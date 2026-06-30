@@ -29,6 +29,36 @@ app.get("/", (req, res) => {
     });
 });
 
+// Регистрация пользователя
+app.post("/register", (req, res) => {
+
+    const { telegram_id, username } = req.body;
+
+    if (!telegram_id) {
+        return res.status(400).json({
+            error: "telegram_id is required"
+        });
+    }
+
+    db.run(
+        "INSERT OR IGNORE INTO users (telegram_id, username) VALUES (?, ?)",
+        [telegram_id, username],
+        function(err) {
+
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
+
+            res.json({
+                success: true
+            });
+
+        }
+    );
+
+});
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
