@@ -85,6 +85,26 @@ app.get("/profile/:telegram_id", (req, res) => {
     );
 
 });
+// Получить всех пользователей
+app.get("/users", (req, res) => {
+
+    db.all(
+        "SELECT * FROM users ORDER BY id DESC",
+        [],
+        (err, rows) => {
+
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
+
+            res.json(rows);
+
+        }
+    );
+
+});
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
