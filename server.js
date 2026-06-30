@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 app.post("/register", (req, res) => {
 
     const { telegram_id, username } = req.body;
-
+console.log("REGISTER:", telegram_id, username);
     if (!telegram_id) {
         return res.status(400).json({
             error: "telegram_id is required"
