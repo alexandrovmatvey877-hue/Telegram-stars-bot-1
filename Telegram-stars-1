@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин звёзд</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--tg-theme-bg-color, #fff);
+            color: var(--tg-theme-text-color, #000);
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .placeholder {
+            padding: 40px 20px;
+            border: 2px dashed var(--tg-theme-hint-color, #ccc);
+            border-radius: 12px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⭐ Магазин звёзд</h1>
+        <div id="app-status" class="placeholder">
+            Загружаем приложение...
+        </div>
+    </div>
+
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        // ========== 1. Инициализация Telegram Mini App ==========
+        const tg = window.Telegram.WebApp;
+        tg.ready(); // сигнализируем, что приложение загружено
+        tg.expand(); // разворачиваем на весь экран
+
+        // Устанавливаем цвет верхней панели
+        tg.setHeaderColor('bg_color');
+        tg.setBackgroundColor('bg_color');
+
+        // Показываем основную информацию о пользователе (без запроса доп. прав)
+        const user = tg.initDataUnsafe?.user;
+        const statusDiv = document.getElementById('app-status');
+
+        if (user) {
+            statusDiv.innerHTML = `
+                <p>Добро пожаловать, ${user.first_name}!</p>
+                <p>Твой ID: ${user.id}</p>
+                <small>Приложение готово к настройке</small>
+            `;
+        } else {
+            statusDiv.innerHTML = `<p>Приложение запущено вне Telegram (отладка)</p>`;
+        }
+
+        // ========== 2. Заглушки для будущих модулей ==========
+        // TODO: Инициализация TON Connect (кошелёк)
+        // TODO: Интеграция с Fragment API / смарт-контрактами
+        // TODO: Платёжный модуль для продажи звёзд (Telegram Stars)
+        // TODO: UI карточки товара, история покупок и т.д.
+    </script>
+</body>
+</html>
