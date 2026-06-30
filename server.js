@@ -59,6 +59,32 @@ app.post("/register", (req, res) => {
     );
 
 });
+// Получение профиля
+app.get("/profile/:telegram_id", (req, res) => {
+
+    db.get(
+        "SELECT * FROM users WHERE telegram_id = ?",
+        [req.params.telegram_id],
+        (err, row) => {
+
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
+
+            if (!row) {
+                return res.status(404).json({
+                    error: "User not found"
+                });
+            }
+
+            res.json(row);
+
+        }
+    );
+
+});
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
