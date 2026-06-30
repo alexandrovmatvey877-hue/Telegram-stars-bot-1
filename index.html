@@ -298,7 +298,15 @@ if (user) {
     .catch(err => {
         console.error(err);
     });
+fetch(`https://white-stars-api.onrender.com/profile/${user.id}`)
+    .then(res => res.json())
+    .then(profile => {
 
+        document.getElementById("balance").innerText =
+            Number(profile.balance).toFixed(2) + " ₽";
+
+    })
+    .catch(err => console.error(err));
 }
 
 function topup(){
