@@ -282,8 +282,6 @@ tg.expand();
 tg.setHeaderColor("bg_color");
 tg.setBackgroundColor("bg_color");
 
-const user = tg.initDataUnsafe?.user;
-
 if(user){
 document.querySelector(".subtitle").innerHTML =
 `Добро пожаловать, <b>${user.first_name}</b>`;
