@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,6 +11,7 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -18,7 +21,7 @@ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 
 body{
 background:#ffffff;
-color:#111;
+color:#111111;
 }
 
 .container{
@@ -28,25 +31,25 @@ padding:20px;
 }
 
 .logo{
+text-align:center;
 font-size:34px;
 font-weight:800;
-text-align:center;
 margin-top:20px;
 }
 
 .subtitle{
-margin-top:8px;
 text-align:center;
+margin-top:8px;
 color:#777;
 font-size:15px;
 }
 
 .balance{
 margin-top:28px;
-background:#f5f5f7;
-border-radius:22px;
 padding:22px;
-box-shadow:0 10px 30px rgba(0,0,0,.05);
+border-radius:20px;
+background:#f5f5f7;
+box-shadow:0 10px 25px rgba(0,0,0,.05);
 }
 
 .balance-title{
@@ -63,14 +66,19 @@ margin-top:8px;
 .topup{
 width:100%;
 height:54px;
-border:none;
 margin-top:18px;
-background:black;
-color:white;
+border:none;
+border-radius:15px;
+background:#111;
+color:#fff;
 font-size:17px;
 font-weight:700;
-border-radius:15px;
 cursor:pointer;
+transition:.2s;
+}
+
+.topup:active{
+transform:scale(.98);
 }
 
 .section{
@@ -78,8 +86,8 @@ margin-top:35px;
 }
 
 .section h2{
-font-size:20px;
-margin-bottom:15px;
+font-size:21px;
+margin-bottom:16px;
 }
 
 .cards{
@@ -90,106 +98,218 @@ gap:14px;
 
 .card{
 background:#f5f5f7;
-border-radius:18px;
 padding:18px;
+border-radius:18px;
+cursor:pointer;
+transition:.2s;
 }
 
-.card-icon{font-size:28px;}
-.card-title{margin-top:12px;font-size:17px;font-weight:700;}
-.card-text{margin-top:8px;font-size:14px;color:#666;line-height:20px;}
+.card:active{
+transform:scale(.97);
+}
+
+.card-icon{
+font-size:30px;
+}
+
+.card-title{
+margin-top:10px;
+font-size:17px;
+font-weight:700;
+}
+
+.card-text{
+margin-top:8px;
+font-size:14px;
+line-height:20px;
+color:#666;
+}
 
 .links{
 margin-top:35px;
 background:#f5f5f7;
-border-radius:20px;
+border-radius:18px;
 overflow:hidden;
 }
 
 .link{
 display:flex;
 justify-content:space-between;
+align-items:center;
 padding:18px;
 border-bottom:1px solid #e5e5e5;
+cursor:pointer;
 }
 
-.link:last-child{border:none;}
+.link:last-child{
+border-bottom:none;
+}
+
+.arrow{
+font-size:20px;
+color:#999;
+}
 
 .footer{
-margin:35px 0;
 text-align:center;
 font-size:13px;
 color:#999;
+margin:35px 0;
 }
+
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="container"><div class="logo">
+⭐ WHITE STARS
+</div>
 
-<div class="logo">⭐ WHITE STARS</div>
-
-<div class="subtitle">Покупка цифровых товаров Telegram</div>
+<div class="subtitle">
+Покупка цифровых товаров Telegram
+</div>
 
 <div class="balance">
-<div class="balance-title">Баланс аккаунта</div>
-<div class="balance-value">0.00 ₽</div>
-<button class="topup" onclick="topup()">Пополнить баланс</button>
+
+<div class="balance-title">
+Баланс аккаунта
+</div>
+
+<div class="balance-value" id="balance">
+0.00 ₽
+</div>
+
+<button class="topup" onclick="topup()">
+Пополнить баланс
+</button>
+
 </div>
 
 <div class="section">
+
 <h2>Каталог</h2>
 
 <div class="cards">
 
-<div class="card">
+<div class="card" onclick="buyStars()">
 <div class="card-icon">⭐</div>
 <div class="card-title">Telegram Stars</div>
-<div class="card-text">Покупка звезд Telegram по выгодному курсу.</div>
+<div class="card-text">
+Пополнение Telegram Stars по выгодному курсу.
+</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="buyPremium()">
 <div class="card-icon">👑</div>
-<div class="card-title">Telegram Premium</div>
-<div class="card-text">Покупка Premium на любой аккаунт.</div>
+<div class="card-title">Premium</div>
+<div class="card-text">
+Покупка Telegram Premium.
+</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="buyGift()">
 <div class="card-icon">🎁</div>
-<div class="card-title">Telegram Gifts</div>
-<div class="card-text">Покупка подарков Telegram.</div>
+<div class="card-title">Подарки</div>
+<div class="card-text">
+Покупка Telegram Gifts.
+</div>
 </div>
 
-<div class="card">
+<div class="card" onclick="buyNFT()">
 <div class="card-icon">🖼</div>
 <div class="card-title">NFT</div>
-<div class="card-text">NFT Fragment и другие цифровые товары.</div>
+<div class="card-text">
+NFT Fragment и другие цифровые товары.
+</div>
 </div>
 
 </div>
+
 </div>
 
 <div class="links">
 
-<div class="link">💰 Тарифы ›</div>
-<div class="link">🔒 Политика конфиденциальности ›</div>
-<div class="link">📄 Пользовательское соглашение ›</div>
-<div class="link">💬 Поддержка ›</div>
+<div class="link" onclick="openPrices()">
+<span>💰 Тарифы</span>
+<span class="arrow">›</span>
+</div>
+
+<div class="link" onclick="openPrivacy()">
+<span>🔒 Политика конфиденциальности</span>
+<span class="arrow">›</span>
+</div>
+
+<div class="link" onclick="openTerms()">
+<span>📄 Пользовательское соглашение</span>
+<span class="arrow">›</span>
+</div>
+
+<div class="link" onclick="openSupport()">
+<span>💬 Поддержка</span>
+<span class="arrow">›</span>
+</div>
 
 </div>
 
-<div class="footer">WHITE STARS © 2026</div>
-
-</div>
+<div class="footer">
+WHITE STARS © 2026
+</div></div>
 
 <script>
+
 const tg = window.Telegram.WebApp;
+
 tg.ready();
 tg.expand();
 
-function topup(){
-tg.showAlert("Пополнение баланса скоро станет доступно.");
+tg.setHeaderColor("bg_color");
+tg.setBackgroundColor("bg_color");
+
+const user = tg.initDataUnsafe?.user;
+
+if(user){
+document.querySelector(".subtitle").innerHTML =
+`Добро пожаловать, <b>${user.first_name}</b>`;
 }
+
+function topup(){
+tg.showAlert("Функция пополнения баланса находится в разработке.");
+}
+
+function buyStars(){
+tg.showAlert("Покупка Telegram Stars скоро станет доступна.");
+}
+
+function buyPremium(){
+tg.showAlert("Покупка Telegram Premium скоро станет доступна.");
+}
+
+function buyGift(){
+tg.showAlert("Покупка Telegram Gifts скоро станет доступна.");
+}
+
+function buyNFT(){
+tg.showAlert("Покупка NFT скоро станет доступна.");
+}
+
+function openPrices(){
+window.location.href = "pages/prices.html";
+}
+
+function openPrivacy(){
+window.location.href = "pages/privacy.html";
+}
+
+function openTerms(){
+window.location.href = "pages/terms.html";
+}
+
+function openSupport(){
+window.open("https://t.me/WHITE_STARS_CONNECT","_blank");
+}
+
 </script>
 
 </body>
