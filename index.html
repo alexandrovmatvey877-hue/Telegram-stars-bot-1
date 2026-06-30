@@ -276,11 +276,7 @@ fetch("https://white-stars-api.onrender.com/register", {
 })
 .then(res => res.json())
 .then(data => console.log("Регистрация:", data))
-.catch(err => console.error(err));
-tg.expand();
-
-tg.setHeaderColor("bg_color");
-tg.setBackgroundColor("bg_color");
+.catch(err => 
 
 if(user){
 document.querySelector(".subtitle").innerHTML =
