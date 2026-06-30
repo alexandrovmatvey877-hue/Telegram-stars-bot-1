@@ -109,6 +109,30 @@ app.get("/users", (req, res) => {
     );
 
 });
+// Изменить баланс пользователя
+app.post("/set-balance", (req, res) => {
+
+    const { telegram_id, balance } = req.body;
+
+    db.run(
+        "UPDATE users SET balance = ? WHERE telegram_id = ?",
+        [balance, telegram_id],
+        function(err) {
+
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
+
+            res.json({
+                success: true
+            });
+
+        }
+    );
+
+});
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
