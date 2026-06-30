@@ -1581,3 +1581,90 @@ NFT Fragment и другие цифровые товары.
 </div>
 
 </div>
+<div class="links">
+
+<div class="link" onclick="openPrices()">
+<span>💰 Тарифы</span>
+<span class="arrow">›</span>
+</div>
+
+<div class="link" onclick="openPrivacy()">
+<span>🔒 Политика конфиденциальности</span>
+<span class="arrow">›</span>
+</div>
+
+<div class="link" onclick="openTerms()">
+<span>📄 Пользовательское соглашение</span>
+<span class="arrow">›</span>
+</div>
+
+<div class="link" onclick="openSupport()">
+<span>💬 Поддержка</span>
+<span class="arrow">›</span>
+</div>
+
+</div>
+
+<div class="footer">
+
+WHITE STARS © 2026
+
+</div>
+
+</div>
+
+<script>
+
+const tg = window.Telegram.WebApp;
+
+tg.ready();
+
+tg.expand();
+
+tg.setHeaderColor("bg_color");
+
+tg.setBackgroundColor("bg_color");
+
+const user=tg.initDataUnsafe?.user;
+
+if(user){
+
+document.querySelector(".subtitle").innerHTML=
+`Добро пожаловать, <b>${user.first_name}</b>`;
+
+}
+
+function topup(){
+
+tg.showAlert("Пополнение баланса скоро станет доступно.");
+
+}
+
+function openPrices(){
+
+window.open("pages/prices.html","_self");
+
+}
+
+function openPrivacy(){
+
+window.open("pages/privacy.html","_self");
+
+}
+
+function openTerms(){
+
+window.open("pages/terms.html","_self");
+
+}
+
+function openSupport(){
+
+window.open("https://t.me/WHITE_STARS_CONNECT");
+
+}
+
+</script>
+
+</body>
+</html>
