@@ -81,10 +81,12 @@ fetch("https://white-stars-api.onrender.com/users",{
     return r.json();
 })
 .then(data=>{
-    console.log(data);
 
-    const tbody=document.getElementById("users");
-    tbody.innerHTML="";
+alert(JSON.stringify(data));
+
+const tbody=document.getElementById("users");
+
+tbody.innerHTML="";
 
     data.forEach(user=>{
         tbody.innerHTML += `
