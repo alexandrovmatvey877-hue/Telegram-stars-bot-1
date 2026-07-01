@@ -137,29 +137,25 @@ app.get("/profile/:telegram_id", (req, res) => {
 
 app.get("/users", (req, res) => {
 
-    console.log("ADMIN HEADER:", req.headers["x-admin-key"]);
-
     if (req.headers["x-admin-key"] !== ADMIN_KEY) {
         return res.status(403).json({
             error: "Access denied"
         });
     }
 
-    db.all(
-        "SELECT * FROM users ORDER BY id DESC",
-        [],
-        (err, rows) => {
+    db.all("SELECT rowid,* FROM users", [], (err, rows) => {
 
-            if (err) {
-                return res.status(500).json({
-                    error: err.message
-                });
-            }
+        console.log("ROWS:", rows);
 
-            res.json(rows);
-
+        if (err) {
+            return res.status(500).json({
+                error: err.message
+            });
         }
-    );
+
+        res.json(rows);
+
+    });
 
 });
 
