@@ -73,7 +73,9 @@ function loadUsers(){
 
 fetch("https://white-stars-api.onrender.com/users")
 .then(r=>r.json())
-.then(users=>{
+.then(users=>{headers:{
+    "x-admin-key":"white-stars-super-admin"
+}
 
 const tbody=document.getElementById("users");
 
