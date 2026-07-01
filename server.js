@@ -137,61 +137,11 @@ app.get("/profile/:telegram_id", (req, res) => {
 
 app.get("/users", (req, res) => {
 
-    if (req.headers["x-admin-key"] !== ADMIN_KEY) {
-        return res.status(403).json({
-            error: "Access denied"
-        });
-    }
+    console.log("USERS ROUTE HIT");
 
-    db.all("SELECT rowid,* FROM users", [], (err, rows) => {
-
-        console.log("ROWS:", rows);
-
-        if (err) {
-            return res.status(500).json({
-                error: err.message
-            });
-        }
-
-        res.json(rows);
-
+    return res.json({
+        test: "работает"
     });
-
-});
-
-app.post("/set-balance", (req, res) => {
-if (req.headers["x-admin-key"] !== ADMIN_KEY) {
-    return res.status(403).json({
-        error: "Access denied"
-    });
-}
-    let { telegram_id, balance } = req.body;
-    telegram_id = String(telegram_id).replace(".0", "");
-
-    if (!telegram_id) {
-        return res.status(400).json({
-            error: "telegram_id is required"
-        });
-    }
-
-    db.run(
-        "UPDATE users SET balance = ? WHERE telegram_id = ?",
-        [balance, telegram_id],
-        function(err) {
-
-            if (err) {
-                return res.status(500).json({
-                    error: err.message
-                });
-            }
-
-            res.json({
-                success: true,
-                updated: this.changes
-            });
-
-        }
-    );
 
 });
 app.get("/reset", (req, res) => {
