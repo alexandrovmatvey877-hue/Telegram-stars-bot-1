@@ -137,17 +137,26 @@ app.get("/profile/:telegram_id", (req, res) => {
 
 app.get("/users", (req, res) => {
 
-    console.log("USERS ROUTE HIT");
+    if (req.headers["x-admin-key"] !== ADMIN_KEY) {
+        return res.status(403).json({
+            error: "Access denied"
+        });
+    }
 
-    return res.json({
-        test: "работает"
-    });
+    db.all(
+        "SELECT * FROM users ORDER BY id DESC",
+        [],
+        (err, rows) => {
 
-});
-app.get("/reset", (req, res) => {
-    db.run("DELETE FROM users");
-    res.send("OK");
-});
-app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
+
+            res.json(rows);
+
+        }
+    );
+
 });
