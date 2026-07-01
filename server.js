@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 
 const db = new sqlite3.Database("./database.db", (err) => {
     if (err) {
-        console.error("Ошибка БД:", err);
+        console.error("Ошибка SQLite:", err);
     } else {
         console.log("SQLite подключена");
     }
@@ -37,14 +37,15 @@ app.get("/", (req, res) => {
     res.json({
         status: "ok",
         project: "WHITE STARS",
-        version: "2.0.0"
+        version: "3.0.0"
     });
 });
 
 app.post("/register", (req, res) => {
 
     let { telegram_id, username } = req.body;
-telegram_id = String(telegram_id).replace(".0", "");
+
+    telegram_id = String(telegram_id).replace(".0", "");
 
     if (!telegram_id) {
         return res.status(400).json({
@@ -76,7 +77,6 @@ telegram_id = String(telegram_id).replace(".0", "");
                 function(err) {
 
                     if (err) {
-                        console.error(err);
                         return res.status(500).json({
                             error: err.message
                         });
@@ -111,9 +111,11 @@ telegram_id = String(telegram_id).replace(".0", "");
 
 app.get("/profile/:telegram_id", (req, res) => {
 
+    const telegram_id = String(req.params.telegram_id).replace(".0", "");
+
     db.get(
         "SELECT * FROM users WHERE telegram_id = ?",
-        [String(req.params.telegram_id).replace(".0", "")],
+        [telegram_id],
         (err, row) => {
 
             if (err) {
@@ -143,14 +145,10 @@ app.get("/users", (req, res) => {
         });
     }
 
-    console.log("USERS ROUTE");
-
     db.all(
         "SELECT * FROM users ORDER BY id DESC",
         [],
         (err, rows) => {
-
-            console.log(rows);
 
             if (err) {
                 return res.status(500).json({
@@ -163,4 +161,78 @@ app.get("/users", (req, res) => {
         }
     );
 
+});
+
+app.post("/set-balance", (req, res) => {
+
+    if (req.headers["x-admin-key"] !== ADMIN_KEY) {
+        return res.status(403).json({
+            error: "Access denied"
+        });
+    }
+
+    let { telegram_id, balance } = req.body;
+
+    telegram_id = String(telegram_id).replace(".0", "");
+
+    if (!telegram_id) {
+        return res.status(400).json({
+            error: "telegram_id is required"
+        });
+    }
+
+    balance = Number(balance);
+
+    if (isNaN(balance)) {
+        return res.status(400).json({
+            error: "Invalid balance"
+        });
+    }
+
+    db.run(
+        "UPDATE users SET balance = ? WHERE telegram_id = ?",
+        [balance, telegram_id],
+        function(err) {
+
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
+
+            res.json({
+                success: true,
+                updated: this.changes
+            });
+
+        }
+    );
+
+});
+
+app.get("/reset", (req, res) => {
+
+    db.run(
+        "DELETE FROM users",
+        [],
+        function(err) {
+
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
+
+            res.json({
+                success: true,
+                deleted: this.changes
+            });
+
+        }
+    );
+
+});
+
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
 });
