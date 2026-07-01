@@ -135,13 +135,16 @@ app.get("/profile/:telegram_id", (req, res) => {
 
 });
 
-app.get("/users", (req, res) =>
-throw new Error("USERS ROUTE TEST");
-if (req.headers["x-admin-key"] !== ADMIN_KEY) {
-    return res.status(403).json({
-        error: "Access denied"
-    });
-}
+app.get("/users", (req, res) => {
+
+    console.log("ADMIN HEADER:", req.headers["x-admin-key"]);
+
+    if (req.headers["x-admin-key"] !== ADMIN_KEY) {
+        return res.status(403).json({
+            error: "Access denied"
+        });
+    }
+
     db.all(
         "SELECT * FROM users ORDER BY id DESC",
         [],
