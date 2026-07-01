@@ -76,38 +76,22 @@ fetch("https://white-stars-api.onrender.com/users",{
         "x-admin-key":"white-stars-super-admin"
     }
 })
-.then(r=>{
-    console.log("STATUS:", r.status);
-    return r.json();
-})
-.then(data=>{
+.then(async r => {
 
-alert(JSON.stringify(data));
+    alert("STATUS: " + r.status);
 
-const tbody=document.getElementById("users");
+    const text = await r.text();
 
-tbody.innerHTML="";
-
-    data.forEach(user=>{
-        tbody.innerHTML += `
-        <tr>
-            <td>${user.telegram_id}</td>
-            <td>${user.username}</td>
-            <td>${user.balance}</td>
-            <td>
-                <input id="b${user.telegram_id}" value="${user.balance}">
-                <button onclick="save('${user.telegram_id}')">Сохранить</button>
-            </td>
-        </tr>`;
-    });
+    alert(text);
 
 })
-.catch(err=>{
-    console.error(err);
+.catch(err => {
+
+    alert("ERROR: " + err);
+
 });
 
 }
-
 function save(id){
 
 const balance=document.getElementById("b"+id).value;
