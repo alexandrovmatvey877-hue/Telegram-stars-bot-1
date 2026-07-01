@@ -111,7 +111,7 @@ app.get("/profile/:telegram_id", (req, res) => {
 
     db.get(
         "SELECT * FROM users WHERE telegram_id = ?",
-        [req.params.telegram_id],
+        [String(req.params.telegram_id).replace(".0", "")]
         (err, row) => {
 
             if (err) {
