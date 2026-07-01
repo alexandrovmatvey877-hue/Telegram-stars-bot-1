@@ -4,6 +4,7 @@ const sqlite3 = require("sqlite3").verbose();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const ADMIN_KEY = "white-stars-super-admin";
 
 app.use(cors());
 app.use(express.json());
