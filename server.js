@@ -156,7 +156,11 @@ app.get("/users", (req, res) => {
 });
 
 app.post("/set-balance", (req, res) => {
-
+if (req.headers["x-admin-key"] !== ADMIN_KEY) {
+    return res.status(403).json({
+        error: "Access denied"
+    });
+}
     let { telegram_id, balance } = req.body;
     telegram_id = String(telegram_id).replace(".0", "");
 
