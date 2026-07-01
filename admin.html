@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WHITE STARS ADMIN</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#111;
+color:white;
+padding:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+td,th{
+border:1px solid #444;
+padding:10px;
+text-align:left;
+}
+
+input{
+width:80px;
+padding:5px;
+}
+
+button{
+padding:6px 10px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>WHITE STARS ADMIN</h1>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Username</th>
+<th>Balance</th>
+<th>Изменить</th>
+
+</tr>
+
+</thead>
+
+<tbody id="users"></tbody>
+
+</table>
+
+<script>
+
+loadUsers();
+
+function loadUsers(){
+
+fetch("https://white-stars-api.onrender.com/users")
+.then(r=>r.json())
+.then(users=>{
+
+const tbody=document.getElementById("users");
+
+tbody.innerHTML="";
+
+users.forEach(user=>{
+
+tbody.innerHTML+=`
+
+<tr>
+
+<td>${user.telegram_id}</td>
+
+<td>${user.username}</td>
+
+<td>${user.balance}</td>
+
+<td>
+
+<input id="b${user.telegram_id}" type="number" value="${user.balance}">
+
+<button onclick="save('${user.telegram_id}')">
+
+Сохранить
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+});
+
+}
+
+function save(id){
+
+const balance=document.getElementById("b"+id).value;
+
+fetch("https://white-stars-api.onrender.com/set-balance",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+telegram_id:id,
+
+balance:balance
+
+})
+
+})
+
+.then(r=>r.json())
+
+.then(()=>{
+
+loadUsers();
+
+alert("Баланс изменён");
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>
