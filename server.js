@@ -45,24 +45,26 @@ console.log("REGISTER:", telegram_id, username);
     }
 
     db.run(
-        "INSERT OR IGNORE INTO users (telegram_id, username) VALUES (?, ?)",
-        [telegram_id, username],
-        function(err) {
+    "INSERT INTO users (telegram_id, username) VALUES (?, ?)",
+    [telegram_id, username],
+    function(err) {
 
-            if (err) {
-                return res.status(500).json({
-                    error: err.message
-                });
-            }
+        console.log("ERR:", err);
+        console.log("CHANGES:", this.changes);
+        console.log("LAST ID:", this.lastID);
 
-            res.json({
-                success: true
+        if (err) {
+            return res.status(500).json({
+                error: err.message
             });
-
         }
-    );
 
-});
+        res.json({
+            success: true
+        });
+
+    }
+);
 // Получение профиля
 app.get("/profile/:telegram_id", (req, res) => {
 
