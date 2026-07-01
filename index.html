@@ -287,7 +287,7 @@ if (user) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            telegram_id: user.id,
+            telegram_id: String(user.id),
             username: user.username || user.first_name
         })
     })
