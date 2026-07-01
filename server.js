@@ -142,12 +142,15 @@ app.get("/users", (req, res) => {
             error: "Access denied"
         });
     }
-console.log("USERS ROUTE");
+
+    console.log("USERS ROUTE");
+
     db.all(
-console.log(rows);
         "SELECT * FROM users ORDER BY id DESC",
         [],
         (err, rows) => {
+
+            console.log(rows);
 
             if (err) {
                 return res.status(500).json({
