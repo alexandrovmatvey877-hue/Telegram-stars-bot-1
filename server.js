@@ -42,7 +42,8 @@ app.get("/", (req, res) => {
 
 app.post("/register", (req, res) => {
 
-    const { telegram_id, username } = req.body;
+    let { telegram_id, username } = req.body;
+telegram_id = String(telegram_id).replace(".0", "");
 
     if (!telegram_id) {
         return res.status(400).json({
