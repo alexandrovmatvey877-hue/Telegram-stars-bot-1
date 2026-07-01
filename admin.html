@@ -72,49 +72,36 @@ loadUsers();
 function loadUsers(){
 
 fetch("https://white-stars-api.onrender.com/users",{
-headers:{
-"x-admin-key":"white-stars-super-admin"
-}
+    headers:{
+        "x-admin-key":"white-stars-super-admin"
+    }
 })
+.then(r=>{
+    console.log("STATUS:", r.status);
+    return r.json();
+})
+.then(data=>{
+    console.log(data);
 
-.then(r=>r.json())
+    const tbody=document.getElementById("users");
+    tbody.innerHTML="";
 
-.then(users=>{
+    data.forEach(user=>{
+        tbody.innerHTML += `
+        <tr>
+            <td>${user.telegram_id}</td>
+            <td>${user.username}</td>
+            <td>${user.balance}</td>
+            <td>
+                <input id="b${user.telegram_id}" value="${user.balance}">
+                <button onclick="save('${user.telegram_id}')">Сохранить</button>
+            </td>
+        </tr>`;
+    });
 
-const tbody=document.getElementById("users");
-
-tbody.innerHTML="";
-
-users.forEach(user=>{
-
-tbody.innerHTML+=`
-
-<tr>
-
-<td>${user.telegram_id}</td>
-
-<td>${user.username}</td>
-
-<td>${user.balance}</td>
-
-<td>
-
-<input id="b${user.telegram_id}" type="number" value="${user.balance}">
-
-<button onclick="save('${user.telegram_id}')">
-
-Сохранить
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
+})
+.catch(err=>{
+    console.error(err);
 });
 
 }
