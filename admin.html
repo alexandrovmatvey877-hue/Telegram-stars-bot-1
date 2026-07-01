@@ -120,7 +120,9 @@ function save(id){
 const balance=document.getElementById("b"+id).value;
 
 fetch("https://white-stars-api.onrender.com/set-balance",{
-
+headers:{
+    "x-admin-key":"white-stars-super-admin"
+}
 method:"POST",
 
 headers:{
