@@ -2,13 +2,120 @@
 <html lang="ru">
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="tabs">
 
-<title>WHITE STARS ADMIN</title>
+    <button class="tab active" onclick="openTab('users')">
+        👤 Пользователи
+    </button>
 
-<style>
+    <button class="tab" onclick="openTab('operations')">
+        💳 Операции
+    </button>
 
+    <button class="tab" onclick="openTab('settings')">
+        ⚙️ Настройки
+    </button>
+
+</div>
+
+<div id="users" class="page active">
+
+    <!-- Список пользователей -->
+
+</div>
+
+<div id="operations" class="page">
+
+    <!-- История операций -->
+
+</div>
+
+<div id="settings" class="page">
+
+    <!-- Настройки -->
+
+</div>
+.tabs{
+display:flex;
+gap:12px;
+margin:25px 0;
+}
+
+.tab{
+flex:1;
+height:52px;
+border:none;
+border-radius:16px;
+background:#ffffff;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+transition:.2s;
+box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.tab.active{
+background:#111;
+color:white;
+}
+
+.page{
+display:none;
+}
+
+.page.active{
+display:block;
+}
+<script>
+
+function openTab(tab){
+
+    document.querySelectorAll(".tab").forEach(button=>{
+        button.classList.remove("active");
+    });
+
+    document.querySelectorAll(".page").forEach(page=>{
+        page.classList.remove("active");
+    });
+
+    document.getElementById(tab).classList.add("active");
+
+    if(tab==="users"){
+        document.querySelectorAll(".tab")[0].classList.add("active");
+    }
+
+    if(tab==="operations"){
+        document.querySelectorAll(".tab")[1].classList.add("active");
+    }
+
+    if(tab==="settings"){
+        document.querySelectorAll(".tab")[2].classList.add("active");
+    }
+
+}
+
+</script>
+.tab:hover{
+background:#ececec;
+}
+
+.tab.active:hover{
+background:#111;
+}
+
+@media(max-width:700px){
+
+.tabs{
+flex-direction:column;
+}
+
+.tab{
+width:100%;
+font-size:15px;
+height:50px;
+}
+
+}
 *{
 margin:0;
 padding:0;
@@ -16,282 +123,506 @@ box-sizing:border-box;
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 }
 
+html{
+scroll-behavior:smooth;
+}
+
 body{
-background:#f5f5f7;
+background:#f3f5f8;
 color:#111;
+min-height:100vh;
 padding:20px;
 }
 
 .container{
-max-width:900px;
+max-width:1200px;
 margin:auto;
 }
 
+a{
+text-decoration:none;
+color:inherit;
+}
+
+button{
+font:inherit;
+outline:none;
+}
+
+input{
+font:inherit;
+outline:none;
+}
+
+::-webkit-scrollbar{
+width:8px;
+height:8px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#cfcfcf;
+border-radius:20px;
+}
+
+::-webkit-scrollbar-track{
+background:transparent;
+}
+
+.hidden{
+display:none!important;
+}
 .header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:25px;
+margin-bottom:30px;
+gap:20px;
 }
 
-h1{
-font-size:32px;
+.logo{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.logo-icon{
+width:58px;
+height:58px;
+border-radius:18px;
+background:#111;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+font-weight:700;
+box-shadow:0 8px 24px rgba(0,0,0,.15);
+}
+
+.logo-text h1{
+font-size:30px;
 font-weight:800;
+line-height:1;
+}
+
+.logo-text p{
+margin-top:6px;
+font-size:14px;
+color:#777;
+}
+
+.header-right{
+display:flex;
+align-items:center;
+gap:12px;
 }
 
 .back{
+height:46px;
+padding:0 20px;
 border:none;
+border-radius:14px;
 background:#111;
 color:#fff;
-padding:12px 20px;
-border-radius:14px;
-font-size:15px;
 font-weight:700;
 cursor:pointer;
 transition:.2s;
+}
+
+.back:hover{
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(0,0,0,.15);
 }
 
 .back:active{
 transform:scale(.97);
 }
 
+.admin-chip{
+padding:10px 16px;
+border-radius:14px;
+background:#fff;
+box-shadow:0 6px 18px rgba(0,0,0,.06);
+font-size:14px;
+font-weight:600;
+}
+.card{
+background:#fff;
+border-radius:22px;
+padding:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+margin-bottom:24px;
+}
+
 .table-box{
 background:#fff;
 border-radius:22px;
-box-shadow:0 10px 30px rgba(0,0,0,.08);
 overflow-x:auto;
--webkit-overflow-scrolling:touch;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
 table{
 width:100%;
-min-width:750px;
+min-width:900px;
 border-collapse:collapse;
 }
 
-th{
+thead{
 background:#fafafa;
-font-size:14px;
-color:#666;
+}
+
+th{
 padding:18px;
 text-align:left;
+font-size:13px;
+font-weight:700;
+color:#666;
+text-transform:uppercase;
+letter-spacing:.5px;
 }
 
 td{
 padding:18px;
 border-top:1px solid #ececec;
+vertical-align:middle;
 }
 
-input{
-width:90px;
-padding:10px;
-border-radius:10px;
-border:1px solid #ddd;
-outline:none;
+tbody tr{
+transition:.2s;
+cursor:pointer;
+}
+
+tbody tr:hover{
+background:#f8f9fb;
+}
+
+.avatar{
+width:46px;
+height:46px;
+border-radius:50%;
+object-fit:cover;
+background:#ddd;
+margin-right:14px;
+}
+
+.user{
+display:flex;
+align-items:center;
+}
+
+.user-info{
+display:flex;
+flex-direction:column;
+gap:4px;
+}
+
+.username{
+font-size:16px;
+font-weight:700;
+}
+
+.user-id{
+font-size:13px;
+color:#888;
+}
+
+.balance{
+font-size:16px;
+font-weight:700;
+color:#111;
+}
+.search-box{
+display:flex;
+gap:14px;
+margin-bottom:24px;
+flex-wrap:wrap;
+}
+
+.search{
+flex:1;
+min-width:260px;
+height:50px;
+padding:0 18px;
+border:none;
+border-radius:16px;
+background:#fff;
+box-shadow:0 8px 20px rgba(0,0,0,.06);
 font-size:15px;
 }
 
-input:focus{
-border-color:#111;
+.search:focus{
+box-shadow:0 0 0 3px rgba(17,17,17,.1);
 }
 
-.save{
+.select{
+height:50px;
+padding:0 16px;
 border:none;
+border-radius:16px;
+background:#fff;
+box-shadow:0 8px 20px rgba(0,0,0,.06);
+font-size:15px;
+cursor:pointer;
+}
+
+.btn{
+height:46px;
+padding:0 20px;
+border:none;
+border-radius:14px;
 background:#111;
-color:white;
-padding:10px 18px;
-border-radius:10px;
+color:#fff;
+font-size:15px;
 font-weight:700;
 cursor:pointer;
-margin-left:8px;
 transition:.2s;
 }
 
-.save:active{
+.btn:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 22px rgba(0,0,0,.15);
+}
+
+.btn:active{
 transform:scale(.97);
 }
 
-@media(max-width:700px){
+.btn.red{
+background:#e53935;
+}
+
+.btn.green{
+background:#22c55e;
+}
+
+.btn.orange{
+background:#ff9800;
+}
+
+.balance-input{
+width:95px;
+height:42px;
+padding:0 10px;
+border:1px solid #ddd;
+border-radius:10px;
+text-align:center;
+font-size:15px;
+transition:.2s;
+}
+
+.balance-input:focus{
+border-color:#111;
+}
+@media(max-width:900px){
+
+body{
+padding:15px;
+}
+
+.container{
+max-width:100%;
+}
 
 .header{
 flex-direction:column;
 align-items:flex-start;
-gap:15px;
+gap:18px;
+}
+
+.header-right{
+width:100%;
+display:flex;
+justify-content:space-between;
+}
+
+.logo-text h1{
+font-size:26px;
+}
+
+.logo-text p{
+font-size:13px;
+}
+
+.search-box{
+flex-direction:column;
+}
+
+.search,
+.select{
+width:100%;
+min-width:100%;
+}
+
+.table-box{
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
 }
 
 table{
+min-width:800px;
+}
+
+}
+
+@media(max-width:600px){
+
+.logo{
+gap:10px;
+}
+
+.logo-icon{
+width:50px;
+height:50px;
+font-size:24px;
+border-radius:16px;
+}
+
+.logo-text h1{
+font-size:22px;
+}
+
+.logo-text p{
+font-size:12px;
+}
+
+.card{
+padding:18px;
+border-radius:18px;
+}
+
+.btn{
+width:100%;
+height:48px;
+}
+
+.back{
+width:100%;
+}
+
+.tabs{
+gap:10px;
+}
+
+.tab{
+height:48px;
 font-size:14px;
 }
 
-th,td{
-padding:12px;
-}
-
-input{
-width:90px;
-}
-
-.save{
-margin-left:8px;
-display:inline-block;
-}
-
-.save{
-margin-left:8px;
-display:inline-block;
+th,
+td{
+padding:14px;
 }
 
 }
+<div id="users" class="page active">
 
-</style>
+<div class="card">
 
-</head>
+<h2 style="margin-bottom:20px;">
+👤 Пользователи
+</h2>
 
-<body>
-
-<div class="container">
-
-<div class="header">
-
-<h1>⭐ WHITE STARS ADMIN</h1>
-
-<button class="back" onclick="history.back()">
-← Назад
-</button>
-
-</div>
-
-<div class="table-box">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>ID</th>
-<th>Username</th>
-<th>Balance</th>
-<th>Изменить</th>
-
-</tr>
-
-</thead>
-
-<tbody id="users"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-<script>
-
-loadUsers();
-
-function loadUsers(){
-
-fetch("https://white-stars-api.onrender.com/users",{
-headers:{
-"x-admin-key":"white-stars-super-admin"
-}
-})
-
-.then(r=>r.json())
-
-.then(users=>{
-
-const tbody=document.getElementById("users");
-
-tbody.innerHTML="";
-
-users.forEach(user=>{
-
-tbody.innerHTML+=`
-
-<tr>
-
-<td>${user.telegram_id}</td>
-
-<td>${user.username}</td>
-
-<td>${user.balance}</td>
-
-<td>
+<div class="search-box">
 
 <input
-id="b${user.telegram_id}"
-type="number"
-value="${user.balance}">
+id="search"
+class="search"
+type="text"
+placeholder="Поиск по ID, имени или username">
+
+<select
+id="sort"
+class="select">
+
+<option value="last_seen">
+Последний вход
+</option>
+
+<option value="balance">
+Баланс
+</option>
+
+<option value="registered">
+Дата регистрации
+</option>
+
+<option value="spent">
+Сумма покупок
+</option>
+
+<option value="deposit">
+Сумма пополнений
+</option>
+
+</select>
 
 <button
-class="save"
-onclick="save('${user.telegram_id}')">
+class="btn"
+onclick="loadUsers()">
 
-Сохранить
+Обновить
 
 </button>
 
-</td>
+</div>
 
-</tr>
+<div id="usersList">
 
-`;
+<!-- Пользователи появятся здесь -->
 
-});
+</div>
 
-})
+</div>
 
-.catch(err=>{
+</div>
+<div class="user-card" onclick="openProfile('${user.telegram_id}')">
 
-alert(err);
+<div class="user-left">
 
-});
+<img
+class="avatar"
+src="${user.avatar || 'images/avatar.png'}">
 
-}
+<div class="user-info">
 
-function save(id){
+<div class="status">
 
-const balance=document.getElementById("b"+id).value;
+${user.online
+? '<span class="online">🟢 В сети</span>'
+: `<span class="offline">Был в сети ${user.last_seen_text}</span>`}
 
-fetch("https://white-stars-api.onrender.com/set-balance",{
+</div>
 
-method:"POST",
+<div class="username">
 
-headers:{
-"Content-Type":"application/json",
-"x-admin-key":"white-stars-super-admin"
-},
+${user.username}
 
-body:JSON.stringify({
+</div>
 
-telegram_id:id,
-balance:Number(balance)
+<div class="userid">
 
-})
+ID: ${user.telegram_id}
 
-})
+</div>
 
-.then(r=>r.json())
+</div>
 
-.then(()=>{
+</div>
 
-alert("Баланс изменён");
+<div class="user-right">
 
-loadUsers();
+<div class="balance">
 
-})
+${user.balance} ₽
 
-.catch(err=>{
+</div>
 
-alert(err);
+<div class="arrow">
 
-});
+›
 
-}
+</div>
 
-</script>
+</div>
 
-</body>
-</html>
+</div>
