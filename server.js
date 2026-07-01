@@ -135,7 +135,7 @@ app.get("/profile/:telegram_id", (req, res) => {
 
 });
 
-app.get("/users", (req, res) => {
+app.get("/users", (req, res) => {console.log("ADMIN HEADER:", req.headers["x-admin-key"]);
 if (req.headers["x-admin-key"] !== ADMIN_KEY) {
     return res.status(403).json({
         error: "Access denied"
