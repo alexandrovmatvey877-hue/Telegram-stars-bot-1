@@ -71,11 +71,15 @@ loadUsers();
 
 function loadUsers(){
 
-fetch("https://white-stars-api.onrender.com/users")
-.then(r=>r.json())
-.then(users=>{headers:{
-    "x-admin-key":"white-stars-super-admin"
+fetch("https://white-stars-api.onrender.com/users",{
+headers:{
+"x-admin-key":"white-stars-super-admin"
 }
+})
+
+.then(r=>r.json())
+
+.then(users=>{
 
 const tbody=document.getElementById("users");
 
@@ -120,20 +124,19 @@ function save(id){
 const balance=document.getElementById("b"+id).value;
 
 fetch("https://white-stars-api.onrender.com/set-balance",{
-headers:{
-    "x-admin-key":"white-stars-super-admin"
-}
+
 method:"POST",
 
 headers:{
-"Content-Type":"application/json"
+"Content-Type":"application/json",
+"x-admin-key":"white-stars-super-admin"
 },
 
 body:JSON.stringify({
 
 telegram_id:id,
 
-balance:balance
+balance:Number(balance)
 
 })
 
@@ -141,17 +144,18 @@ balance:balance
 
 .then(r=>r.json())
 
-.then(()=>{
-
-loadUsers();
+.then(data=>{
 
 alert("Баланс изменён");
+
+loadUsers();
 
 });
 
 }
 
 </script>
+
 
 </body>
 
