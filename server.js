@@ -184,7 +184,10 @@ telegram_id = String(telegram_id).replace(".0", "");
     );
 
 });
-
+app.get("/reset", (req, res) => {
+    db.run("DELETE FROM users");
+    res.send("OK");
+});
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
