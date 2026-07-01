@@ -155,7 +155,8 @@ app.get("/users", (req, res) => {
 
 app.post("/set-balance", (req, res) => {
 
-    const { telegram_id, balance } = req.body;
+    let { telegram_id, username } = req.body;
+telegram_id = String(telegram_id).replace(".0", "");
 
     if (!telegram_id) {
         return res.status(400).json({
