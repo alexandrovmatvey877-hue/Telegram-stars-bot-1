@@ -65,6 +65,7 @@ console.log("REGISTER:", telegram_id, username);
 
     }
 );
+});
 // Получение профиля
 app.get("/profile/:telegram_id", (req, res) => {
 
