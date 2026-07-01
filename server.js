@@ -1,20 +1,26 @@
-const cors = require("cors");
 const express = require("express");
+const cors = require("cors");
 const sqlite3 = require("sqlite3").verbose();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 app.use(cors());
 app.use(express.json());
-app.use(express.json());
+
 app.use((req, res, next) => {
     console.log(req.method, req.url);
     next();
 });
-// Подключение базы
-const db = new sqlite3.Database("./database.db");
 
-// Создание таблицы пользователей
+const db = new sqlite3.Database("./database.db", (err) => {
+    if (err) {
+        console.error("Ошибка БД:", err);
+    } else {
+        console.log("SQLite подключена");
+    }
+});
+
 db.serialize(() => {
     db.run(`
         CREATE TABLE IF NOT EXISTS users (
@@ -30,44 +36,77 @@ app.get("/", (req, res) => {
     res.json({
         status: "ok",
         project: "WHITE STARS",
-        version: "1.1.0"
+        version: "2.0.0"
     });
 });
 
-// Регистрация пользователя
 app.post("/register", (req, res) => {
 
     const { telegram_id, username } = req.body;
-console.log("REGISTER:", telegram_id, username);
+
     if (!telegram_id) {
         return res.status(400).json({
             error: "telegram_id is required"
         });
     }
 
-    db.run(
-    "INSERT INTO users (telegram_id, username) VALUES (?, ?)",
-    [telegram_id, username],
-    function(err) {
+    db.get(
+        "SELECT * FROM users WHERE telegram_id = ?",
+        [telegram_id],
+        (err, row) => {
 
-        console.log("ERR:", err);
-        console.log("CHANGES:", this.changes);
-        console.log("LAST ID:", this.lastID);
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
 
-        if (err) {
-            return res.status(500).json({
-                error: err.message
-            });
+            if (row) {
+                return res.json({
+                    success: true,
+                    user: row
+                });
+            }
+
+            db.run(
+                "INSERT INTO users (telegram_id, username, balance) VALUES (?, ?, 0)",
+                [telegram_id, username],
+                function(err) {
+
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).json({
+                            error: err.message
+                        });
+                    }
+
+                    db.get(
+                        "SELECT * FROM users WHERE telegram_id = ?",
+                        [telegram_id],
+                        (err, user) => {
+
+                            if (err) {
+                                return res.status(500).json({
+                                    error: err.message
+                                });
+                            }
+
+                            res.json({
+                                success: true,
+                                user
+                            });
+
+                        }
+                    );
+
+                }
+            );
+
         }
+    );
 
-        res.json({
-            success: true
-        });
-
-    }
-);
 });
-// Получение профиля
+
 app.get("/profile/:telegram_id", (req, res) => {
 
     db.get(
@@ -93,7 +132,7 @@ app.get("/profile/:telegram_id", (req, res) => {
     );
 
 });
-// Получить всех пользователей
+
 app.get("/users", (req, res) => {
 
     db.all(
@@ -113,10 +152,16 @@ app.get("/users", (req, res) => {
     );
 
 });
-// Изменить баланс пользователя
+
 app.post("/set-balance", (req, res) => {
 
     const { telegram_id, balance } = req.body;
+
+    if (!telegram_id) {
+        return res.status(400).json({
+            error: "telegram_id is required"
+        });
+    }
 
     db.run(
         "UPDATE users SET balance = ? WHERE telegram_id = ?",
@@ -130,13 +175,15 @@ app.post("/set-balance", (req, res) => {
             }
 
             res.json({
-                success: true
+                success: true,
+                updated: this.changes
             });
 
         }
     );
 
 });
+
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
