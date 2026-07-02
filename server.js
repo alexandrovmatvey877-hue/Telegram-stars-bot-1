@@ -61,7 +61,7 @@ app.get("/", (req, res) => {
         version: "3.0.0"
     });
 });
-
+app.post("/register", (req, res) => {
 let {
     telegram_id,
     username,
