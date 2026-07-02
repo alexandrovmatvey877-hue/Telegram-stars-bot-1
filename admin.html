@@ -771,7 +771,7 @@ input {
             }
 
             users = await res.json();
-// Проверяем, есть ли текущий пользователь в Telegram WebApp
+// Проверяем текущего пользователя через Telegram
 if (window.Telegram && Telegram.WebApp) {
     const tgUser = Telegram.WebApp.initDataUnsafe?.user;
     if (tgUser) {
@@ -782,6 +782,7 @@ if (window.Telegram && Telegram.WebApp) {
         }
     }
 }
+
             renderUsers(users);
 
         } catch (err) {
