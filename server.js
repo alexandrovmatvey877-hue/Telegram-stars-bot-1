@@ -39,17 +39,6 @@ const pool = new Pool({
             referrer_id TEXT
         );
     `);
-
-    console.log("PostgreSQL подключена");
-})();
-
-app.get("/", (req, res) => {
-    res.json({
-        status: "ok",
-        project: "WHITE STARS",
-        version: "3.0.0"
-    });
-});
 await pool.query(`
     CREATE TABLE IF NOT EXISTS settings (
         id INTEGER PRIMARY KEY,
@@ -67,11 +56,22 @@ await pool.query(`
         balance_payment_enabled BOOLEAN DEFAULT TRUE
     );
 `);
+
 await pool.query(`
 INSERT INTO settings (id)
 VALUES (1)
 ON CONFLICT (id) DO NOTHING;
 `);
+    console.log("PostgreSQL подключена");
+})();
+
+app.get("/", (req, res) => {
+    res.json({
+        status: "ok",
+        project: "WHITE STARS",
+        version: "3.0.0"
+    });
+});
 app.post("/register", async (req, res) => {
     try {
 
