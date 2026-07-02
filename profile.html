@@ -272,7 +272,56 @@
             .profile-card {
                 padding: 20px;
             }
+#balanceInput {
+    width: 100%;
+    min-width: 100%;
+}
+
+.btn {
+    flex: 1;
+    min-width: 80px;
+}
         }
+/* ===== КНОПКИ ИЗМЕНЕНИЯ БАЛАНСА ===== */
+.btn {
+    height: 46px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+}
+
+.btn:active {
+    transform: scale(.97);
+}
+
+#balanceInput {
+    height: 46px;
+    padding: 0 16px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: .2s;
+}
+
+#balanceInput:focus {
+    border-color: #111;
+    box-shadow: 0 0 0 3px rgba(17, 17, 17, .1);
+}
+
+#balanceMessage {
+    min-height: 24px;
+    font-weight: 500;
+}
     </style>
 </head>
 <body>
@@ -467,6 +516,86 @@
 
     // ============ ЗАГРУЗКА ПРИ СТАРТЕ ============
     document.addEventListener('DOMContentLoaded', loadProfile);
+// ============ ИЗМЕНЕНИЕ БАЛАНСА ============
+async function changeBalance(action) {
+    const input = document.getElementById('balanceInput');
+    const message = document.getElementById('balanceMessage');
+    const amount = parseFloat(input.value);
+
+    if (isNaN(amount) || amount <= 0) {
+        message.style.color = '#e53935';
+        message.textContent = '❌ Введите корректную сумму (больше 0)';
+        return;
+    }
+
+    const userId = getUserId();
+    if (!userId) {
+        message.style.color = '#e53935';
+        message.textContent = '❌ ID пользователя не найден';
+        return;
+    }
+
+    // Определяем тип операции
+    let operation = action;
+    let displayAmount = amount;
+
+    if (action === 'subtract') {
+        operation = 'subtract';
+        displayAmount = -amount;
+    } else if (action === 'set') {
+        operation = 'set';
+    } else {
+        operation = 'add';
+    }
+
+    message.style.color = '#888';
+    message.textContent = '⏳ Сохранение...';
+
+    try {
+        const res = await fetch('https://white-stars-api.onrender.com/admin/balance', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-admin-key': 'white-stars-super-admin'
+            },
+            body: JSON.stringify({
+                telegram_id: String(userId),
+                action: operation,
+                amount: amount
+            })
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `HTTP ${res.status}`);
+        }
+
+        const data = await res.json();
+
+        // Обновляем баланс на странице
+        const balanceElement = document.getElementById('profileBalance');
+        if (balanceElement) {
+            balanceElement.textContent = `${data.new_balance || data.balance || 0} ₽`;
+        }
+
+        message.style.color = '#22c55e';
+        message.textContent = `✅ Баланс успешно обновлён! Новый баланс: ${data.new_balance || data.balance || 0} ₽`;
+        input.value = '';
+
+        // Обновляем страницу через 2 секунды
+        setTimeout(() => {
+            loadProfile();
+        }, 2000);
+
+    } catch (err) {
+        console.error(err);
+        message.style.color = '#e53935';
+        message.textContent = `❌ Ошибка: ${err.message || 'Не удалось изменить баланс'}`;
+    }
+}
+
+// ============ ДОБАВЛЯЕМ В ГЛОБАЛЬНЫЙ ДОСТУП ============
+window.changeBalance = changeBalance;
 </script>
 
 </body>
