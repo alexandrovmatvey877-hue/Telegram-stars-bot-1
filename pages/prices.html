@@ -156,6 +156,27 @@ cursor:pointer;
 
 <body>
 
+</script>
+async function loadPrices() {
+    try {
+
+        const res = await fetch("https://white-stars-api.onrender.com/settings");
+        const settings = await res.json();
+
+        document.getElementById("stars50").textContent = settings.stars50 + " ₽";
+        document.getElementById("stars100").textContent = settings.stars100 + " ₽";
+        document.getElementById("stars250").textContent = settings.stars250 + " ₽";
+        document.getElementById("stars500").textContent = settings.stars500 + " ₽";
+        document.getElementById("stars1000").textContent = settings.stars1000 + " ₽";
+
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+loadPrices();
+</script>
+
 <div class="container">
 
 <a class="back" href="../index.html">
@@ -297,26 +318,7 @@ cursor:pointer;
 </button>
 
 </div>
-</script>
-async function loadPrices() {
-    try {
-
-        const res = await fetch("https://white-stars-api.onrender.com/settings");
-        const settings = await res.json();
-
-        document.getElementById("stars50").textContent = settings.stars50 + " ₽";
-        document.getElementById("stars100").textContent = settings.stars100 + " ₽";
-        document.getElementById("stars250").textContent = settings.stars250 + " ₽";
-        document.getElementById("stars500").textContent = settings.stars500 + " ₽";
-        document.getElementById("stars1000").textContent = settings.stars1000 + " ₽";
-
-    } catch (e) {
-        console.error(e);
-    }
-}
-
-loadPrices();
-</script>
+        
 </body>
 
 </html>
