@@ -50,7 +50,28 @@ app.get("/", (req, res) => {
         version: "3.0.0"
     });
 });
+await pool.query(`
+    CREATE TABLE IF NOT EXISTS settings (
+        id INTEGER PRIMARY KEY,
+        stars50 DOUBLE PRECISION DEFAULT 95,
+        stars75 DOUBLE PRECISION DEFAULT 140,
+        stars100 DOUBLE PRECISION DEFAULT 185,
+        stars150 DOUBLE PRECISION DEFAULT 275,
+        stars250 DOUBLE PRECISION DEFAULT 455,
+        stars500 DOUBLE PRECISION DEFAULT 910,
+        stars1000 DOUBLE PRECISION DEFAULT 1820,
 
+        sales_enabled BOOLEAN DEFAULT TRUE,
+        deposits_enabled BOOLEAN DEFAULT TRUE,
+        referrals_enabled BOOLEAN DEFAULT TRUE,
+        balance_payment_enabled BOOLEAN DEFAULT TRUE
+    );
+`);
+await pool.query(`
+INSERT INTO settings (id)
+VALUES (1)
+ON CONFLICT (id) DO NOTHING;
+`);
 app.post("/register", async (req, res) => {
     try {
 
