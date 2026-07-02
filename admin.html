@@ -1031,6 +1031,36 @@ function toggleSwitch(el) {
 }
 
 // ============ ДОБАВЛЯЕМ В ГЛОБАЛЬНЫЙ ДОСТУП ============
+async function savePrices() {
+
+    const body = {
+        stars50: Number(document.getElementById("stars50").value),
+        stars75: Number(document.getElementById("stars75").value),
+        stars100: Number(document.getElementById("stars100").value),
+        stars150: Number(document.getElementById("stars150").value),
+        stars250: Number(document.getElementById("stars250").value),
+        stars500: Number(document.getElementById("stars500").value),
+        stars1000: Number(document.getElementById("stars1000").value)
+    };
+
+    const res = await fetch(
+        "https://white-stars-api.onrender.com/settings",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-admin-key": "white-stars-super-admin"
+            },
+            body: JSON.stringify(body)
+        }
+    );
+
+    if (res.ok) {
+        alert("✅ Цены сохранены");
+    } else {
+        alert("❌ Ошибка сохранения");
+    }
+}
 window.switchSettings = switchSettings;
 window.selectTariff = selectTariff;
 window.toggleService = toggleService;
