@@ -252,7 +252,7 @@ app.get("/users", (req, res) => {
 
 });
 
- (req, res) => {
+app.post("set-balance",(req, res) => {
 
     if (req.headers["x-admin-key"] !== ADMIN_KEY) {
         return res.status(403).json({
