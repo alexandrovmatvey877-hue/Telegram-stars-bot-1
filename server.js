@@ -43,38 +43,6 @@ const pool = new Pool({
     console.log("PostgreSQL подключена");
 })();
 
-db.serialize(() => {
-
-    db.run(`
-        CREATE TABLE IF NOT EXISTS users (
-
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-
-            telegram_id TEXT UNIQUE,
-
-            username TEXT,
-
-            first_name TEXT,
-            last_name TEXT,
-
-            avatar TEXT,
-
-            balance REAL DEFAULT 0,
-
-            registered_at INTEGER,
-            last_seen INTEGER,
-
-            total_spent REAL DEFAULT 0,
-            total_deposit REAL DEFAULT 0,
-
-            referral_count INTEGER DEFAULT 0,
-            referrer_id TEXT
-
-        )
-    `);
-
-});
-
 app.get("/", (req, res) => {
     res.json({
         status: "ok",
