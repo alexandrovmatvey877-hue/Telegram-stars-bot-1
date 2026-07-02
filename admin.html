@@ -431,6 +431,216 @@ input {
 .back-home:active {
     transform: scale(.97);
 }
+/* ===== НАСТРОЙКИ ===== */
+.settings-tab {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 12px;
+    background: #f0f0f0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.settings-tab:hover {
+    background: #e0e0e0;
+}
+
+.settings-tab.active {
+    background: #111;
+    color: #fff;
+}
+
+.tariff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.tariff-card {
+    background: #f8f9fb;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: .2s;
+    cursor: pointer;
+}
+
+.tariff-card:hover {
+    border-color: #111;
+    transform: translateY(-2px);
+}
+
+.tariff-card.active {
+    border-color: #22c55e;
+    background: #f0faf4;
+}
+
+.tariff-name {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.tariff-price {
+    font-size: 24px;
+    font-weight: 800;
+    color: #111;
+    margin: 8px 0;
+}
+
+.tariff-price span {
+    font-size: 14px;
+    color: #888;
+}
+
+.tariff-features {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.8;
+}
+
+.service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #ececec;
+}
+
+.service-item:last-child {
+    border-bottom: none;
+}
+
+.service-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.service-icon {
+    font-size: 28px;
+}
+
+.service-name {
+    font-weight: 600;
+}
+
+.service-desc {
+    font-size: 13px;
+    color: #888;
+}
+
+.service-status {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.service-status.on {
+    background: #d4edda;
+    color: #155724;
+}
+
+.service-status.off {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.toggle-btn {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 20px;
+    background: #111;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.toggle-btn:hover {
+    transform: scale(1.05);
+}
+
+.toggle-btn.off {
+    background: #e53935;
+}
+
+.notif-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #ececec;
+}
+
+.notif-item:last-child {
+    border-bottom: none;
+}
+
+.notif-label {
+    font-weight: 600;
+}
+
+.notif-desc {
+    font-size: 13px;
+    color: #888;
+}
+
+.switch {
+    position: relative;
+    width: 50px;
+    height: 28px;
+    background: #ccc;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: .3s;
+    flex-shrink: 0;
+}
+
+.switch.on {
+    background: #22c55e;
+}
+
+.switch-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background: #fff;
+    border-radius: 50%;
+    transition: .3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+}
+
+.switch.on .switch-knob {
+    left: 25px;
+}
+
+@media(max-width:600px) {
+    .tariff-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .service-item {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    .service-left {
+        width: 100%;
+    }
+    .notif-item {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+}
 </style>
 </head>
 <body>
@@ -488,12 +698,27 @@ input {
     </div>
 
     <!-- СТРАНИЦА: НАСТРОЙКИ -->
-    <div id="settings" class="page">
-        <div class="card">
-            <h2>⚙️ Настройки</h2>
-            <p style="color:#888;margin-top:10px;">Здесь будут настройки</p>
+<div id="settings" class="page">
+    <div class="card">
+        <h2 style="margin-bottom:20px;">⚙️ Настройки</h2>
+
+        <!-- Вкладки настроек -->
+        <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;">
+            <button class="settings-tab active" data-tab="tariffs" onclick="switchSettings('tariffs')">
+                📊 Тарифы
+            </button>
+            <button class="settings-tab" data-tab="services" onclick="switchSettings('services')">
+                🛠️ Услуги
+            </button>
+            <button class="settings-tab" data-tab="notifications" onclick="switchSettings('notifications')">
+                🔔 Оповещения
+            </button>
         </div>
+
+        <!-- Контент настроек -->
+        <div id="settingsContent"></div>
     </div>
+</div>
 
 </div>
 
@@ -546,6 +771,17 @@ input {
             }
 
             users = await res.json();
+// Проверяем, есть ли текущий пользователь в Telegram WebApp
+if (window.Telegram && Telegram.WebApp) {
+    const tgUser = Telegram.WebApp.initDataUnsafe?.user;
+    if (tgUser) {
+        const currentUser = users.find(u => String(u.telegram_id) === String(tgUser.id));
+        if (currentUser) {
+            currentUser.online = true;
+            currentUser.last_seen = Date.now();
+        }
+    }
+}
             renderUsers(users);
 
         } catch (err) {
@@ -687,6 +923,8 @@ input {
 
         // Автообновление каждые 30 секунд
         setInterval(loadUsers, 30000);
+// Загружаем настройки (вкладка "Тарифы" по умолчанию)
+renderSettings('tariffs');
     });
 
     // ============ ГЛОБАЛЬНЫЙ ДОСТУП (для onclick в HTML) ============
@@ -694,6 +932,205 @@ input {
     window.loadUsers = loadUsers;
     window.openProfile = openProfile;
     window.filterUsers = filterUsers;
+// ============ НАСТРОЙКИ ============
+function switchSettings(tab) {
+    // Обновляем кнопки
+    document.querySelectorAll('.settings-tab').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`.settings-tab[data-tab="${tab}"]`)?.classList.add('active');
+
+    // Рендерим контент
+    renderSettings(tab);
+}
+
+function renderSettings(tab) {
+    const container = document.getElementById('settingsContent');
+    if (!container) return;
+
+    const content = {
+        tariffs: `
+            <h3>📊 Тарифы</h3>
+            <p style="color:#888;margin:8px 0 16px;">Выберите тариф для пользователей</p>
+            <div class="tariff-grid">
+                <div class="tariff-card active" onclick="selectTariff(this, 'free')">
+                    <div class="tariff-name">🆓 Бесплатный</div>
+                    <div class="tariff-price">0 ₽ <span>/мес</span></div>
+                    <div class="tariff-features">
+                        ✅ Базовые функции<br>
+                        ✅ 5 операций/день<br>
+                        ❌ Приоритетная поддержка
+                    </div>
+                </div>
+                <div class="tariff-card" onclick="selectTariff(this, 'pro')">
+                    <div class="tariff-name">⭐ Pro</div>
+                    <div class="tariff-price">499 ₽ <span>/мес</span></div>
+                    <div class="tariff-features">
+                        ✅ Все функции<br>
+                        ✅ Безлимит операций<br>
+                        ✅ Приоритетная поддержка<br>
+                        ✅ Скидка 10%
+                    </div>
+                </div>
+                <div class="tariff-card" onclick="selectTariff(this, 'business')">
+                    <div class="tariff-name">🏢 Business</div>
+                    <div class="tariff-price">1499 ₽ <span>/мес</span></div>
+                    <div class="tariff-features">
+                        ✅ Всё из Pro<br>
+                        ✅ API доступ<br>
+                        ✅ Персональный менеджер<br>
+                        ✅ Скидка 25%
+                    </div>
+                </div>
+            </div>
+            <button class="btn" style="margin-top:20px;" onclick="alert('Тариф сохранён!')">
+                💾 Сохранить тариф
+            </button>
+        `,
+        services: `
+            <h3>🛠️ Услуги</h3>
+            <p style="color:#888;margin:8px 0 16px;">Включите или отключите услуги</p>
+            <div class="service-item">
+                <div class="service-left">
+                    <div class="service-icon">💳</div>
+                    <div>
+                        <div class="service-name">Платежи</div>
+                        <div class="service-desc">Приём и обработка платежей</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="service-status on">Вкл</span>
+                    <button class="toggle-btn" onclick="toggleService(this, 'payments')">Выключить</button>
+                </div>
+            </div>
+            <div class="service-item">
+                <div class="service-left">
+                    <div class="service-icon">📤</div>
+                    <div>
+                        <div class="service-name">Вывод средств</div>
+                        <div class="service-desc">Вывод на карты и криптовалюты</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="service-status on">Вкл</span>
+                    <button class="toggle-btn" onclick="toggleService(this, 'withdraw')">Выключить</button>
+                </div>
+            </div>
+            <div class="service-item">
+                <div class="service-left">
+                    <div class="service-icon">🎁</div>
+                    <div>
+                        <div class="service-name">Бонусная система</div>
+                        <div class="service-desc">Начисление бонусов за операции</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="service-status off">Выкл</span>
+                    <button class="toggle-btn off" onclick="toggleService(this, 'bonus')">Включить</button>
+                </div>
+            </div>
+            <div class="service-item">
+                <div class="service-left">
+                    <div class="service-icon">👥</div>
+                    <div>
+                        <div class="service-name">Реферальная система</div>
+                        <div class="service-desc">Приглашай друзей и получай бонусы</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="service-status on">Вкл</span>
+                    <button class="toggle-btn" onclick="toggleService(this, 'referral')">Выключить</button>
+                </div>
+            </div>
+        `,
+        notifications: `
+            <h3>🔔 Оповещения</h3>
+            <p style="color:#888;margin:8px 0 16px;">Настройте уведомления для пользователей</p>
+            <div class="notif-item">
+                <div>
+                    <div class="notif-label">📧 Email уведомления</div>
+                    <div class="notif-desc">Письма о балансе и операциях</div>
+                </div>
+                <div class="switch on" onclick="toggleSwitch(this)">
+                    <div class="switch-knob"></div>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div>
+                    <div class="notif-label">📱 Telegram уведомления</div>
+                    <div class="notif-desc">Уведомления в Telegram боте</div>
+                </div>
+                <div class="switch on" onclick="toggleSwitch(this)">
+                    <div class="switch-knob"></div>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div>
+                    <div class="notif-label">🔔 Push-уведомления</div>
+                    <div class="notif-desc">Всплывающие уведомления в приложении</div>
+                </div>
+                <div class="switch" onclick="toggleSwitch(this)">
+                    <div class="switch-knob"></div>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div>
+                    <div class="notif-label">💬 Маркетинговые рассылки</div>
+                    <div class="notif-desc">Акции, новости и спецпредложения</div>
+                </div>
+                <div class="switch" onclick="toggleSwitch(this)">
+                    <div class="switch-knob"></div>
+                </div>
+            </div>
+            <button class="btn" style="margin-top:20px;" onclick="alert('Настройки оповещений сохранены!')">
+                💾 Сохранить настройки
+            </button>
+        `
+    };
+
+    container.innerHTML = content[tab] || '<p>Раздел в разработке</p>';
+}
+
+// ============ ФУНКЦИИ ДЛЯ НАСТРОЕК ============
+function selectTariff(el, tariff) {
+    document.querySelectorAll('.tariff-card').forEach(card => {
+        card.classList.remove('active');
+    });
+    el.classList.add('active');
+    console.log(`Выбран тариф: ${tariff}`);
+}
+
+function toggleService(btn, service) {
+    const parent = btn.closest('.service-item');
+    const status = parent.querySelector('.service-status');
+    const isOn = status.textContent.trim() === 'Вкл';
+
+    if (isOn) {
+        status.textContent = 'Выкл';
+        status.className = 'service-status off';
+        btn.textContent = 'Включить';
+        btn.classList.add('off');
+    } else {
+        status.textContent = 'Вкл';
+        status.className = 'service-status on';
+        btn.textContent = 'Выключить';
+        btn.classList.remove('off');
+    }
+    console.log(`Услуга ${service}: ${isOn ? 'выключена' : 'включена'}`);
+}
+
+function toggleSwitch(el) {
+    el.classList.toggle('on');
+    const isOn = el.classList.contains('on');
+    console.log(`Переключатель: ${isOn ? 'ВКЛ' : 'ВЫКЛ'}`);
+}
+
+// ============ ДОБАВЛЯЕМ В ГЛОБАЛЬНЫЙ ДОСТУП ============
+window.switchSettings = switchSettings;
+window.selectTariff = selectTariff;
+window.toggleService = toggleService;
+window.toggleSwitch = toggleSwitch;
+window.renderSettings = renderSettings;
 </script>
 </body>
 </html>
