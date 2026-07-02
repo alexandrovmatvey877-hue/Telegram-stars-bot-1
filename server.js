@@ -143,32 +143,31 @@ app.post("/register", async (req, res) => {
     }
 });
 
-app.get("/profile/:telegram_id", (req, res) => {
+app.get("/profile/:telegram_id", async (req, res) => {
+    try {
 
-    const telegram_id = String(req.params.telegram_id).replace(".0", "");
+        const telegram_id = String(req.params.telegram_id).replace(".0", "");
 
-    db.get(
-        "SELECT * FROM users WHERE telegram_id = ?",
-        [telegram_id],
-        (err, row) => {
+        const result = await pool.query(
+            "SELECT * FROM users WHERE telegram_id = $1",
+            [telegram_id]
+        );
 
-            if (err) {
-                return res.status(500).json({
-                    error: err.message
-                });
-            }
-
-            if (!row) {
-                return res.status(404).json({
-                    error: "User not found"
-                });
-            }
-
-            res.json(row);
-
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                error: "User not found"
+            });
         }
-    );
 
+        res.json(result.rows[0]);
+
+    } catch (err) {
+
+        res.status(500).json({
+            error: err.message
+        });
+
+    }
 });
 
 app.get("/users", (req, res) => {
