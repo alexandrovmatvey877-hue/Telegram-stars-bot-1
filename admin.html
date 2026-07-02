@@ -1,1074 +1,168 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>White Stars Admin</title>
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
 
-html {
-    scroll-behavior: smooth;
-}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-body {
-    background: #f3f5f8;
-    color: #111;
-    min-height: 100vh;
-    padding: 20px;
-}
+<title>White Stars Admin</title>
 
-.container {
-    max-width: 1200px;
-    margin: auto;
-}
+<link rel="stylesheet" href="css/admin.css">
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-button {
-    font: inherit;
-    outline: none;
-    cursor: pointer;
-}
-
-input {
-    font: inherit;
-    outline: none;
-}
-
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #cfcfcf;
-    border-radius: 20px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* ===== ШАПКА ===== */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    gap: 20px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.logo-icon {
-    width: 58px;
-    height: 58px;
-    border-radius: 18px;
-    background: #111;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    font-weight: 700;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .15);
-}
-
-.logo-text h1 {
-    font-size: 30px;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.logo-text p {
-    margin-top: 6px;
-    font-size: 14px;
-    color: #777;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.back {
-    height: 46px;
-    padding: 0 20px;
-    border: none;
-    border-radius: 14px;
-    background: #111;
-    color: #fff;
-    font-weight: 700;
-    transition: .2s;
-}
-
-.back:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
-}
-
-.back:active {
-    transform: scale(.97);
-}
-
-.admin-chip {
-    padding: 10px 16px;
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, .06);
-    font-size: 14px;
-    font-weight: 600;
-}
-
-/* ===== ВКЛАДКИ ===== */
-.tabs {
-    display: flex;
-    gap: 12px;
-    margin: 25px 0;
-}
-
-.tab {
-    flex: 1;
-    height: 52px;
-    border: none;
-    border-radius: 16px;
-    background: #ffffff;
-    font-size: 16px;
-    font-weight: 700;
-    transition: .2s;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, .06);
-}
-
-.tab:hover {
-    background: #ececec;
-}
-
-.tab.active {
-    background: #111;
-    color: white;
-}
-
-.tab.active:hover {
-    background: #111;
-}
-
-/* ===== СТРАНИЦЫ ===== */
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-}
-
-/* ===== КАРТОЧКИ ===== */
-.card {
-    background: #fff;
-    border-radius: 22px;
-    padding: 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
-    margin-bottom: 24px;
-}
-
-/* ===== ПОИСК ===== */
-.search-box {
-    display: flex;
-    gap: 14px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-}
-
-.search {
-    flex: 1;
-    min-width: 260px;
-    height: 50px;
-    padding: 0 18px;
-    border: none;
-    border-radius: 16px;
-    background: #fff;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .06);
-    font-size: 15px;
-}
-
-.search:focus {
-    box-shadow: 0 0 0 3px rgba(17, 17, 17, .1);
-}
-
-.select {
-    height: 50px;
-    padding: 0 16px;
-    border: none;
-    border-radius: 16px;
-    background: #fff;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .06);
-    font-size: 15px;
-    cursor: pointer;
-}
-
-.btn {
-    height: 46px;
-    padding: 0 20px;
-    border: none;
-    border-radius: 14px;
-    background: #111;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 700;
-    transition: .2s;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, .15);
-}
-
-.btn:active {
-    transform: scale(.97);
-}
-
-/* ===== КАРТОЧКИ ПОЛЬЗОВАТЕЛЕЙ ===== */
-.user-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    border-radius: 18px;
-    padding: 18px 20px;
-    margin-bottom: 14px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .06);
-    cursor: pointer;
-    transition: .2s;
-}
-
-.user-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, .10);
-}
-
-.user-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.user-right {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-}
-
-.avatar {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #ddd;
-}
-
-.user-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.status {
-    font-size: 12px;
-}
-
-.online {
-    color: #22c55e;
-    font-weight: 700;
-}
-
-.offline {
-    color: #999;
-}
-
-.username {
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.userid {
-    font-size: 13px;
-    color: #888;
-}
-
-.balance {
-    font-size: 16px;
-    font-weight: 700;
-    color: #111;
-}
-
-.arrow {
-    font-size: 26px;
-    color: #bbb;
-    font-weight: 700;
-    transition: .2s;
-}
-
-.user-card:hover .arrow {
-    transform: translateX(5px);
-    color: #111;
-}
-
-/* ===== АДАПТИВ ===== */
-@media(max-width:900px) {
-    body {
-        padding: 15px;
-    }
-    .container {
-        max-width: 100%;
-    }
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 18px;
-    }
-    .header-right {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
-    .logo-text h1 {
-        font-size: 26px;
-    }
-    .logo-text p {
-        font-size: 13px;
-    }
-    .search-box {
-        flex-direction: column;
-    }
-    .search,
-    .select {
-        width: 100%;
-        min-width: 100%;
-    }
-}
-
-@media(max-width:700px) {
-    .tabs {
-        flex-direction: column;
-    }
-    .tab {
-        width: 100%;
-        font-size: 15px;
-        height: 50px;
-    }
-}
-
-@media(max-width:600px) {
-    .logo {
-        gap: 10px;
-    }
-    .logo-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
-        border-radius: 16px;
-    }
-    .logo-text h1 {
-        font-size: 22px;
-    }
-    .logo-text p {
-        font-size: 12px;
-    }
-    .card {
-        padding: 18px;
-        border-radius: 18px;
-    }
-    .btn {
-        width: 100%;
-        height: 48px;
-    }
-    .back {
-        width: 100%;
-    }
-    .tabs {
-        gap: 10px;
-    }
-    .tab {
-        height: 48px;
-        font-size: 14px;
-    }
-}
-/* ===== КНОПКА НАЗАД ===== */
-.back-home {
-    height: 46px;
-    padding: 0 20px;
-    border: none;
-    border-radius: 14px;
-    background: #111;
-    color: #fff;
-    font-weight: 700;
-    transition: .2s;
-    cursor: pointer;
-}
-
-.back-home:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
-}
-
-.back-home:active {
-    transform: scale(.97);
-}
-/* ===== НАСТРОЙКИ ===== */
-.settings-tab {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 12px;
-    background: #f0f0f0;
-    font-size: 14px;
-    font-weight: 600;
-    color: #666;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.settings-tab:hover {
-    background: #e0e0e0;
-}
-
-.settings-tab.active {
-    background: #111;
-    color: #fff;
-}
-
-.tariff-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-top: 16px;
-}
-
-.tariff-card {
-    background: #f8f9fb;
-    border-radius: 16px;
-    padding: 20px;
-    text-align: center;
-    border: 2px solid transparent;
-    transition: .2s;
-    cursor: pointer;
-}
-
-.tariff-card:hover {
-    border-color: #111;
-    transform: translateY(-2px);
-}
-
-.tariff-card.active {
-    border-color: #22c55e;
-    background: #f0faf4;
-}
-
-.tariff-name {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.tariff-price {
-    font-size: 24px;
-    font-weight: 800;
-    color: #111;
-    margin: 8px 0;
-}
-
-.tariff-price span {
-    font-size: 14px;
-    color: #888;
-}
-
-.tariff-features {
-    font-size: 13px;
-    color: #666;
-    line-height: 1.8;
-}
-
-.service-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    border-bottom: 1px solid #ececec;
-}
-
-.service-item:last-child {
-    border-bottom: none;
-}
-
-.service-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.service-icon {
-    font-size: 28px;
-}
-
-.service-name {
-    font-weight: 600;
-}
-
-.service-desc {
-    font-size: 13px;
-    color: #888;
-}
-
-.service-status {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.service-status.on {
-    background: #d4edda;
-    color: #155724;
-}
-
-.service-status.off {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-.toggle-btn {
-    padding: 6px 16px;
-    border: none;
-    border-radius: 20px;
-    background: #111;
-    color: #fff;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.toggle-btn:hover {
-    transform: scale(1.05);
-}
-
-.toggle-btn.off {
-    background: #e53935;
-}
-
-.notif-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    border-bottom: 1px solid #ececec;
-}
-
-.notif-item:last-child {
-    border-bottom: none;
-}
-
-.notif-label {
-    font-weight: 600;
-}
-
-.notif-desc {
-    font-size: 13px;
-    color: #888;
-}
-
-.switch {
-    position: relative;
-    width: 50px;
-    height: 28px;
-    background: #ccc;
-    border-radius: 14px;
-    cursor: pointer;
-    transition: .3s;
-    flex-shrink: 0;
-}
-
-.switch.on {
-    background: #22c55e;
-}
-
-.switch-knob {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 22px;
-    height: 22px;
-    background: #fff;
-    border-radius: 50%;
-    transition: .3s;
-    box-shadow: 0 2px 4px rgba(0,0,0,.2);
-}
-
-.switch.on .switch-knob {
-    left: 25px;
-}
-
-@media(max-width:600px) {
-    .tariff-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    .service-item {
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-start;
-    }
-    .service-left {
-        width: 100%;
-    }
-    .notif-item {
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-start;
-    }
-}
-</style>
 </head>
+
 <body>
 
 <div class="container">
 
-    <!-- ШАПКА -->
-    <div class="header">
+    <header class="header">
+
         <div class="logo">
-            <div class="logo-icon">⭐</div>
+
+            <div class="logo-icon">
+                ⭐
+            </div>
+
             <div class="logo-text">
                 <h1>White Stars</h1>
                 <p>Админ-панель</p>
             </div>
+
         </div>
-        <div class="header-right">
-    <div class="admin-chip">👑 Администратор</div>
-    <button class="back" onclick="window.location.href='index.html'">← Назад</button>
-    <button class="back" onclick="location.reload()">⟳ Обновить</button>
-</div>
-    </div>
 
-    <!-- ВКЛАДКИ -->
-    <div class="tabs">
-        <button class="tab active" onclick="openTab('users')">👤 Пользователи</button>
-        <button class="tab" onclick="openTab('operations')">💳 Операции</button>
-        <button class="tab" onclick="openTab('settings')">⚙️ Настройки</button>
-    </div>
+        <div class="header-buttons">
 
-    <!-- СТРАНИЦА: ПОЛЬЗОВАТЕЛИ -->
-    <div id="users" class="page active">
-        <div class="card">
-            <h2 style="margin-bottom:20px;">👤 Пользователи</h2>
-            <div class="search-box">
-                <input id="search" class="search" type="text" placeholder="Поиск по ID, имени или username">
-                <select id="sort" class="select">
-                    <option value="last_seen">Последний вход</option>
-                    <option value="balance">Баланс</option>
-                    <option value="registered">Дата регистрации</option>
-                    <option value="spent">Сумма покупок</option>
-                    <option value="deposit">Сумма пополнений</option>
+            <button id="homeBtn">
+                ← Назад
+            </button>
+
+            <button id="reloadBtn">
+                ⟳ Обновить
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <nav class="tabs">
+
+        <button class="tab active" data-page="users">
+            👤 Пользователи
+        </button>
+
+        <button class="tab" data-page="operations">
+            💳 Операции
+        </button>
+
+        <button class="tab" data-page="settings">
+            ⚙️ Настройки
+        </button>
+
+    </nav>
+
+
+    <main>
+
+        <section id="usersPage" class="page active">
+
+            <div class="search-panel">
+
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Поиск пользователя">
+
+                <select id="sortSelect">
+
+                    <option value="last_seen">
+                        Последний вход
+                    </option>
+
+                    <option value="balance">
+                        Баланс
+                    </option>
+
+                    <option value="registered">
+                        Регистрация
+                    </option>
+
+                    <option value="deposit">
+                        Пополнения
+                    </option>
+
+                    <option value="spent">
+                        Покупки
+                    </option>
+
                 </select>
-                <button class="btn" onclick="loadUsers()">Обновить</button>
+
+                <button id="refreshUsers">
+                    Обновить
+                </button>
+
             </div>
+
             <div id="usersList"></div>
-        </div>
-    </div>
 
-    <!-- СТРАНИЦА: ОПЕРАЦИИ -->
-    <div id="operations" class="page">
-        <div class="card">
-            <h2>💳 Операции</h2>
-            <p style="color:#888;margin-top:10px;">Здесь будет история операций</p>
-        </div>
-    </div>
+        </section>
 
-    <!-- СТРАНИЦА: НАСТРОЙКИ -->
-<div id="settings" class="page">
-    <div class="card">
-        <h2 style="margin-bottom:20px;">⚙️ Настройки</h2>
 
-        <!-- Вкладки настроек -->
-        <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;">
-            <button class="settings-tab active" data-tab="tariffs" onclick="switchSettings('tariffs')">
-                📊 Тарифы
-            </button>
-            <button class="settings-tab" data-tab="services" onclick="switchSettings('services')">
-                🛠️ Услуги
-            </button>
-            <button class="settings-tab" data-tab="notifications" onclick="switchSettings('notifications')">
-                🔔 Оповещения
-            </button>
-        </div>
 
-        <!-- Контент настроек -->
-        <div id="settingsContent"></div>
-    </div>
-</div>
+        <section id="operationsPage" class="page">
 
-</div>
+            <div id="operationsList"></div>
 
-<!-- ДАЛЬШЕ БУДЕТ CSS (ЧАСТЬ 2) -->
-<!-- ДАЛЬШЕ БУДЕТ JS (ЧАСТЬ 3) -->
-<script>
-let settings = {};
-    // ============ ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ============
-    let users = [];
-    let currentTab = 'users';
+        </section>
 
-    // ============ ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК ============
-    function openTab(tabName) {
-        // Скрываем все страницы
-        document.querySelectorAll('.page').forEach(page => {
-            page.classList.remove('active');
-        });
 
-        // Убираем активный класс со всех кнопок
-        document.querySelectorAll('.tab').forEach(btn => {
-            btn.classList.remove('active');
-        });
 
-        // Показываем нужную страницу
-        const targetPage = document.getElementById(tabName);
-        if (targetPage) {
-            targetPage.classList.add('active');
-        }
+        <section id="settingsPage" class="page">
 
-        // Активируем соответствующую кнопку
-        const buttons = document.querySelectorAll('.tab');
-        const tabIndex = { users: 0, operations: 1, settings: 2 };
-        if (tabIndex[tabName] !== undefined && buttons[tabIndex[tabName]]) {
-            buttons[tabIndex[tabName]].classList.add('active');
-        }
+            <div class="settings-tabs">
 
-        currentTab = tabName;
-    }
+                <button
+                    class="settings-tab active"
+                    data-settings="prices">
 
-    // ============ ЗАГРУЗКА ПОЛЬЗОВАТЕЛЕЙ ============
-    async function loadUsers() {
-        try {
-            const res = await fetch('https://white-stars-api.onrender.com/users', {
-                headers: {
-                    'x-admin-key': 'white-stars-super-admin'
-                }
-            });
+                    📊 Тарифы
 
-            if (!res.ok) {
-                throw new Error(`HTTP ${res.status}`);
-            }
+                </button>
 
-            users = await res.json();
-// Проверяем текущего пользователя через Telegram
-if (window.Telegram && Telegram.WebApp) {
-    const tgUser = Telegram.WebApp.initDataUnsafe?.user;
-    if (tgUser) {
-        const currentUser = users.find(u => String(u.telegram_id) === String(tgUser.id));
-        if (currentUser) {
-            currentUser.online = true;
-            currentUser.last_seen = Date.now();
-        }
-    }
-}
+                <button
+                    class="settings-tab"
+                    data-settings="services">
 
-            renderUsers(users);
+                    🛠 Услуги
 
-        } catch (err) {
-            alert('❌ Ошибка загрузки пользователей');
-            console.error(err);
-        }
-    }
+                </button>
 
-    // ============ ОТРИСОВКА ПОЛЬЗОВАТЕЛЕЙ ============
-    function renderUsers(list) {
-        const box = document.getElementById('usersList');
+                <button
+                    class="settings-tab"
+                    data-settings="notifications">
 
-        if (!box) return;
+                    🔔 Уведомления
 
-        if (!list || list.length === 0) {
-            box.innerHTML = `
-                <div class="card" style="text-align:center;padding:60px;">
-                    <div style="font-size:60px;">👤</div>
-                    <h2 style="margin-top:15px;">Пользователи не найдены</h2>
-                    <p style="margin-top:10px;color:#888;">Попробуйте изменить параметры поиска</p>
-                </div>
-            `;
-            return;
-        }
+                </button>
 
-        box.innerHTML = '';
+            </div>
 
-        list.forEach(user => {
-            const avatar = user.avatar || 'images/avatar.png';
-            const username = user.username || 'Без имени';
-            const balance = user.balance !== undefined ? user.balance : 0;
+            <div id="settingsContent"></div>
 
-            // Форматируем дату последнего входа
-            let lastSeenText = 'неизвестно';
-            if (user.last_seen) {
-                const date = new Date(user.last_seen);
-                if (!isNaN(date)) {
-                    lastSeenText = date.toLocaleString('ru-RU', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                }
-            }
+        </section>
 
-            const onlineStatus = user.online 
-                ? '<span class="online">🟢 В сети</span>' 
-                : `<span class="offline">Был в сети ${lastSeenText}</span>`;
-
-            box.innerHTML += `
-                <div class="user-card" onclick="openProfile('${user.telegram_id}')">
-                    <div class="user-left">
-                        <img class="avatar" src="${avatar}" alt="avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2246%22 height=%2246%22%3E%3Crect width=%2246%22 height=%2246%22 fill=%22%23ddd%22/%3E%3Ctext x=%2223%22 y=%2230%22 text-anchor=%22middle%22 font-size=%2220%22 fill=%22%23999%22%3E👤%3C/text%3E%3C/svg%3E'">
-                        <div class="user-info">
-                            <div class="status">${onlineStatus}</div>
-                            <div class="username">${username}</div>
-                            <div class="userid">ID: ${user.telegram_id}</div>
-                        </div>
-                    </div>
-                    <div class="user-right">
-                        <div class="balance">${balance} ₽</div>
-                        <div class="arrow">›</div>
-                    </div>
-                </div>
-            `;
-        });
-    }
-
-    // ============ ФИЛЬТРАЦИЯ И СОРТИРОВКА ============
-    function filterUsers() {
-        const searchInput = document.getElementById('search');
-        const sortSelect = document.getElementById('sort');
-
-        if (!searchInput || !sortSelect) return;
-
-        const text = searchInput.value.toLowerCase().trim();
-        const sort = sortSelect.value;
-
-        let filtered = [...users];
-
-        // Фильтр
-        if (text) {
-            filtered = filtered.filter(user => {
-                const id = String(user.telegram_id || '');
-                const username = (user.username || '').toLowerCase();
-                const firstName = (user.first_name || '').toLowerCase();
-                return id.includes(text) || username.includes(text) || firstName.includes(text);
-            });
-        }
-
-        // Сортировка
-        switch (sort) {
-            case 'balance':
-                filtered.sort((a, b) => (b.balance || 0) - (a.balance || 0));
-                break;
-            case 'last_seen':
-                filtered.sort((a, b) => (b.last_seen || 0) - (a.last_seen || 0));
-                break;
-            case 'registered':
-                filtered.sort((a, b) => (b.registered_at || 0) - (a.registered_at || 0));
-                break;
-            case 'deposit':
-                filtered.sort((a, b) => (b.total_deposit || 0) - (a.total_deposit || 0));
-                break;
-            case 'spent':
-                filtered.sort((a, b) => (b.total_spent || 0) - (a.total_spent || 0));
-                break;
-            default:
-                break;
-        }
-
-        renderUsers(filtered);
-    }
-
-    // ============ ОТКРЫТИЕ ПРОФИЛЯ ============
-    function openProfile(id) {
-        if (id) {
-            window.location.href = `profile.html?id=${id}`;
-        }
-    }
-
-    // ============ НАВЕШИВАЕМ СОБЫТИЯ ============
-    document.addEventListener('DOMContentLoaded', function() {
-        const search = document.getElementById('search');
-        const sort = document.getElementById('sort');
-
-        if (search) {
-            search.addEventListener('input', filterUsers);
-        }
-
-        if (sort) {
-            sort.addEventListener('change', filterUsers);
-        }
-
-        // Загружаем пользователей
-        loadUsers();
-
-        // Автообновление каждые 30 секунд
-        setInterval(loadUsers, 30000);
-// Загружаем настройки (вкладка "Тарифы" по умолчанию)
-renderSettings('tariffs');
-    });
-
-    // ============ ГЛОБАЛЬНЫЙ ДОСТУП (для onclick в HTML) ============
-    window.openTab = openTab;
-    window.loadUsers = loadUsers;
-    window.openProfile = openProfile;
-    window.filterUsers = filterUsers;
-// ============ НАСТРОЙКИ ============
-function switchSettings(tab) {
-    // Обновляем кнопки
-    document.querySelectorAll('.settings-tab').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    document.querySelector(`.settings-tab[data-tab="${tab}"]`)?.classList.add('active');
-
-    // Рендерим контент
-    renderSettings(tab);
-}
-
-async function renderSettings(tab) {
-
-    if (Object.keys(settings).length === 0) {
-        const res = await fetch("https://white-stars-api.onrender.com/settings");
-        settings = await res.json();
-    }
-
-    const container = document.getElementById("settingsContent");
-    if (!container) return;
-
-    const content = {<h3>📊 Цены на звезды</h3>
-
-<div style="display:grid;gap:15px;margin-top:20px;">
-
-<label>50 ⭐
-<input id="stars50" class="search" type="number" value="${settings.stars50}">
-</label>
-
-<label>75 ⭐
-<input id="stars75" class="search" type="number" value="${settings.stars75}">
-</label>
-
-<label>100 ⭐
-<input id="stars100" class="search" type="number" value="${settings.stars100}">
-</label>
-
-<label>150 ⭐
-<input id="stars150" class="search" type="number" value="${settings.stars150}">
-</label>
-
-<label>250 ⭐
-<input id="stars250" class="search" type="number" value="${settings.stars250}">
-</label>
-
-<label>500 ⭐
-<input id="stars500" class="search" type="number" value="${settings.stars500}">
-</label>
-
-<label>1000 ⭐
-<input id="stars1000" class="search" type="number" value="${settings.stars1000}">
-</label>
-
-<button class="btn" onclick="saveSettings()">
-💾 Сохранить
-</button>
+    </main>
 
 </div>
 
-    // дальше оставь весь существующий код функции               
 
-// ============ ФУНКЦИИ ДЛЯ НАСТРОЕК ============
-function selectTariff(el, tariff) {
-    document.querySelectorAll('.tariff-card').forEach(card => {
-        card.classList.remove('active');
-    });
-    el.classList.add('active');
-    console.log(`Выбран тариф: ${tariff}`);
-}
+<script src="js/api.js"></script>
+<script src="js/users.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/operations.js"></script>
+<script src="js/admin.js"></script>
 
-function toggleService(btn, service) {
-    const parent = btn.closest('.service-item');
-    const status = parent.querySelector('.service-status');
-    const isOn = status.textContent.trim() === 'Вкл';
-
-    if (isOn) {
-        status.textContent = 'Выкл';
-        status.className = 'service-status off';
-        btn.textContent = 'Включить';
-        btn.classList.add('off');
-    } else {
-        status.textContent = 'Вкл';
-        status.className = 'service-status on';
-        btn.textContent = 'Выключить';
-        btn.classList.remove('off');
-    }
-    console.log(`Услуга ${service}: ${isOn ? 'выключена' : 'включена'}`);
-}
-
-function toggleSwitch(el) {
-    el.classList.toggle('on');
-    const isOn = el.classList.contains('on');
-    console.log(`Переключатель: ${isOn ? 'ВКЛ' : 'ВЫКЛ'}`);
-}
-
-// ============ ДОБАВЛЯЕМ В ГЛОБАЛЬНЫЙ ДОСТУП ============
-async function savePrices() {
-
-    const body = {
-        ...settings,
-
-        stars50: Number(document.getElementById("stars50").value),
-        stars75: Number(document.getElementById("stars75").value),
-        stars100: Number(document.getElementById("stars100").value),
-        stars150: Number(document.getElementById("stars150").value),
-        stars250: Number(document.getElementById("stars250").value),
-        stars500: Number(document.getElementById("stars500").value),
-        stars1000: Number(document.getElementById("stars1000").value)
-    };
-
-    const res = await fetch(
-        "https://white-stars-api.onrender.com/settings",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "x-admin-key": "white-stars-super-admin"
-            },
-            body: JSON.stringify(body)
-        }
-    );
-
-    if (res.ok) {
-        settings = body;
-        alert("✅ Цены сохранены");
-    } else {
-        alert("❌ Ошибка сохранения");
-    }
-}
-window.switchSettings = switchSettings;
-window.selectTariff = selectTariff;
-window.toggleService = toggleService;
-window.toggleSwitch = toggleSwitch;
-window.renderSettings = renderSettings;
-</script>
 </body>
 </html>
