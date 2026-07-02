@@ -322,7 +322,75 @@ app.get("/reset", async (req, res) => {
     }
 
 });
+app.get("/settings", async (req, res) => {
+    try {
+        const result = await pool.query(
+            "SELECT * FROM settings WHERE id = 1"
+        );
 
+        res.json(result.rows[0]);
+
+    } catch (err) {
+
+        res.status(500).json({
+            error: err.message
+        });
+
+    }
+});
+
+app.post("/settings", async (req, res) => {
+    try {
+
+        if (req.headers["x-admin-key"] !== ADMIN_KEY) {
+            return res.status(403).json({
+                error: "Access denied"
+            });
+        }
+
+        const data = req.body;
+
+        await pool.query(
+            `UPDATE settings SET
+                stars50 = $1,
+                stars75 = $2,
+                stars100 = $3,
+                stars150 = $4,
+                stars250 = $5,
+                stars500 = $6,
+                stars1000 = $7,
+                sales_enabled = $8,
+                deposits_enabled = $9,
+                referrals_enabled = $10,
+                balance_payment_enabled = $11
+             WHERE id = 1`,
+            [
+                data.stars50,
+                data.stars75,
+                data.stars100,
+                data.stars150,
+                data.stars250,
+                data.stars500,
+                data.stars1000,
+                data.sales_enabled,
+                data.deposits_enabled,
+                data.referrals_enabled,
+                data.balance_payment_enabled
+            ]
+        );
+
+        res.json({
+            success: true
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            error: err.message
+        });
+
+    }
+});
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
