@@ -62,9 +62,13 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post("/register", (req, res) => {
-
-    let { telegram_id, username } = req.body;
+let {
+    telegram_id,
+    username,
+    first_name,
+    last_name,
+    avatar
+} = req.body;
 
     telegram_id = String(telegram_id).replace(".0", "");
 
