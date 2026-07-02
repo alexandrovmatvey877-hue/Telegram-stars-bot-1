@@ -170,137 +170,134 @@ app.get("/profile/:telegram_id", async (req, res) => {
     }
 });
 
-app.get("/users", (req, res) => {
+app.get("/users", async (req, res) => {
 
-    if (req.headers["x-admin-key"] !== ADMIN_KEY) {
-        return res.status(403).json({
-            error: "Access denied"
-        });
-    }
+    try {
 
-    db.all(
-        "SELECT * FROM users ORDER BY id DESC",
-        [],
-        (err, rows) => {
-
-            if (err) {
-                return res.status(500).json({
-                    error: err.message
-                });
-            }
-
-            res.json(rows);
-
-        }
-    );
-
-});
-
-app.post("/admin/balance", (req, res) => {
-
-    if (req.headers["x-admin-key"] !== ADMIN_KEY) {
-        return res.status(403).json({
-            error: "Access denied"
-        });
-    }
-
-    let {
-        telegram_id,
-        action,
-        amount
-    } = req.body;
-
-    telegram_id = String(telegram_id).replace(".0", "");
-    amount = Number(amount);
-
-    if (!telegram_id || isNaN(amount)) {
-        return res.status(400).json({
-            error: "Invalid data"
-        });
-    }
-
-    db.get(
-        "SELECT * FROM users WHERE telegram_id = ?",
-        [telegram_id],
-        (err, user) => {
-
-            if (err)
-                return res.status(500).json({
-                    error: err.message
-                });
-
-            if (!user)
-                return res.status(404).json({
-                    error: "User not found"
-                });
-
-            let balance = Number(user.balance);
-
-            switch (action) {
-
-                case "add":
-                    balance += amount;
-                    break;
-
-                case "subtract":
-                    balance -= amount;
-                    break;
-
-                case "set":
-                    balance = amount;
-                    break;
-
-                default:
-                    return res.status(400).json({
-                        error: "Unknown action"
-                    });
-
-            }
-
-            db.run(
-                "UPDATE users SET balance = ? WHERE telegram_id = ?",
-                [balance, telegram_id],
-                function(err) {
-
-                    if (err)
-                        return res.status(500).json({
-                            error: err.message
-                        });
-
-                    res.json({
-                        success: true,
-                        balance
-                    });
-
-                }
-            );
-
-        }
-
-    );
-
-});
-
-app.get("/reset", (req, res) => {
-
-    db.run(
-        "DELETE FROM users",
-        [],
-        function(err) {
-
-            if (err) {
-                return res.status(500).json({
-                    error: err.message
-                });
-            }
-
-            res.json({
-                success: true,
-                deleted: this.changes
+        if (req.headers["x-admin-key"] !== ADMIN_KEY) {
+            return res.status(403).json({
+                error: "Access denied"
             });
+        }
+
+        const result = await pool.query(
+            "SELECT * FROM users ORDER BY id DESC"
+        );
+
+        res.json(result.rows);
+
+    } catch (err) {
+
+        res.status(500).json({
+            error: err.message
+        });
+
+    }
+
+});
+
+app.post("/admin/balance", async (req, res) => {
+
+    try {
+
+        if (req.headers["x-admin-key"] !== ADMIN_KEY) {
+            return res.status(403).json({
+                error: "Access denied"
+            });
+        }
+
+        let {
+            telegram_id,
+            action,
+            amount
+        } = req.body;
+
+        telegram_id = String(telegram_id).replace(".0", "");
+        amount = Number(amount);
+
+        if (!telegram_id || isNaN(amount)) {
+            return res.status(400).json({
+                error: "Invalid data"
+            });
+        }
+
+        const result = await pool.query(
+            "SELECT balance FROM users WHERE telegram_id = $1",
+            [telegram_id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                error: "User not found"
+            });
+        }
+
+        let balance = Number(result.rows[0].balance);
+
+        switch (action) {
+
+            case "add":
+                balance += amount;
+                break;
+
+            case "subtract":
+                balance -= amount;
+                break;
+
+            case "set":
+                balance = amount;
+                break;
+
+            default:
+                return res.status(400).json({
+                    error: "Unknown action"
+                });
 
         }
-    );
+
+        await pool.query(
+            "UPDATE users SET balance = $1 WHERE telegram_id = $2",
+            [
+                balance,
+                telegram_id
+            ]
+        );
+
+        res.json({
+            success: true,
+            balance: balance
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            error: err.message
+        });
+
+    }
+
+});
+
+app.get("/reset", async (req, res) => {
+
+    try {
+
+        const result = await pool.query(
+            "DELETE FROM users"
+        );
+
+        res.json({
+            success: true,
+            deleted: result.rowCount
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            error: err.message
+        });
+
+    }
 
 });
 
