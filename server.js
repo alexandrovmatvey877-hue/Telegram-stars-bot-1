@@ -90,15 +90,79 @@ let {
             }
 
             if (row) {
-                return res.json({
-                    success: true,
-                    user: row
+
+    db.run(
+        `UPDATE users
+         SET username = ?,
+             first_name = ?,
+             last_name = ?,
+             avatar = ?,
+             last_seen = ?
+         WHERE telegram_id = ?`,
+        [
+            username,
+            first_name,
+            last_name,
+            avatar,
+            Date.now(),
+            telegram_id
+        ],
+        function(err) {
+
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
                 });
             }
 
+            db.get(
+                "SELECT * FROM users WHERE telegram_id = ?",
+                [telegram_id],
+                (err, user) => {
+
+                    if (err) {
+                        return res.status(500).json({
+                            error: err.message
+                        });
+                    }
+
+                    res.json({
+                        success: true,
+                        user
+                    });
+
+                }
+            );
+
+        }
+    );
+
+    return;
+}
+
             db.run(
-                "INSERT INTO users (telegram_id, username, balance) VALUES (?, ?, 0)",
-                [telegram_id, username],
+                `INSERT INTO users
+(
+telegram_id,
+username,
+first_name,
+last_name,
+avatar,
+balance,
+registered_at,
+last_seen
+)
+VALUES
+(?, ?, ?, ?, ?, 0, ?, ?)`
+                [
+telegram_id,
+username,
+first_name,
+last_name,
+avatar,
+Date.now(),
+Date.now()
+],
                 function(err) {
 
                     if (err) {
@@ -188,7 +252,7 @@ app.get("/users", (req, res) => {
 
 });
 
-app.post("/set-balance", (req, res) => {
+, (req, res) => {
 
     if (req.headers["x-admin-key"] !== ADMIN_KEY) {
         return res.status(403).json({
