@@ -50,141 +50,97 @@ app.get("/", (req, res) => {
         version: "3.0.0"
     });
 });
-app.post("/register", (req, res) => {
-let {
-    telegram_id,
-    username,
-    first_name,
-    last_name,
-    avatar
-} = req.body;
+app.post("/register", async (req, res) => {
+    try {
 
-    telegram_id = String(telegram_id).replace(".0", "");
-
-    if (!telegram_id) {
-        return res.status(400).json({
-            error: "telegram_id is required"
-        });
-    }
-
-    db.get(
-        "SELECT * FROM users WHERE telegram_id = ?",
-        [telegram_id],
-        (err, row) => {
-
-            if (err) {
-                return res.status(500).json({
-                    error: err.message
-                });
-            }
-
-            if (row) {
-
-    db.run(
-        `UPDATE users
-         SET username = ?,
-             first_name = ?,
-             last_name = ?,
-             avatar = ?,
-             last_seen = ?
-         WHERE telegram_id = ?`,
-        [
+        let {
+            telegram_id,
             username,
             first_name,
             last_name,
-            avatar,
-            Date.now(),
-            telegram_id
-        ],
-        function(err) {
+            avatar
+        } = req.body;
 
-            if (err) {
-                return res.status(500).json({
-                    error: err.message
-                });
-            }
+        telegram_id = String(telegram_id).replace(".0", "");
 
-            db.get(
-                "SELECT * FROM users WHERE telegram_id = ?",
-                [telegram_id],
-                (err, user) => {
-
-                    if (err) {
-                        return res.status(500).json({
-                            error: err.message
-                        });
-                    }
-
-                    res.json({
-                        success: true,
-                        user
-                    });
-
-                }
-            );
-
+        if (!telegram_id) {
+            return res.status(400).json({
+                error: "telegram_id is required"
+            });
         }
-    );
 
-    return;
-           }
+        const existing = await pool.query(
+            "SELECT * FROM users WHERE telegram_id = $1",
+            [telegram_id]
+        );
 
-            db.run(
-                `INSERT INTO users
-(
-telegram_id,
-username,
-first_name,
-last_name,
-avatar,
-balance,
-registered_at,
-last_seen
-)
-VALUES
-(?, ?, ?, ?, ?, 0, ?, ?)`,
+        if (existing.rows.length > 0) {
+
+            const result = await pool.query(
+                `UPDATE users
+                 SET username=$1,
+                     first_name=$2,
+                     last_name=$3,
+                     avatar=$4,
+                     last_seen=$5
+                 WHERE telegram_id=$6
+                 RETURNING *`,
                 [
-telegram_id,
-username,
-first_name,
-last_name,
-avatar,
-Date.now(),
-Date.now()
-],
-                function(err) {
-
-                    if (err) {
-                        return res.status(500).json({
-                            error: err.message
-                        });
-                    }
-
-                    db.get(
-                        "SELECT * FROM users WHERE telegram_id = ?",
-                        [telegram_id],
-                        (err, user) => {
-
-                            if (err) {
-                                return res.status(500).json({
-                                    error: err.message
-                                });
-                            }
-
-                            res.json({
-                                success: true,
-                                user
-                            });
-
-                        }
-                    );
-
-                }
+                    username,
+                    first_name,
+                    last_name,
+                    avatar,
+                    Date.now(),
+                    telegram_id
+                ]
             );
 
+            return res.json({
+                success: true,
+                user: result.rows[0]
+            });
         }
-    );
 
+        const result = await pool.query(
+            `INSERT INTO users
+            (
+                telegram_id,
+                username,
+                first_name,
+                last_name,
+                avatar,
+                balance,
+                registered_at,
+                last_seen
+            )
+            VALUES
+            ($1,$2,$3,$4,$5,0,$6,$7)
+            RETURNING *`,
+            [
+                telegram_id,
+                username,
+                first_name,
+                last_name,
+                avatar,
+                Date.now(),
+                Date.now()
+            ]
+        );
+
+        res.json({
+            success: true,
+            user: result.rows[0]
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            error: err.message
+        });
+
+    }
 });
 
 app.get("/profile/:telegram_id", (req, res) => {
