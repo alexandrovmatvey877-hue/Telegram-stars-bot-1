@@ -252,7 +252,7 @@ app.get("/users", (req, res) => {
 
 });
 
-app.post("set-balance",(req, res) => {
+app.post("/admin/balance", (req, res) => {
 
     if (req.headers["x-admin-key"] !== ADMIN_KEY) {
         return res.status(403).json({
@@ -260,41 +260,79 @@ app.post("set-balance",(req, res) => {
         });
     }
 
-    let { telegram_id, balance } = req.body;
+    let {
+        telegram_id,
+        action,
+        amount
+    } = req.body;
 
     telegram_id = String(telegram_id).replace(".0", "");
+    amount = Number(amount);
 
-    if (!telegram_id) {
+    if (!telegram_id || isNaN(amount)) {
         return res.status(400).json({
-            error: "telegram_id is required"
+            error: "Invalid data"
         });
     }
 
-    balance = Number(balance);
+    db.get(
+        "SELECT * FROM users WHERE telegram_id = ?",
+        [telegram_id],
+        (err, user) => {
 
-    if (isNaN(balance)) {
-        return res.status(400).json({
-            error: "Invalid balance"
-        });
-    }
-
-    db.run(
-        "UPDATE users SET balance = ? WHERE telegram_id = ?",
-        [balance, telegram_id],
-        function(err) {
-
-            if (err) {
+            if (err)
                 return res.status(500).json({
                     error: err.message
                 });
+
+            if (!user)
+                return res.status(404).json({
+                    error: "User not found"
+                });
+
+            let balance = Number(user.balance);
+
+            switch (action) {
+
+                case "add":
+                    balance += amount;
+                    break;
+
+                case "subtract":
+                    balance -= amount;
+                    break;
+
+                case "set":
+                    balance = amount;
+                    break;
+
+                default:
+                    return res.status(400).json({
+                        error: "Unknown action"
+                    });
+
             }
 
-            res.json({
-                success: true,
-                updated: this.changes
-            });
+            db.run(
+                "UPDATE users SET balance = ? WHERE telegram_id = ?",
+                [balance, telegram_id],
+                function(err) {
+
+                    if (err)
+                        return res.status(500).json({
+                            error: err.message
+                        });
+
+                    res.json({
+                        success: true,
+                        balance
+                    });
+
+                }
+            );
 
         }
+
     );
 
 });
