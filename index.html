@@ -301,9 +301,12 @@ if (user) {if (String(user.id) === ADMIN_ID) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            telegram_id: String(user.id),
-            username: user.username || user.first_name
-        })
+    telegram_id: String(user.id),
+    username: user.username || "",
+    first_name: user.first_name || "",
+    last_name: user.last_name || "",
+    avatar: user.photo_url || ""
+})
     })
     .then(res => res.json())
     .then(data => {
