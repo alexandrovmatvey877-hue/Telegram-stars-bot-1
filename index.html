@@ -178,7 +178,9 @@ margin:35px 0;
 </div>
 
 <div class="balance">
-<div id="ton-connect" style="margin-bottom:18px;"></div>
+
+<div id="ton-connect"></div>
+
 <div class="balance-title">
 Баланс аккаунта
 </div>
@@ -363,10 +365,32 @@ function openSupport(){
 }
 
 </script>
-<script src="https://unpkg.com/@tonconnect/sdk@3.0.6/dist/tonconnect-sdk.min.js"></script>
 <script>
-const tonConnect = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: "https://white-stars-api.onrender.com/tonconnect-manifest.json"
+const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: "https://white-stars-api.onrender.com/tonconnect-manifest.json",
+    buttonRootId: "ton-connect"
+});
+
+tonConnectUI.onStatusChange(wallet => {
+    if (!wallet) {
+        console.log("Кошелек отключен");
+        return;
+    }
+
+    console.log("Кошелек подключен:");
+    console.log(wallet);
+
+    fetch("https://white-stars-api.onrender.com/save-wallet", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "x-admin-key": "white-stars-super-admin"
+        },
+        body: JSON.stringify({
+            telegram_id: String(user.id),
+            wallet: wallet.account.address
+        })
+    }).catch(console.error);
 });
 </script>
 </body>
