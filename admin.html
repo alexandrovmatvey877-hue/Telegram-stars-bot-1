@@ -1034,6 +1034,8 @@ function toggleSwitch(el) {
 async function savePrices() {
 
     const body = {
+        ...settings,
+
         stars50: Number(document.getElementById("stars50").value),
         stars75: Number(document.getElementById("stars75").value),
         stars100: Number(document.getElementById("stars100").value),
@@ -1056,6 +1058,7 @@ async function savePrices() {
     );
 
     if (res.ok) {
+        settings = body;
         alert("✅ Цены сохранены");
     } else {
         alert("❌ Ошибка сохранения");
