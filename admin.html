@@ -626,3 +626,309 @@ ${user.balance} ₽
 </div>
 
 </div>
+.user-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#fff;
+border-radius:18px;
+padding:18px 20px;
+margin-bottom:14px;
+box-shadow:0 8px 20px rgba(0,0,0,.06);
+cursor:pointer;
+transition:.2s;
+}
+
+.user-card:hover{
+transform:translateY(-2px);
+box-shadow:0 14px 30px rgba(0,0,0,.10);
+}
+
+.user-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.user-right{
+display:flex;
+align-items:center;
+gap:18px;
+}
+
+.status{
+font-size:12px;
+margin-bottom:4px;
+}
+
+.online{
+color:#22c55e;
+font-weight:700;
+}
+
+.offline{
+color:#999;
+}
+
+.userid{
+font-size:13px;
+color:#888;
+margin-top:2px;
+}
+
+.arrow{
+font-size:26px;
+color:#bbb;
+font-weight:700;
+transition:.2s;
+}
+
+.user-card:hover .arrow{
+transform:translateX(5px);
+color:#111;
+}
+<script>
+
+let users = [];
+
+async function loadUsers(){
+
+    try{
+
+        const res = await fetch(
+            "https://white-stars-api.onrender.com/users",
+            {
+                headers:{
+                    "x-admin-key":"white-stars-super-admin"
+                }
+            }
+        );
+
+        users = await res.json();
+
+        renderUsers(users);
+
+    }
+
+    catch(err){
+
+        alert("Ошибка загрузки пользователей");
+
+        console.error(err);
+
+    }
+
+}
+
+function renderUsers(list){
+
+    const box = document.getElementById("usersList");
+
+    box.innerHTML = "";
+
+    list.forEach(user=>{
+
+        box.innerHTML += `
+
+<div class="user-card" onclick="openProfile('${user.telegram_id}')">
+
+<div class="user-left">
+
+<img
+class="avatar"
+src="${user.avatar || 'images/avatar.png'}">
+
+<div class="user-info">
+
+<div class="status">
+
+${user.online
+? '<span class="online">🟢 В сети</span>'
+: `<span class="offline">Был в сети ${user.last_seen_text}</span>`}
+
+</div>
+
+<div class="username">
+${user.username}
+</div>
+
+<div class="userid">
+ID: ${user.telegram_id}
+</div>
+
+</div>
+
+</div>
+
+<div class="user-right">
+
+<div class="balance">
+${user.balance} ₽
+</div>
+
+<div class="arrow">›</div>
+
+</div>
+
+</div>
+
+`;
+
+    });
+
+}
+
+loadUsers();
+
+</script>
+<script>
+
+document.getElementById("search").addEventListener("input", filterUsers);
+document.getElementById("sort").addEventListener("change", filterUsers);
+
+function filterUsers(){
+
+    const text = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const sort = document
+        .getElementById("sort")
+        .value;
+
+    let list = [...users];
+
+    list = list.filter(user=>{
+
+        return (
+            String(user.telegram_id).includes(text) ||
+            (user.username || "").toLowerCase().includes(text) ||
+            (user.first_name || "").toLowerCase().includes(text)
+        );
+
+    });
+
+    switch(sort){
+
+        case "balance":
+            list.sort((a,b)=>b.balance-a.balance);
+            break;
+
+        case "last_seen":
+            list.sort((a,b)=>b.last_seen-a.last_seen);
+            break;
+
+        case "registered":
+            list.sort((a,b)=>b.registered_at-a.registered_at);
+            break;
+
+        case "deposit":
+            list.sort((a,b)=>b.total_deposit-a.total_deposit);
+            break;
+
+        case "spent":
+            list.sort((a,b)=>b.total_spent-a.total_spent);
+            break;
+
+    }
+
+    renderUsers(list);
+
+}
+
+</script>
+<script>
+
+function renderUsers(list){
+
+    const box = document.getElementById("usersList");
+
+    if(list.length===0){
+
+        box.innerHTML=`
+
+        <div class="card" style="text-align:center;padding:60px;">
+
+            <div style="font-size:60px;">👤</div>
+
+            <h2 style="margin-top:15px;">
+                Пользователи не найдены
+            </h2>
+
+            <p style="margin-top:10px;color:#888;">
+                Попробуйте изменить параметры поиска
+            </p>
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+
+    box.innerHTML="";
+
+    list.forEach(user=>{
+
+        box.innerHTML+=`
+
+<div class="user-card" onclick="openProfile('${user.telegram_id}')">
+
+<div class="user-left">
+
+<img
+class="avatar"
+src="${user.avatar || 'images/avatar.png'}">
+
+<div class="user-info">
+
+<div class="status">
+
+${user.online
+? '<span class="online">🟢 В сети</span>'
+: `<span class="offline">Был в сети ${user.last_seen_text}</span>`}
+
+</div>
+
+<div class="username">
+${user.username}
+</div>
+
+<div class="userid">
+ID: ${user.telegram_id}
+</div>
+
+</div>
+
+</div>
+
+<div class="user-right">
+
+<div class="balance">
+${user.balance} ₽
+</div>
+
+<div class="arrow">›</div>
+
+</div>
+
+</div>
+
+`;
+
+    });
+
+}
+
+function openProfile(id){
+
+    window.location.href=`profile.html?id=${id}`;
+
+}
+
+setInterval(loadUsers,30000);
+
+</script>
+
