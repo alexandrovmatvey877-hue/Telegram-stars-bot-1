@@ -24,20 +24,21 @@ const pool = new Pool({
 (async () => {
     await pool.query(`
         CREATE TABLE IF NOT EXISTS users (
-            id SERIAL PRIMARY KEY,
-            telegram_id TEXT UNIQUE,
-            username TEXT,
-            first_name TEXT,
-            last_name TEXT,
-            avatar TEXT,
-            balance DOUBLE PRECISION DEFAULT 0,
-            registered_at BIGINT,
-            last_seen BIGINT,
-            total_spent DOUBLE PRECISION DEFAULT 0,
-            total_deposit DOUBLE PRECISION DEFAULT 0,
-            referral_count INTEGER DEFAULT 0,
-            referrer_id TEXT
-        );
+    id SERIAL PRIMARY KEY,
+    telegram_id TEXT UNIQUE,
+    username TEXT,
+    first_name TEXT,
+    last_name TEXT,
+    avatar TEXT,
+    balance DOUBLE PRECISION DEFAULT 0,
+    stars INTEGER DEFAULT 0, -- 👈 ЭТО ДОБАВИТЬ
+    registered_at BIGINT,
+    last_seen BIGINT,
+    total_spent DOUBLE PRECISION DEFAULT 0,
+    total_deposit DOUBLE PRECISION DEFAULT 0,
+    referral_count INTEGER DEFAULT 0,
+    referrer_id TEXT
+);
     `);
 
     console.log("PostgreSQL подключена");
