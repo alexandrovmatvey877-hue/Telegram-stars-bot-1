@@ -949,17 +949,50 @@ function switchSettings(tab) {
 async function renderSettings(tab) {
 
     if (Object.keys(settings).length === 0) {
-
-        const res = await fetch(
-            "https://white-stars-api.onrender.com/settings"
-        );
-
+        const res = await fetch("https://white-stars-api.onrender.com/settings");
         settings = await res.json();
     }
 
     const container = document.getElementById("settingsContent");
-
     if (!container) return;
+
+    const content = {<h3>📊 Цены на звезды</h3>
+
+<div style="display:grid;gap:15px;margin-top:20px;">
+
+<label>50 ⭐
+<input id="stars50" class="search" type="number" value="${settings.stars50}">
+</label>
+
+<label>75 ⭐
+<input id="stars75" class="search" type="number" value="${settings.stars75}">
+</label>
+
+<label>100 ⭐
+<input id="stars100" class="search" type="number" value="${settings.stars100}">
+</label>
+
+<label>150 ⭐
+<input id="stars150" class="search" type="number" value="${settings.stars150}">
+</label>
+
+<label>250 ⭐
+<input id="stars250" class="search" type="number" value="${settings.stars250}">
+</label>
+
+<label>500 ⭐
+<input id="stars500" class="search" type="number" value="${settings.stars500}">
+</label>
+
+<label>1000 ⭐
+<input id="stars1000" class="search" type="number" value="${settings.stars1000}">
+</label>
+
+<button class="btn" onclick="saveSettings()">
+💾 Сохранить
+</button>
+
+</div>
 
     // дальше оставь весь существующий код функции               
 
