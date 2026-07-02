@@ -24,7 +24,7 @@
             margin: auto;
         }
 
-        /* ===== ШАПКА ===== */
+        /* ШАПКА */
         .header {
             display: flex;
             justify-content: space-between;
@@ -92,7 +92,7 @@
             transform: scale(.97);
         }
 
-        /* ===== КАРТОЧКА ПРОФИЛЯ ===== */
+        /* КАРТОЧКА ПРОФИЛЯ */
         .profile-card {
             background: #fff;
             border-radius: 22px;
@@ -142,10 +142,10 @@
             color: #999;
         }
 
-        /* ===== СТАТИСТИКА ===== */
+        /* СТАТИСТИКА */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
             margin-top: 20px;
         }
@@ -169,7 +169,7 @@
             margin-top: 4px;
         }
 
-        /* ===== ИНФО ===== */
+        /* ИНФО */
         .info-row {
             display: flex;
             justify-content: space-between;
@@ -191,23 +191,26 @@
             font-size: 14px;
         }
 
-        /* ===== ИЗМЕНЕНИЕ БАЛАНСА ===== */
+        /* ИЗМЕНЕНИЕ БАЛАНСА */
         .balance-edit {
             margin-top: 24px;
             padding: 20px;
             background: #f8f9fb;
             border-radius: 16px;
+            border: 2px solid #e0e0e0;
         }
 
         .balance-edit h4 {
             margin-bottom: 12px;
             font-size: 16px;
+            font-weight: 700;
         }
 
-        .balance-edit .row {
+        .balance-row {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         #balanceInput {
@@ -233,7 +236,7 @@
             border-radius: 12px;
             color: #fff;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: .2s;
         }
@@ -266,7 +269,7 @@
             min-height: 24px;
         }
 
-        /* ===== ЗАГРУЗКА ===== */
+        /* ЗАГРУЗКА */
         .loader {
             text-align: center;
             padding: 60px;
@@ -290,7 +293,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ===== ОШИБКА ===== */
+        /* ОШИБКА */
         .error {
             text-align: center;
             padding: 60px;
@@ -311,14 +314,17 @@
             margin-top: 8px;
         }
 
-        /* ===== АДАПТИВ ===== */
+        /* АДАПТИВ */
+        @media(max-width:700px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         @media(max-width:600px) {
             .profile-header {
                 flex-direction: column;
                 text-align: center;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
             }
             .logo-text h1 {
                 font-size: 22px;
@@ -342,7 +348,7 @@
             .profile-card {
                 padding: 20px;
             }
-            .balance-edit .row {
+            .balance-row {
                 flex-direction: column;
             }
             #balanceInput {
@@ -350,8 +356,7 @@
                 min-width: 100%;
             }
             .btn {
-                flex: 1;
-                min-width: 80px;
+                width: 100%;
             }
         }
     </style>
@@ -404,7 +409,6 @@
             return;
         }
 
-        // Показываем загрузку
         container.innerHTML = `
             <div class="profile-card loader">
                 <div class="loader-spinner"></div>
@@ -482,7 +486,6 @@
             statusHtml = `<span class="offline">Был в сети ${lastSeenText}</span>`;
         }
 
-        // Форматирование дат
         const regDate = user.registered_at ? new Date(user.registered_at).toLocaleDateString('ru-RU', {
             day: '2-digit',
             month: '2-digit',
@@ -524,7 +527,7 @@
                 <!-- ИЗМЕНЕНИЕ БАЛАНСА -->
                 <div class="balance-edit">
                     <h4>✏️ Изменить баланс</h4>
-                    <div class="row">
+                    <div class="balance-row">
                         <input type="number" id="balanceInput" step="0.01" placeholder="Введите сумму">
                         <button class="btn btn-green" onclick="changeBalance('add')">➕ Добавить</button>
                         <button class="btn btn-red" onclick="changeBalance('subtract')">➖ Списать</button>
@@ -601,7 +604,6 @@
 
             const data = await res.json();
 
-            // Обновляем баланс на странице
             const balanceElement = document.getElementById('profileBalance');
             if (balanceElement) {
                 balanceElement.textContent = `${data.new_balance || data.balance || 0} ₽`;
@@ -611,7 +613,6 @@
             message.textContent = `✅ Баланс успешно обновлён! Новый баланс: ${data.new_balance || data.balance || 0} ₽`;
             input.value = '';
 
-            // Обновляем страницу через 2 секунды
             setTimeout(() => {
                 loadProfile();
             }, 2000);
