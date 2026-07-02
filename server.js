@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const sqlite3 = require("sqlite3").verbose();
+const { Pool } = require("pg");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,13 +14,34 @@ app.use((req, res, next) => {
     next();
 });
 
-const db = new sqlite3.Database("./database.db", (err) => {
-    if (err) {
-        console.error("Ошибка SQLite:", err);
-    } else {
-        console.log("SQLite подключена");
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
     }
 });
+
+(async () => {
+    await pool.query(`
+        CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            telegram_id TEXT UNIQUE,
+            username TEXT,
+            first_name TEXT,
+            last_name TEXT,
+            avatar TEXT,
+            balance DOUBLE PRECISION DEFAULT 0,
+            registered_at BIGINT,
+            last_seen BIGINT,
+            total_spent DOUBLE PRECISION DEFAULT 0,
+            total_deposit DOUBLE PRECISION DEFAULT 0,
+            referral_count INTEGER DEFAULT 0,
+            referrer_id TEXT
+        );
+    `);
+
+    console.log("PostgreSQL подключена");
+})();
 
 db.serialize(() => {
 
