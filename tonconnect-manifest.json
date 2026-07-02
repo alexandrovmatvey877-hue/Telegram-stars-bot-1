@@ -2,4 +2,7 @@
   "url": "https://white-stars-api.onrender.com",
   "name": "WHITE STARS",
   "iconUrl": "https://white-stars-api.onrender.com/image/logo.png"
+tonConnect.onStatusChange(wallet => {
+    console.log(wallet);
+});
 }
