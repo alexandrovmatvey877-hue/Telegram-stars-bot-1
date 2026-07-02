@@ -142,37 +142,32 @@
             color: #999;
         }
 
-<!-- Статистика -->
-<div class="stats-grid">
-    <div class="stat-item">
-        <div class="stat-value" id="profileBalance">${user.balance || 0} ₽</div>
-        <div class="stat-label">💰 Баланс</div>
-    </div>
-    <div class="stat-item">
-        <div class="stat-value">${user.total_spent || 0} ₽</div>
-        <div class="stat-label">💳 Потрачено</div>
-    </div>
-    <div class="stat-item">
-        <div class="stat-value">${user.total_deposit || 0} ₽</div>
-        <div class="stat-label">📥 Пополнено</div>
-    </div>
-    <div class="stat-item">
-        <div class="stat-value">${user.referral_count || 0}</div>
-        <div class="stat-label">👥 Рефералов</div>
-    </div>
-</div>
+        /* ===== СТАТИСТИКА ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
 
-<!-- ИЗМЕНЕНИЕ БАЛАНСА -->
-<div style="margin-top:24px;padding:20px;background:#f8f9fb;border-radius:16px;">
-    <h4 style="margin-bottom:12px;">✏️ Изменить баланс</h4>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <input type="number" id="balanceInput" step="0.01" placeholder="Сумма" style="flex:1;min-width:150px;height:46px;padding:0 16px;border:1px solid #ddd;border-radius:12px;font-size:15px;">
-        <button class="btn" onclick="changeBalance('add')" style="background:#22c55e;">➕ Добавить</button>
-        <button class="btn" onclick="changeBalance('subtract')" style="background:#e53935;">➖ Списать</button>
-        <button class="btn" onclick="changeBalance('set')" style="background:#111;">📌 Установить</button>
-    </div>
-    <div id="balanceMessage" style="margin-top:10px;font-size:14px;color:#888;"></div>
-</div>
+        .stat-item {
+            background: #f8f9fb;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: #111;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #888;
+            margin-top: 4px;
+        }
 
         /* ===== ИНФО ===== */
         .info-row {
@@ -194,6 +189,81 @@
         .info-value {
             font-weight: 600;
             font-size: 14px;
+        }
+
+        /* ===== ИЗМЕНЕНИЕ БАЛАНСА ===== */
+        .balance-edit {
+            margin-top: 24px;
+            padding: 20px;
+            background: #f8f9fb;
+            border-radius: 16px;
+        }
+
+        .balance-edit h4 {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .balance-edit .row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        #balanceInput {
+            flex: 1;
+            min-width: 150px;
+            height: 46px;
+            padding: 0 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: .2s;
+        }
+
+        #balanceInput:focus {
+            border-color: #111;
+            box-shadow: 0 0 0 3px rgba(17, 17, 17, .1);
+        }
+
+        .btn {
+            height: 46px;
+            padding: 0 20px;
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+        }
+
+        .btn:active {
+            transform: scale(.97);
+        }
+
+        .btn-green {
+            background: #22c55e;
+        }
+
+        .btn-red {
+            background: #e53935;
+        }
+
+        .btn-black {
+            background: #111;
+        }
+
+        #balanceMessage {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            min-height: 24px;
         }
 
         /* ===== ЗАГРУЗКА ===== */
@@ -272,56 +342,18 @@
             .profile-card {
                 padding: 20px;
             }
-#balanceInput {
-    width: 100%;
-    min-width: 100%;
-}
-
-.btn {
-    flex: 1;
-    min-width: 80px;
-}
+            .balance-edit .row {
+                flex-direction: column;
+            }
+            #balanceInput {
+                width: 100%;
+                min-width: 100%;
+            }
+            .btn {
+                flex: 1;
+                min-width: 80px;
+            }
         }
-/* ===== КНОПКИ ИЗМЕНЕНИЯ БАЛАНСА ===== */
-.btn {
-    height: 46px;
-    padding: 0 20px;
-    border: none;
-    border-radius: 12px;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
-}
-
-.btn:active {
-    transform: scale(.97);
-}
-
-#balanceInput {
-    height: 46px;
-    padding: 0 16px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    font-size: 15px;
-    transition: .2s;
-}
-
-#balanceInput:focus {
-    border-color: #111;
-    box-shadow: 0 0 0 3px rgba(17, 17, 17, .1);
-}
-
-#balanceMessage {
-    min-height: 24px;
-    font-weight: 500;
-}
     </style>
 </head>
 <body>
@@ -338,7 +370,7 @@
             </div>
         </div>
         <div class="header-right">
-            <button class="back-home" onclick="window.location.href='index.html'">← Назад</button>
+            <button class="back-home" onclick="window.location.href='admin.html'">← Назад в админку</button>
         </div>
     </div>
 
@@ -472,7 +504,7 @@
                 <!-- Статистика -->
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <div class="stat-value">${user.balance || 0} ₽</div>
+                        <div class="stat-value" id="profileBalance">${user.balance || 0} ₽</div>
                         <div class="stat-label">💰 Баланс</div>
                     </div>
                     <div class="stat-item">
@@ -487,6 +519,18 @@
                         <div class="stat-value">${user.referral_count || 0}</div>
                         <div class="stat-label">👥 Рефералов</div>
                     </div>
+                </div>
+
+                <!-- ИЗМЕНЕНИЕ БАЛАНСА -->
+                <div class="balance-edit">
+                    <h4>✏️ Изменить баланс</h4>
+                    <div class="row">
+                        <input type="number" id="balanceInput" step="0.01" placeholder="Введите сумму">
+                        <button class="btn btn-green" onclick="changeBalance('add')">➕ Добавить</button>
+                        <button class="btn btn-red" onclick="changeBalance('subtract')">➖ Списать</button>
+                        <button class="btn btn-black" onclick="changeBalance('set')">📌 Установить</button>
+                    </div>
+                    <div id="balanceMessage"></div>
                 </div>
 
                 <!-- Детальная информация -->
@@ -514,88 +558,77 @@
         `;
     }
 
+    // ============ ИЗМЕНЕНИЕ БАЛАНСА ============
+    async function changeBalance(action) {
+        const input = document.getElementById('balanceInput');
+        const message = document.getElementById('balanceMessage');
+        const amount = parseFloat(input.value);
+
+        if (isNaN(amount) || amount <= 0) {
+            message.style.color = '#e53935';
+            message.textContent = '❌ Введите корректную сумму (больше 0)';
+            return;
+        }
+
+        const userId = getUserId();
+        if (!userId) {
+            message.style.color = '#e53935';
+            message.textContent = '❌ ID пользователя не найден';
+            return;
+        }
+
+        message.style.color = '#888';
+        message.textContent = '⏳ Сохранение...';
+
+        try {
+            const res = await fetch('https://white-stars-api.onrender.com/admin/balance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-admin-key': 'white-stars-super-admin'
+                },
+                body: JSON.stringify({
+                    telegram_id: String(userId),
+                    action: action,
+                    amount: amount
+                })
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.message || `HTTP ${res.status}`);
+            }
+
+            const data = await res.json();
+
+            // Обновляем баланс на странице
+            const balanceElement = document.getElementById('profileBalance');
+            if (balanceElement) {
+                balanceElement.textContent = `${data.new_balance || data.balance || 0} ₽`;
+            }
+
+            message.style.color = '#22c55e';
+            message.textContent = `✅ Баланс успешно обновлён! Новый баланс: ${data.new_balance || data.balance || 0} ₽`;
+            input.value = '';
+
+            // Обновляем страницу через 2 секунды
+            setTimeout(() => {
+                loadProfile();
+            }, 2000);
+
+        } catch (err) {
+            console.error(err);
+            message.style.color = '#e53935';
+            message.textContent = `❌ Ошибка: ${err.message || 'Не удалось изменить баланс'}`;
+        }
+    }
+
     // ============ ЗАГРУЗКА ПРИ СТАРТЕ ============
     document.addEventListener('DOMContentLoaded', loadProfile);
-// ============ ИЗМЕНЕНИЕ БАЛАНСА ============
-async function changeBalance(action) {
-    const input = document.getElementById('balanceInput');
-    const message = document.getElementById('balanceMessage');
-    const amount = parseFloat(input.value);
 
-    if (isNaN(amount) || amount <= 0) {
-        message.style.color = '#e53935';
-        message.textContent = '❌ Введите корректную сумму (больше 0)';
-        return;
-    }
-
-    const userId = getUserId();
-    if (!userId) {
-        message.style.color = '#e53935';
-        message.textContent = '❌ ID пользователя не найден';
-        return;
-    }
-
-    // Определяем тип операции
-    let operation = action;
-    let displayAmount = amount;
-
-    if (action === 'subtract') {
-        operation = 'subtract';
-        displayAmount = -amount;
-    } else if (action === 'set') {
-        operation = 'set';
-    } else {
-        operation = 'add';
-    }
-
-    message.style.color = '#888';
-    message.textContent = '⏳ Сохранение...';
-
-    try {
-        const res = await fetch('https://white-stars-api.onrender.com/admin/balance', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-admin-key': 'white-stars-super-admin'
-            },
-            body: JSON.stringify({
-                telegram_id: String(userId),
-                action: operation,
-                amount: amount
-            })
-        });
-
-        if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.message || `HTTP ${res.status}`);
-        }
-
-        const data = await res.json();
-
-        // Обновляем баланс на странице
-        const balanceElement = document.getElementById('profileBalance');
-        if (balanceElement) {
-            balanceElement.textContent = `${data.new_balance || data.balance || 0} ₽`;
-        }
-
-        message.style.color = '#22c55e';
-        message.textContent = `✅ Баланс успешно обновлён! Новый баланс: ${data.new_balance || data.balance || 0} ₽`;
-        input.value = '';
-
-        // Обновляем страницу через 2 секунды
-        setTimeout(() => {
-            loadProfile();
-        }, 2000);
-
-    } catch (err) {
-        console.error(err);
-        message.style.color = '#e53935';
-        message.textContent = `❌ Ошибка: ${err.message || 'Не удалось изменить баланс'}`;
-    }
-}
-
-// ============ ДОБАВЛЯЕМ В ГЛОБАЛЬНЫЙ ДОСТУП ============
-window.changeBalance = changeBalance;
+    // ============ ГЛОБАЛЬНЫЙ ДОСТУП ============
+    window.changeBalance = changeBalance;
+    window.loadProfile = loadProfile;
 </script>
 
 </body>
