@@ -1,8 +1,7 @@
 {
   "url": "https://white-stars-api.onrender.com",
   "name": "WHITE STARS",
-  "iconUrl": "https://white-stars-api.onrender.com/image/logo.png"
-tonConnect.onStatusChange(wallet => {
-    console.log(wallet);
-});
+  "iconUrl": "https://white-stars-api.onrender.com/image/logo.png",
+  "termsOfUseUrl": "https://white-stars-api.onrender.com/pages/terms.html",
+  "privacyPolicyUrl": "https://white-stars-api.onrender.com/pages/privacy.html"
 }
