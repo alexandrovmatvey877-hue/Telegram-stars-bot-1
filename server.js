@@ -138,7 +138,7 @@ let {
     );
 
     return;
-}
+           }
 
             db.run(
                 `INSERT INTO users
@@ -153,7 +153,7 @@ registered_at,
 last_seen
 )
 VALUES
-(?, ?, ?, ?, ?, 0, ?, ?)`
+(?, ?, ?, ?, ?, 0, ?, ?)`,
                 [
 telegram_id,
 username,
