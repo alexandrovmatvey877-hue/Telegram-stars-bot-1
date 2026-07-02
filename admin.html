@@ -946,152 +946,22 @@ function switchSettings(tab) {
     renderSettings(tab);
 }
 
-function renderSettings(tab) {
-    const container = document.getElementById('settingsContent');
+async function renderSettings(tab) {
+
+    if (Object.keys(settings).length === 0) {
+
+        const res = await fetch(
+            "https://white-stars-api.onrender.com/settings"
+        );
+
+        settings = await res.json();
+    }
+
+    const container = document.getElementById("settingsContent");
+
     if (!container) return;
 
-    const content = {
-        tariffs: `
-            <h3>📊 Тарифы</h3>
-            <p style="color:#888;margin:8px 0 16px;">Выберите тариф для пользователей</p>
-            <div class="tariff-grid">
-                <div class="tariff-card active" onclick="selectTariff(this, 'free')">
-                    <div class="tariff-name">🆓 Бесплатный</div>
-                    <div class="tariff-price">0 ₽ <span>/мес</span></div>
-                    <div class="tariff-features">
-                        ✅ Базовые функции<br>
-                        ✅ 5 операций/день<br>
-                        ❌ Приоритетная поддержка
-                    </div>
-                </div>
-                <div class="tariff-card" onclick="selectTariff(this, 'pro')">
-                    <div class="tariff-name">⭐ Pro</div>
-                    <div class="tariff-price">499 ₽ <span>/мес</span></div>
-                    <div class="tariff-features">
-                        ✅ Все функции<br>
-                        ✅ Безлимит операций<br>
-                        ✅ Приоритетная поддержка<br>
-                        ✅ Скидка 10%
-                    </div>
-                </div>
-                <div class="tariff-card" onclick="selectTariff(this, 'business')">
-                    <div class="tariff-name">🏢 Business</div>
-                    <div class="tariff-price">1499 ₽ <span>/мес</span></div>
-                    <div class="tariff-features">
-                        ✅ Всё из Pro<br>
-                        ✅ API доступ<br>
-                        ✅ Персональный менеджер<br>
-                        ✅ Скидка 25%
-                    </div>
-                </div>
-            </div>
-            <button class="btn" style="margin-top:20px;" onclick="alert('Тариф сохранён!')">
-                💾 Сохранить тариф
-            </button>
-        `,
-        services: `
-            <h3>🛠️ Услуги</h3>
-            <p style="color:#888;margin:8px 0 16px;">Включите или отключите услуги</p>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-icon">💳</div>
-                    <div>
-                        <div class="service-name">Платежи</div>
-                        <div class="service-desc">Приём и обработка платежей</div>
-                    </div>
-                </div>
-                <div>
-                    <span class="service-status on">Вкл</span>
-                    <button class="toggle-btn" onclick="toggleService(this, 'payments')">Выключить</button>
-                </div>
-            </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-icon">📤</div>
-                    <div>
-                        <div class="service-name">Вывод средств</div>
-                        <div class="service-desc">Вывод на карты и криптовалюты</div>
-                    </div>
-                </div>
-                <div>
-                    <span class="service-status on">Вкл</span>
-                    <button class="toggle-btn" onclick="toggleService(this, 'withdraw')">Выключить</button>
-                </div>
-            </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-icon">🎁</div>
-                    <div>
-                        <div class="service-name">Бонусная система</div>
-                        <div class="service-desc">Начисление бонусов за операции</div>
-                    </div>
-                </div>
-                <div>
-                    <span class="service-status off">Выкл</span>
-                    <button class="toggle-btn off" onclick="toggleService(this, 'bonus')">Включить</button>
-                </div>
-            </div>
-            <div class="service-item">
-                <div class="service-left">
-                    <div class="service-icon">👥</div>
-                    <div>
-                        <div class="service-name">Реферальная система</div>
-                        <div class="service-desc">Приглашай друзей и получай бонусы</div>
-                    </div>
-                </div>
-                <div>
-                    <span class="service-status on">Вкл</span>
-                    <button class="toggle-btn" onclick="toggleService(this, 'referral')">Выключить</button>
-                </div>
-            </div>
-        `,
-        notifications: `
-            <h3>🔔 Оповещения</h3>
-            <p style="color:#888;margin:8px 0 16px;">Настройте уведомления для пользователей</p>
-            <div class="notif-item">
-                <div>
-                    <div class="notif-label">📧 Email уведомления</div>
-                    <div class="notif-desc">Письма о балансе и операциях</div>
-                </div>
-                <div class="switch on" onclick="toggleSwitch(this)">
-                    <div class="switch-knob"></div>
-                </div>
-            </div>
-            <div class="notif-item">
-                <div>
-                    <div class="notif-label">📱 Telegram уведомления</div>
-                    <div class="notif-desc">Уведомления в Telegram боте</div>
-                </div>
-                <div class="switch on" onclick="toggleSwitch(this)">
-                    <div class="switch-knob"></div>
-                </div>
-            </div>
-            <div class="notif-item">
-                <div>
-                    <div class="notif-label">🔔 Push-уведомления</div>
-                    <div class="notif-desc">Всплывающие уведомления в приложении</div>
-                </div>
-                <div class="switch" onclick="toggleSwitch(this)">
-                    <div class="switch-knob"></div>
-                </div>
-            </div>
-            <div class="notif-item">
-                <div>
-                    <div class="notif-label">💬 Маркетинговые рассылки</div>
-                    <div class="notif-desc">Акции, новости и спецпредложения</div>
-                </div>
-                <div class="switch" onclick="toggleSwitch(this)">
-                    <div class="switch-knob"></div>
-                </div>
-            </div>
-            <button class="btn" style="margin-top:20px;" onclick="alert('Настройки оповещений сохранены!')">
-                💾 Сохранить настройки
-            </button>
-        `
-    };
-
-    container.innerHTML = content[tab] || '<p>Раздел в разработке</p>';
-}
+    // дальше оставь весь существующий код функции               
 
 // ============ ФУНКЦИИ ДЛЯ НАСТРОЕК ============
 function selectTariff(el, tariff) {
