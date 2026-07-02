@@ -410,6 +410,27 @@ input {
         font-size: 14px;
     }
 }
+/* ===== КНОПКА НАЗАД ===== */
+.back-home {
+    height: 46px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 14px;
+    background: #111;
+    color: #fff;
+    font-weight: 700;
+    transition: .2s;
+    cursor: pointer;
+}
+
+.back-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+}
+
+.back-home:active {
+    transform: scale(.97);
+}
 </style>
 </head>
 <body>
@@ -426,9 +447,10 @@ input {
             </div>
         </div>
         <div class="header-right">
-            <div class="admin-chip">👑 Администратор</div>
-            <button class="back" onclick="location.reload()">⟳ Обновить</button>
-        </div>
+    <div class="admin-chip">👑 Администратор</div>
+    <button class="back" onclick="window.location.href='index.html'">← Назад</button>
+    <button class="back" onclick="location.reload()">⟳ Обновить</button>
+</div>
     </div>
 
     <!-- ВКЛАДКИ -->
