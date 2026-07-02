@@ -142,32 +142,37 @@
             color: #999;
         }
 
-        /* ===== СТАТИСТИКА ===== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-            margin-top: 20px;
-        }
+<!-- Статистика -->
+<div class="stats-grid">
+    <div class="stat-item">
+        <div class="stat-value" id="profileBalance">${user.balance || 0} ₽</div>
+        <div class="stat-label">💰 Баланс</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value">${user.total_spent || 0} ₽</div>
+        <div class="stat-label">💳 Потрачено</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value">${user.total_deposit || 0} ₽</div>
+        <div class="stat-label">📥 Пополнено</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value">${user.referral_count || 0}</div>
+        <div class="stat-label">👥 Рефералов</div>
+    </div>
+</div>
 
-        .stat-item {
-            background: #f8f9fb;
-            border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 22px;
-            font-weight: 800;
-            color: #111;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: #888;
-            margin-top: 4px;
-        }
+<!-- ИЗМЕНЕНИЕ БАЛАНСА -->
+<div style="margin-top:24px;padding:20px;background:#f8f9fb;border-radius:16px;">
+    <h4 style="margin-bottom:12px;">✏️ Изменить баланс</h4>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <input type="number" id="balanceInput" step="0.01" placeholder="Сумма" style="flex:1;min-width:150px;height:46px;padding:0 16px;border:1px solid #ddd;border-radius:12px;font-size:15px;">
+        <button class="btn" onclick="changeBalance('add')" style="background:#22c55e;">➕ Добавить</button>
+        <button class="btn" onclick="changeBalance('subtract')" style="background:#e53935;">➖ Списать</button>
+        <button class="btn" onclick="changeBalance('set')" style="background:#111;">📌 Установить</button>
+    </div>
+    <div id="balanceMessage" style="margin-top:10px;font-size:14px;color:#888;"></div>
+</div>
 
         /* ===== ИНФО ===== */
         .info-row {
