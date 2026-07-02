@@ -178,7 +178,7 @@ margin:35px 0;
 </div>
 
 <div class="balance">
-
+<div id="ton-connect" style="margin-bottom:18px;"></div>
 <div class="balance-title">
 Баланс аккаунта
 </div>
@@ -363,6 +363,11 @@ function openSupport(){
 }
 
 </script>
-
+<script src="https://unpkg.com/@tonconnect/sdk@3.0.6/dist/tonconnect-sdk.min.js"></script>
+<script>
+const tonConnect = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: "https://white-stars-api.onrender.com/tonconnect-manifest.json"
+});
+</script>
 </body>
 </html>
