@@ -397,6 +397,78 @@ app.post("/settings", async (req, res) => {
 
     }
 });
+// ====================== СОХРАНЕНИЕ КОШЕЛЬКА ======================
+
+app.post("/wallet", async (req, res) => {
+
+    try {
+
+        const { telegram_id, wallet_address } = req.body;
+
+        if (!telegram_id || !wallet_address) {
+            return res.status(400).json({
+                success: false,
+                error: "Не хватает данных"
+            });
+        }
+
+        await pool.query(
+            `UPDATE users
+             SET wallet_address = $1
+             WHERE telegram_id = $2`,
+            [wallet_address, telegram_id]
+        );
+
+        res.json({
+            success: true
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            success: false
+        });
+
+    }
+
+});
+
+// ====================== ПОЛУЧИТЬ КОШЕЛЕК ======================
+
+app.get("/wallet/:telegram_id", async (req, res) => {
+
+    try {
+
+        const result = await pool.query(
+            `SELECT wallet_address
+             FROM users
+             WHERE telegram_id = $1`,
+            [req.params.telegram_id]
+        );
+
+        if (!result.rows.length) {
+            return res.json({
+                wallet: null
+            });
+        }
+
+        res.json({
+            wallet: result.rows[0].wallet_address
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            wallet: null
+        });
+
+    }
+
+});
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
 });
