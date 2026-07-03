@@ -1,7 +1,7 @@
-const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
