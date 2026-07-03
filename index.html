@@ -401,6 +401,28 @@ const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl: "https://white-stars-api.onrender.com/tonconnect-manifest.json",
     buttonRootId: "ton-connect"
 });
+(async () => {
+
+    if (!user) return;
+
+    const walletOwner = localStorage.getItem("walletOwner");
+
+    if (
+        walletOwner &&
+        walletOwner !== String(user.id)
+    ) {
+
+        console.log("Смена Telegram аккаунта.");
+
+        await tonConnectUI.disconnect();
+
+        localStorage.removeItem("walletOwner");
+
+        console.log("Старая сессия TON удалена.");
+
+    }
+
+})();
 
 console.log("Telegram ID:", user.id);
 console.log("TonConnect wallet:", tonConnectUI.wallet);
@@ -408,6 +430,7 @@ console.log("TonConnect wallet:", tonConnectUI.wallet);
 tonConnectUI.onStatusChange(async (wallet) => { console.log("onStatusChange:", wallet);
 
     if (!wallet || !user) return;
+localStorage.setItem("walletOwner", String(user.id));
 
     try {
 
