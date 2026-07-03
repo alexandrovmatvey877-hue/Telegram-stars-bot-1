@@ -211,11 +211,8 @@ app.get("/users", async (req, res) => {
         const result = await pool.query(
             "SELECT * FROM users ORDER BY id DESC"
         );
-console.table(result.rows.map(u => ({
-    telegram_id: u.telegram_id,
-    first_name: u.first_name,
-    wallet: u.wallet_address
-})));
+console.log("USERS:");
+console.log(JSON.stringify(result.rows, null, 2));
 
         res.json(result.rows);
 
