@@ -62,6 +62,11 @@ CREATE TABLE IF NOT EXISTS settings (
     updated_at BIGINT DEFAULT 0
 
 );
+await pool.query(`
+INSERT INTO settings (id)
+VALUES (1)
+ON CONFLICT (id) DO NOTHING;
+`);
 `);
 INSERT INTO settings (id)
 VALUES (1)
@@ -477,6 +482,93 @@ app.get("/wallet/:telegram_id", async (req, res) => {
 
         res.status(500).json({
             wallet: null
+        });
+
+    }
+
+});
+app.get("/settings", async (req, res) => {
+
+    try {
+
+        const result = await pool.query(
+            "SELECT * FROM settings WHERE id = 1"
+        );
+
+        res.json(result.rows[0]);
+
+    } catch (e) {
+
+        console.error(e);
+
+        res.status(500).json({
+            error: e.message
+        });
+
+    }
+
+});
+app.post("/settings", async (req, res) => {
+
+    try {
+
+        const {
+
+            ton_wallet,
+            ton_rate,
+            stars_rate,
+            mode
+
+        } = req.body;
+
+        await pool.query(
+
+            `UPDATE settings
+
+            SET
+
+            ton_wallet=$1,
+
+            ton_rate=$2,
+
+            stars_rate=$3,
+
+            mode=$4,
+
+            updated_at=$5
+
+            WHERE id=1`,
+
+            [
+
+                ton_wallet,
+
+                ton_rate,
+
+                stars_rate,
+
+                mode,
+
+                Date.now()
+
+            ]
+
+        );
+
+        res.json({
+
+            success:true
+
+        });
+
+    } catch(e){
+
+        console.error(e);
+
+        res.status(500).json({
+
+            success:false
+
         });
 
     }
