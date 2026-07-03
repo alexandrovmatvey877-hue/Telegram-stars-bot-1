@@ -289,111 +289,109 @@ tg.setHeaderColor("bg_color");
 tg.setBackgroundColor("bg_color");
 
 const user = tg.initDataUnsafe?.user;
-console.log(user);
-console.log("ID:", user?.id);
-console.log("ADMIN:", ADMIN_ID);
 const ADMIN_ID = "6508463020";
+
 if (user) {
 
-    fetch(`https://white-stars-api.onrender.com/wallet/${user.id}`)
-        .then(res => res.json())
-        .then(data => {
-
-            if (data.wallet) {
-
-    console.log("Кошелек найден:", data.wallet);
-
-    document.getElementById("walletInfo").style.display = "block";
-
-    document.getElementById("walletAddress").innerText =
-        data.wallet.slice(0, 6) +
-        "..." +
-        data.wallet.slice(-4);
-
-}
-if (user) {if (true) {
-
-    const adminBtn = document.createElement("button");
-
-    adminBtn.className = "topup";
-    adminBtn.style.marginTop = "15px";
-    adminBtn.innerText = "⚙️ Админ-панель";
-
-    adminBtn.onclick = () => {
-        window.location.href = "admin.html";
-    };
-
-    document.querySelector(".balance").appendChild(adminBtn);
-
-}
-
+    // Заголовок
     document.querySelector(".subtitle").innerHTML =
         `Добро пожаловать, <b>${user.first_name}</b>`;
 
+    // Админ-панель
+    if (String(user.id) === ADMIN_ID) {
+
+        const adminBtn = document.createElement("button");
+
+        adminBtn.className = "topup";
+        adminBtn.style.marginTop = "15px";
+        adminBtn.innerText = "⚙️ Админ-панель";
+
+        adminBtn.onclick = () => {
+            window.location.href = "admin.html";
+        };
+
+        document.querySelector(".balance").appendChild(adminBtn);
+
+    }
+
+    // Регистрация пользователя
     fetch("https://white-stars-api.onrender.com/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-    telegram_id: String(user.id),
-    username: user.username || "",
-    first_name: user.first_name || "",
-    last_name: user.last_name || "",
-    avatar: user.photo_url || ""
-})
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log("Регистрация:", data);
-    })
-    .catch(err => {
-        console.error(err);
-    });
-fetch(`https://white-stars-api.onrender.com/profile/${user.id}`)
-    .then(res => res.json())
-    .then(profile => {
+            telegram_id: String(user.id),
+            username: user.username || "",
+            first_name: user.first_name || "",
+            last_name: user.last_name || "",
+            avatar: user.photo_url || ""
+        })
+    }).catch(console.error);
 
-        document.getElementById("balance").innerText =
-            Number(profile.balance).toFixed(2) + " ₽";
+    // Баланс
+    fetch(`https://white-stars-api.onrender.com/profile/${user.id}`)
+        .then(res => res.json())
+        .then(profile => {
 
-    })
-    .catch(err => console.error(err));
+            document.getElementById("balance").innerText =
+                Number(profile.balance).toFixed(2) + " ₽";
+
+        })
+        .catch(console.error);
+
+    // Кошелек
+    fetch(`https://white-stars-api.onrender.com/wallet/${user.id}`)
+        .then(res => res.json())
+        .then(data => {
+
+            if (!data.wallet) return;
+
+            document.getElementById("walletInfo").style.display = "block";
+
+            document.getElementById("walletAddress").innerText =
+                data.wallet.slice(0, 6) +
+                "..." +
+                data.wallet.slice(-4);
+
+        })
+        .catch(console.error);
+
 }
 
-function topup(){
+function topup() {
     window.location.href = "pages/topup.html";
 }
 
-function buyStars(){
+function buyStars() {
     tg.showAlert("Покупка Telegram Stars скоро станет доступна.");
 }
 
-function buyPremium(){
+function buyPremium() {
     tg.showAlert("Покупка Telegram Premium скоро станет доступна.");
 }
 
-function buyGift(){
+function buyGift() {
     tg.showAlert("Покупка Telegram Gifts скоро станет доступна.");
 }
 
-function buyNFT(){
+function buyNFT() {
     tg.showAlert("Покупка NFT скоро станет доступна.");
 }
 
-function openPrices(){
+function openPrices() {
     window.location.href = "pages/prices.html";
 }
 
-function openPrivacy(){
+function openPrivacy() {
     window.location.href = "pages/privacy.html";
 }
 
-function openTerms(){
+function openTerms() {
     window.location.href = "pages/terms.html";
 }
 
-function openSupport(){
+function openSupport() {
     tg.openTelegramLink("https://t.me/WHITE_STARS_CONNECT");
 }
 
