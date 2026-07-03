@@ -42,23 +42,27 @@ const pool = new Pool({
         );
     `);
 await pool.query(`
-    CREATE TABLE IF NOT EXISTS settings (
-        id INTEGER PRIMARY KEY,
-        stars50 DOUBLE PRECISION DEFAULT 95,
-        stars75 DOUBLE PRECISION DEFAULT 140,
-        stars100 DOUBLE PRECISION DEFAULT 185,
-        stars150 DOUBLE PRECISION DEFAULT 275,
-        stars250 DOUBLE PRECISION DEFAULT 455,
-        stars500 DOUBLE PRECISION DEFAULT 910,
-        stars1000 DOUBLE PRECISION DEFAULT 1820,
-
-        sales_enabled BOOLEAN DEFAULT TRUE,
-        deposits_enabled BOOLEAN DEFAULT TRUE,
-        referrals_enabled BOOLEAN DEFAULT TRUE,
-        balance_payment_enabled BOOLEAN DEFAULT TRUE
+    CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        telegram_id TEXT UNIQUE,
+        username TEXT,
+        first_name TEXT,
+        last_name TEXT,
+        avatar TEXT,
+        balance DOUBLE PRECISION DEFAULT 0,
+        registered_at BIGINT,
+        last_seen BIGINT,
+        total_spent DOUBLE PRECISION DEFAULT 0,
+        total_deposit DOUBLE PRECISION DEFAULT 0,
+        referral_count INTEGER DEFAULT 0,
+        referrer_id TEXT,
+        wallet_address TEXT
     );
 `);
-
+await pool.query(`
+ALTER TABLE users
+ADD COLUMN IF NOT EXISTS wallet_address TEXT;
+`);
 await pool.query(`
 INSERT INTO settings (id)
 VALUES (1)
