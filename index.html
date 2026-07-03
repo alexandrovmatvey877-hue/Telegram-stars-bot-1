@@ -278,6 +278,19 @@ tg.setBackgroundColor("bg_color");
 
 const user = tg.initDataUnsafe?.user;
 const ADMIN_ID = "6508463020";
+if (user) {
+
+    fetch(`https://white-stars-api.onrender.com/wallet/${user.id}`)
+        .then(res => res.json())
+        .then(data => {
+
+            if (data.wallet_address) {
+                console.log("Кошелек найден:", data.wallet_address);
+            }
+
+        });
+
+}
 if (user) {if (String(user.id) === ADMIN_ID) {
 
     const adminBtn = document.createElement("button");
@@ -370,7 +383,30 @@ const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl: "https://white-stars-api.onrender.com/tonconnect-manifest.json",
     buttonRootId: "ton-connect"
 });
+tonConnect.onStatusChange(async (wallet) => {
 
+    if (!wallet || !user) return;
+
+    try {
+
+        await fetch("https://white-stars-api.onrender.com/wallet", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                telegram_id: String(user.id),
+                wallet_address: wallet.account.address
+            })
+        });
+
+        console.log("Кошелек сохранен");
+
+    } catch (e) {
+        console.error(e);
+    }
+
+});
 tonConnectUI.onStatusChange(wallet => {
     if (!wallet) {
         console.log("Кошелек отключен");
