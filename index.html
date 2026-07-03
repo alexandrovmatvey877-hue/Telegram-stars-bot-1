@@ -289,6 +289,9 @@ tg.setHeaderColor("bg_color");
 tg.setBackgroundColor("bg_color");
 
 const user = tg.initDataUnsafe?.user;
+console.log(user);
+console.log("ID:", user?.id);
+console.log("ADMIN:", ADMIN_ID);
 const ADMIN_ID = "6508463020";
 if (user) {
 
