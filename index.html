@@ -8,10 +8,6 @@
 
 <title>WHITE STARS</title>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://unpkg.com/@tonconnect/ui@2.0.0/dist/tonconnect-ui.min.js"></script>
-<style>
-
 *{
 margin:0;
 padding:0;
@@ -179,17 +175,6 @@ margin:35px 0;
 
 <div class="balance">
 
-<div id="walletInfo" style="
-margin-top:12px;
-padding:12px;
-border-radius:12px;
-background:#eef5ff;
-display:none;
-font-size:14px;
-line-height:22px;
-">
-</div>
-
 <div class="balance-title">
 Баланс аккаунта
 </div>
@@ -337,23 +322,6 @@ if (user) {
         })
         .catch(console.error);
 
-    // Кошелек
-    fetch(`https://white-stars-api.onrender.com/wallet/${user.id}`)
-        .then(res => res.json())
-        .then(data => {
-
-            if (!data.wallet) return;
-
-            document.getElementById("walletInfo").style.display = "block";
-
-            document.getElementById("walletAddress").innerText =
-                data.wallet.slice(0, 6) +
-                "..." +
-                data.wallet.slice(-4);
-
-        })
-        .catch(console.error);
-
 }
 
 function topup() {
@@ -392,65 +360,6 @@ function openSupport() {
     tg.openTelegramLink("https://t.me/WHITE_STARS_CONNECT");
 }
 
-</script>
-<script>
-const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: "https://white-stars-api.onrender.com/tonconnect-manifest.json",
-    buttonRootId: "ton-connect"
-});
-(async () => {
-
-    if (!user) return;
-
-    const walletOwner = localStorage.getItem("walletOwner");
-
-    if (
-        walletOwner &&
-        walletOwner !== String(user.id)
-    ) {
-
-        console.log("Смена Telegram аккаунта.");
-
-        await tonConnectUI.disconnect();
-
-        localStorage.removeItem("walletOwner");
-
-        console.log("Старая сессия TON удалена.");
-
-    }
-
-})();
-
-console.log("Telegram ID:", user.id);
-console.log("TonConnect wallet:", tonConnectUI.wallet);
-
-tonConnectUI.onStatusChange(async (wallet) => { console.log("onStatusChange:", wallet);
-
-    if (!wallet || !user) return;
-localStorage.setItem("walletOwner", String(user.id));
-
-    try {
-
-        console.log("Подключен:", wallet.account.address);
-
-        const response = await fetch("https://white-stars-api.onrender.com/wallet", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                telegram_id: String(user.id),
-                wallet_address: wallet.account.address
-            })
-        });
-
-        console.log(await response.text());
-
-    } catch (e) {
-        console.error(e);
-    }
-
-});
 </script>
 </body>
 </html>
