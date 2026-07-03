@@ -46,6 +46,23 @@ ALTER TABLE users
 ADD COLUMN IF NOT EXISTS wallet_address TEXT;
 `);
 await pool.query(`
+await pool.query(`
+CREATE TABLE IF NOT EXISTS settings (
+
+    id INTEGER PRIMARY KEY,
+
+    ton_wallet TEXT DEFAULT '',
+
+    ton_rate DOUBLE PRECISION DEFAULT 0,
+
+    stars_rate DOUBLE PRECISION DEFAULT 0,
+
+    mode TEXT DEFAULT 'auto',
+
+    updated_at BIGINT DEFAULT 0
+
+);
+`);
 INSERT INTO settings (id)
 VALUES (1)
 ON CONFLICT (id) DO NOTHING;
