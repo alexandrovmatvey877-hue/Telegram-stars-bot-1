@@ -401,15 +401,16 @@ app.post("/wallet", async (req, res) => {
              SET wallet_address = $1
              WHERE telegram_id = $2`,
             [wallet_address, telegram_id]
-const check = await pool.query(
-    `SELECT telegram_id, wallet_address
-     FROM users
-     WHERE telegram_id = $1`,
-    [telegram_id]
-);
-
-console.log("После UPDATE:", check.rows);
         );
+
+        const check = await pool.query(
+            `SELECT telegram_id, wallet_address
+             FROM users
+             WHERE telegram_id = $1`,
+            [telegram_id]
+        );
+
+        console.log("После UPDATE:", check.rows);
 
         res.json({
             success: true
