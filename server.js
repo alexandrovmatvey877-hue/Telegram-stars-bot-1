@@ -42,24 +42,6 @@ const pool = new Pool({
         );
     `);
 await pool.query(`
-    CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        telegram_id TEXT UNIQUE,
-        username TEXT,
-        first_name TEXT,
-        last_name TEXT,
-        avatar TEXT,
-        balance DOUBLE PRECISION DEFAULT 0,
-        registered_at BIGINT,
-        last_seen BIGINT,
-        total_spent DOUBLE PRECISION DEFAULT 0,
-        total_deposit DOUBLE PRECISION DEFAULT 0,
-        referral_count INTEGER DEFAULT 0,
-        referrer_id TEXT,
-        wallet_address TEXT
-    );
-`);
-await pool.query(`
 ALTER TABLE users
 ADD COLUMN IF NOT EXISTS wallet_address TEXT;
 `);
