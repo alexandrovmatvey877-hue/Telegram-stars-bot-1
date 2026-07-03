@@ -428,18 +428,21 @@ app.post("/wallet", async (req, res) => {
 
 });
 
-// ====================== ПОЛУЧИТЬ КОШЕЛЕК ======================
-
+// ====================== ПОЛУЧИТЬ КОШЕЛЕК ======================//
 app.get("/wallet/:telegram_id", async (req, res) => {
 
     try {
 
+        console.log("Ищу:", req.params.telegram_id);
+
         const result = await pool.query(
-            `SELECT wallet_address
+            `SELECT telegram_id, wallet_address
              FROM users
              WHERE telegram_id = $1`,
             [req.params.telegram_id]
         );
+
+        console.log("Нашел:", result.rows);
 
         if (!result.rows.length) {
             return res.json({
