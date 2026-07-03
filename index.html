@@ -296,20 +296,16 @@ if (user) {
         .then(res => res.json())
         .then(data => {
 
-            if (data.wallet_address) {
+            if (data.wallet) {
 
-    console.log("Кошелек найден:", data.wallet_address);
+    console.log("Кошелек найден:", data.wallet);
 
     document.getElementById("walletInfo").style.display = "block";
 
     document.getElementById("walletAddress").innerText =
-        data.wallet_address.slice(0,6) +
+        data.wallet.slice(0, 6) +
         "..." +
-        data.wallet_address.slice(-4);
-
-}
-
-        });
+        data.wallet.slice(-4);
 
 }
 if (user) {if (String(user.id) === ADMIN_ID) {
