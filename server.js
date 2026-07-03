@@ -24,6 +24,7 @@ const pool = new Pool({
 });
 
 (async () => {
+
     await pool.query(`
         CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
@@ -38,51 +39,62 @@ const pool = new Pool({
             total_spent DOUBLE PRECISION DEFAULT 0,
             total_deposit DOUBLE PRECISION DEFAULT 0,
             referral_count INTEGER DEFAULT 0,
-            referrer_id TEXT
+            referrer_id TEXT,
+            wallet_address TEXT
         );
     `);
-await pool.query(`
-ALTER TABLE users
-ADD COLUMN IF NOT EXISTS wallet_address TEXT;
-`);
-await pool.query(`
-await pool.query(`
-CREATE TABLE IF NOT EXISTS settings (
 
-    id INTEGER PRIMARY KEY,
+    await pool.query(`
+        CREATE TABLE IF NOT EXISTS settings (
 
-    ton_wallet TEXT DEFAULT '',
+            id INTEGER PRIMARY KEY,
 
-    ton_rate DOUBLE PRECISION DEFAULT 0,
+            stars50 DOUBLE PRECISION DEFAULT 0,
+            stars75 DOUBLE PRECISION DEFAULT 0,
+            stars100 DOUBLE PRECISION DEFAULT 0,
+            stars150 DOUBLE PRECISION DEFAULT 0,
+            stars250 DOUBLE PRECISION DEFAULT 0,
+            stars500 DOUBLE PRECISION DEFAULT 0,
+            stars1000 DOUBLE PRECISION DEFAULT 0,
 
-    stars_rate DOUBLE PRECISION DEFAULT 0,
+            ton_wallet TEXT DEFAULT '',
+            ton_rate DOUBLE PRECISION DEFAULT 0,
+            stars_rate DOUBLE PRECISION DEFAULT 0,
 
-    mode TEXT DEFAULT 'auto',
+            mode TEXT DEFAULT 'auto',
 
-    updated_at BIGINT DEFAULT 0
+            sales_enabled BOOLEAN DEFAULT TRUE,
+            deposits_enabled BOOLEAN DEFAULT TRUE,
+            referrals_enabled BOOLEAN DEFAULT TRUE,
+            balance_payment_enabled BOOLEAN DEFAULT TRUE,
 
-);
-await pool.query(`
-INSERT INTO settings (id)
-VALUES (1)
-ON CONFLICT (id) DO NOTHING;
-`);
-`);
-INSERT INTO settings (id)
-VALUES (1)
-ON CONFLICT (id) DO NOTHING;
-`);
-    console.log("PostgreSQL подключена");
+            updated_at BIGINT DEFAULT 0
+
+        );
+    `);
+
+    await pool.query(`
+        INSERT INTO settings (id)
+        VALUES (1)
+        ON CONFLICT (id) DO NOTHING;
+    `);
+
+    console.log("✅ PostgreSQL подключена");
+
 })();
 
 app.get("/", (req, res) => {
+
     res.json({
         status: "ok",
         project: "WHITE STARS",
-        version: "3.0.0"
+        version: "4.0.0"
     });
+
 });
+
 app.post("/register", async (req, res) => {
+
     try {
 
         let {
@@ -95,28 +107,29 @@ app.post("/register", async (req, res) => {
 
         telegram_id = String(telegram_id).replace(".0", "");
 
-        if (!telegram_id) {
-            return res.status(400).json({
-                error: "telegram_id is required"
-            });
-        }
-
-        const existing = await pool.query(
-            "SELECT * FROM users WHERE telegram_id = $1",
+        const exists = await pool.query(
+            "SELECT id FROM users WHERE telegram_id=$1",
             [telegram_id]
         );
 
-        if (existing.rows.length > 0) {
+        if (exists.rows.length) {
 
-            const result = await pool.query(
+            const user = await pool.query(
+
                 `UPDATE users
-                 SET username=$1,
-                     first_name=$2,
-                     last_name=$3,
-                     avatar=$4,
-                     last_seen=$5
-                 WHERE telegram_id=$6
-                 RETURNING *`,
+
+                SET
+
+                username=$1,
+                first_name=$2,
+                last_name=$3,
+                avatar=$4,
+                last_seen=$5
+
+                WHERE telegram_id=$6
+
+                RETURNING *`,
+
                 [
                     username,
                     first_name,
@@ -125,30 +138,33 @@ app.post("/register", async (req, res) => {
                     Date.now(),
                     telegram_id
                 ]
+
             );
 
-            return res.json({
-                success: true,
-                user: result.rows[0]
-            });
+            return res.json(user.rows[0]);
+
         }
 
-        const result = await pool.query(
-            `INSERT INTO users
-            (
+        const created = await pool.query(
+
+            `INSERT INTO users(
+
                 telegram_id,
                 username,
                 first_name,
                 last_name,
                 avatar,
-                balance,
                 registered_at,
                 last_seen
+
             )
-            VALUES
-            ($1,$2,$3,$4,$5,0,$6,$7)
+
+            VALUES($1,$2,$3,$4,$5,$6,$7)
+
             RETURNING *`,
+
             [
+
                 telegram_id,
                 username,
                 first_name,
@@ -156,186 +172,60 @@ app.post("/register", async (req, res) => {
                 avatar,
                 Date.now(),
                 Date.now()
+
             ]
+
         );
 
-        res.json({
-            success: true,
-            user: result.rows[0]
-        });
+        res.json(created.rows[0]);
 
-    } catch (err) {
+    } catch (e) {
 
-        console.error(err);
+        console.error(e);
 
         res.status(500).json({
-            error: err.message
+            error: e.message
         });
 
     }
+
 });
 
 app.get("/profile/:telegram_id", async (req, res) => {
+
     try {
 
-        const telegram_id = String(req.params.telegram_id).replace(".0", "");
-
         const result = await pool.query(
-            "SELECT * FROM users WHERE telegram_id = $1",
-            [telegram_id]
+
+            "SELECT * FROM users WHERE telegram_id=$1",
+
+            [String(req.params.telegram_id)]
+
         );
 
-        if (result.rows.length === 0) {
+        if (!result.rows.length)
             return res.status(404).json({
                 error: "User not found"
             });
-        }
 
         res.json(result.rows[0]);
 
-    } catch (err) {
+    } catch (e) {
 
         res.status(500).json({
-            error: err.message
-        });
-
-    }
-});
-
-app.get("/users", async (req, res) => {
-
-    try {
-
-        if (req.headers["x-admin-key"] !== ADMIN_KEY) {
-            return res.status(403).json({
-                error: "Access denied"
-            });
-        }
-
-        const result = await pool.query(
-            "SELECT * FROM users ORDER BY id DESC"
-        );
-console.log("USERS:");
-console.log(JSON.stringify(result.rows, null, 2));
-
-        res.json(result.rows);
-
-    } catch (err) {
-
-        res.status(500).json({
-            error: err.message
+            error: e.message
         });
 
     }
 
 });
 
-app.post("/admin/balance", async (req, res) => {
+// ====================== НАСТРОЙКИ ======================
 
-    try {
-
-        if (req.headers["x-admin-key"] !== ADMIN_KEY) {
-            return res.status(403).json({
-                error: "Access denied"
-            });
-        }
-
-        let {
-            telegram_id,
-            action,
-            amount
-        } = req.body;
-
-        telegram_id = String(telegram_id).replace(".0", "");
-        amount = Number(amount);
-
-        if (!telegram_id || isNaN(amount)) {
-            return res.status(400).json({
-                error: "Invalid data"
-            });
-        }
-
-        const result = await pool.query(
-            "SELECT balance FROM users WHERE telegram_id = $1",
-            [telegram_id]
-        );
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({
-                error: "User not found"
-            });
-        }
-
-        let balance = Number(result.rows[0].balance);
-
-        switch (action) {
-
-            case "add":
-                balance += amount;
-                break;
-
-            case "subtract":
-                balance -= amount;
-                break;
-
-            case "set":
-                balance = amount;
-                break;
-
-            default:
-                return res.status(400).json({
-                    error: "Unknown action"
-                });
-
-        }
-
-        await pool.query(
-            "UPDATE users SET balance = $1 WHERE telegram_id = $2",
-            [
-                balance,
-                telegram_id
-            ]
-        );
-
-        res.json({
-            success: true,
-            balance: balance
-        });
-
-    } catch (err) {
-
-        res.status(500).json({
-            error: err.message
-        });
-
-    }
-
-});
-
-app.get("/reset", async (req, res) => {
-
-    try {
-
-        const result = await pool.query(
-            "DELETE FROM users"
-        );
-
-        res.json({
-            success: true,
-            deleted: result.rowCount
-        });
-
-    } catch (err) {
-
-        res.status(500).json({
-            error: err.message
-        });
-
-    }
-
-});
 app.get("/settings", async (req, res) => {
+
     try {
+
         const result = await pool.query(
             "SELECT * FROM settings WHERE id = 1"
         );
@@ -344,14 +234,18 @@ app.get("/settings", async (req, res) => {
 
     } catch (err) {
 
+        console.error(err);
+
         res.status(500).json({
             error: err.message
         });
 
     }
+
 });
 
 app.post("/settings", async (req, res) => {
+
     try {
 
         if (req.headers["x-admin-key"] !== ADMIN_KEY) {
@@ -360,79 +254,30 @@ app.post("/settings", async (req, res) => {
             });
         }
 
-        const data = req.body;
+        const {
+            ton_wallet,
+            ton_rate,
+            stars_rate,
+            mode
+        } = req.body;
 
         await pool.query(
-            `UPDATE settings SET
-                stars50 = $1,
-                stars75 = $2,
-                stars100 = $3,
-                stars150 = $4,
-                stars250 = $5,
-                stars500 = $6,
-                stars1000 = $7,
-                sales_enabled = $8,
-                deposits_enabled = $9,
-                referrals_enabled = $10,
-                balance_payment_enabled = $11
+            `UPDATE settings
+             SET
+                ton_wallet = $1,
+                ton_rate = $2,
+                stars_rate = $3,
+                mode = $4,
+                updated_at = $5
              WHERE id = 1`,
             [
-                data.stars50,
-                data.stars75,
-                data.stars100,
-                data.stars150,
-                data.stars250,
-                data.stars500,
-                data.stars1000,
-                data.sales_enabled,
-                data.deposits_enabled,
-                data.referrals_enabled,
-                data.balance_payment_enabled
+                ton_wallet,
+                ton_rate,
+                stars_rate,
+                mode,
+                Date.now()
             ]
         );
-
-        res.json({
-            success: true
-        });
-
-    } catch (err) {
-
-        res.status(500).json({
-            error: err.message
-        });
-
-    }
-});
-// ====================== СОХРАНЕНИЕ КОШЕЛЬКА ======================
-
-app.post("/wallet", async (req, res) => {
-
-    try {
-
-        const { telegram_id, wallet_address } = req.body;
-
-        if (!telegram_id || !wallet_address) {
-            return res.status(400).json({
-                success: false,
-                error: "Не хватает данных"
-            });
-        }
-
-        await pool.query(
-            `UPDATE users
-             SET wallet_address = $1
-             WHERE telegram_id = $2`,
-            [wallet_address, telegram_id]
-        );
-
-        const check = await pool.query(
-            `SELECT telegram_id, wallet_address
-             FROM users
-             WHERE telegram_id = $1`,
-            [telegram_id]
-        );
-
-        console.log("После UPDATE:", check.rows);
 
         res.json({
             success: true
@@ -443,37 +288,62 @@ app.post("/wallet", async (req, res) => {
         console.error(err);
 
         res.status(500).json({
-            success: false
+            success: false,
+            error: err.message
         });
 
     }
 
 });
 
-// ====================== ПОЛУЧИТЬ КОШЕЛЕК ======================//
+// ====================== WALLET ======================
+
+app.post("/wallet", async (req, res) => {
+
+    try {
+
+        const { telegram_id, wallet_address } = req.body;
+
+        await pool.query(
+            `UPDATE users
+             SET wallet_address = $1
+             WHERE telegram_id = $2`,
+            [
+                wallet_address,
+                telegram_id
+            ]
+        );
+
+        res.json({
+            success: true
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
+
+    }
+
+});
+
 app.get("/wallet/:telegram_id", async (req, res) => {
 
     try {
 
-        console.log("Ищу:", req.params.telegram_id);
-
         const result = await pool.query(
-            `SELECT telegram_id, wallet_address
+            `SELECT wallet_address
              FROM users
              WHERE telegram_id = $1`,
             [req.params.telegram_id]
         );
 
-        console.log("Нашел:", result.rows);
-
-        if (!result.rows.length) {
-            return res.json({
-                wallet: null
-            });
-        }
-
         res.json({
-            wallet: result.rows[0].wallet_address
+            wallet: result.rows[0]?.wallet_address || null
         });
 
     } catch (err) {
@@ -487,6 +357,8 @@ app.get("/wallet/:telegram_id", async (req, res) => {
     }
 
 });
+// ====================== НАСТРОЙКИ ======================
+
 app.get("/settings", async (req, res) => {
 
     try {
@@ -497,83 +369,75 @@ app.get("/settings", async (req, res) => {
 
         res.json(result.rows[0]);
 
-    } catch (e) {
+    } catch (err) {
 
-        console.error(e);
+        console.error(err);
 
         res.status(500).json({
-            error: e.message
+            error: err.message
         });
 
     }
 
 });
+
 app.post("/settings", async (req, res) => {
 
     try {
 
-        const {
+        if (req.headers["x-admin-key"] !== ADMIN_KEY) {
+            return res.status(403).json({
+                error: "Access denied"
+            });
+        }
 
+        const {
             ton_wallet,
             ton_rate,
             stars_rate,
             mode
-
         } = req.body;
 
         await pool.query(
-
             `UPDATE settings
-
-            SET
-
-            ton_wallet=$1,
-
-            ton_rate=$2,
-
-            stars_rate=$3,
-
-            mode=$4,
-
-            updated_at=$5
-
-            WHERE id=1`,
-
+             SET
+                ton_wallet = $1,
+                ton_rate = $2,
+                stars_rate = $3,
+                mode = $4,
+                updated_at = $5
+             WHERE id = 1`,
             [
-
                 ton_wallet,
-
                 ton_rate,
-
                 stars_rate,
-
                 mode,
-
                 Date.now()
-
             ]
-
         );
 
         res.json({
-
-            success:true
-
+            success: true
         });
 
-    } catch(e){
+    } catch (err) {
 
-        console.error(e);
+        console.error(err);
 
         res.status(500).json({
-
-            success:false
-
+            success: false,
+            error: err.message
         });
 
     }
 
 });
+
+
+// ====================== ЗАПУСК ======================
+
 app.listen(PORT, () => {
+
     console.log(`Server started on port ${PORT}`);
+
 });
