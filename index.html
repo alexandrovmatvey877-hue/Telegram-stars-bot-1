@@ -402,7 +402,10 @@ const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     buttonRootId: "ton-connect"
 });
 
-tonConnectUI.onStatusChange(async (wallet) => {
+console.log("Telegram ID:", user.id);
+console.log("TonConnect wallet:", tonConnectUI.wallet);
+
+tonConnectUI.onStatusChange(async (wallet) => { console.log("onStatusChange:", wallet);
 
     if (!wallet || !user) return;
 
