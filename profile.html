@@ -396,6 +396,7 @@ alert("PROFILE V2");
 
     // ============ ЗАГРУЖАЕМ ПРОФИЛЬ ============
     async function loadProfile() {
+        console.log("ID =", userId);
         const userId = getUserId();
         const container = document.getElementById('profileContent');
 
@@ -423,12 +424,14 @@ alert("PROFILE V2");
                     'x-admin-key': 'white-stars-super-admin'
                 }
             });
+console.log("STATUS =", res.status);
 
             if (!res.ok) {
                 throw new Error(`HTTP ${res.status}`);
             }
 
             const users = await res.json();
+console.log(users);
             const user = users.find(u => String(u.telegram_id) === String(userId));
 
             if (!user) {
