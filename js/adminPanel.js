@@ -63,15 +63,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ---------- вкладки ----------
-    document.querySelectorAll(".tab").forEach(tab => {
+    document.querySelectorAll(".settings-tab").forEach(tab => {
 
-        tab.onclick = () => {
+    tab.onclick = () => {
 
-            switchPage(tab.dataset.page);
+        // сначала открыть страницу настроек
+        switchPage("settings");
 
-        };
+        // затем открыть нужный раздел
+        Settings.switchSettings(tab.dataset.settings);
 
-    });
+    };
+
+});
 
     // ---------- вкладки настроек ----------
     document.querySelectorAll(".settings-tab").forEach(tab => {
