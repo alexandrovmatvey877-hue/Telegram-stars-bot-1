@@ -419,7 +419,9 @@ alert("PROFILE V2");
         `;
 
         try {
-            const res = await fetch('https://white-stars-api.onrender.com/api/users', {
+            const res = await fetch(
+    `https://white-stars-api.onrender.com/api/users/${userId}`
+);
                 headers: {
                     'x-admin-key': 'white-stars-super-admin'
                 }
@@ -430,9 +432,15 @@ console.log("STATUS =", res.status);
                 throw new Error(`HTTP ${res.status}`);
             }
 
-            const users = await res.json();
-console.log(users);
-            const user = users.find(u => String(u.telegram_id) === String(userId));
+            const data = await res.json();
+
+console.log(data);
+
+if (!data.success) {
+    throw new Error("Пользователь не найден");
+}
+
+const user = data.user;
 
             if (!user) {
                 container.innerHTML = `
