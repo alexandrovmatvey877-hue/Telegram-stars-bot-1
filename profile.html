@@ -387,7 +387,6 @@
 </div>
 
 <script>
-alert("PROFILE V2");
     // ============ ПОЛУЧАЕМ ID ИЗ URL ============
     function getUserId() {
         const params = new URLSearchParams(window.location.search);
@@ -397,7 +396,6 @@ alert("PROFILE V2");
     // ============ ЗАГРУЖАЕМ ПРОФИЛЬ ============
     async function loadProfile() {
         const userId = getUserId();
-        alert("ID = " + userId);
         console.log("ID =", userId);
         const container = document.getElementById('profileContent');
 
@@ -429,7 +427,6 @@ alert("PROFILE V2");
     }
 );
 
-alert("STATUS = " + res.status);
 console.log("STATUS =", res.status);
 
             if (!res.ok) {
@@ -437,7 +434,6 @@ console.log("STATUS =", res.status);
             }
 
             const data = await res.json();
-alert(JSON.stringify(data));
 console.log("SUCCESS =", data.success);
 console.log("USER =", data.user);
 
@@ -466,8 +462,6 @@ const user = data.user;
 
     console.error(err);
 
-    alert(err.message);
-
     container.innerHTML = `
         <div class="profile-card error">
             <div class="error-icon">⚠️</div>
@@ -481,7 +475,6 @@ const user = data.user;
 }
 
     // ============ ОТРИСОВКА ПРОФИЛЯ ============
-alert("RENDER");
     function renderProfile(user) {
         const container = document.getElementById('profileContent');
 
