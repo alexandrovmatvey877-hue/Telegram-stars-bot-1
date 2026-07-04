@@ -397,6 +397,7 @@ alert("PROFILE V2");
     // ============ ЗАГРУЖАЕМ ПРОФИЛЬ ============
     async function loadProfile() {
         const userId = getUserId();
+        alert("ID = " + userId);
         console.log("ID =", userId);
         const container = document.getElementById('profileContent');
 
@@ -422,6 +423,7 @@ alert("PROFILE V2");
             const res = await fetch(
     `https://white-stars-api.onrender.com/api/users/${userId}`
 );
+alert("STATUS = " + res.status);
                 headers: {
                     'x-admin-key': 'white-stars-super-admin'
                 }
@@ -433,6 +435,7 @@ console.log("STATUS =", res.status);
             }
 
             const data = await res.json();
+alert(JSON.stringify(data));
 
 console.log(data);
 
@@ -472,6 +475,8 @@ const user = data.user;
 }
 
     // ============ ОТРИСОВКА ПРОФИЛЯ ============
+alert("RENDER");
+console.log(user);
     function renderProfile(user) {
         const container = document.getElementById('profileContent');
 
