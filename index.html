@@ -336,7 +336,7 @@ if (user) {
         console.log(profile);
 
         document.getElementById("balance").innerText =
-            Number(profile.user.balance ?? 0).toFixed(2) + " ₽";
+            Number(profile.user.balance).toFixed(2) + " ₽";
 
     })
     .catch(err => {
