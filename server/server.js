@@ -15,7 +15,23 @@ const cors = require("cors");
 const path = require("path");
 
 const app = express();
+app.use(cors());
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, "../")));
 const initDatabase = require("./database/initDatabase");
+app.use("/users", userRoutes);
+
+app.use("/settings", settingsRoutes);
+
+app.use("/wallet", walletRoutes);
+
+app.use("/balance", balanceRoutes);
+
+app.use("/operations", operationRoutes);
 
 // =========================
 // CONFIG
@@ -94,7 +110,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 3000;
 
 initDatabase();
-
+app.use(errorHandler);
 app.listen(PORT, () => {
     console.log(`🚀 WHITE STARS started on port ${PORT}`);
 });
