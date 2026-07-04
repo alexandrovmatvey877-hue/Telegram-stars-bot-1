@@ -444,16 +444,20 @@
             renderProfile(user);
 
         } catch (err) {
-            console.error(err);
-            container.innerHTML = `
-                <div class="profile-card error">
-                    <div class="error-icon">⚠️</div>
-                    <div class="error-title">Ошибка загрузки</div>
-                    <div class="error-text">Не удалось загрузить профиль. Попробуйте позже.</div>
-                </div>
-            `;
-        }
-    }
+
+    console.error(err);
+
+    alert(err);
+
+    container.innerHTML = `
+        <div class="profile-card error">
+            <div class="error-icon">⚠️</div>
+            <div class="error-title">Ошибка загрузки</div>
+            <div class="error-text">${err}</div>
+        </div>
+    `;
+
+}
 
     // ============ ОТРИСОВКА ПРОФИЛЯ ============
     function renderProfile(user) {
