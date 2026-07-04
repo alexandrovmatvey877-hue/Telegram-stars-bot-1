@@ -36,22 +36,52 @@ exports.updateBalance = async (req, res) => {
 
     try {
 
-        const {
-            telegram_id,
-            balance
-        } = req.body;
+        const { telegram_id, action, amount } = req.body;
 
-        await db.query(`
-            UPDATE users
-            SET balance=$1
-            WHERE telegram_id=$2
-        `, [
-            balance,
-            telegram_id
-        ]);
+        const result = await db.query(
+            "SELECT balance FROM users WHERE telegram_id=$1",
+            [telegram_id]
+        );
+
+        if (!result.rows.length) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        let balance = Number(result.rows[0].balance);
+
+        switch (action) {
+
+            case "add":
+                balance += Number(amount);
+                break;
+
+            case "subtract":
+                balance -= Number(amount);
+                break;
+
+            case "set":
+                balance = Number(amount);
+                break;
+
+            default:
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid action"
+                });
+
+        }
+
+        await db.query(
+            "UPDATE users SET balance=$1 WHERE telegram_id=$2",
+            [balance, telegram_id]
+        );
 
         res.json({
-            success: true
+            success: true,
+            balance
         });
 
     } catch (err) {
