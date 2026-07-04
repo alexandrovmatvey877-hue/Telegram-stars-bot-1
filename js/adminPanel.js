@@ -20,7 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (currentPage === "users") {
 
-                Users.loadUsers();
+               Users.loadUsers();
+               Settings.loadSettings();
 
             } else if (currentPage === "settings") {
 
@@ -104,9 +105,11 @@ function switchPage(page) {
 
     document.getElementById(pages[page]).classList.add("active");
 
-    document
-        .querySelector(`.tab[data-page="${page}"]`)
-        .classList.add("active");
+    const btn = document.querySelector(`.tab[data-page="${page}"]`);
+
+if (btn) {
+    btn.classList.add("active");
+}
 
     if (page === "users") {
 
