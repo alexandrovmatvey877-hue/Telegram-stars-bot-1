@@ -396,8 +396,8 @@ alert("PROFILE V2");
 
     // ============ ЗАГРУЖАЕМ ПРОФИЛЬ ============
     async function loadProfile() {
-        console.log("ID =", userId);
         const userId = getUserId();
+        console.log("ID =", userId);
         const container = document.getElementById('profileContent');
 
         if (!userId) {
