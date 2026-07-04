@@ -216,3 +216,31 @@ exports.getStats = async (req, res) => {
     }
 
 };
+// =======================
+// Все пользователи
+// =======================
+
+exports.getAllUsers = async (req, res) => {
+
+    try {
+
+        const result = await db.query(`
+            SELECT *
+            FROM users
+            ORDER BY registered_at DESC
+        `);
+
+        res.json(result.rows);
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to load users"
+        });
+
+    }
+
+};
