@@ -5,6 +5,7 @@ const cors = require("cors");
 const path = require("path");
 
 const app = express();
+const initDatabase = require("./database/initDatabase");
 
 // =========================
 // CONFIG
@@ -81,6 +82,8 @@ app.use((err, req, res, next) => {
 // =========================
 
 const PORT = process.env.PORT || 3000;
+
+initDatabase();
 
 app.listen(PORT, () => {
     console.log(`🚀 WHITE STARS started on port ${PORT}`);
