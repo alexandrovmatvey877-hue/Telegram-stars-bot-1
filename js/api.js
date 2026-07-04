@@ -47,3 +47,9 @@ async function saveSettings(settings) {
 async function getOperations() {
     return await api("/api/operations");
 }
+window.API = {
+    getUsers,
+    getSettings,
+    saveSettings,
+    getOperations
+};
