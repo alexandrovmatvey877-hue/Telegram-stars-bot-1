@@ -6,6 +6,9 @@ const usersController = require("../controllers/usersController");
 // Регистрация / авторизация пользователя
 router.post("/register", usersController.register);
 
+// Все пользователи (админка)
+router.get("/", usersController.getAllUsers);
+
 // Получить профиль
 router.get("/:telegram_id", usersController.getProfile);
 
