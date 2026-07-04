@@ -8,7 +8,8 @@
 
 <title>WHITE STARS</title>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script> src="https://telegram.org/js/telegram-web-app.js">
+</script>
 
 <style>
 
@@ -266,6 +267,15 @@ WHITE STARS © 2026
 </div>
 <script>
 
+alert("JS START");
+
+const tg = window.Telegram.WebApp;
+
+alert("TG OK");
+
+tg.ready();
+
+alert("READY OK");
 console.log("Telegram:", tg);
 console.log("initData:", tg.initData);
 console.log("initDataUnsafe:", tg.initDataUnsafe);
