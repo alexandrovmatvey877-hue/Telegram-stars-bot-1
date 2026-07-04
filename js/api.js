@@ -33,24 +33,17 @@ async function api(path, method = "GET", body = null) {
 }
 
 async function getUsers() {
-    return await api("/users");
+    return await api("/api/users");
 }
 
 async function getSettings() {
-    return await api("/settings");
+    return await api("/api/settings");
 }
 
 async function saveSettings(settings) {
-    return await api("/settings", "POST", settings);
+    return await api("/api/settings", "POST", settings);
 }
 
 async function getOperations() {
-    return await api("/operations");
+    return await api("/api/operations");
 }
-
-window.API = {
-    getUsers,
-    getSettings,
-    saveSettings,
-    getOperations
-};
