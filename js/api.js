@@ -33,7 +33,7 @@ async function api(path, method = "GET", body = null) {
 }
 
 async function getUsers() {
-    return await api("/api/users");
+    return await api("/api/admin/users");
 }
 
 async function getSettings() {
