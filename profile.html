@@ -421,13 +421,15 @@ alert("PROFILE V2");
 
         try {
             const res = await fetch(
-    `https://white-stars-api.onrender.com/api/users/${userId}`
+    `https://white-stars-api.onrender.com/api/users/${userId}`,
+    {
+        headers: {
+            "x-admin-key": "white-stars-super-admin"
+        }
+    }
 );
+
 alert("STATUS = " + res.status);
-                headers: {
-                    'x-admin-key': 'white-stars-super-admin'
-                }
-            });
 console.log("STATUS =", res.status);
 
             if (!res.ok) {
@@ -436,6 +438,8 @@ console.log("STATUS =", res.status);
 
             const data = await res.json();
 alert(JSON.stringify(data));
+console.log("SUCCESS =", data.success);
+console.log("USER =", data.user);
 
 console.log(data);
 
@@ -462,7 +466,7 @@ const user = data.user;
 
     console.error(err);
 
-    alert(err);
+    alert(err.message);
 
     container.innerHTML = `
         <div class="profile-card error">
@@ -474,9 +478,10 @@ const user = data.user;
 
 }
 
+}
+
     // ============ ОТРИСОВКА ПРОФИЛЯ ============
 alert("RENDER");
-console.log(user);
     function renderProfile(user) {
         const container = document.getElementById('profileContent');
 
