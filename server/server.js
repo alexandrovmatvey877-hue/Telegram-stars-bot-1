@@ -14,7 +14,7 @@ const app = express();
 // DATABASE
 // =========================
 
-require("./config/database");
+const db = require("./config/database");
 
 // =========================
 // MIDDLEWARE
@@ -97,7 +97,7 @@ const PORT = process.env.PORT || 3000;
 
 (async () => {
     try {
-
+await db.query("SELECT NOW()");
         await initDatabase();
 
         app.listen(PORT, () => {
