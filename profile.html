@@ -603,7 +603,7 @@ const user = data.user;
         message.textContent = '⏳ Сохранение...';
 
         try {
-            const res = await fetch('https://white-stars-api.onrender.com/admin/balance', {
+            const res = await fetch("https://white-stars-api.onrender.com/api/admin/balance", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
