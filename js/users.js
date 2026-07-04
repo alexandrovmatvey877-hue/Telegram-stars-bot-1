@@ -12,14 +12,13 @@ async function loadUsers() {
 
     } catch (e) {
 
-        console.error(e);
+    console.error(e);
 
-        document.getElementById("usersList").innerHTML =
-        `<div class="operation-card">
-            ❌ Ошибка загрузки пользователей
-        </div>`;
-
-    }
+    document.getElementById("usersList").innerHTML = `
+<div class="operation-card">
+❌ ${e.message}
+</div>`;
+}
 
 }
 
