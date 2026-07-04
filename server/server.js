@@ -4,6 +4,16 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
+const errorHandler = require("./middleware/errorHandler");
+
+const userRoutes = require("./routes/users");
+const settingsRoutes = require("./routes/settings");
+const walletRoutes = require("./routes/wallet");
+const balanceRoutes = require("./routes/balance");
+const operationRoutes = require("./routes/operations");
+const cors = require("cors");
+const path = require("path");
+
 const app = express();
 const initDatabase = require("./database/initDatabase");
 
