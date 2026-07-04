@@ -316,7 +316,7 @@ if (user) {
     }).catch(console.error);
 
     // Баланс
-    fetch(`https://white-stars-api.onrender.com/profile/${user.id}`)
+    fetch(`https://white-stars-api.onrender.com/api/users/${user.id}`)
         .then(res => res.json())
         .then(profile => {
 
