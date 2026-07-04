@@ -266,6 +266,10 @@ WHITE STARS © 2026
 </div>
 <script>
 
+console.log("Telegram:", tg);
+console.log("initData:", tg.initData);
+console.log("initDataUnsafe:", tg.initDataUnsafe);
+console.log("user:", tg.initDataUnsafe?.user);
 const tg = window.Telegram.WebApp;
 
 tg.ready();
