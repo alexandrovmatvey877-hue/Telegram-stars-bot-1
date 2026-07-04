@@ -33,7 +33,18 @@ async function initDatabase() {
             referral_count INTEGER DEFAULT 0,
             referrer_id TEXT,
 
-            wallet_address TEXT
+            wallet_address TEXT,
+is_banned BOOLEAN DEFAULT false,
+
+ban_reason TEXT,
+
+warning_count INTEGER DEFAULT 0,
+
+theme TEXT DEFAULT 'dark',
+
+font_size TEXT DEFAULT 'normal',
+
+language TEXT DEFAULT 'ru'
 
         );
 
