@@ -325,19 +325,30 @@ if (user) {
 
     // Баланс
     fetch(`https://white-stars-api.onrender.com/api/users/${user.id}`)
-    .then(res => res.json())
-    .then(profile => {
+.then(async res => {
 
-        console.log(profile);
+    console.log("STATUS:", res.status);
 
-        document.getElementById("balance").innerText =
-            Number(profile.user.balance).toFixed(2) + " ₽";
+    const data = await res.json();
 
-    })
-    .catch(err => {
-        console.error(err);
-        document.getElementById("balance").innerText = "0.00 ₽";
-    });
+    console.log("DATA:", data);
+
+    return data;
+
+})
+.then(profile => {
+
+    document.getElementById("balance").innerText =
+        Number(profile.user.balance).toFixed(2) + " ₽";
+
+})
+.catch(err => {
+
+    alert(err);
+
+    console.error(err);
+
+});
 
 }
 
