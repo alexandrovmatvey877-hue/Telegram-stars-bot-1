@@ -132,3 +132,4 @@ function switchPage(page) {
     }
 
 }
+// ЗАДНИЦА ХАХАХА 67 67 ПОКОЕ ОКАК
