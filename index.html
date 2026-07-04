@@ -266,21 +266,10 @@ WHITE STARS © 2026
 </div>
 <script>
 
-alert("1. Скрипт начал работать");
-
-alert("JS START");
-
 const tg = window.Telegram.WebApp;
-
-alert("2. Telegram найден");
-
-alert("TG OK");
 
 tg.ready();
 
-alert("3. ready() выполнен");
-
-alert("READY OK");
 console.log("Telegram:", tg);
 console.log("initData:", tg.initData);
 console.log("initDataUnsafe:", tg.initDataUnsafe);
@@ -293,8 +282,6 @@ tg.setHeaderColor("bg_color");
 tg.setBackgroundColor("bg_color");
 
 const user = tg.initDataUnsafe?.user;
-
-alert("4. user = " + JSON.stringify(user));
 
 const ADMIN_ID = "6508463020";
 
