@@ -78,15 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
     // ---------- вкладки настроек ----------
-    document.querySelectorAll(".settings-tab").forEach(tab => {
-
-        tab.onclick = () => {
-
-            Settings.switchSettings(tab.dataset.settings);
-
-        };
-
-    });
 
     // ---------- первая загрузка ----------
     Users.loadUsers();
