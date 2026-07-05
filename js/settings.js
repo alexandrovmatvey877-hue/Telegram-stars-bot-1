@@ -1,4 +1,5 @@
 let settings = {};
+let currentSettingsTab = "prices";
 
 async function loadSettings() {
 
