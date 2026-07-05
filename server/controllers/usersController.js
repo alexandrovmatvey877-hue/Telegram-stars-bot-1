@@ -78,14 +78,16 @@ EXTRACT(EPOCH FROM NOW()) * 1000
 
     } catch (err) {
 
-        console.error(err);
+    console.error("REGISTER ERROR:");
+    console.error(err);
+    console.error(err.stack);
 
-        res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
+    res.status(500).json({
+        success: false,
+        message: err.message
+    });
 
-    }
+}
 };
 
 // =======================
