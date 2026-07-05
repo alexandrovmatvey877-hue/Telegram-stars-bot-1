@@ -7,7 +7,7 @@ async function loadSettings() {
 
         settings = await API.getSettings();
 
-        renderSettings("prices");
+        renderSettings(currentSettingsTab);
 
     } catch (e) {
 
@@ -32,7 +32,7 @@ function switchSettings(tab) {
     document
         .querySelector(`[data-settings="${tab}"]`)
         ?.classList.add("active");
-
+    currentSettingsTab = tab;
     renderSettings(tab);
 
 }
