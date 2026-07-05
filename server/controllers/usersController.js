@@ -36,9 +36,13 @@ exports.register = async (req, res) => {
                     last_name,
                     avatar,
                     registered_at,
-                    last_seen
-                )
-                VALUES($1,$2,$3,$4,$5,NOW(),NOW())
+last_seen
+)
+VALUES(
+...
+EXTRACT(EPOCH FROM NOW()) * 1000,
+EXTRACT(EPOCH FROM NOW()) * 1000
+)
             `, [
                 telegram_id,
                 username,
@@ -56,7 +60,7 @@ exports.register = async (req, res) => {
                     first_name=$3,
                     last_name=$4,
                     avatar=$5,
-                    last_seen=NOW()
+                    last_seen = EXTRACT(EPOCH FROM NOW()) * 1000
                 WHERE telegram_id=$1
             `, [
                 telegram_id,
