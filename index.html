@@ -324,18 +324,21 @@ if (user) {
         avatar: user.photo_url || ""
     })
 })
-.then(async res => {
-
-    console.log("REGISTER STATUS:", res.status);
+.then(async (res) => {
 
     const text = await res.text();
 
-    console.log("REGISTER RESPONSE:", text);
+    alert(
+        "REGISTER\n\n" +
+        "STATUS: " + res.status +
+        "\n\n" +
+        text
+    );
 
 })
-.catch(err => {
+.catch((err) => {
 
-    console.error("REGISTER ERROR:", err);
+    alert("ERROR:\n" + err);
 
 });
 
