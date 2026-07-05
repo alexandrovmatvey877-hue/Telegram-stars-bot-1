@@ -283,6 +283,8 @@ tg.setBackgroundColor("bg_color");
 
 const user = tg.initDataUnsafe?.user;
 
+alert("USER ID: " + (user ? user.id : "NULL"));
+
 const ADMIN_ID = "6508463020";
 
 if (user) {
@@ -310,18 +312,32 @@ if (user) {
 
     // Регистрация пользователя
     fetch("https://white-stars-api.onrender.com/api/users/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            telegram_id: String(user.id),
-            username: user.username || "",
-            first_name: user.first_name || "",
-            last_name: user.last_name || "",
-            avatar: user.photo_url || ""
-        })
-    }).catch(console.error);
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        telegram_id: String(user.id),
+        username: user.username || "",
+        first_name: user.first_name || "",
+        last_name: user.last_name || "",
+        avatar: user.photo_url || ""
+    })
+})
+.then(async res => {
+
+    console.log("REGISTER STATUS:", res.status);
+
+    const text = await res.text();
+
+    console.log("REGISTER RESPONSE:", text);
+
+})
+.catch(err => {
+
+    console.error("REGISTER ERROR:", err);
+
+});
 
     // Баланс
     fetch(`https://white-stars-api.onrender.com/api/users/${user.id}`)
