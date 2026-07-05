@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (currentPage === "users") {
 
                Users.loadUsers();
-               Settings.loadSettings();
 
             } else if (currentPage === "settings") {
 
@@ -62,6 +61,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     }
+// ---------- верхние вкладки ----------
+document.querySelectorAll(".tab").forEach(tab => {
+
+    tab.onclick = () => {
+
+        switchPage(tab.dataset.page);
+
+    };
+
+});
 
     // ---------- вкладки ----------
     document.querySelectorAll(".settings-tab").forEach(tab => {
@@ -114,6 +123,7 @@ if (btn) {
     if (page === "users") {
 
         Users.loadUsers();
+        Settings.loadSettings();
 
     }
 
