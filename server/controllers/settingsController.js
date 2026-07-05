@@ -9,10 +9,12 @@ exports.getSettings = async (req, res) => {
     try {
 
         const result = await db.query(
-            "SELECT * FROM settings WHERE id = 1"
-        );
+    "SELECT * FROM settings WHERE id = 1"
+);
 
-        res.json(result.rows[0]);
+console.log("SETTINGS =", result.rows);
+
+res.json(result.rows[0]);
 
     } catch (err) {
 
