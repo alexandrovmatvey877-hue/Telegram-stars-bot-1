@@ -10,11 +10,11 @@ async function loadSettings() {
 
         const data = await API.getSettings();
 
-console.log("API DATA:", data);
+alert("API DATA:\n" + JSON.stringify(data));
 
 settings = data;
 
-console.log("SETTINGS:", settings);
+alert("SETTINGS:\n" + JSON.stringify(settings));
 
         alert("LOAD:");
         alert(JSON.stringify(settings));
