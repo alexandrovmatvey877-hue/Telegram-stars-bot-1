@@ -6,6 +6,8 @@ const db = require("../config/database");
 
 exports.register = async (req, res) => {
     try {
+console.log("REGISTER V2 START");
+console.log(req.body);
         const {
             telegram_id,
             username,
@@ -27,7 +29,7 @@ exports.register = async (req, res) => {
         );
 
         if (user.rows.length === 0) {
-
+console.log("NEW USER");
             await db.query(`
 INSERT INTO users(
     telegram_id,
