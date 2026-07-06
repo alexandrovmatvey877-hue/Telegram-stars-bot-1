@@ -2,8 +2,6 @@ const db = require("../config/database");
 
 async function initDatabase() {
 
-await db.query("DROP TABLE IF EXISTS settings;");
-
     try {
 
         // ===========================
