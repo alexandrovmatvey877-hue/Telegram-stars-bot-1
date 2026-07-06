@@ -29,27 +29,31 @@ exports.register = async (req, res) => {
         if (user.rows.length === 0) {
 
             await db.query(`
-                INSERT INTO users(
-                    telegram_id,
-                    username,
-                    first_name,
-                    last_name,
-                    avatar,
-                    registered_at,
-last_seen
+INSERT INTO users(
+    telegram_id,
+    username,
+    first_name,
+    last_name,
+    avatar,
+    registered_at,
+    last_seen
 )
 VALUES(
-...
-EXTRACT(EPOCH FROM NOW()) * 1000,
-EXTRACT(EPOCH FROM NOW()) * 1000
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    NOW(),
+    NOW()
 )
-            `, [
-                telegram_id,
-                username,
-                first_name,
-                last_name,
-                avatar
-            ]);
+`,[
+    telegram_id,
+    username,
+    first_name,
+    last_name,
+    avatar
+]);
 
         } else {
 
