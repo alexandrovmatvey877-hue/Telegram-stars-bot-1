@@ -50,6 +50,10 @@ alert(JSON.stringify(settings));
     alert(JSON.stringify(settings));
 
     const box = document.getElementById("settingsContent");
+console.log("settings =", settings);
+console.log("typeof =", typeof settings);
+console.log("stars50 =", settings.stars50);
+alert("stars50 = " + settings.stars50);
 
     if (!box) return;
 
@@ -58,6 +62,16 @@ alert(JSON.stringify(settings));
     // ===========================
 
     if (tab === "prices") {
+
+settings = {
+    stars50: 111,
+    stars75: 222,
+    stars100: 333,
+    stars150: 444,
+    stars250: 555,
+    stars500: 666,
+    stars1000: 777
+};
 
         box.innerHTML = `
 
