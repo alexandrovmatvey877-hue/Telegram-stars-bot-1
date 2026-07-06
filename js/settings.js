@@ -264,11 +264,16 @@ console.log(result);
 
     } catch (e) {
 
-        console.error(e);
+    console.error(e);
 
-        alert("❌ Ошибка сохранения");
+    alert(
+        "Ошибка сохранения\n\n" +
+        "message: " + e.message +
+        "\n\n" +
+        "stack:\n" + (e.stack || "нет")
+    );
 
-    }
+}
 
 }
 
