@@ -6,6 +6,10 @@ async function loadSettings() {
     try {
 
         settings = await API.getSettings();
+console.log("GET SETTINGS");
+console.log(settings);
+
+alert(JSON.stringify(settings));
 
 console.log("SETTINGS:");
 console.log(settings);
@@ -43,6 +47,11 @@ function switchSettings(tab) {
 }
 
 function renderSettings(tab) {
+
+console.log("RENDER SETTINGS");
+console.log(settings);
+
+alert("render: " + JSON.stringify(settings));
 
     const box = document.getElementById("settingsContent");
 
