@@ -36,6 +36,10 @@ res.json(result.rows[0]);
 exports.saveSettings = async (req, res) => {
 
     try {
+alert = console.log;
+
+alert("SAVE SETTINGS CALLED");
+alert(JSON.stringify(req.body));
 
         const s = req.body;
 
