@@ -36,6 +36,8 @@ function switchSettings(tab) {
 }
 
 function renderSettings(tab) {
+console.log("renderSettings settings =", settings);
+alert(JSON.stringify(settings));
 
     alert("RENDER:");
     alert(JSON.stringify(settings));
