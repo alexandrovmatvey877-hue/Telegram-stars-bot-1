@@ -91,6 +91,7 @@ document.querySelectorAll(".tab").forEach(tab => {
 
     // ---------- первая загрузка ----------
     Users.loadUsers();
+Settings.loadSettings();
 
 });
 
