@@ -283,8 +283,6 @@ tg.setBackgroundColor("bg_color");
 
 const user = tg.initDataUnsafe?.user;
 
-alert("USER ID: " + (user ? user.id : "NULL"));
-
 const ADMIN_ID = "6508463020";
 
 if (user) {
@@ -323,18 +321,6 @@ if (user) {
         last_name: user.last_name || "",
         avatar: user.photo_url || ""
     })
-})
-.then(async (res) => {
-
-    const text = await res.text();
-
-    alert(
-        "REGISTER\n\n" +
-        "STATUS: " + res.status +
-        "\n\n" +
-        text
-    );
-
 })
 .catch((err) => {
 
