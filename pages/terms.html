@@ -1,196 +1,589 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Пользовательское соглашение | WHITE STARS</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Пользовательское соглашение | WHITE STARS</title>
+    <style>
+        /* ============================================
+           БАЗА — ПОЛНОСТЬЮ СОВПАДАЕТ С ПОЛИТИКОЙ
+        ============================================ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-}
+        :root {
+            --bg: #0b0d11;
+            --gold: #f8d86a;
+            --gold-dim: rgba(248, 216, 106, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.025);
+            --glass-border: rgba(255, 255, 255, 0.04);
+            --text-primary: #f0f2f6;
+            --text-secondary: rgba(255, 255, 255, 0.72);
+            --text-muted: rgba(255, 255, 255, 0.22);
+            --radius: 40px;
+        }
 
-body{
-background:#fff;
-color:#111;
-line-height:1.7;
-}
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
 
-.container{
-max-width:900px;
-margin:auto;
-padding:20px;
-}
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            padding: 20px 12px;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.back{
-display:inline-block;
-margin-bottom:20px;
-text-decoration:none;
-color:#111;
-font-weight:600;
-}
+        /* ============================================
+           ФОН — ОДИН ЛЁГКИЙ ГРАДИЕНТ
+        ============================================ */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(60, 80, 140, 0.06), transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(180, 160, 200, 0.03), transparent 50%),
+                var(--bg);
+            pointer-events: none;
+        }
 
-h1{
-font-size:32px;
-margin-bottom:10px;
-}
+        /* ============================================
+           ЗВЁЗДЫ — ТОЛЬКО 20 ШТУК, STATIC
+        ============================================ */
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
 
-.subtitle{
-color:#666;
-margin-bottom:25px;
-}
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: #fff;
+            opacity: 0.15;
+            width: 2px;
+            height: 2px;
+        }
 
-.card{
-background:#f6f7fb;
-padding:25px;
-border-radius:18px;
-margin-bottom:20px;
-}
+        /* ============================================
+           ОСНОВНОЙ КОНТЕЙНЕР — ОДИН BLUR
+        ============================================ */
+        .container {
+            position: relative;
+            max-width: 830px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 36px 40px 48px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px) saturate(1.2);
+            -webkit-backdrop-filter: blur(24px) saturate(1.2);
+            border-radius: var(--radius);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: containerIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            will-change: transform, opacity;
+        }
 
-h2{
-margin-top:28px;
-margin-bottom:10px;
-font-size:22px;
-}
+        @keyframes containerIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-p,li{
-margin-bottom:10px;
-color:#444;
-}
+        /* ============================================
+           ЗОЛОТОЙ АКЦЕНТ — ЛЁГКИЙ ГЛОУ
+        ============================================ */
+        .gold-glow {
+            position: absolute;
+            right: -40px;
+            top: 20%;
+            width: 260px;
+            height: 300px;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(248, 216, 106, 0.12), rgba(248, 216, 106, 0.03) 50%, transparent 70%);
+            filter: blur(60px);
+            will-change: transform;
+        }
 
-ul{
-padding-left:20px;
-}
+        /* ============================================
+           КОНТЕНТ — ПОВЕРХ ВСЕГО
+        ============================================ */
+        .content {
+            position: relative;
+            z-index: 2;
+        }
 
-button{
-width:100%;
-height:55px;
-border:none;
-border-radius:15px;
-background:#111;
-color:#fff;
-font-size:17px;
-font-weight:700;
-cursor:pointer;
-margin-top:30px;
-}
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 450;
+            font-size: 14px;
+            letter-spacing: 0.2px;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 2px;
+        }
+        .back:hover {
+            color: var(--gold);
+            border-bottom-color: var(--gold-dim);
+        }
 
-</style>
+        .brand-title {
+            font-size: 36px;
+            font-weight: 620;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+            color: #fff;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.15s forwards;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 28px;
+            padding-left: 16px;
+            border-left: 2px solid var(--gold-dim);
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.2s forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .brand-title {
+            transform: translateY(8px);
+        }
+        .subtitle {
+            transform: translateY(6px);
+        }
+
+        /* ============================================
+           КАРТОЧКА — ВТОРОЙ СЛОЙ СТЕКЛА
+        ============================================ */
+        .card {
+            background: rgba(255, 255, 255, 0.015);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 28px 32px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.025);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.25s forwards;
+            transform: translateY(6px);
+        }
+
+        /* ============================================
+           ТИПОГРАФИКА
+        ============================================ */
+        h2 {
+            margin-top: 32px;
+            margin-bottom: 12px;
+            font-size: 20px;
+            font-weight: 530;
+            color: #fff;
+            letter-spacing: -0.2px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            padding-bottom: 8px;
+        }
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        p,
+        li {
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            font-size: 15.5px;
+            letter-spacing: 0.1px;
+            max-width: 76ch;
+        }
+
+        ul {
+            padding-left: 24px;
+            margin: 4px 0 14px;
+        }
+        ul li {
+            margin-bottom: 4px;
+            list-style-type: none;
+            position: relative;
+            padding-left: 4px;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--gold);
+            position: absolute;
+            left: -20px;
+            opacity: 0.3;
+            font-size: 16px;
+        }
+
+        b,
+        strong {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .card p+h2,
+        .card ul+h2 {
+            margin-top: 34px;
+            padding-top: 4px;
+            border-top: 1px solid rgba(255, 255, 255, 0.015);
+        }
+
+        /* ============================================
+           КНОПКА
+        ============================================ */
+        button {
+            width: 100%;
+            height: 54px;
+            border: none;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.015);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 470;
+            cursor: pointer;
+            margin-top: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+            letter-spacing: 0.3px;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.3s forwards;
+            transform: translateY(6px);
+        }
+        button:hover {
+            background: rgba(248, 216, 106, 0.03);
+            border-color: rgba(248, 216, 106, 0.06);
+            transform: translateY(-1px);
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        button:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 3px;
+        }
+
+        /* ============================================
+           АДАПТИВНОСТЬ
+        ============================================ */
+        @media (max-width: 820px) {
+            body {
+                padding: 14px 10px;
+            }
+            .container {
+                padding: 28px 24px 36px;
+                border-radius: 32px;
+            }
+            .brand-title {
+                font-size: 28px;
+            }
+            .card {
+                padding: 22px 20px;
+                border-radius: 24px;
+            }
+            .gold-glow {
+                width: 180px;
+                height: 220px;
+                right: -20px;
+                filter: blur(50px);
+                opacity: 0.6;
+            }
+            p,
+            li {
+                font-size: 14.5px;
+                line-height: 1.75;
+            }
+            h2 {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px 4px;
+                align-items: stretch;
+            }
+            .container {
+                padding: 20px 14px 28px;
+                border-radius: 24px;
+                backdrop-filter: blur(16px) saturate(1.1);
+                -webkit-backdrop-filter: blur(16px) saturate(1.1);
+            }
+            .brand-title {
+                font-size: 22px;
+            }
+            .subtitle {
+                font-size: 12px;
+                padding-left: 10px;
+                margin-bottom: 20px;
+            }
+            .card {
+                padding: 16px 12px;
+                border-radius: 18px;
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+            }
+            .gold-glow {
+                width: 120px;
+                height: 150px;
+                right: -10px;
+                filter: blur(40px);
+                opacity: 0.3;
+            }
+            p,
+            li {
+                font-size: 13.5px;
+                line-height: 1.7;
+                margin-bottom: 8px;
+            }
+            h2 {
+                font-size: 17px;
+                margin-top: 24px;
+            }
+            button {
+                height: 46px;
+                font-size: 14px;
+                border-radius: 22px;
+            }
+            .card p+h2,
+            .card ul+h2 {
+                margin-top: 26px;
+            }
+        }
+
+        /* ============================================
+           PREFERS-REDUCED-MOTION
+        ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .container {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .brand-title,
+            .subtitle,
+            .card,
+            button {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
+        /* ============================================
+           HIGH CONTRAST
+        ============================================ */
+        @media (prefers-contrast: high) {
+            :root {
+                --text-secondary: rgba(255, 255, 255, 0.92);
+                --glass-bg: rgba(255, 255, 255, 0.06);
+                --glass-border: rgba(255, 255, 255, 0.15);
+            }
+            .gold-glow {
+                opacity: 0 !important;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+    <!-- ============================================
+    ЗВЁЗДЫ — ВСЕГО 20, STATIC
+    ============================================ -->
+    <div class="stars" aria-hidden="true" id="stars"></div>
 
-<a class="back" href="../index.html">← На главную</a>
+    <!-- ============================================
+    ОСНОВНОЙ КОНТЕЙНЕР
+    ============================================ -->
+    <main class="container" role="main">
 
-<h1>📄 Пользовательское соглашение</h1>
+        <!-- Золотой глоу — лёгкий акцент -->
+        <div class="gold-glow" aria-hidden="true"></div>
 
-<p class="subtitle">
-Редакция от 30.06.2026
-</p>
+        <div class="content">
+            <a class="back" href="../index.html" aria-label="На главную">← На главную</a>
 
-<div class="card">
+            <h1 class="brand-title">📜 Пользовательское соглашение</h1>
 
-<h2>1. Общие положения</h2>
+            <p class="subtitle">
+                Редакция от 30 июня 2026 года
+            </p>
 
-<p>1.1. Настоящее Пользовательское соглашение регулирует порядок использования сервиса WHITE STARS (далее — «Сервис»).</p>
+            <article class="card">
 
-<p>1.2. Используя WHITE STARS, включая запуск Telegram Mini App, пополнение баланса, оформление заказа или получение цифровых товаров, Пользователь подтверждает, что ознакомился с условиями настоящего Соглашения и принимает их полностью.</p>
+                <h2>1. Общие положения</h2>
 
-<p>1.3. Если Пользователь не согласен с настоящим Соглашением, он обязан прекратить использование Сервиса.</p>
+                <p>1.1. Настоящее Пользовательское соглашение регулирует порядок использования сервиса WHITE STARS (далее — «Сервис»).</p>
 
-<h2>2. Цифровые товары</h2>
+                <p>1.2. Используя WHITE STARS, включая запуск Telegram Mini App, пополнение баланса, оформление заказа или получение цифровых товаров, Пользователь подтверждает, что ознакомился с условиями настоящего Соглашения и принимает их полностью.</p>
 
-<p>2.1. WHITE STARS предоставляет цифровые товары и услуги, включая:</p>
+                <p>1.3. Если Пользователь не согласен с настоящим Соглашением, он обязан прекратить использование Сервиса.</p>
 
-<ul>
-<li>Telegram Stars;</li>
-<li>Telegram Premium;</li>
-<li>NFT;</li>
-<li>Telegram Gifts;</li>
-<li>иные цифровые товары, размещённые в каталоге сервиса.</li>
-</ul>
+                <h2>2. Цифровые товары</h2>
 
-<p>2.2. Все товары являются цифровыми и не имеют материального носителя.</p>
+                <p>2.1. WHITE STARS предоставляет цифровые товары и услуги, включая:</p>
 
-<p>2.3. Стоимость товаров указывается до момента оплаты.</p>
+                <ul>
+                    <li>Telegram Stars;</li>
+                    <li>Telegram Premium;</li>
+                    <li>NFT;</li>
+                    <li>Telegram Gifts;</li>
+                    <li>иные цифровые товары, размещённые в каталоге сервиса.</li>
+                </ul>
 
-<p>2.4. Цена может изменяться в зависимости от рыночного курса Telegram Stars, TON и других цифровых активов.</p>
+                <p>2.2. Все товары являются цифровыми и не имеют материального носителя.</p>
 
-<h2>3. Ограничение ответственности</h2>
+                <p>2.3. Стоимость товаров указывается до момента оплаты.</p>
 
-<p>3.1. Сервис предоставляется по принципу «Как есть».</p>
+                <p>2.4. Цена может изменяться в зависимости от рыночного курса Telegram Stars, TON и других цифровых активов.</p>
 
-<p>3.2. Администрация не гарантирует бесперебойную работу сервиса.</p>
+                <h2>3. Ограничение ответственности</h2>
 
-<p>3.3. Возможны временные технические работы, обновления и ограничения доступа.</p>
+                <p>3.1. Сервис предоставляется по принципу «Как есть».</p>
 
-<p>3.4. Администрация не несёт ответственности за убытки, возникшие вследствие невозможности использования сервиса по причинам, не зависящим от администрации.</p>
+                <p>3.2. Администрация не гарантирует бесперебойную работу сервиса.</p>
 
-<h2>4. Законность использования</h2>
+                <p>3.3. Возможны временные технические работы, обновления и ограничения доступа.</p>
 
-<p>4.1. Пользователь обязуется использовать WHITE STARS только в соответствии с законодательством своей страны и правилами Telegram.</p>
+                <p>3.4. Администрация не несёт ответственности за убытки, возникшие вследствие невозможности использования сервиса по причинам, не зависящим от администрации.</p>
 
-<p>4.2. Пользователь самостоятельно несёт ответственность за последствия использования приобретённых цифровых товаров.</p>
+                <h2>4. Законность использования</h2>
 
-<h2>5. Интеллектуальная собственность</h2>
+                <p>4.1. Пользователь обязуется использовать WHITE STARS только в соответствии с законодательством своей страны и правилами Telegram.</p>
 
-<p>5.1. Интерфейс, дизайн, программный код и иные материалы WHITE STARS являются объектами интеллектуальной собственности.</p>
+                <p>4.2. Пользователь самостоятельно несёт ответственность за последствия использования приобретённых цифровых товаров.</p>
 
-<p>5.2. Запрещается копирование, продажа, распространение или использование материалов сервиса без письменного разрешения администрации.</p>
+                <h2>5. Интеллектуальная собственность</h2>
 
-<h2>6. Ограничение доступа</h2>
+                <p>5.1. Интерфейс, дизайн, программный код и иные материалы WHITE STARS являются объектами интеллектуальной собственности.</p>
 
-<p>Администрация вправе ограничить доступ к сервису без предварительного уведомления в случаях:</p>
+                <p>5.2. Запрещается копирование, продажа, распространение или использование материалов сервиса без письменного разрешения администрации.</p>
 
-<ul>
-<li>нарушения настоящего Соглашения;</li>
-<li>мошеннических действий;</li>
-<li>использования сервиса с нарушением законодательства;</li>
-<li>по требованию платёжных провайдеров или государственных органов.</li>
-</ul>
+                <h2>6. Ограничение доступа</h2>
 
-<h2>7. Платежи и возвраты</h2>
+                <p>Администрация вправе ограничить доступ к сервису без предварительного уведомления в случаях:</p>
 
-<p>7.1. Оплата производится способами, указанными в сервисе.</p>
+                <ul>
+                    <li>нарушения настоящего Соглашения;</li>
+                    <li>мошеннических действий;</li>
+                    <li>использования сервиса с нарушением законодательства;</li>
+                    <li>по требованию платёжных провайдеров или государственных органов.</li>
+                </ul>
 
-<p>7.2. Денежные средства зачисляются на внутренний баланс пользователя после успешного подтверждения платежа.</p>
+                <h2>7. Платежи и возвраты</h2>
 
-<p>7.3. С внутреннего баланса пользователь может приобретать цифровые товары, представленные в WHITE STARS.</p>
+                <p>7.1. Оплата производится способами, указанными в сервисе.</p>
 
-<p>7.4. Возврат средств возможен только в случае, если денежные средства были списаны, но не были зачислены на баланс по технической ошибке сервиса.</p>
+                <p>7.2. Денежные средства зачисляются на внутренний баланс пользователя после успешного подтверждения платежа.</p>
 
-<p>7.5. После успешного предоставления цифрового товара возврат денежных средств не осуществляется, если иное не предусмотрено законодательством.</p>
+                <p>7.3. С внутреннего баланса пользователь может приобретать цифровые товары, представленные в WHITE STARS.</p>
 
-<p>7.6. Перед обращением в банк или платёжную систему Пользователь обязуется обратиться в службу поддержки WHITE STARS.</p>
+                <p>7.4. Возврат средств возможен только в случае, если денежные средства были списаны, но не были зачислены на баланс по технической ошибке сервиса.</p>
 
-<h2>8. Конфиденциальность</h2>
+                <p>7.5. После успешного предоставления цифрового товара возврат денежных средств не осуществляется, если иное не предусмотрено законодательством.</p>
 
-<p>Обработка данных осуществляется в соответствии с Политикой конфиденциальности WHITE STARS.</p>
+                <p>7.6. Перед обращением в банк или платёжную систему Пользователь обязуется обратиться в службу поддержки WHITE STARS.</p>
 
-<h2>9. Изменение соглашения</h2>
+                <h2>8. Конфиденциальность</h2>
 
-<p>Администрация вправе изменять настоящее Соглашение без предварительного уведомления.</p>
+                <p>Обработка данных осуществляется в соответствии с Политикой конфиденциальности WHITE STARS.</p>
 
-<p>Продолжение использования сервиса означает согласие Пользователя с новой редакцией документа.</p>
+                <h2>9. Изменение соглашения</h2>
 
-<h2>10. Контакты</h2>
+                <p>Администрация вправе изменять настоящее Соглашение без предварительного уведомления.</p>
 
-<p>По всем вопросам Пользователь может обратиться в службу поддержки:</p>
+                <p>Продолжение использования сервиса означает согласие Пользователя с новой редакцией документа.</p>
 
-<p><b>@WHITE_STARS_CONNECT</b></p>
+                <h2>10. Контакты</h2>
 
-</div>
+                <p>По всем вопросам Пользователь может обратиться в службу поддержки:</p>
 
-<button onclick="location.href='../index.html'">
-Вернуться на главную
-</button>
+                <p><b>@WHITE_STARS_CONNECT</b></p>
 
-</div>
+            </article>
+
+            <button onclick="location.href='../index.html'" aria-label="Вернуться на главную страницу">
+                Вернуться на главную
+            </button>
+        </div>
+    </main>
+
+    <!-- ============================================
+    JS — МИНИМАЛЬНЫЙ, ТОЛЬКО ЗВЁЗДЫ
+    ============================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================
+            // ЗВЁЗДЫ — 20 ШТУК, STATIC, БЕЗ АНИМАЦИЙ
+            // ============================================
+            const container = document.getElementById('stars');
+            if (container) {
+                const count = 20;
+                const fragment = document.createDocumentFragment();
+
+                for (let i = 0; i < count; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    const size = 1 + Math.random() * 2;
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    const opacity = 0.08 + Math.random() * 0.25;
+                    star.style.cssText =
+                        `width:${size}px;height:${size}px;left:${x}%;top:${y}%;opacity:${opacity};`;
+                    fragment.appendChild(star);
+                }
+                container.appendChild(fragment);
+            }
+
+            // ============================================
+            // ВСЁ. НИКАКИХ RAF, ПАРАЛЛАКСОВ, ДВИЖЕНИЙ.
+            // ============================================
+
+        })();
+    </script>
 
 </body>
 </html>
