@@ -1,8 +1,8 @@
-// a natural ya Nujen?
+// a nahuy ya Nujen?
 // да хз, потом мб пригодишься 
-// a Potomac eto kinda?
+// a Potom eto kogda?
 // а хуй знает
-//*cry" 
+//*cry* 
 // ты чо срешь далбабеб
 //suka cry eto plakat a ne srat 
 // аа, тоесть плоке плоке нормалдаке?
