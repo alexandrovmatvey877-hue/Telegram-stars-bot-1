@@ -1,180 +1,1491 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Политика конфиденциальности | WHITE STARS</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Политика конфиденциальности | WHITE STARS</title>
+    <style>
+        /* ============================================
+           BASE RESET & TYPOGRAPHY
+        ============================================ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
+        :root {
+            --bg-primary: #0b0d11;
+            --text-primary: #f0f2f6;
+            --text-secondary: rgba(255, 255, 255, 0.76);
+            --text-muted: rgba(255, 255, 255, 0.25);
+            --gold: #f8d86a;
+            --gold-dim: rgba(248, 216, 106, 0.12);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-shadow: 0 40px 80px -24px rgba(0, 0, 0, 0.8);
+            --radius-large: 56px;
+            --radius-medium: 32px;
+            --radius-small: 28px;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-}
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
 
-body{
-background:#fff;
-color:#111;
-line-height:1.7;
-}
+        body {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            padding: 32px 16px;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            position: relative;
+            color: var(--text-primary);
+        }
 
-.container{
-max-width:900px;
-margin:auto;
-padding:20px;
-}
+        /* ============================================
+           COSMIC BACKGROUND
+        ============================================ */
+        .cosmic-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            will-change: transform;
+        }
 
-.back{
-display:inline-block;
-margin-bottom:20px;
-text-decoration:none;
-color:#111;
-font-weight:600;
-}
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            will-change: transform, opacity;
+            opacity: 0.12;
+        }
 
-h1{
-font-size:32px;
-margin-bottom:10px;
-}
+        .nebula-1 {
+            width: 70%;
+            height: 60%;
+            top: -20%;
+            left: -10%;
+            background: radial-gradient(circle, rgba(80, 120, 200, 0.08), rgba(40, 60, 120, 0.02) 60%, transparent);
+            animation: nebulaDrift1 45s infinite alternate ease-in-out;
+        }
+        .nebula-2 {
+            width: 50%;
+            height: 50%;
+            bottom: -10%;
+            right: -10%;
+            background: radial-gradient(circle, rgba(180, 140, 200, 0.06), rgba(100, 80, 140, 0.02) 60%, transparent);
+            animation: nebulaDrift2 55s infinite alternate ease-in-out;
+        }
+        .nebula-3 {
+            width: 40%;
+            height: 40%;
+            top: 30%;
+            left: 30%;
+            background: radial-gradient(circle, rgba(200, 180, 150, 0.04), rgba(150, 130, 100, 0.01) 60%, transparent);
+            animation: nebulaDrift3 65s infinite alternate ease-in-out;
+        }
+        .nebula-4 {
+            width: 30%;
+            height: 35%;
+            top: 50%;
+            left: 60%;
+            background: radial-gradient(circle, rgba(140, 160, 200, 0.05), rgba(80, 100, 160, 0.01) 60%, transparent);
+            animation: nebulaDrift4 50s infinite alternate ease-in-out;
+        }
 
-.subtitle{
-color:#666;
-margin-bottom:25px;
-}
+        @keyframes nebulaDrift1 {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.10;
+            }
+            100% {
+                transform: translate(8%, 5%) scale(1.1);
+                opacity: 0.16;
+            }
+        }
+        @keyframes nebulaDrift2 {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.08;
+            }
+            100% {
+                transform: translate(-6%, -8%) scale(1.15);
+                opacity: 0.14;
+            }
+        }
+        @keyframes nebulaDrift3 {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.06;
+            }
+            100% {
+                transform: translate(5%, -5%) scale(1.2);
+                opacity: 0.10;
+            }
+        }
+        @keyframes nebulaDrift4 {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.05;
+            }
+            100% {
+                transform: translate(-10%, 8%) scale(1.3);
+                opacity: 0.09;
+            }
+        }
 
-.card{
-background:#f6f7fb;
-padding:25px;
-border-radius:18px;
-margin-bottom:20px;
-}
+        /* ============================================
+           STARS & DUST (shared keyframes)
+        ============================================ */
+        .stars-container {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            will-change: transform;
+        }
 
-h2{
-margin-top:25px;
-margin-bottom:10px;
-font-size:22px;
-}
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            background: #fff;
+            will-change: transform, opacity;
+        }
 
-p,li{
-color:#444;
-margin-bottom:10px;
-}
+        .star-twinkle {
+            animation: starTwinkle var(--duration, 4s) infinite alternate ease-in-out;
+            animation-delay: var(--delay, 0s);
+        }
 
-ul{
-padding-left:20px;
-}
+        @keyframes starTwinkle {
+            0% {
+                opacity: var(--opacity-min, 0.05);
+                transform: scale(0.7);
+            }
+            100% {
+                opacity: var(--opacity-max, 0.45);
+                transform: scale(1.3);
+            }
+        }
 
-button{
-width:100%;
-height:55px;
-border:none;
-border-radius:15px;
-background:#111;
-color:#fff;
-font-size:17px;
-font-weight:700;
-cursor:pointer;
-margin-top:30px;
-}
+        .dust-container {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            will-change: transform;
+        }
 
-</style>
+        .dust {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(200, 200, 220, 0.25), transparent 70%);
+            filter: blur(3px);
+            will-change: transform;
+        }
+
+        .dust-drift {
+            animation: dustDrift var(--duration, 45s) infinite alternate ease-in-out;
+            animation-delay: var(--delay, 0s);
+        }
+
+        @keyframes dustDrift {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: var(--opacity-min, 0.007);
+            }
+            33% {
+                transform: translate(var(--dx1, 20px), var(--dy1, -15px)) scale(1.15);
+                opacity: var(--opacity-mid, 0.02);
+            }
+            66% {
+                transform: translate(var(--dx2, -15px), var(--dy2, 15px)) scale(0.85);
+                opacity: var(--opacity-mid2, 0.015);
+            }
+            100% {
+                transform: translate(var(--dx3, 10px), var(--dy3, -10px)) scale(1.05);
+                opacity: var(--opacity-max, 0.025);
+            }
+        }
+
+        /* ============================================
+           GLASS REFRACTION OVERLAY
+        ============================================ */
+        .glass-refraction {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.01), transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(255, 215, 74, 0.005), transparent 50%);
+            filter: blur(60px);
+            opacity: 0.3;
+            will-change: transform;
+        }
+
+        /* ============================================
+           MAIN CONTAINER
+        ============================================ */
+        .container {
+            position: relative;
+            max-width: 830px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 48px 56px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(45px) saturate(1.4);
+            -webkit-backdrop-filter: blur(45px) saturate(1.4);
+            border-radius: var(--radius-large);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 -1px 0 rgba(255, 255, 255,
+                    0.02);
+            overflow: hidden;
+            z-index: 1;
+            opacity: 0;
+            clip-path: inset(0 0 100% 0);
+            animation: glassForm 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.6s;
+            will-change: transform, opacity, clip-path, backdrop-filter;
+            transform: translateZ(0);
+        }
+
+        /* ============================================
+           GLASS LAYERS
+        ============================================ */
+        .glass-noise {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.012;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
+            mix-blend-mode: overlay;
+            will-change: transform;
+        }
+
+        .glass-reflection {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: var(--radius-large);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 25%, transparent 65%, rgba(255,
+                        255, 255, 0.02) 100%);
+            opacity: 0.6;
+            will-change: transform;
+        }
+
+        .glass-reflection-2 {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: var(--radius-large);
+            background: linear-gradient(225deg, rgba(255, 215, 74, 0.03) 0%, transparent 40%, transparent 60%, rgba(255,
+                        215, 74, 0.015) 100%);
+            opacity: 0.4;
+            will-change: transform;
+        }
+
+        .glass-caustics {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: var(--radius-large);
+            background:
+                radial-gradient(ellipse at 30% 70%, rgba(255, 215, 74, 0.02), transparent 50%),
+                radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.01), transparent 50%);
+            opacity: 0.3;
+            will-change: transform;
+        }
+
+        .glass-edge {
+            position: absolute;
+            inset: -1px;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: calc(var(--radius-large) + 1px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, transparent 20%, transparent 80%, rgba(255,
+                        215, 74, 0.03) 100%);
+            opacity: 0.4;
+            will-change: transform;
+        }
+
+        @keyframes glassForm {
+            0% {
+                opacity: 0;
+                clip-path: inset(100% 0 0 0);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+            15% {
+                opacity: 0.2;
+                clip-path: inset(85% 0 0 0);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+            }
+            35% {
+                opacity: 0.4;
+                clip-path: inset(55% 0 0 0);
+                backdrop-filter: blur(25px);
+                -webkit-backdrop-filter: blur(25px);
+            }
+            55% {
+                opacity: 0.7;
+                clip-path: inset(25% 0 0 0);
+                backdrop-filter: blur(35px);
+                -webkit-backdrop-filter: blur(35px);
+            }
+            75% {
+                opacity: 0.9;
+                clip-path: inset(5% 0 0 0);
+                backdrop-filter: blur(42px);
+                -webkit-backdrop-filter: blur(42px);
+            }
+            90% {
+                opacity: 0.95;
+                clip-path: inset(1% 0 0 0);
+                backdrop-filter: blur(45px);
+                -webkit-backdrop-filter: blur(45px);
+            }
+            100% {
+                opacity: 1;
+                clip-path: inset(0 0 0 0);
+                backdrop-filter: blur(45px) saturate(1.4);
+                -webkit-backdrop-filter: blur(45px) saturate(1.4);
+            }
+        }
+
+        /* ============================================
+           LIGHT WAVE & GOLDEN PASS
+        ============================================ */
+        .light-wave {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: var(--radius-large);
+            background: linear-gradient(135deg,
+                    rgba(255, 215, 74, 0) 0%,
+                    rgba(255, 215, 74, 0.04) 20%,
+                    rgba(255, 215, 74, 0.06) 40%,
+                    rgba(255, 215, 74, 0.04) 60%,
+                    rgba(255, 215, 74, 0) 100%);
+            opacity: 0;
+            animation: lightWave 2s ease forwards;
+            animation-delay: 3.4s;
+            will-change: transform, opacity;
+        }
+
+        @keyframes lightWave {
+            0% {
+                opacity: 0;
+                transform: scale(1.05) rotate(5deg);
+            }
+            30% {
+                opacity: 0.7;
+                transform: scale(1) rotate(0deg);
+            }
+            70% {
+                opacity: 0.4;
+                transform: scale(0.98) rotate(-2deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .golden-pass {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: var(--radius-large);
+            background: linear-gradient(135deg,
+                    transparent 40%,
+                    rgba(255, 215, 74, 0.02) 45%,
+                    rgba(255, 215, 74, 0.04) 50%,
+                    rgba(255, 215, 74, 0.02) 55%,
+                    transparent 60%);
+            opacity: 0;
+            animation: goldenPass 20s ease infinite;
+            animation-delay: 5s;
+            will-change: transform, opacity;
+        }
+
+        @keyframes goldenPass {
+            0%,
+            100% {
+                opacity: 0;
+                transform: rotate(0deg) scale(1);
+            }
+            5% {
+                opacity: 0.6;
+            }
+            10% {
+                opacity: 0.8;
+                transform: rotate(15deg) scale(1.1);
+            }
+            15% {
+                opacity: 0.4;
+                transform: rotate(25deg) scale(0.95);
+            }
+            20% {
+                opacity: 0;
+                transform: rotate(30deg) scale(1);
+            }
+        }
+
+        /* ============================================
+           LIGHT INDICATOR
+        ============================================ */
+        .light-indicator {
+            position: absolute;
+            right: 20px;
+            top: 0;
+            width: 280px;
+            height: 320px;
+            pointer-events: none;
+            z-index: 1;
+            will-change: transform, opacity;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 35% 30%,
+                    rgba(255, 212, 90, 0.30) 0%,
+                    rgba(248, 216, 106, 0.12) 35%,
+                    rgba(255, 212, 90, 0.04) 65%,
+                    transparent 100%);
+            filter: blur(90px);
+            mix-blend-mode: soft-light;
+            opacity: 0.45;
+            transform: translateY(0) translateX(0) scale(1);
+            transition: opacity 0.8s ease;
+        }
+
+        .light-indicator::after {
+            content: '';
+            position: absolute;
+            inset: 8%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 25%,
+                    rgba(255, 225, 160, 0.12),
+                    transparent 70%);
+            filter: blur(50px);
+            mix-blend-mode: overlay;
+            opacity: 0.5;
+            will-change: transform;
+        }
+
+        /* ============================================
+           VIGNETTE
+        ============================================ */
+        .vignette-top,
+        .vignette-bottom {
+            position: absolute;
+            left: 0;
+            right: 0;
+            pointer-events: none;
+            z-index: 2;
+            height: 80px;
+            border-radius: var(--radius-large);
+            will-change: transform;
+        }
+        .vignette-top {
+            top: -1px;
+            background: linear-gradient(to bottom, rgba(11, 13, 17, 0.7) 0%, transparent 100%);
+            border-radius: var(--radius-large) var(--radius-large) 0 0;
+        }
+        .vignette-bottom {
+            bottom: -1px;
+            background: linear-gradient(to top, rgba(11, 13, 17, 0.6) 0%, transparent 100%);
+            border-radius: 0 0 var(--radius-large) var(--radius-large);
+        }
+
+        /* ============================================
+           CONTENT
+        ============================================ */
+        .content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 24px;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.30);
+            font-weight: 450;
+            font-size: 15px;
+            letter-spacing: 0.2px;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 2px;
+            transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            animation: textReveal 1.4s ease forwards;
+            animation-delay: 3.2s;
+            will-change: transform, opacity;
+        }
+        .back:hover {
+            color: var(--gold);
+            border-bottom-color: var(--gold-dim);
+            transform: translateY(-1px);
+        }
+        .back:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 4px;
+            border-radius: 2px;
+        }
+
+        .brand-title {
+            font-size: 40px;
+            font-weight: 620;
+            letter-spacing: -0.6px;
+            margin-bottom: 6px;
+            color: #ffffff;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            filter: blur(12px);
+            transform: translateY(15px);
+            animation: titleReveal 2s ease forwards;
+            animation-delay: 3.0s;
+            position: relative;
+            display: inline-block;
+            will-change: transform, opacity, filter;
+        }
+
+        .brand-title::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 215, 74, 0.12),
+                    transparent);
+            transform: skewX(-20deg);
+            animation: goldReflection 1.4s ease forwards;
+            animation-delay: 4.8s;
+            pointer-events: none;
+            will-change: transform, opacity;
+        }
+
+        @keyframes goldReflection {
+            0% {
+                left: -100%;
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                left: 200%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes titleReveal {
+            0% {
+                opacity: 0;
+                filter: blur(15px);
+                transform: translateY(15px);
+            }
+            30% {
+                opacity: 0.3;
+                filter: blur(8px);
+                transform: translateY(8px);
+            }
+            60% {
+                opacity: 0.7;
+                filter: blur(2px);
+                transform: translateY(3px);
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes textReveal {
+            0% {
+                opacity: 0;
+                filter: blur(6px);
+                transform: translateY(8px);
+            }
+            50% {
+                opacity: 0.5;
+                filter: blur(2px);
+                transform: translateY(3px);
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 400;
+            margin-bottom: 34px;
+            padding-left: 18px;
+            border-left: 2px solid var(--gold-dim);
+            letter-spacing: 0.2px;
+            opacity: 0;
+            animation: textReveal 1.2s ease forwards;
+            animation-delay: 3.4s;
+            will-change: transform, opacity, filter;
+        }
+
+        /* ============================================
+           CARD
+        ============================================ */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 32px 36px;
+            border-radius: var(--radius-medium);
+            border: 1px solid rgba(255, 255, 255, 0.035);
+            box-shadow:
+                0 8px 32px -16px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.01);
+            transition: box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, box-shadow;
+        }
+
+        .card:hover {
+            box-shadow:
+                0 12px 48px -20px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.02),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.02);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+        ============================================ */
+        h2 {
+            margin-top: 36px;
+            margin-bottom: 14px;
+            font-size: 22px;
+            font-weight: 530;
+            color: #ffffff;
+            letter-spacing: -0.2px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            padding-bottom: 10px;
+            opacity: 0;
+            animation: textReveal 0.9s ease forwards;
+            will-change: transform, opacity, filter;
+        }
+
+        .card h2:nth-of-type(1) {
+            animation-delay: 3.6s;
+        }
+        .card h2:nth-of-type(2) {
+            animation-delay: 3.8s;
+        }
+        .card h2:nth-of-type(3) {
+            animation-delay: 4.0s;
+        }
+        .card h2:nth-of-type(4) {
+            animation-delay: 4.2s;
+        }
+        .card h2:nth-of-type(5) {
+            animation-delay: 4.4s;
+        }
+        .card h2:nth-of-type(6) {
+            animation-delay: 4.6s;
+        }
+        .card h2:nth-of-type(7) {
+            animation-delay: 4.8s;
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        p,
+        li {
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.85;
+            margin-bottom: 14px;
+            font-size: 16.5px;
+            letter-spacing: 0.1px;
+            max-width: 76ch;
+            opacity: 0;
+            animation: textReveal 0.9s ease forwards;
+            will-change: transform, opacity, filter;
+        }
+
+        .card p:nth-of-type(1) {
+            animation-delay: 3.7s;
+        }
+        .card p:nth-of-type(2) {
+            animation-delay: 3.9s;
+        }
+        .card p:nth-of-type(3) {
+            animation-delay: 4.1s;
+        }
+        .card p:nth-of-type(4) {
+            animation-delay: 4.3s;
+        }
+        .card p:nth-of-type(5) {
+            animation-delay: 4.5s;
+        }
+        .card p:nth-of-type(6) {
+            animation-delay: 4.7s;
+        }
+        .card p:nth-of-type(7) {
+            animation-delay: 4.9s;
+        }
+        .card p:nth-of-type(8) {
+            animation-delay: 5.1s;
+        }
+
+        ul {
+            padding-left: 26px;
+            margin: 6px 0 18px;
+        }
+        ul li {
+            margin-bottom: 6px;
+            list-style-type: none;
+            position: relative;
+            padding-left: 4px;
+        }
+        ul li::before {
+            content: '•';
+            color: var(--gold);
+            font-weight: 500;
+            position: absolute;
+            left: -22px;
+            opacity: 0.30;
+            font-size: 18px;
+        }
+
+        b,
+        strong {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        /* ============================================
+           BUTTON
+        ============================================ */
+        button {
+            width: 100%;
+            height: 60px;
+            border: none;
+            border-radius: var(--radius-medium);
+            background: rgba(255, 255, 255, 0.015);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #fff;
+            font-size: 17px;
+            font-weight: 470;
+            cursor: pointer;
+            margin-top: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.025);
+            transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            animation: textReveal 1s ease forwards;
+            animation-delay: 5.2s;
+            will-change: transform, opacity;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-medium);
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.02) 0%,
+                    transparent 40%,
+                    transparent 60%,
+                    rgba(255, 215, 74, 0.01) 100%);
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        button:hover {
+            background: rgba(248, 216, 106, 0.035);
+            border-color: rgba(248, 216, 106, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px -12px rgba(248, 216, 106, 0.04),
+                0 8px 24px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        button:hover::before {
+            opacity: 1;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 4px;
+        }
+
+        /* ============================================
+           DIVIDERS
+        ============================================ */
+        .card p+h2,
+        .card ul+h2 {
+            margin-top: 40px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.015);
+        }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 820px) {
+            body {
+                padding: 20px 12px;
+            }
+            .container {
+                padding: 28px 28px 40px;
+                border-radius: 40px;
+                max-width: 100%;
+            }
+            .vignette-top,
+            .vignette-bottom {
+                height: 60px;
+                border-radius: 40px;
+            }
+            .vignette-top {
+                border-radius: 40px 40px 0 0;
+            }
+            .vignette-bottom {
+                border-radius: 0 0 40px 40px;
+            }
+            .brand-title {
+                font-size: 30px;
+            }
+            .card {
+                padding: 24px 22px;
+                border-radius: var(--radius-small);
+            }
+            .light-indicator {
+                width: 190px;
+                height: 220px;
+                right: 10px;
+                filter: blur(70px);
+                opacity: 0.35;
+            }
+            p,
+            li {
+                font-size: 15px;
+                line-height: 1.8;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            .glass-reflection,
+            .glass-reflection-2,
+            .glass-caustics,
+            .glass-edge {
+                border-radius: 40px;
+            }
+            .light-wave {
+                border-radius: 40px;
+            }
+            .golden-pass {
+                border-radius: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px 6px;
+            }
+            .container {
+                padding: 20px 16px 32px;
+                border-radius: var(--radius-small);
+            }
+            .vignette-top,
+            .vignette-bottom {
+                height: 40px;
+                border-radius: var(--radius-small);
+            }
+            .vignette-top {
+                border-radius: var(--radius-small) var(--radius-small) 0 0;
+            }
+            .vignette-bottom {
+                border-radius: 0 0 var(--radius-small) var(--radius-small);
+            }
+            .card {
+                padding: 18px 14px;
+                border-radius: 20px;
+            }
+            .brand-title {
+                font-size: 24px;
+            }
+            .subtitle {
+                font-size: 13px;
+                padding-left: 12px;
+                margin-bottom: 22px;
+            }
+            .light-indicator {
+                width: 140px;
+                height: 170px;
+                right: 4px;
+                filter: blur(55px);
+                opacity: 0.25;
+            }
+            p,
+            li {
+                font-size: 14px;
+                line-height: 1.75;
+                margin-bottom: 10px;
+            }
+            h2 {
+                font-size: 18px;
+                margin-top: 28px;
+            }
+            button {
+                height: 52px;
+                font-size: 15px;
+                border-radius: 24px;
+            }
+            .glass-reflection,
+            .glass-reflection-2,
+            .glass-caustics,
+            .glass-edge {
+                border-radius: var(--radius-small);
+            }
+            .light-wave {
+                border-radius: var(--radius-small);
+            }
+            .golden-pass {
+                border-radius: var(--radius-small);
+            }
+        }
+
+        /* ============================================
+           ACCESSIBILITY: REDUCED MOTION
+        ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .container {
+                animation: none !important;
+                opacity: 1 !important;
+                clip-path: none !important;
+                backdrop-filter: blur(45px) saturate(1.4) !important;
+                -webkit-backdrop-filter: blur(45px) saturate(1.4) !important;
+            }
+
+            .brand-title,
+            .subtitle,
+            .back,
+            .card h2,
+            .card p,
+            .card li,
+            button {
+                animation: none !important;
+                opacity: 1 !important;
+                filter: none !important;
+                transform: none !important;
+            }
+
+            .light-wave,
+            .golden-pass {
+                animation: none !important;
+                opacity: 0 !important;
+            }
+
+            .nebula,
+            .star,
+            .dust {
+                animation: none !important;
+            }
+
+            .light-indicator {
+                transition: none !important;
+            }
+        }
+
+        /* ============================================
+           ACCESSIBILITY: HIGH CONTRAST
+        ============================================ */
+        @media (prefers-contrast: high) {
+            :root {
+                --text-secondary: rgba(255, 255, 255, 0.92);
+                --text-muted: rgba(255, 255, 255, 0.6);
+                --glass-bg: rgba(255, 255, 255, 0.06);
+                --glass-border: rgba(255, 255, 255, 0.15);
+            }
+
+            .glass-noise,
+            .glass-reflection,
+            .glass-reflection-2,
+            .glass-caustics,
+            .glass-edge {
+                opacity: 0 !important;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+    <!-- ============================================
+    COSMIC BACKGROUND
+    ============================================ -->
+    <div class="cosmic-bg" id="cosmicBg" role="presentation" aria-hidden="true">
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+        <div class="nebula nebula-3"></div>
+        <div class="nebula nebula-4"></div>
+    </div>
 
-<a class="back" href="../index.html">← На главную</a>
+    <!-- ============================================
+    STARS
+    ============================================ -->
+    <div class="stars-container" id="starsContainer" role="presentation" aria-hidden="true"></div>
 
-<h1>🔒 Политика конфиденциальности</h1>
+    <!-- ============================================
+    DUST
+    ============================================ -->
+    <div class="dust-container" id="dustContainer" role="presentation" aria-hidden="true"></div>
 
-<p class="subtitle">
-Редакция от 30 июня 2026 года
-</p>
+    <!-- ============================================
+    GLASS REFRACTION OVERLAY
+    ============================================ -->
+    <div class="glass-refraction" id="glassRefraction" role="presentation" aria-hidden="true"></div>
 
-<div class="card">
+    <!-- ============================================
+    MAIN CONTAINER
+    ============================================ -->
+    <main class="container" id="container" role="main">
 
-<p><b>WHITE STARS</b> уважает право каждого пользователя на конфиденциальность. Настоящая Политика регулирует порядок обработки и защиты информации, которую пользователь передает при использовании сервиса WHITE STARS.</p>
+        <!-- Glass layers -->
+        <div class="glass-noise" aria-hidden="true"></div>
+        <div class="glass-reflection" aria-hidden="true"></div>
+        <div class="glass-reflection-2" aria-hidden="true"></div>
+        <div class="glass-caustics" aria-hidden="true"></div>
+        <div class="glass-edge" aria-hidden="true"></div>
 
-<h2>1. Общие положения</h2>
+        <!-- Light wave -->
+        <div class="light-wave" aria-hidden="true"></div>
 
-<p>1.1. Настоящая Политика конфиденциальности регулирует порядок обработки и защиты информации, которую пользователь предоставляет при использовании сервиса WHITE STARS.</p>
+        <!-- Golden pass -->
+        <div class="golden-pass" aria-hidden="true"></div>
 
-<p>1.2. Используя сервис, пользователь подтверждает согласие с настоящей Политикой. Если пользователь не согласен с ее условиями, он обязан прекратить использование сервиса.</p>
+        <!-- Light indicator -->
+        <div class="light-indicator" id="lightIndicator" aria-hidden="true"></div>
 
-<h2>2. Какие данные собираются</h2>
+        <!-- Vignette -->
+        <div class="vignette-top" aria-hidden="true"></div>
+        <div class="vignette-bottom" aria-hidden="true"></div>
 
-<p>WHITE STARS может обрабатывать следующую информацию:</p>
+        <!-- Content -->
+        <div class="content">
+            <a class="back" href="../index.html" aria-label="На главную">← На главную</a>
 
-<ul>
-<li>Telegram ID пользователя;</li>
-<li>Имя пользователя, username и другую информацию, доступную через Telegram Mini App;</li>
-<li>Технические сведения об устройстве, браузере и операционной системе;</li>
-<li>IP-адрес;</li>
-<li>Историю заказов и операций;</li>
-<li>Историю взаимодействия с сервисом.</li>
-</ul>
+            <h1 class="brand-title">🔒 Политика конфиденциальности</h1>
 
-<p>Сервис не требует предоставления паспортных данных, фотографий документов или иной информации, не связанной с работой сервиса.</p>
+            <p class="subtitle">
+                Редакция от 30 июня 2026 года
+            </p>
 
-<h2>3. Использование информации</h2>
+            <article class="card">
 
-<p>Полученные данные используются исключительно для:</p>
+                <p><b>WHITE STARS</b> уважает право каждого пользователя на конфиденциальность. Настоящая Политика регулирует порядок обработки и защиты информации, которую пользователь передает при использовании сервиса WHITE STARS.</p>
 
-<ul>
-<li>работы сервиса;</li>
-<li>обработки платежей;</li>
-<li>пополнения внутреннего баланса;</li>
-<li>выдачи цифровых товаров;</li>
-<li>связи с пользователем;</li>
-<li>предоставления технической поддержки;</li>
-<li>улучшения качества работы сервиса;</li>
-<li>предотвращения мошеннических действий.</li>
-</ul>
+                <h2>1. Общие положения</h2>
 
-<h2>4. Передача информации третьим лицам</h2>
+                <p>1.1. Настоящая Политика конфиденциальности регулирует порядок обработки и защиты информации, которую пользователь предоставляет при использовании сервиса WHITE STARS.</p>
 
-<p>Администрация не передает персональные данные третьим лицам, кроме следующих случаев:</p>
+                <p>1.2. Используя сервис, пользователь подтверждает согласие с настоящей Политикой. Если пользователь не согласен с ее условиями, он обязан прекратить использование сервиса.</p>
 
-<ul>
-<li>если это требуется законодательством;</li>
-<li>если это необходимо для обработки платежей или исполнения заказа;</li>
-<li>если пользователь самостоятельно дал согласие.</li>
-</ul>
+                <h2>2. Какие данные собираются</h2>
 
-<h2>5. Хранение и защита данных</h2>
+                <p>WHITE STARS может обрабатывать следующую информацию:</p>
 
-<p>Данные пользователей хранятся только в течение срока, необходимого для работы сервиса и исполнения обязательств.</p>
+                <ul>
+                    <li>Telegram ID пользователя;</li>
+                    <li>Имя пользователя, username и другую информацию, доступную через Telegram Mini App;</li>
+                    <li>Технические сведения об устройстве, браузере и операционной системе;</li>
+                    <li>IP-адрес;</li>
+                    <li>Историю заказов и операций;</li>
+                    <li>Историю взаимодействия с сервисом.</li>
+                </ul>
 
-<p>WHITE STARS принимает разумные технические и организационные меры для защиты информации, однако не может гарантировать абсолютную безопасность передачи данных через сеть Интернет.</p>
+                <p>Сервис не требует предоставления паспортных данных, фотографий документов или иной информации, не связанной с работой сервиса.</p>
 
-<h2>6. Ограничение ответственности</h2>
+                <h2>3. Использование информации</h2>
 
-<p>Пользователь понимает, что передача информации через Интернет всегда связана с определенными рисками.</p>
+                <p>Полученные данные используются исключительно для:</p>
 
-<p>Администрация не несет ответственности за утрату, раскрытие или повреждение информации, если это произошло по причинам, не зависящим от администрации сервиса, включая действия третьих лиц или самого пользователя.</p>
+                <ul>
+                    <li>работы сервиса;</li>
+                    <li>обработки платежей;</li>
+                    <li>пополнения внутреннего баланса;</li>
+                    <li>выдачи цифровых товаров;</li>
+                    <li>связи с пользователем;</li>
+                    <li>предоставления технической поддержки;</li>
+                    <li>улучшения качества работы сервиса;</li>
+                    <li>предотвращения мошеннических действий.</li>
+                </ul>
 
-<h2>7. Изменение Политики</h2>
+                <h2>4. Передача информации третьим лицам</h2>
 
-<p>WHITE STARS вправе изменять настоящую Политику без предварительного уведомления пользователей.</p>
+                <p>Администрация не передает персональные данные третьим лицам, кроме следующих случаев:</p>
 
-<p>Продолжение использования сервиса после публикации новой редакции означает согласие пользователя с внесенными изменениями.</p>
+                <ul>
+                    <li>если это требуется законодательством;</li>
+                    <li>если это необходимо для обработки платежей или исполнения заказа;</li>
+                    <li>если пользователь самостоятельно дал согласие.</li>
+                </ul>
 
-<h2>8. Контакты</h2>
+                <h2>5. Хранение и защита данных</h2>
 
-<p>По всем вопросам, связанным с работой сервиса или обработкой данных, можно обратиться в службу поддержки:</p>
+                <p>Данные пользователей хранятся только в течение срока, необходимого для работы сервиса и исполнения обязательств.</p>
 
-<p><b>@WHITE_STARS_CONNECT</b></p>
+                <p>WHITE STARS принимает разумные технические и организационные меры для защиты информации, однако не может гарантировать абсолютную безопасность передачи данных через сеть Интернет.</p>
 
-</div>
+                <h2>6. Ограничение ответственности</h2>
 
-<button onclick="location.href='../index.html'">
-Вернуться на главную
-</button>
+                <p>Пользователь понимает, что передача информации через Интернет всегда связана с определенными рисками.</p>
 
-</div>
+                <p>Администрация не несет ответственности за утрату, раскрытие или повреждение информации, если это произошло по причинам, не зависящим от администрации сервиса, включая действия третьих лиц или самого пользователя.</p>
+
+                <h2>7. Изменение Политики</h2>
+
+                <p>WHITE STARS вправе изменять настоящую Политику без предварительного уведомления пользователей.</p>
+
+                <p>Продолжение использования сервиса после публикации новой редакции означает согласие пользователя с внесенными изменениями.</p>
+
+                <h2>8. Контакты</h2>
+
+                <p>По всем вопросам, связанным с работой сервиса или обработкой данных, можно обратиться в службу поддержки:</p>
+
+                <p><b>@WHITE_STARS_CONNECT</b></p>
+
+            </article>
+
+            <button onclick="location.href='../index.html'" aria-label="Вернуться на главную страницу">
+                Вернуться на главную
+            </button>
+        </div>
+    </main>
+
+    <!-- ============================================
+    JAVASCRIPT — FULLY OPTIMIZED
+    ============================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================
+            // CONFIG
+            // ============================================
+            const isMobile = window.innerWidth < 768;
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // ============================================
+            // 1. STARS GENERATION (optimized, shared keyframes)
+            // ============================================
+            const starsContainer = document.getElementById('starsContainer');
+            if (starsContainer && !prefersReducedMotion) {
+                const count = isMobile ? 50 : 100;
+                const fragment = document.createDocumentFragment();
+
+                for (let i = 0; i < count; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+
+                    const size = 0.8 + Math.random() * 2.5;
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    const opacity = 0.10 + Math.random() * 0.45;
+                    const hasTwinkle = Math.random() > 0.65;
+
+                    star.style.cssText =
+                        `width:${size}px;height:${size}px;left:${x}%;top:${y}%;opacity:${opacity};box-shadow:0 0 ${size*1.5}px rgba(255,255,255,0.10);`;
+
+                    if (hasTwinkle) {
+                        const duration = 3 + Math.random() * 5;
+                        const delay = Math.random() * 5;
+                        star.classList.add('star-twinkle');
+                        star.style.setProperty('--duration', duration + 's');
+                        star.style.setProperty('--delay', delay + 's');
+                        star.style.setProperty('--opacity-min', (opacity * 0.3).toString());
+                        star.style.setProperty('--opacity-max', opacity.toString());
+                    }
+
+                    fragment.appendChild(star);
+                }
+                starsContainer.appendChild(fragment);
+            }
+
+            // ============================================
+            // 2. DUST GENERATION (optimized, shared keyframes)
+            // ============================================
+            const dustContainer = document.getElementById('dustContainer');
+            if (dustContainer && !prefersReducedMotion) {
+                const count = isMobile ? 15 : 30;
+                const fragment = document.createDocumentFragment();
+
+                for (let i = 0; i < count; i++) {
+                    const dust = document.createElement('div');
+                    dust.className = 'dust dust-drift';
+
+                    const size = 50 + Math.random() * 150;
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    const baseOpacity = 0.015 + Math.random() * 0.035;
+                    const duration = 45 + Math.random() * 60;
+                    const delay = Math.random() * 30;
+
+                    const dx1 = 10 + Math.random() * 25;
+                    const dy1 = -10 + Math.random() * 25;
+                    const dx2 = -10 + Math.random() * 25;
+                    const dy2 = 10 + Math.random() * 25;
+                    const dx3 = 5 + Math.random() * 20;
+                    const dy3 = -5 + Math.random() * 20;
+
+                    dust.style.cssText =
+                        `width:${size}px;height:${size}px;left:${x}%;top:${y}%;opacity:${baseOpacity};`;
+                    dust.style.setProperty('--duration', duration + 's');
+                    dust.style.setProperty('--delay', delay + 's');
+                    dust.style.setProperty('--opacity-min', (baseOpacity * 0.5).toString());
+                    dust.style.setProperty('--opacity-mid', (baseOpacity * 0.8).toString());
+                    dust.style.setProperty('--opacity-mid2', (baseOpacity * 0.6).toString());
+                    dust.style.setProperty('--opacity-max', (baseOpacity * 0.7).toString());
+                    dust.style.setProperty('--dx1', dx1 + 'px');
+                    dust.style.setProperty('--dy1', dy1 + 'px');
+                    dust.style.setProperty('--dx2', dx2 + 'px');
+                    dust.style.setProperty('--dy2', dy2 + 'px');
+                    dust.style.setProperty('--dx3', dx3 + 'px');
+                    dust.style.setProperty('--dy3', dy3 + 'px');
+
+                    fragment.appendChild(dust);
+                }
+                dustContainer.appendChild(fragment);
+            }
+
+            // ============================================
+            // 3. LIGHT INDICATOR (optimized)
+            // ============================================
+            const indicator = document.getElementById('lightIndicator');
+            if (indicator && !prefersReducedMotion) {
+                // State
+                let state = {
+                    targetY: 0,
+                    currentY: 0,
+                    targetX: 0,
+                    currentX: 0,
+                    targetScale: 1,
+                    currentScale: 1,
+                    targetOpacity: 0.45,
+                    currentOpacity: 0.45,
+                    time: 0,
+                    active: false,
+                    rafId: null,
+                    scrolling: false
+                };
+
+                // Helper
+                const getScrollProgress = () => {
+                    const scrollTop = window.scrollY;
+                    const docHeight = Math.max(
+                        document.documentElement.scrollHeight - window.innerHeight,
+                        0
+                    );
+                    return docHeight <= 0 ? 0 : Math.min(Math.max(scrollTop / docHeight, 0), 1);
+                };
+
+                const updateTarget = () => {
+                    const progress = getScrollProgress();
+                    const containerHeight = window.innerHeight;
+                    const minY = containerHeight * 0.03;
+                    const maxY = containerHeight * 0.90;
+
+                    state.targetY = minY + progress * (maxY - minY);
+                    state.targetX = Math.sin(progress * Math.PI * 2.5 + state.time * 0.0003) * 18;
+                    state.targetScale = 1 + Math.sin(progress * Math.PI * 1.8 + state.time * 0.0005) * 0.015;
+                    state.targetOpacity = 0.40 + Math.sin(state.time * 0.0002 + progress * 2) * 0.08;
+                    state.targetOpacity = Math.min(Math.max(state.targetOpacity, 0.32), 0.58);
+                };
+
+                const step = () => {
+                    if (!state.active) return;
+
+                    state.time += 16;
+
+                    state.currentY += (state.targetY - state.currentY) * 0.055;
+                    state.currentX += (state.targetX - state.currentX) * 0.04;
+                    state.currentScale += (state.targetScale - state.currentScale) * 0.035;
+                    state.currentOpacity += (state.targetOpacity - state.currentOpacity) * 0.025;
+
+                    const clampedY = Math.min(Math.max(state.currentY, -20), window.innerHeight + 20);
+                    indicator.style.transform =
+                        `translateY(${clampedY}px) translateX(${state.currentX}px) scale(${state.currentScale})`;
+                    indicator.style.opacity = state.currentOpacity;
+
+                    state.rafId = requestAnimationFrame(step);
+                };
+
+                const onScroll = () => {
+                    if (!state.scrolling) {
+                        state.scrolling = true;
+                        requestAnimationFrame(() => {
+                            updateTarget();
+                            state.scrolling = false;
+                        });
+                    }
+                };
+
+                const onResize = updateTarget;
+
+                // Init
+                updateTarget();
+                state.currentY = state.targetY;
+                state.currentX = state.targetX;
+                state.currentScale = state.targetScale;
+                state.currentOpacity = state.targetOpacity;
+                indicator.style.transform =
+                    `translateY(${state.currentY}px) translateX(${state.currentX}px) scale(${state.currentScale})`;
+                indicator.style.opacity = state.currentOpacity;
+
+                // Start after delay
+                const startDelay = 5000;
+                const timerId = setTimeout(() => {
+                    state.active = true;
+                    state.rafId = requestAnimationFrame(step);
+                }, startDelay);
+
+                // Events
+                window.addEventListener('scroll', onScroll, { passive: true });
+                window.addEventListener('resize', onResize, { passive: true });
+                document.addEventListener('DOMContentLoaded', updateTarget);
+
+                // Cleanup
+                window.addEventListener('beforeunload', () => {
+                    state.active = false;
+                    if (state.rafId) cancelAnimationFrame(state.rafId);
+                    if (timerId) clearTimeout(timerId);
+                    window.removeEventListener('scroll', onScroll);
+                    window.removeEventListener('resize', onResize);
+                });
+            }
+
+            // ============================================
+            // 4. MULTI-LAYER PARALLAX (optimized, no DOM reads)
+            // ============================================
+            if (!prefersReducedMotion) {
+                const cosmicBg = document.getElementById('cosmicBg');
+                const glassRefraction = document.getElementById('glassRefraction');
+                const nebulas = document.querySelectorAll('.nebula');
+
+                // Store positions
+                const positions = {
+                    cosmic: { x: 0, y: 0 },
+                    refraction: { x: 0, y: 0 },
+                    nebulas: []
+                };
+
+                nebulas.forEach(() => {
+                    positions.nebulas.push({ x: 0, y: 0 });
+                });
+
+                let lastScrollY = 0;
+                let parallaxActive = false;
+                let parallaxRafId = null;
+
+                const updateParallax = () => {
+                    if (!parallaxActive) return;
+
+                    const scrollY = window.scrollY;
+                    const delta = scrollY - lastScrollY;
+                    lastScrollY = scrollY;
+
+                    // Cosmic bg
+                    if (cosmicBg) {
+                        positions.cosmic.y += delta * 0.015;
+                        cosmicBg.style.transform = `translate(${positions.cosmic.x}px, ${positions.cosmic.y}px)`;
+                    }
+
+                    // Nebulas
+                    nebulas.forEach((neb, i) => {
+                        const speed = 0.02 + i * 0.008;
+                        positions.nebulas[i].y += delta * speed;
+                        neb.style.transform =
+                            `translate(${positions.nebulas[i].x}px, ${positions.nebulas[i].y}px) scale(${1 + i * 0.04})`;
+                    });
+
+                    // Glass refraction
+                    if (glassRefraction) {
+                        positions.refraction.y += delta * 0.01;
+                        glassRefraction.style.transform =
+                            `translate(${positions.refraction.x}px, ${positions.refraction.y}px)`;
+                    }
+
+                    parallaxRafId = requestAnimationFrame(updateParallax);
+                };
+
+                // Start after delay
+                const parallaxTimer = setTimeout(() => {
+                    parallaxActive = true;
+                    updateParallax();
+                }, 2000);
+
+                // Cleanup
+                window.addEventListener('beforeunload', () => {
+                    parallaxActive = false;
+                    if (parallaxRafId) cancelAnimationFrame(parallaxRafId);
+                    if (parallaxTimer) clearTimeout(parallaxTimer);
+                });
+            }
+
+        })();
+    </script>
 
 </body>
 </html>
