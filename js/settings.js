@@ -1,3 +1,5 @@
+alert("SETTINGS.JS НОВЫЙ");
+
 let settings = {};
 let currentSettingsTab = "prices";
 
