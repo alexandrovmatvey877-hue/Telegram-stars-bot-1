@@ -33,14 +33,14 @@ body::before {
     height: 500px;
     top: -200px;
     right: -150px;
-    background: radial-gradient(circle, rgba(120, 80, 255, 0.15), transparent 70%);
+    background: radial-gradient(circle, rgba(60, 120, 255, 0.15), transparent 70%);
 }
 body::after {
     width: 400px;
     height: 400px;
     bottom: -150px;
     left: -100px;
-    background: radial-gradient(circle, rgba(60, 120, 255, 0.10), transparent 70%);
+    background: radial-gradient(circle, rgba(120, 80, 255, 0.12), transparent 70%);
 }
 
 .container {
@@ -97,14 +97,14 @@ button {
     width: 60px;
     height: 60px;
     border-radius: 18px;
-    background: linear-gradient(135deg, #f8d86a, #d4a83a);
-    color: #080c1a;
+    background: linear-gradient(135deg, #4a7cf7, #6c3ce0);
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 30px;
     font-weight: 700;
-    box-shadow: 0 4px 20px rgba(248, 216, 106, 0.2);
+    box-shadow: 0 4px 20px rgba(74, 124, 247, 0.2);
 }
 
 .logo-text h1 {
@@ -132,14 +132,33 @@ button {
     background: rgba(255, 255, 255, 0.03);
     color: #fff;
     font-weight: 700;
-    transition: all 0.25s ease;
+    transition: all 0.3s ease;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+}
+
+.header-buttons button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(74, 124, 247, 0.08), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.header-buttons button:hover::before {
+    opacity: 1;
 }
 
 .header-buttons button:hover {
-    background: rgba(248, 216, 106, 0.06);
-    border-color: rgba(248, 216, 106, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(74, 124, 247, 0.15);
     transform: translateY(-2px);
 }
 
@@ -165,6 +184,21 @@ button {
     font-size: 16px;
     color: rgba(255, 255, 255, 0.5);
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(74, 124, 247, 0.05), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.tab:hover::before {
+    opacity: 1;
 }
 
 .tab:hover {
@@ -173,10 +207,10 @@ button {
 }
 
 .tab.active {
-    background: linear-gradient(135deg, rgba(120, 80, 255, 0.2), rgba(248, 216, 106, 0.1));
-    border-color: rgba(248, 216, 106, 0.15);
-    color: #f8d86a;
-    box-shadow: 0 4px 20px rgba(120, 80, 255, 0.05);
+    background: linear-gradient(135deg, rgba(74, 124, 247, 0.15), rgba(108, 60, 224, 0.08));
+    border-color: rgba(74, 124, 247, 0.15);
+    color: #4a7cf7;
+    box-shadow: 0 4px 20px rgba(74, 124, 247, 0.05);
 }
 
 .page {
@@ -210,7 +244,7 @@ button {
     color: rgba(255, 255, 255, 0.3);
 }
 .search-panel input:focus {
-    border-color: rgba(248, 216, 106, 0.2);
+    border-color: rgba(74, 124, 247, 0.2);
 }
 
 .search-panel select {
@@ -233,24 +267,44 @@ button {
     color: #f0f2f6;
 }
 .search-panel select:focus {
-    border-color: rgba(248, 216, 106, 0.2);
+    border-color: rgba(74, 124, 247, 0.2);
 }
 
 .search-panel button {
     height: 50px;
     padding: 0 24px;
-    border: 1px solid rgba(248, 216, 106, 0.1);
+    border: 1px solid rgba(74, 124, 247, 0.1);
     border-radius: 16px;
-    background: rgba(248, 216, 106, 0.05);
-    color: #f8d86a;
+    background: rgba(74, 124, 247, 0.05);
+    color: #4a7cf7;
     font-weight: 700;
-    transition: all 0.25s ease;
+    transition: all 0.3s ease;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
 }
+
+.search-panel button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(74, 124, 247, 0.08), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.search-panel button:hover::before {
+    opacity: 1;
+}
+
 .search-panel button:hover {
-    background: rgba(248, 216, 106, 0.1);
-    border-color: rgba(248, 216, 106, 0.2);
+    background: rgba(74, 124, 247, 0.08);
+    border-color: rgba(74, 124, 247, 0.2);
     transform: translateY(-1px);
 }
 .search-panel button:active {
@@ -269,14 +323,15 @@ button {
     margin-bottom: 14px;
     border: 1px solid rgba(255, 255, 255, 0.04);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    transition: all 0.25s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
+    position: relative;
 }
 
 .user-card:hover {
     transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(248, 216, 106, 0.06);
+    border-color: rgba(74, 124, 247, 0.08);
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
 }
 
@@ -298,7 +353,34 @@ button {
     border-radius: 50%;
     object-fit: cover;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.user-card:hover .avatar {
+    border-color: rgba(74, 124, 247, 0.15);
+    transform: scale(1.05);
+}
+
+.user-card:focus .avatar {
+    transform: scale(1.1) perspective(400px) rotateY(-5deg);
+}
+
+.avatar::after {
+    content: '';
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #080c1a;
+    background: #22c55e;
+}
+
+.offline .avatar::after {
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .user-info {
@@ -332,7 +414,7 @@ button {
 .balance {
     font-weight: 700;
     font-size: 16px;
-    color: #f8d86a;
+    color: #4a7cf7;
 }
 
 .arrow {
@@ -357,12 +439,27 @@ button {
     color: rgba(255, 255, 255, 0.5);
     font-weight: 700;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.settings-tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(74, 124, 247, 0.05), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.settings-tab:hover::before {
+    opacity: 1;
 }
 
 .settings-tab.active {
-    background: linear-gradient(135deg, rgba(120, 80, 255, 0.15), rgba(248, 216, 106, 0.05));
-    border-color: rgba(248, 216, 106, 0.1);
-    color: #f8d86a;
+    background: linear-gradient(135deg, rgba(74, 124, 247, 0.15), rgba(108, 60, 224, 0.08));
+    border-color: rgba(74, 124, 247, 0.15);
+    color: #4a7cf7;
 }
 
 .settings-tab:hover {
@@ -370,7 +467,7 @@ button {
     color: #fff;
 }
 .settings-tab.active:hover {
-    background: linear-gradient(135deg, rgba(120, 80, 255, 0.15), rgba(248, 216, 106, 0.05));
+    background: linear-gradient(135deg, rgba(74, 124, 247, 0.15), rgba(108, 60, 224, 0.08));
 }
 
 #settingsContent {
@@ -407,7 +504,7 @@ button {
     transition: border-color 0.3s ease;
 }
 .setting-item input:focus {
-    border-color: rgba(248, 216, 106, 0.2);
+    border-color: rgba(74, 124, 247, 0.2);
 }
 .setting-item input::placeholder {
     color: rgba(255, 255, 255, 0.2);
@@ -416,18 +513,38 @@ button {
 .save-button {
     margin-top: 20px;
     height: 48px;
-    border: 1px solid rgba(248, 216, 106, 0.1);
+    border: 1px solid rgba(74, 124, 247, 0.1);
     border-radius: 14px;
-    background: rgba(248, 216, 106, 0.05);
-    color: #f8d86a;
+    background: rgba(74, 124, 247, 0.05);
+    color: #4a7cf7;
     font-weight: 700;
-    transition: all 0.25s ease;
+    transition: all 0.3s ease;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
 }
+
+.save-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(74, 124, 247, 0.08), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.save-button:hover::before {
+    opacity: 1;
+}
+
 .save-button:hover {
-    background: rgba(248, 216, 106, 0.1);
-    border-color: rgba(248, 216, 106, 0.2);
+    background: rgba(74, 124, 247, 0.08);
+    border-color: rgba(74, 124, 247, 0.2);
     transform: translateY(-1px);
 }
 .save-button:active {
@@ -443,6 +560,24 @@ button {
     margin-bottom: 14px;
     border: 1px solid rgba(255, 255, 255, 0.04);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Lens flare effect for all buttons */
+button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 50%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+
+button:hover::after {
+    left: 200%;
 }
 
 @media (max-width: 900px) {
