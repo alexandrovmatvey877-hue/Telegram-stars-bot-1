@@ -260,7 +260,7 @@ exports.saveSystem=async(req,res)=>{
         referrals_enabled=$7,
         balance_payment_enabled=$8,
 
-        updated_at=$9
+        updated_at=NOW()
 
         WHERE id=1
 
@@ -276,7 +276,6 @@ exports.saveSystem=async(req,res)=>{
             s.referrals_enabled,
             s.balance_payment_enabled,
 
-            Date.now()
 
         ]);
 
