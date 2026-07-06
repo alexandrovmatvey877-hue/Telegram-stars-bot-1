@@ -8,15 +8,9 @@ async function loadSettings() {
     try {
 
         settings = await API.getSettings();
-console.log("GET SETTINGS");
-console.log(settings);
 
-alert(JSON.stringify(settings));
-
-console.log("SETTINGS:");
-console.log(settings);
-
-alert(JSON.stringify(settings));
+        alert("LOAD:");
+        alert(JSON.stringify(settings));
 
         renderSettings(currentSettingsTab);
 
@@ -24,16 +18,9 @@ alert(JSON.stringify(settings));
 
         console.error(e);
 
-        document.getElementById("settingsContent").innerHTML = `
-            <div class="operation-card">
-                ❌ Не удалось загрузить настройки
-            </div>
-        `;
-
     }
 
 }
-
 function switchSettings(tab) {
 
     document
@@ -50,10 +37,8 @@ function switchSettings(tab) {
 
 function renderSettings(tab) {
 
-console.log("RENDER SETTINGS");
-console.log(settings);
-
-alert("render: " + JSON.stringify(settings));
+    alert("RENDER:");
+    alert(JSON.stringify(settings));
 
     const box = document.getElementById("settingsContent");
 
