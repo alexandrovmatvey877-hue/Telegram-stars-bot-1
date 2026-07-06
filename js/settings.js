@@ -10,15 +10,7 @@ async function loadSettings() {
 
         const data = await API.getSettings();
 
-alert("API DATA:\n" + JSON.stringify(data));
-
 settings = data;
-
-alert("SETTINGS:\n" + JSON.stringify(settings));
-
-        alert("LOAD:");
-        alert(JSON.stringify(settings));
-
         renderSettings(currentSettingsTab);
 
     } catch (e) {
@@ -44,10 +36,6 @@ function switchSettings(tab) {
 
 function renderSettings(tab) {
 console.log("renderSettings settings =", settings);
-alert(JSON.stringify(settings));
-
-    alert("RENDER:");
-    alert(JSON.stringify(settings));
 
     const box = document.getElementById("settingsContent");
 console.log("settings =", settings);
