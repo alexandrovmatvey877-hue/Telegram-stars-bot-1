@@ -160,7 +160,12 @@ cursor:pointer;
 async function loadPrices() {
     try {
 
-        const res = await fetch("https://white-stars-api.onrender.com/settings");
+        const res = await fetch("https://white-stars-api.onrender.com/api/settings");
+        console.log(res.status);
+
+const settings = await res.json();
+
+console.log(settings);
         const settings = await res.json();
 
         document.getElementById("stars50").textContent = settings.stars50 + " ₽";
