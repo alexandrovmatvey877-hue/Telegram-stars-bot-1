@@ -61,7 +61,6 @@ exports.saveSettings = async (req, res) => {
             referrals_enabled=$14,
             balance_payment_enabled=$15,
 
-            updated_at=$16
 
             WHERE id=1
         `, [
@@ -85,7 +84,6 @@ exports.saveSettings = async (req, res) => {
             s.referrals_enabled,
             s.balance_payment_enabled,
 
-            Date.now()
 
         ]);
 
