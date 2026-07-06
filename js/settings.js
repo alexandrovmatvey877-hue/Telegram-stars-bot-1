@@ -7,6 +7,11 @@ async function loadSettings() {
 
         settings = await API.getSettings();
 
+console.log("SETTINGS:");
+console.log(settings);
+
+alert(JSON.stringify(settings));
+
         renderSettings(currentSettingsTab);
 
     } catch (e) {
