@@ -59,7 +59,7 @@ exports.saveSettings = async (req, res) => {
             sales_enabled=$12,
             deposits_enabled=$13,
             referrals_enabled=$14,
-            balance_payment_enabled=$15,
+            balance_payment_enabled=$15
 
 
             WHERE id=1
