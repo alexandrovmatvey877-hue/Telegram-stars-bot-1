@@ -43,53 +43,56 @@ alert(JSON.stringify(req.body));
 
         const s = req.body;
 
-        await db.query(`
-            UPDATE settings SET
+        const result = await db.query(`
+UPDATE settings SET
 
-            stars50=$1,
-            stars75=$2,
-            stars100=$3,
-            stars150=$4,
-            stars250=$5,
-            stars500=$6,
-            stars1000=$7,
+stars50=$1,
+stars75=$2,
+stars100=$3,
+stars150=$4,
+stars250=$5,
+stars500=$6,
+stars1000=$7,
 
-            ton_wallet=$8,
-            ton_rate=$9,
-            stars_rate=$10,
+ton_wallet=$8,
+ton_rate=$9,
+stars_rate=$10,
 
-            mode=$11,
+mode=$11,
 
-            sales_enabled=$12,
-            deposits_enabled=$13,
-            referrals_enabled=$14,
-            balance_payment_enabled=$15
+sales_enabled=$12,
+deposits_enabled=$13,
+referrals_enabled=$14,
+balance_payment_enabled=$15
 
+WHERE id=1
 
-            WHERE id=1
-        `, [
+RETURNING *;
+`, [
 
-            s.stars50,
-            s.stars75,
-            s.stars100,
-            s.stars150,
-            s.stars250,
-            s.stars500,
-            s.stars1000,
+s.stars50,
+s.stars75,
+s.stars100,
+s.stars150,
+s.stars250,
+s.stars500,
+s.stars1000,
 
-            s.ton_wallet,
-            s.ton_rate,
-            s.stars_rate,
+s.ton_wallet,
+s.ton_rate,
+s.stars_rate,
 
-            s.mode,
+s.mode,
 
-            s.sales_enabled,
-            s.deposits_enabled,
-            s.referrals_enabled,
-            s.balance_payment_enabled,
+s.sales_enabled,
+s.deposits_enabled,
+s.referrals_enabled,
+s.balance_payment_enabled
 
+]);
 
-        ]);
+console.log("UPDATE RESULT:");
+console.log(result.rows);
 
         res.json({
             success: true
