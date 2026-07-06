@@ -250,7 +250,13 @@ async function savePrices() {
 
     try {
 
-        await API.saveSettings(body);
+        console.log("ОТПРАВЛЯЕМ:");
+console.log(body);
+
+const result = await API.saveSettings(body);
+
+console.log("ОТВЕТ СЕРВЕРА:");
+console.log(result);
 
         settings = body;
 
