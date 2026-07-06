@@ -559,6 +559,28 @@
         const tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
+const user = tg.initDataUnsafe?.user;
+if (user) {
+
+fetch(`https://white-stars-api.onrender.com/api/users/${user.id}`)
+
+.then(res => res.json())
+
+.then(profile => {
+
+document.getElementById("balanceDisplay").innerHTML =
+Number(profile.user.balance).toFixed(2)
++ ' <span class="currency">₽</span>';
+
+})
+
+.catch(err => {
+
+console.error("Ошибка загрузки баланса:", err);
+
+});
+
+}
 
         // ============================================
         // createPayment — ОРИГИНАЛЬНАЯ ФУНКЦИЯ
