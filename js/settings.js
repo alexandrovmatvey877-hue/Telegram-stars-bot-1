@@ -1,6 +1,3 @@
-alert("SETTINGS.JS НОВЫЙ");
-alert("SETTINGS JS LOADED");
-
 let settings = {};
 let currentSettingsTab = "prices";
 
@@ -41,8 +38,6 @@ console.log("renderSettings settings =", settings);
 console.log("settings =", settings);
 console.log("typeof =", typeof settings);
 console.log("stars50 =", settings.stars50);
-alert("stars50 = " + settings.stars50);
-
     if (!box) return;
 
     // ===========================
