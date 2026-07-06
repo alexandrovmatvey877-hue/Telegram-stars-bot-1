@@ -15,22 +15,21 @@
     }
 
     body {
-      min-height: 100vh;
-      background: #080c1a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      margin: 0;
-      overflow-x: hidden;
-      position: relative;
-    }
+    min-height: 100dvh;
+    background: #080c1a;
+    padding: 16px;
+    margin: 0;
+    overflow-x: hidden;
+    position: relative;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
 
     /* ––– FLOATING GLASS ORBS (Samsung Flex UI style) ––– */
     .orb {
       position: fixed;
       border-radius: 50%;
-      filter: blur(80px);
+      filter: blur(50px);
       pointer-events: none;
       z-index: 0;
       animation: floatOrb 14s ease-in-out infinite alternate;
@@ -99,8 +98,8 @@
       max-width: 460px;
       margin: 0 auto;
       background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(28px) saturate(180%);
-      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      backdrop-filter: blur(18px)
+      -webkit-backdrop-filter: blur(18px)
       border-radius: 56px 56px 40px 40px;
       box-shadow: 0 40px 60px -20px rgba(0, 0, 0, 0.7),
                   inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -117,7 +116,7 @@
     }
 
     .glass-container {
-      animation: liquidShimmer 18s ease-in-out infinite alternate;
+animation:none;
       background-image: 
         radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 70%),
         radial-gradient(circle at 80% 70%, rgba(255,255,255,0.07) 0%, transparent 60%);
