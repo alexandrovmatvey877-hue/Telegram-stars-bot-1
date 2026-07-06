@@ -1,4 +1,5 @@
 alert("SETTINGS.JS НОВЫЙ");
+alert("SETTINGS JS LOADED");
 
 let settings = {};
 let currentSettingsTab = "prices";
