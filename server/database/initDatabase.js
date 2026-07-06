@@ -3,7 +3,6 @@ const db = require("../config/database");
 async function initDatabase() {
 
     try {
-await db.query("DROP TABLE IF EXISTS users CASCADE;");
 
         // ===========================
         // USERS
