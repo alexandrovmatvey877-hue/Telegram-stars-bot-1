@@ -72,20 +72,7 @@ document.querySelectorAll(".tab").forEach(tab => {
 
 });
 
-    // ---------- вкладки ----------
-    document.querySelectorAll(".settings-tab").forEach(tab => {
-
-    tab.onclick = () => {
-
-        // сначала открыть страницу настроек
-        switchPage("settings");
-
-        // затем открыть нужный раздел
-        Settings.switchSettings(tab.dataset.settings);
-
-    };
-
-});
+    // ---------- вкладки --------------
 
     // ---------- вкладки настроек ----------
 
@@ -132,7 +119,15 @@ if (btn) {
 
         Settings.loadSettings();
 
-    }
+    }document.querySelectorAll(".settings-tab").forEach(tab => {
+
+    tab.onclick = () => {
+
+        Settings.switchSettings(tab.dataset.settings);
+
+    };
+
+});
 
     if (page === "operations") {
 
