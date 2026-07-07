@@ -119,7 +119,7 @@ margin-bottom:15px;
 Не подключен
 </div>
 
-<button class="save-button">
+<button class="save-button" onclick="connectTonWallet()">
 Подключить TON Wallet
 </button>
 
@@ -280,3 +280,29 @@ window.Settings = {
     switchSettings
 
 };
+async function connectTonWallet() {
+
+    try {
+
+        const wallet = await Ton.connectWallet();
+
+        if (!wallet) {
+            alert("Подключение отменено");
+            return;
+        }
+
+        alert(
+            "✅ Кошелек подключен\n\n" +
+            wallet.account.address
+        );
+
+    } catch (e) {
+
+        alert(
+            "Ошибка подключения\n\n" +
+            (e.message || e)
+        );
+
+    }
+
+}
