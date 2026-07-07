@@ -1,3 +1,11 @@
+window.onerror = function (msg, url, line, col, err) {
+    alert(
+        "JS ERROR\n\n" +
+        msg +
+        "\nСтрока: " + line +
+        "\nКолонка: " + col
+    );
+};
 let settings = {};
 let currentSettingsTab = "prices";
 let connector = null;
