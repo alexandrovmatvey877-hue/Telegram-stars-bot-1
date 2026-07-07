@@ -291,6 +291,15 @@ window.Settings = {
 
 };
 async function connectTonWallet() {
+if (connector.wallet) {
+
+    alert(
+        "Кошелек уже подключен\n\n" +
+        connector.wallet.account.address
+    );
+
+    return;
+}
 if (!connector) {
     connector = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: window.location.origin + "/tonconnect-manifest.json"
