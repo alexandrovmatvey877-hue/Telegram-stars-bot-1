@@ -319,6 +319,20 @@ async function connectTonWallet() {
         });
 
         await connector.openModal();
+alert("Модалка закрылась");
+
+if (connector.wallet) {
+
+    alert(
+        "Кошелек:\n\n" +
+        connector.wallet.account.address
+    );
+
+} else {
+
+    alert("connector.wallet = NULL");
+
+}
 
     } catch (err) {
 
