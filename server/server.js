@@ -101,6 +101,10 @@ const PORT = process.env.PORT || 3000;
 await db.query("SELECT NOW()");
         await initDatabase();
 
+const price = await monitor.getTonPrice();
+
+console.log("TON PRICE =", price);
+
         app.listen(PORT, () => {
             console.log(`🚀 WHITE STARS started on port ${PORT}`);
         });
