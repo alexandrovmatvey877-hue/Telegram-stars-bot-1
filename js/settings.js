@@ -303,6 +303,7 @@ async function connectTonWallet() {
 
             settings.ton_wallet = address;
 
+alert("Адрес получен:\n\n" + address);
             await API.saveSystem({
                 ton_wallet: address,
                 ton_rate: settings.ton_rate,
@@ -336,6 +337,11 @@ if (connector.wallet) {
 
     } catch (err) {
 
+catch (err) {
+    alert(err.message || JSON.stringify(err));
+
+    console.error(err);
+}
         console.error(err);
 
     }
