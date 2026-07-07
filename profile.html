@@ -2,9 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Профиль пользователя</title>
     <style>
+        /* ––– RESET & BASE ––– */
         * {
             margin: 0;
             padding: 0;
@@ -13,25 +14,106 @@
         }
 
         body {
-            background: linear-gradient(180deg, #f6f7f9 0%, #f2f4f7 45%, #eef2f6 100%);
-            background-attachment: fixed;
-            color: #111;
-            min-height: 100vh;
-            padding: 20px;
+            min-height: 100dvh;
+            background: #080c1a;
+            padding: 16px;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+            display: block;
+            -webkit-overflow-scrolling: touch;
         }
 
+        /* ––– FLOATING GLASS ORBS ––– */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(50px);
+            pointer-events: none;
+            z-index: 0;
+            animation: floatOrb 14s ease-in-out infinite alternate;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            top: -150px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(120, 80, 255, 0.45), rgba(200, 100, 255, 0.1));
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            bottom: -100px;
+            left: -100px;
+            background: radial-gradient(circle, rgba(0, 220, 255, 0.35), rgba(0, 100, 255, 0.05));
+            animation-delay: -4s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(255, 100, 200, 0.2), rgba(255, 50, 100, 0.05));
+            animation-delay: -8s;
+        }
+
+        .orb-4 {
+            width: 250px;
+            height: 250px;
+            top: 20%;
+            right: 20%;
+            background: radial-gradient(circle, rgba(255, 200, 50, 0.2), rgba(255, 150, 0, 0.05));
+            animation-delay: -12s;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            25% { transform: translate(30px, -40px) scale(1.1) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) scale(0.9) rotate(-3deg); }
+            75% { transform: translate(40px, 30px) scale(1.05) rotate(7deg); }
+            100% { transform: translate(-30px, -20px) scale(0.95) rotate(-5deg); }
+        }
+
+        /* ––– CONTAINER ––– */
         .container {
+            position: relative;
+            z-index: 1;
             max-width: 800px;
-            margin: auto;
+            margin: 0 auto;
         }
 
-        /* ШАПКА */
+        /* ––– GLASS CARD ––– */
+        .glass-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 56px 56px 40px 40px;
+            box-shadow: 0 40px 60px -20px rgba(0, 0, 0, 0.7),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            padding: 28px 24px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 70%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.07) 0%, transparent 60%);
+            background-blend-mode: overlay;
+            background-size: 200% 200%;
+        }
+
+        /* ––– HEADER ––– */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
             gap: 20px;
+            flex-wrap: wrap;
         }
 
         .logo {
@@ -44,15 +126,17 @@
             width: 58px;
             height: 58px;
             border-radius: 18px;
-            background: #111;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
             font-weight: 700;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease;
+            text-shadow: 0 2px 30px rgba(100, 80, 255, 0.4);
         }
 
         .logo-icon:hover {
@@ -61,14 +145,21 @@
 
         .logo-text h1 {
             font-size: 30px;
-            font-weight: 800;
-            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            text-shadow: 0 2px 30px rgba(100, 80, 255, 0.4);
+            background: linear-gradient(135deg, #ffffff 0%, #b0b8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .logo-text p {
-            margin-top: 6px;
+            margin-top: 4px;
             font-size: 14px;
-            color: #777;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
         }
 
         .header-right {
@@ -77,40 +168,64 @@
             gap: 12px;
         }
 
-        .back-home {
+        /* ––– BUTTONS ––– */
+        .topup {
             height: 46px;
             padding: 0 20px;
             border: none;
-            border-radius: 14px;
-            background: #111;
+            border-radius: 60px;
+            background: linear-gradient(135deg, rgba(120, 80, 255, 0.3), rgba(200, 100, 255, 0.15));
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: #fff;
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .back-home:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, .15);
+        .topup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
         }
 
-        .back-home:active {
-            transform: scale(.97);
+        .topup:hover::before {
+            left: 100%;
         }
 
-        /* КАРТОЧКА ПРОФИЛЯ */
-        .profile-card {
-            background: #fff;
-            border-radius: 22px;
-            padding: 24px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, .04), 0 10px 28px rgba(0, 0, 0, .06);
-            margin-bottom: 24px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        .topup:active {
+            transform: scale(0.94);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .profile-card:hover {
+        .topup:hover {
+            border-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .06), 0 14px 34px rgba(0, 0, 0, .08);
+            box-shadow: 0 12px 28px -10px rgba(100, 80, 255, 0.3);
+        }
+
+        /* ––– PROFILE CARD ––– */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 36px;
+            padding: 28px 24px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+            margin-bottom: 24px;
+            transition: all 0.2s ease;
         }
 
         .profile-header {
@@ -125,9 +240,9 @@
             height: 76px;
             border-radius: 50%;
             object-fit: cover;
-            background: #ddd;
-            border: 3px solid #fff;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
             flex-shrink: 0;
         }
 
@@ -135,29 +250,32 @@
             font-size: 23px;
             font-weight: 800;
             line-height: 1.2;
+            color: #ffffff;
+            text-shadow: 0 2px 20px rgba(100, 80, 255, 0.2);
         }
 
         .profile-id {
             font-size: 13px;
-            color: #888;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 500;
             margin-top: 3px;
         }
 
         .profile-status {
             font-size: 13px;
             margin-top: 4px;
+            font-weight: 500;
         }
 
         .online {
-            color: #22c55e;
-            font-weight: 700;
+            color: #4ade80;
         }
 
         .offline {
-            color: #999;
+            color: rgba(255, 255, 255, 0.4);
         }
 
-        /* СТАТИСТИКА */
+        /* ––– STATS GRID ––– */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -166,47 +284,70 @@
         }
 
         .stat-item {
-            background: #f8f9fb;
-            border-radius: 14px;
-            padding: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 16px 14px;
             text-align: center;
-            border: 1px solid transparent;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
             cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .stat-item:hover::after {
+            opacity: 1;
         }
 
         .stat-item:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, .05);
-            border-color: rgba(0, 0, 0, .05);
-            background: #fff;
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 28px -12px rgba(100, 80, 255, 0.2);
         }
 
         .stat-value {
             font-size: 21px;
             font-weight: 800;
-            color: #0a0a0a;
+            color: #ffffff;
             letter-spacing: -0.3px;
+            text-shadow: 0 2px 20px rgba(100, 80, 255, 0.15);
         }
 
         .stat-label {
             font-size: 12px;
-            color: #888;
-            margin-top: 3px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 4px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
         }
 
-        /* ИНФО */
+        /* ––– INFO ROWS ––– */
         .info-row {
             display: flex;
             justify-content: space-between;
-            padding: 11px 8px;
-            border-bottom: 1px solid #ececec;
-            transition: background 0.15s ease;
+            padding: 14px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s ease;
             cursor: default;
         }
 
         .info-row:hover {
-            background: #f8f9fb;
+            background: rgba(255, 255, 255, 0.03);
+            padding-left: 12px;
         }
 
         .info-row:last-child {
@@ -214,28 +355,35 @@
         }
 
         .info-label {
-            color: #888;
+            color: rgba(255, 255, 255, 0.4);
             font-size: 13px;
+            font-weight: 500;
         }
 
         .info-value {
             font-weight: 600;
             font-size: 13px;
+            color: rgba(255, 255, 255, 0.85);
         }
 
-        /* ИЗМЕНЕНИЕ БАЛАНСА */
+        /* ––– BALANCE EDIT ––– */
         .balance-edit {
             margin-top: 20px;
-            padding: 18px;
-            background: #f8f9fb;
-            border-radius: 14px;
-            border: 1px solid #e8eaed;
+            padding: 20px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.3);
         }
 
         .balance-edit h4 {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-size: 15px;
             font-weight: 700;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 0.2px;
         }
 
         .balance-row {
@@ -249,51 +397,101 @@
             flex: 1;
             min-width: 140px;
             height: 44px;
-            padding: 0 14px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            padding: 0 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
             font-size: 14px;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-            background: #fff;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(4px);
+            color: #fff;
+        }
+
+        #balanceInput::placeholder {
+            color: rgba(255, 255, 255, 0.3);
         }
 
         #balanceInput:focus {
-            border-color: #111;
-            box-shadow: 0 0 0 3px rgba(17, 17, 17, .06);
+            border-color: rgba(120, 80, 255, 0.4);
+            box-shadow: 0 0 0 3px rgba(120, 80, 255, 0.1);
             outline: none;
+            background: rgba(255, 255, 255, 0.06);
         }
 
+        /* ––– ACTION BUTTONS ––– */
         .btn {
             height: 44px;
             padding: 0 18px;
             border: none;
-            border-radius: 10px;
+            border-radius: 60px;
             color: #fff;
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:active {
-            transform: scale(.97);
+            transform: scale(0.94);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
         }
 
         .btn-green {
-            background: #22c55e;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.4), rgba(34, 197, 94, 0.15));
+            border-color: rgba(34, 197, 94, 0.2);
+        }
+
+        .btn-green:hover {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.5), rgba(34, 197, 94, 0.25));
+            box-shadow: 0 12px 28px -10px rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.3);
         }
 
         .btn-red {
-            background: #e53935;
+            background: linear-gradient(135deg, rgba(229, 57, 53, 0.4), rgba(229, 57, 53, 0.15));
+            border-color: rgba(229, 57, 53, 0.2);
+        }
+
+        .btn-red:hover {
+            background: linear-gradient(135deg, rgba(229, 57, 53, 0.5), rgba(229, 57, 53, 0.25));
+            box-shadow: 0 12px 28px -10px rgba(229, 57, 53, 0.3);
+            border-color: rgba(229, 57, 53, 0.3);
         }
 
         .btn-black {
-            background: #111;
+            background: linear-gradient(135deg, rgba(120, 80, 255, 0.3), rgba(200, 100, 255, 0.15));
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-black:hover {
+            background: linear-gradient(135deg, rgba(120, 80, 255, 0.4), rgba(200, 100, 255, 0.25));
+            box-shadow: 0 12px 28px -10px rgba(100, 80, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.12);
         }
 
         #balanceMessage {
@@ -301,22 +499,22 @@
             font-size: 13px;
             font-weight: 500;
             min-height: 22px;
+            color: rgba(255, 255, 255, 0.6);
         }
 
-        /* ЗАГРУЗКА */
+        /* ––– LOADER ––– */
         .loader {
             text-align: center;
             padding: 60px;
-            font-size: 18px;
-            color: #888;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .loader-spinner {
             display: inline-block;
             width: 40px;
             height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #111;
+            border: 4px solid rgba(255, 255, 255, 0.05);
+            border-top: 4px solid rgba(120, 80, 255, 0.6);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 16px;
@@ -327,10 +525,10 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* ОШИБКА */
+        /* ––– ERROR ––– */
         .error {
             text-align: center;
-            padding: 60px;
+            padding: 60px 20px;
         }
 
         .error-icon {
@@ -341,14 +539,16 @@
             font-size: 24px;
             font-weight: 700;
             margin-top: 16px;
+            color: #ffffff;
         }
 
         .error-text {
-            color: #888;
+            color: rgba(255, 255, 255, 0.4);
             margin-top: 8px;
+            font-weight: 500;
         }
 
-        /* АДАПТИВ */
+        /* ––– RESPONSIVE ––– */
         @media(max-width:700px) {
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
@@ -356,16 +556,13 @@
         }
 
         @media(max-width:600px) {
+            .glass-container { padding: 20px 16px 24px; border-radius: 40px 40px 32px 32px; }
             .profile-header {
                 flex-direction: column;
                 text-align: center;
             }
-            .logo-text h1 {
-                font-size: 22px;
-            }
-            .logo-text p {
-                font-size: 12px;
-            }
+            .logo-text h1 { font-size: 22px; }
+            .logo-text p { font-size: 12px; }
             .header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -376,314 +573,316 @@
                 display: flex;
                 justify-content: space-between;
             }
-            .back-home {
+            .topup {
                 width: 100%;
+                justify-content: center;
             }
-            .profile-card {
-                padding: 18px;
-            }
-            .balance-row {
-                flex-direction: column;
-            }
-            #balanceInput {
-                width: 100%;
-                min-width: 100%;
-            }
-            .btn {
-                width: 100%;
-            }
+            .profile-card { padding: 18px; border-radius: 28px; }
+            .balance-row { flex-direction: column; }
+            #balanceInput { width: 100%; min-width: 100%; }
+            .btn { width: 100%; }
+            .orb-1 { width: 300px; height: 300px; }
+            .orb-2 { width: 250px; height: 250px; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+    <!-- ––– FLOATING ORBS ––– -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
 
-    <!-- ШАПКА -->
-    <div class="header">
-        <div class="logo">
-            <div class="logo-icon">⭐</div>
-            <div class="logo-text">
-                <h1>White Stars</h1>
-                <p>Профиль пользователя</p>
-            </div>
-        </div>
-        <div class="header-right">
-            <button class="back-home" onclick="window.location.href='admin.html'">← Назад в админку</button>
-        </div>
-    </div>
+    <div class="container">
 
-    <!-- КОНТЕНТ -->
-    <div id="profileContent">
-        <!-- Сюда загрузится профиль -->
-    </div>
-
-</div>
-
-<script>
-    // ============ ПОЛУЧАЕМ ID ИЗ URL ============
-    function getUserId() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get('id');
-    }
-
-    // ============ ЗАГРУЖАЕМ ПРОФИЛЬ ============
-    async function loadProfile() {
-        const userId = getUserId();
-        console.log("ID =", userId);
-        const container = document.getElementById('profileContent');
-
-        if (!userId) {
-            container.innerHTML = `
-                <div class="profile-card error">
-                    <div class="error-icon">❌</div>
-                    <div class="error-title">ID не указан</div>
-                    <div class="error-text">Передайте ID пользователя в параметре ?id=</div>
+        <!-- ШАПКА -->
+        <div class="glass-container">
+            <div class="header">
+                <div class="logo">
+                    <div class="logo-icon">⭐</div>
+                    <div class="logo-text">
+                        <h1>White Stars</h1>
+                        <p>Профиль пользователя</p>
+                    </div>
                 </div>
-            `;
-            return;
-        }
-
-        container.innerHTML = `
-            <div class="profile-card loader">
-                <div class="loader-spinner"></div>
-                <div>Загрузка профиля...</div>
+                <div class="header-right">
+                    <button class="topup" onclick="window.location.href='admin.html'">← Назад в админку</button>
+                </div>
             </div>
-        `;
 
-        try {
-            const res = await fetch(
-    `https://white-stars-api.onrender.com/api/users/${userId}`,
-    {
-        headers: {
-            "x-admin-key": "white-stars-super-admin"
+            <!-- КОНТЕНТ -->
+            <div id="profileContent">
+                <!-- Сюда загрузится профиль -->
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ============ ПОЛУЧАЕМ ID ИЗ URL ============
+        function getUserId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
         }
-    }
-);
 
-console.log("STATUS =", res.status);
+        // ============ ЗАГРУЖАЕМ ПРОФИЛЬ ============
+        async function loadProfile() {
+            const userId = getUserId();
+            console.log("ID =", userId);
+            const container = document.getElementById('profileContent');
 
-            if (!res.ok) {
-                throw new Error(`HTTP ${res.status}`);
-            }
-
-            const data = await res.json();
-console.log("SUCCESS =", data.success);
-console.log("USER =", data.user);
-
-console.log(data);
-
-if (!data.success) {
-    throw new Error("Пользователь не найден");
-}
-
-const user = data.user;
-
-            if (!user) {
+            if (!userId) {
                 container.innerHTML = `
                     <div class="profile-card error">
-                        <div class="error-icon">👤</div>
-                        <div class="error-title">Пользователь не найден</div>
-                        <div class="error-text">Пользователь с ID ${userId} не существует</div>
+                        <div class="error-icon">❌</div>
+                        <div class="error-title">ID не указан</div>
+                        <div class="error-text">Передайте ID пользователя в параметре ?id=</div>
                     </div>
                 `;
                 return;
             }
 
-            renderProfile(user);
+            container.innerHTML = `
+                <div class="profile-card loader">
+                    <div class="loader-spinner"></div>
+                    <div>Загрузка профиля...</div>
+                </div>
+            `;
 
-        } catch (err) {
+            try {
+                const res = await fetch(
+                    `https://white-stars-api.onrender.com/api/users/${userId}`,
+                    {
+                        headers: {
+                            "x-admin-key": "white-stars-super-admin"
+                        }
+                    }
+                );
 
-    console.error(err);
+                console.log("STATUS =", res.status);
 
-    container.innerHTML = `
-        <div class="profile-card error">
-            <div class="error-icon">⚠️</div>
-            <div class="error-title">Ошибка загрузки</div>
-            <div class="error-text">${err}</div>
-        </div>
-    `;
-
-}
-
-}
-
-    // ============ ОТРИСОВКА ПРОФИЛЯ ============
-    function renderProfile(user) {
-        const container = document.getElementById('profileContent');
-
-        const avatar = user.avatar || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%23ddd%22/%3E%3Ctext x=%2240%22 y=%2252%22 text-anchor=%22middle%22 font-size=%2236%22 fill=%22%23999%22%3E👤%3C/text%3E%3C/svg%3E';
-        const username = user.username || 'Без имени';
-        const firstName = user.first_name || '';
-        const lastName = user.last_name || '';
-        const fullName = [firstName, lastName].filter(Boolean).join(' ') || 'Не указано';
-
-        // Статус онлайн
-        let statusHtml = '';
-        if (user.online) {
-            statusHtml = '<span class="online">🟢 В сети</span>';
-        } else {
-            let lastSeenText = 'неизвестно';
-            if (user.last_seen) {
-                const date = new Date(user.last_seen);
-                if (!isNaN(date)) {
-                    lastSeenText = date.toLocaleString('ru-RU', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
                 }
-            }
-            statusHtml = `<span class="offline">Был в сети ${lastSeenText}</span>`;
-        }
 
-        const regDate = user.registered_at ? new Date(user.registered_at).toLocaleDateString('ru-RU', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        }) : 'неизвестно';
+                const data = await res.json();
+                console.log("SUCCESS =", data.success);
+                console.log("USER =", data.user);
 
-        container.innerHTML = `
-            <div class="profile-card">
-                <!-- Шапка профиля -->
-                <div class="profile-header">
-                    <img class="profile-avatar" src="${avatar}" alt="avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%23ddd%22/%3E%3Ctext x=%2240%22 y=%2252%22 text-anchor=%22middle%22 font-size=%2236%22 fill=%22%23999%22%3E👤%3C/text%3E%3C/svg%3E'">
-                    <div>
-                        <div class="profile-name">${username}</div>
-                        <div class="profile-id">ID: ${user.telegram_id}</div>
-                        <div class="profile-status">${statusHtml}</div>
+                console.log(data);
+
+                if (!data.success) {
+                    throw new Error("Пользователь не найден");
+                }
+
+                const user = data.user;
+
+                if (!user) {
+                    container.innerHTML = `
+                        <div class="profile-card error">
+                            <div class="error-icon">👤</div>
+                            <div class="error-title">Пользователь не найден</div>
+                            <div class="error-text">Пользователь с ID ${userId} не существует</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                renderProfile(user);
+
+            } catch (err) {
+
+                console.error(err);
+
+                container.innerHTML = `
+                    <div class="profile-card error">
+                        <div class="error-icon">⚠️</div>
+                        <div class="error-title">Ошибка загрузки</div>
+                        <div class="error-text">${err}</div>
                     </div>
-                </div>
+                `;
 
-                <!-- Статистика -->
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-value" id="profileBalance">${user.balance || 0} ₽</div>
-                        <div class="stat-label">💰 Баланс</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">${user.total_spent || 0} ₽</div>
-                        <div class="stat-label">💳 Потрачено</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">${user.total_deposit || 0} ₽</div>
-                        <div class="stat-label">📥 Пополнено</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">${user.referral_count || 0}</div>
-                        <div class="stat-label">👥 Рефералов</div>
-                    </div>
-                </div>
-
-                <!-- ИЗМЕНЕНИЕ БАЛАНСА -->
-                <div class="balance-edit">
-                    <h4>✏️ Изменить баланс</h4>
-                    <div class="balance-row">
-                        <input type="number" id="balanceInput" step="0.01" placeholder="Введите сумму">
-                        <button class="btn btn-green" onclick="changeBalance('add')">➕ Добавить</button>
-                        <button class="btn btn-red" onclick="changeBalance('subtract')">➖ Списать</button>
-                        <button class="btn btn-black" onclick="changeBalance('set')">📌 Установить</button>
-                    </div>
-                    <div id="balanceMessage"></div>
-                </div>
-
-                <!-- Детальная информация -->
-                <div style="margin-top:20px;">
-                    <div class="info-row">
-                        <span class="info-label">📛 Полное имя</span>
-                        <span class="info-value">${fullName}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">📅 Дата регистрации</span>
-                        <span class="info-value">${regDate}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">📱 Telegram ID</span>
-                        <span class="info-value">${user.telegram_id}</span>
-                    </div>
-                    ${user.referrer_id ? `
-                    <div class="info-row">
-                        <span class="info-label">🔗 Пригласил</span>
-                        <span class="info-value">${user.referrer_id}</span>
-                    </div>
-                    ` : ''}
-                </div>
-            </div>
-        `;
-    }
-
-    // ============ ИЗМЕНЕНИЕ БАЛАНСА ============
-    async function changeBalance(action) {
-        const input = document.getElementById('balanceInput');
-        const message = document.getElementById('balanceMessage');
-        const amount = parseFloat(input.value);
-
-        if (isNaN(amount) || amount <= 0) {
-            message.style.color = '#e53935';
-            message.textContent = '❌ Введите корректную сумму (больше 0)';
-            return;
-        }
-
-        const userId = getUserId();
-        if (!userId) {
-            message.style.color = '#e53935';
-            message.textContent = '❌ ID пользователя не найден';
-            return;
-        }
-
-        message.style.color = '#888';
-        message.textContent = '⏳ Сохранение...';
-
-        try {
-            const res = await fetch("https://white-stars-api.onrender.com/api/admin/balance", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-admin-key': 'white-stars-super-admin'
-                },
-                body: JSON.stringify({
-                    telegram_id: String(userId),
-                    action: action,
-                    amount: amount
-                })
-            });
-
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.message || `HTTP ${res.status}`);
             }
 
-            const data = await res.json();
+        }
 
-            const balanceElement = document.getElementById('profileBalance');
-            if (balanceElement) {
-                balanceElement.textContent = `${data.new_balance || data.balance || 0} ₽`;
+        // ============ ОТРИСОВКА ПРОФИЛЯ ============
+        function renderProfile(user) {
+            const container = document.getElementById('profileContent');
+
+            const avatar = user.avatar || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%23ddd%22/%3E%3Ctext x=%2240%22 y=%2252%22 text-anchor=%22middle%22 font-size=%2236%22 fill=%22%23999%22%3E👤%3C/text%3E%3C/svg%3E';
+            const username = user.username || 'Без имени';
+            const firstName = user.first_name || '';
+            const lastName = user.last_name || '';
+            const fullName = [firstName, lastName].filter(Boolean).join(' ') || 'Не указано';
+
+            // Статус онлайн
+            let statusHtml = '';
+            if (user.online) {
+                statusHtml = '<span class="online">🟢 В сети</span>';
+            } else {
+                let lastSeenText = 'неизвестно';
+                if (user.last_seen) {
+                    const date = new Date(user.last_seen);
+                    if (!isNaN(date)) {
+                        lastSeenText = date.toLocaleString('ru-RU', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                    }
+                }
+                statusHtml = `<span class="offline">Был в сети ${lastSeenText}</span>`;
             }
 
-            message.style.color = '#22c55e';
-            message.textContent = `✅ Баланс успешно обновлён! Новый баланс: ${data.new_balance || data.balance || 0} ₽`;
-            input.value = '';
+            const regDate = user.registered_at ? new Date(user.registered_at).toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }) : 'неизвестно';
 
-            setTimeout(() => {
-                loadProfile();
-            }, 2000);
+            container.innerHTML = `
+                <div class="profile-card">
+                    <!-- Шапка профиля -->
+                    <div class="profile-header">
+                        <img class="profile-avatar" src="${avatar}" alt="avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22%3E%3Crect width=%2280%22 height=%2280%22 fill=%22%23ddd%22/%3E%3Ctext x=%2240%22 y=%2252%22 text-anchor=%22middle%22 font-size=%2236%22 fill=%22%23999%22%3E👤%3C/text%3E%3C/svg%3E'">
+                        <div>
+                            <div class="profile-name">${username}</div>
+                            <div class="profile-id">ID: ${user.telegram_id}</div>
+                            <div class="profile-status">${statusHtml}</div>
+                        </div>
+                    </div>
 
-        } catch (err) {
-            console.error(err);
-            message.style.color = '#e53935';
-            message.textContent = `❌ Ошибка: ${err.message || 'Не удалось изменить баланс'}`;
+                    <!-- Статистика -->
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="profileBalance">${user.balance || 0} ₽</div>
+                            <div class="stat-label">💰 Баланс</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${user.total_spent || 0} ₽</div>
+                            <div class="stat-label">💳 Потрачено</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${user.total_deposit || 0} ₽</div>
+                            <div class="stat-label">📥 Пополнено</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${user.referral_count || 0}</div>
+                            <div class="stat-label">👥 Рефералов</div>
+                        </div>
+                    </div>
+
+                    <!-- ИЗМЕНЕНИЕ БАЛАНСА -->
+                    <div class="balance-edit">
+                        <h4>✏️ Изменить баланс</h4>
+                        <div class="balance-row">
+                            <input type="number" id="balanceInput" step="0.01" placeholder="Введите сумму">
+                            <button class="btn btn-green" onclick="changeBalance('add')">➕ Добавить</button>
+                            <button class="btn btn-red" onclick="changeBalance('subtract')">➖ Списать</button>
+                            <button class="btn btn-black" onclick="changeBalance('set')">📌 Установить</button>
+                        </div>
+                        <div id="balanceMessage"></div>
+                    </div>
+
+                    <!-- Детальная информация -->
+                    <div style="margin-top:20px;">
+                        <div class="info-row">
+                            <span class="info-label">📛 Полное имя</span>
+                            <span class="info-value">${fullName}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">📅 Дата регистрации</span>
+                            <span class="info-value">${regDate}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">📱 Telegram ID</span>
+                            <span class="info-value">${user.telegram_id}</span>
+                        </div>
+                        ${user.referrer_id ? `
+                        <div class="info-row">
+                            <span class="info-label">🔗 Пригласил</span>
+                            <span class="info-value">${user.referrer_id}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
         }
-    }
 
-    // ============ ЗАГРУЗКА ПРИ СТАРТЕ ============
-    document.addEventListener('DOMContentLoaded', loadProfile);
+        // ============ ИЗМЕНЕНИЕ БАЛАНСА ============
+        async function changeBalance(action) {
+            const input = document.getElementById('balanceInput');
+            const message = document.getElementById('balanceMessage');
+            const amount = parseFloat(input.value);
 
-    // ============ ГЛОБАЛЬНЫЙ ДОСТУП ============
-    window.changeBalance = changeBalance;
-    window.loadProfile = loadProfile;
-</script>
+            if (isNaN(amount) || amount <= 0) {
+                message.style.color = '#ef4444';
+                message.textContent = '❌ Введите корректную сумму (больше 0)';
+                return;
+            }
+
+            const userId = getUserId();
+            if (!userId) {
+                message.style.color = '#ef4444';
+                message.textContent = '❌ ID пользователя не найден';
+                return;
+            }
+
+            message.style.color = 'rgba(255, 255, 255, 0.5)';
+            message.textContent = '⏳ Сохранение...';
+
+            try {
+                const res = await fetch("https://white-stars-api.onrender.com/api/admin/balance", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-admin-key': 'white-stars-super-admin'
+                    },
+                    body: JSON.stringify({
+                        telegram_id: String(userId),
+                        action: action,
+                        amount: amount
+                    })
+                });
+
+                if (!res.ok) {
+                    const errorData = await res.json();
+                    throw new Error(errorData.message || `HTTP ${res.status}`);
+                }
+
+                const data = await res.json();
+
+                const balanceElement = document.getElementById('profileBalance');
+                if (balanceElement) {
+                    balanceElement.textContent = `${data.new_balance || data.balance || 0} ₽`;
+                }
+
+                message.style.color = '#4ade80';
+                message.textContent = `✅ Баланс успешно обновлён! Новый баланс: ${data.new_balance || data.balance || 0} ₽`;
+                input.value = '';
+
+                setTimeout(() => {
+                    loadProfile();
+                }, 2000);
+
+            } catch (err) {
+                console.error(err);
+                message.style.color = '#ef4444';
+                message.textContent = `❌ Ошибка: ${err.message || 'Не удалось изменить баланс'}`;
+            }
+        }
+
+        // ============ ЗАГРУЗКА ПРИ СТАРТЕ ============
+        document.addEventListener('DOMContentLoaded', loadProfile);
+
+        // ============ ГЛОБАЛЬНЫЙ ДОСТУП ============
+        window.changeBalance = changeBalance;
+        window.loadProfile = loadProfile;
+    </script>
 
 </body>
 </html>
