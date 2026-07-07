@@ -47,9 +47,18 @@ async function saveSettings(settings) {
 async function getOperations() {
     return await api("/api/operations");
 }
+async function getSystem() {
+    return await api("/api/settings/system");
+}
+
+async function saveSystem(system) {
+    return await api("/api/settings/system", "POST", system);
+}
 window.API = {
     getUsers,
     getSettings,
     saveSettings,
-    getOperations
+    getOperations,
+    getSystem,
+    saveSystem
 };
