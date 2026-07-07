@@ -338,10 +338,6 @@ if (connector.wallet) {
     } catch (err) {
 
 catch (err) {
-    alert(err.message || JSON.stringify(err));
-
-    console.error(err);
-}
         console.error(err);
 
     }
