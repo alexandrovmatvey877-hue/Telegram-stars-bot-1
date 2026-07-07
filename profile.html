@@ -13,7 +13,7 @@
         }
 
         body {
-            background: linear-gradient(175deg, #f6f8fb 0%, #eef1f5 40%, #f4f6f9 100%);
+            background: linear-gradient(180deg, #f6f7f9 0%, #f2f4f7 45%, #eef2f6 100%);
             background-attachment: fixed;
             color: #111;
             min-height: 100vh;
@@ -51,12 +51,12 @@
             justify-content: center;
             font-size: 28px;
             font-weight: 700;
-            box-shadow: 0 8px 24px rgba(0,0,0,.12);
-            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+            transition: transform 0.3s ease;
         }
 
         .logo-icon:hover {
-            transform: scale(1.06) rotate(-4deg);
+            transform: scale(1.05);
         }
 
         .logo-text h1 {
@@ -86,110 +86,66 @@
             color: #fff;
             font-weight: 700;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.25s ease;
-        }
-
-        .back-home::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -120%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-            transition: left 0.6s ease;
-            pointer-events: none;
-        }
-
-        .back-home:hover::after {
-            left: 120%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .back-home:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(0,0,0,0.16);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .15);
         }
 
         .back-home:active {
-            transform: scale(0.97);
+            transform: scale(.97);
         }
 
         /* КАРТОЧКА ПРОФИЛЯ */
         .profile-card {
             background: #fff;
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.04),
-                0 12px 32px rgba(0,0,0,0.06),
-                0 0 0 1px rgba(0,0,0,0.03);
+            border-radius: 22px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .04), 0 10px 28px rgba(0, 0, 0, .06);
             margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.25s ease;
-        }
-
-        .profile-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -30%;
-            width: 160%;
-            height: 160%;
-            background: radial-gradient(ellipse at 30% 20%, rgba(120,80,255,0.04) 0%, transparent 55%);
-            pointer-events: none;
-            z-index: 0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .profile-card:hover {
-            transform: translateY(-3px);
-            box-shadow:
-                0 4px 12px rgba(0,0,0,0.06),
-                0 16px 40px rgba(0,0,0,0.09),
-                0 0 0 1px rgba(0,0,0,0.04);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .06), 0 14px 34px rgba(0, 0, 0, .08);
         }
 
         .profile-header {
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 24px;
-            position: relative;
-            z-index: 1;
+            gap: 18px;
+            margin-bottom: 20px;
         }
 
         .profile-avatar {
-            width: 80px;
-            height: 80px;
+            width: 76px;
+            height: 76px;
             border-radius: 50%;
             object-fit: cover;
             background: #ddd;
             border: 3px solid #fff;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .profile-avatar:hover {
-            transform: scale(1.04);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.13), 0 0 0 1px rgba(0,0,0,0.05);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .08);
+            flex-shrink: 0;
         }
 
         .profile-name {
-            font-size: 24px;
+            font-size: 23px;
             font-weight: 800;
+            line-height: 1.2;
         }
 
         .profile-id {
-            font-size: 14px;
+            font-size: 13px;
             color: #888;
-            margin-top: 4px;
+            margin-top: 3px;
         }
 
         .profile-status {
-            font-size: 14px;
-            margin-top: 6px;
+            font-size: 13px;
+            margin-top: 4px;
         }
 
         .online {
@@ -204,462 +160,53 @@
         /* СТАТИСТИКА */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-top: 20px;
-            position: relative;
-            z-index: 1;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
         }
 
         .stat-item {
             background: #f8f9fb;
-            border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-            border: 1px solid rgba(0,0,0,0.03);
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-            cursor: default;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-            border-color: rgba(0,0,0,0.06);
-            background: #fff;
-        }
-
-        .stat-value {
-            font-size: 22px;
-            font-weight: 800;
-            color: #0a0a0a;
-            letter-spacing: -0.3px;
-            font-feature-settings: "tnum";
-            font-variant-numeric: tabular-nums;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: #888;
-            margin-top: 4px;
-        }
-
-        /* ИНФО */
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 14px 10px;
-            margin: 0 -10px;
-            border-bottom: 1px solid #ececec;
-            border-radius: 10px;
-            transition: background 0.2s ease, padding-left 0.25s ease, transform 0.2s ease;
-            cursor: default;
-            position: relative;
-            z-index: 1;
-        }
-
-        .info-row:hover {
-            background: #f8f9fb;
-            padding-left: 14px;
-            transform: translateX(2px);
-        }
-
-        .info-row:last-child {
-            border-bottom: none;
-        }
-
-        .info-label {
-            color: #888;
-            font-size: 14px;
-        }
-
-        .info-value {
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        /* ИЗМЕНЕНИЕ БАЛАНСА */
-        .balance-edit {
-            margin-top: 24px;
-            padding: 20px;
-            background: #f8f9fb;
-            border-radius: 16px;
-            border: 2px solid #e0e0e0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .balance-edit h4 {
-            margin-bottom: 12px;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .balance-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        #balanceInput {
-            flex: 1;
-            min-width: 150px;
-            height: 46px;
-            padding: 0 16px;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            font-size: 15px;
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-            background: #fff;
-        }
-
-        #balanceInput:focus {
-            border-color: #111;
-            box-shadow: 0 0 0 4px rgba(17,17,17,0.06);
-            outline: none;
-            transform: scale(1.02);
-        }
-
-        .btn {
-            height: 46px;
-            padding: 0 20px;
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.25s ease;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -120%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s ease;
-            pointer-events: none;
-        }
-
-        .btn:hover::after {
-            left: 120%;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 22px rgba(0,0,0,0.14);
-        }
-
-        .btn:active {
-            transform: scale(0.97);
-        }
-
-        .btn-green {
-            background: #22c55e;
-        }
-
-        .btn-red {
-            background: #e53935;
-        }
-
-        .btn-black {
-            background: #111;
-        }
-
-        #balanceMessage {
-            margin-top: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            min-height: 24px;
-        }
-
-        /* ЗАГРУЗКА */
-        .loader {
-            text-align: center;
-            padding: 60px;
-            font-size: 18px;
-            color: #888;
-        }
-
-        .loader-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px The user wants me to rewrite the entire page code with the new design CSS incorporated, without changing the functionality (HTML structure and JS logic remain the same). I need to output the complete HTML file from `<!DOCTYPE html>` to `</html>`, merging the original page with the refined CSS I provided earlier. I'll ensure the original HTML and JavaScript are preserved exactly, and the CSS includes all the enhancements.
-
-Important: I must not change any HTML or JavaScript. I'll take the original page, replace the CSS block entirely with the new one that includes all the refinements (body gradient, profile card enhancements, avatar styling, stat items, stat values, logo icon hover, button shine effects, info row hover, balance input focus). I'll keep all the original HTML structure and JS logic intact.
-
-The user's instruction is clear: "Можешь переписать код с этим дизайном, но не меняя функционал. От <!DOCTYPE До <html> ?" — they want the full page code with the new design applied.
-
-I'll provide the complete file.```html
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль пользователя</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(175deg, #f6f8fb 0%, #eef1f5 40%, #f4f6f9 100%);
-            background-attachment: fixed;
-            color: #111;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: auto;
-        }
-
-        /* ШАПКА */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            gap: 20px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .logo-icon {
-            width: 58px;
-            height: 58px;
-            border-radius: 18px;
-            background: #111;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: 700;
-            box-shadow: 0 8px 24px rgba(0,0,0,.12);
-            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-        }
-
-        .logo-icon:hover {
-            transform: scale(1.06) rotate(-4deg);
-        }
-
-        .logo-text h1 {
-            font-size: 30px;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .logo-text p {
-            margin-top: 6px;
-            font-size: 14px;
-            color: #777;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .back-home {
-            height: 46px;
-            padding: 0 20px;
-            border: none;
             border-radius: 14px;
-            background: #111;
-            color: #fff;
-            font-weight: 700;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.25s ease;
-        }
-
-        .back-home::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -120%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-            transition: left 0.6s ease;
-            pointer-events: none;
-        }
-
-        .back-home:hover::after {
-            left: 120%;
-        }
-
-        .back-home:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(0,0,0,0.16);
-        }
-
-        .back-home:active {
-            transform: scale(0.97);
-        }
-
-        /* КАРТОЧКА ПРОФИЛЯ */
-        .profile-card {
-            background: #fff;
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.04),
-                0 12px 32px rgba(0,0,0,0.06),
-                0 0 0 1px rgba(0,0,0,0.03);
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.25s ease;
-        }
-
-        .profile-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -30%;
-            width: 160%;
-            height: 160%;
-            background: radial-gradient(ellipse at 30% 20%, rgba(120,80,255,0.04) 0%, transparent 55%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .profile-card:hover {
-            transform: translateY(-3px);
-            box-shadow:
-                0 4px 12px rgba(0,0,0,0.06),
-                0 16px 40px rgba(0,0,0,0.09),
-                0 0 0 1px rgba(0,0,0,0.04);
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 24px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #ddd;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .profile-avatar:hover {
-            transform: scale(1.04);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.13), 0 0 0 1px rgba(0,0,0,0.05);
-        }
-
-        .profile-name {
-            font-size: 24px;
-            font-weight: 800;
-        }
-
-        .profile-id {
-            font-size: 14px;
-            color: #888;
-            margin-top: 4px;
-        }
-
-        .profile-status {
-            font-size: 14px;
-            margin-top: 6px;
-        }
-
-        .online {
-            color: #22c55e;
-            font-weight: 700;
-        }
-
-        .offline {
-            color: #999;
-        }
-
-        /* СТАТИСТИКА */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-top: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .stat-item {
-            background: #f8f9fb;
-            border-radius: 16px;
-            padding: 16px;
+            padding: 14px;
             text-align: center;
-            border: 1px solid rgba(0,0,0,0.03);
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+            border: 1px solid transparent;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
             cursor: default;
         }
 
         .stat-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-            border-color: rgba(0,0,0,0.06);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .05);
+            border-color: rgba(0, 0, 0, .05);
             background: #fff;
         }
 
         .stat-value {
-            font-size: 22px;
+            font-size: 21px;
             font-weight: 800;
             color: #0a0a0a;
             letter-spacing: -0.3px;
-            font-feature-settings: "tnum";
-            font-variant-numeric: tabular-nums;
         }
 
         .stat-label {
-            font-size: 13px;
+            font-size: 12px;
             color: #888;
-            margin-top: 4px;
+            margin-top: 3px;
         }
 
         /* ИНФО */
         .info-row {
             display: flex;
             justify-content: space-between;
-            padding: 14px 10px;
-            margin: 0 -10px;
+            padding: 11px 8px;
             border-bottom: 1px solid #ececec;
-            border-radius: 10px;
-            transition: background 0.2s ease, padding-left 0.25s ease, transform 0.2s ease;
+            transition: background 0.15s ease;
             cursor: default;
-            position: relative;
-            z-index: 1;
         }
 
         .info-row:hover {
             background: #f8f9fb;
-            padding-left: 14px;
-            transform: translateX(2px);
         }
 
         .info-row:last-child {
@@ -668,94 +215,73 @@ I'll provide the complete file.```html
 
         .info-label {
             color: #888;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .info-value {
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* ИЗМЕНЕНИЕ БАЛАНСА */
         .balance-edit {
-            margin-top: 24px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 18px;
             background: #f8f9fb;
-            border-radius: 16px;
-            border: 2px solid #e0e0e0;
-            position: relative;
-            z-index: 1;
+            border-radius: 14px;
+            border: 1px solid #e8eaed;
         }
 
         .balance-edit h4 {
-            margin-bottom: 12px;
-            font-size: 16px;
+            margin-bottom: 10px;
+            font-size: 15px;
             font-weight: 700;
         }
 
         .balance-row {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
             align-items: center;
         }
 
         #balanceInput {
             flex: 1;
-            min-width: 150px;
-            height: 46px;
-            padding: 0 16px;
+            min-width: 140px;
+            height: 44px;
+            padding: 0 14px;
             border: 1px solid #ddd;
-            border-radius: 12px;
-            font-size: 15px;
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
             background: #fff;
         }
 
         #balanceInput:focus {
             border-color: #111;
-            box-shadow: 0 0 0 4px rgba(17,17,17,0.06);
+            box-shadow: 0 0 0 3px rgba(17, 17, 17, .06);
             outline: none;
-            transform: scale(1.02);
         }
 
         .btn {
-            height: 46px;
-            padding: 0 20px;
+            height: 44px;
+            padding: 0 18px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             color: #fff;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.25s ease;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -120%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s ease;
-            pointer-events: none;
-        }
-
-        .btn:hover::after {
-            left: 120%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 22px rgba(0,0,0,0.14);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
         }
 
         .btn:active {
-            transform: scale(0.97);
+            transform: scale(.97);
         }
 
         .btn-green {
@@ -772,9 +298,9 @@ I'll provide the complete file.```html
 
         #balanceMessage {
             margin-top: 10px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
-            min-height: 24px;
+            min-height: 22px;
         }
 
         /* ЗАГРУЗКА */
@@ -854,7 +380,7 @@ I'll provide the complete file.```html
                 width: 100%;
             }
             .profile-card {
-                padding: 20px;
+                padding: 18px;
             }
             .balance-row {
                 flex-direction: column;
@@ -1064,7 +590,7 @@ const user = data.user;
                 </div>
 
                 <!-- Детальная информация -->
-                <div style="margin-top:24px;">
+                <div style="margin-top:20px;">
                     <div class="info-row">
                         <span class="info-label">📛 Полное имя</span>
                         <span class="info-value">${fullName}</span>
