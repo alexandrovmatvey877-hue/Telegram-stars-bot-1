@@ -25,6 +25,14 @@ async function loadSettings() {
 settings = data;
         renderSettings(currentSettingsTab);
 
+document.querySelectorAll(".settings-tab").forEach(btn => {
+    btn.classList.remove("active");
+});
+
+document
+    .querySelector(`[data-settings="${currentSettingsTab}"]`)
+    ?.classList.add("active");
+
     } catch (e) {
 
         console.error(e);
