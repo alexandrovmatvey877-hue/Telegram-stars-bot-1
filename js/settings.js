@@ -312,3 +312,43 @@ async function connectTonWallet() {
     }
 
 }
+async function connectTonWallet() {
+
+    try {
+
+        const connector = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: window.location.origin + "/tonconnect-manifest.json"
+        });
+
+        await connector.openModal();
+
+        connector.onStatusChange(async wallet => {
+
+            if (!wallet) return;
+
+            const address = wallet.account.address;
+
+            settings.ton_wallet = address;
+
+            await API.saveSystem({
+                ton_wallet: address,
+                ton_rate: settings.ton_rate,
+                stars_rate: settings.stars_rate,
+                mode: settings.mode,
+                sales_enabled: settings.sales_enabled,
+                deposits_enabled: settings.deposits_enabled,
+                referrals_enabled: settings.referrals_enabled,
+                balance_payment_enabled: settings.balance_payment_enabled
+            });
+
+            renderSettings("wallet");
+
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+    }
+
+}
