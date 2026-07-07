@@ -1,7 +1,8 @@
+
 {
-  "url": "https://white-stars-api.onrender.com",
+  "url": "https://white-stars.onrender.com",
   "name": "WHITE STARS",
-  "iconUrl": "https://white-stars-api.onrender.com/image/logo.png",
-  "termsOfUseUrl": "https://white-stars-api.onrender.com/pages/terms.html",
-  "privacyPolicyUrl": "https://white-stars-api.onrender.com/pages/privacy.html"
+  "iconUrl": "https://white-stars.onrender.com/images/logo.png",
+  "termsOfUseUrl": "https://white-stars.onrender.com/pages/terms.html",
+  "privacyPolicyUrl": "https://white-stars.onrender.com/pages/privacy.html"
 }
