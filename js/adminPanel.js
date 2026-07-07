@@ -71,6 +71,15 @@ document.querySelectorAll(".tab").forEach(tab => {
     };
 
 });
+document.querySelectorAll(".settings-tab").forEach(tab => {
+
+    tab.onclick = () => {
+
+        Settings.switchSettings(tab.dataset.settings);
+
+    };
+
+});
 
     // ---------- вкладки --------------
 
@@ -119,15 +128,7 @@ if (btn) {
 
         Settings.loadSettings();
 
-    }document.querySelectorAll(".settings-tab").forEach(tab => {
-
-    tab.onclick = () => {
-
-        Settings.switchSettings(tab.dataset.settings);
-
-    };
-
-});
+    }
 
     if (page === "operations") {
 
