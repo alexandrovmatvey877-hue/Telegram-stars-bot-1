@@ -99,13 +99,15 @@ console.log("stars50 =", settings.stars50);
 
     if (tab === "wallet") {
 
-        box.innerHTML = `
+    box.innerHTML = `
 
 <div class="operation-card">
 
 <h3>💎 TON Wallet</h3>
 
-<p><b>Статус:</b> Не подключен</p>
+<p><b>Статус:</b> ${
+    settings.ton_wallet ? "Подключен ✅" : "Не подключен"
+}</p>
 
 <p><b>Адрес:</b></p>
 
@@ -116,20 +118,24 @@ border-radius:10px;
 word-break:break-all;
 margin-bottom:15px;
 ">
-Не подключен
+${settings.ton_wallet || "Не подключен"}
 </div>
 
-<button class="save-button" onclick="connectTonWallet()">
-Подключить TON Wallet
+<button id="connectWalletBtn" class="save-button">
+${settings.ton_wallet ? "Переподключить" : "Подключить TON Wallet"}
 </button>
 
 </div>
 
 `;
 
-        return;
+    document
+        .getElementById("connectWalletBtn")
+        .onclick = connectTonWallet;
 
-    }
+    return;
+
+}
 
     // ===========================
     // УСЛУГИ
