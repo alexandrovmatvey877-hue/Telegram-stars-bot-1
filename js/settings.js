@@ -3,8 +3,6 @@ window.onerror = function (msg, url, line, col, err) {
 let settings = {};
 let currentSettingsTab = "prices";
 let connector = null;
-alert("settings.js загрузился");
-alert("connector создан");
 
 async function loadSettings() {
 
