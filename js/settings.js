@@ -1,10 +1,4 @@
 window.onerror = function (msg, url, line, col, err) {
-    alert(
-        "JS ERROR\n\n" +
-        msg +
-        "\nСтрока: " + line +
-        "\nКолонка: " + col
-    );
 };
 let settings = {};
 let currentSettingsTab = "prices";
@@ -288,13 +282,6 @@ console.log(result);
 
     console.error(e);
 
-    alert(
-        "Ошибка сохранения\n\n" +
-        "message: " + e.message +
-        "\n\n" +
-        "stack:\n" + (e.stack || "нет")
-    );
-
 }
 
 }
@@ -322,8 +309,6 @@ if (!connector) {
             const address = wallet.account.address;
 
             settings.ton_wallet = address;
-
-alert("Адрес получен:\n\n" + address);
             await API.saveSystem({
                 ton_wallet: address,
                 ton_rate: settings.ton_rate,
@@ -340,7 +325,6 @@ alert("Адрес получен:\n\n" + address);
         });
 
         await connector.openModal();
-alert("Модалка закрылась");
 
 if (connector.wallet) {
 
