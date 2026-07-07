@@ -290,32 +290,6 @@ async function connectTonWallet() {
 
     try {
 
-        const wallet = await Ton.connectWallet();
-
-        if (!wallet) {
-            alert("Подключение отменено");
-            return;
-        }
-
-        alert(
-            "✅ Кошелек подключен\n\n" +
-            wallet.account.address
-        );
-
-    } catch (e) {
-
-        alert(
-            "Ошибка подключения\n\n" +
-            (e.message || e)
-        );
-
-    }
-
-}
-async function connectTonWallet() {
-
-    try {
-
         const connector = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: window.location.origin + "/tonconnect-manifest.json"
         });
