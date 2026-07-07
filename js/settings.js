@@ -10,10 +10,6 @@ let settings = {};
 let currentSettingsTab = "prices";
 let connector = null;
 alert("settings.js загрузился");
-const connector = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: window.location.origin + "/tonconnect-manifest.json"
-});
-
 alert("connector создан");
 
 async function loadSettings() {
@@ -361,7 +357,6 @@ if (connector.wallet) {
 
     } catch (err) {
 
-catch (err) {
         console.error(err);
 
     }
