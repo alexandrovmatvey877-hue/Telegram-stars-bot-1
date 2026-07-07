@@ -1,5 +1,8 @@
 let settings = {};
 let currentSettingsTab = "prices";
+const connector = new TON_CONNECT_UI.TonConnectUI({
+    manifestUrl: window.location.origin + "/tonconnect-manifest.json"
+});
 
 async function loadSettings() {
 
@@ -289,10 +292,6 @@ window.Settings = {
 async function connectTonWallet() {
 
     try {
-
-        const connector = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: window.location.origin + "/tonconnect-manifest.json"
-        });
 
         await connector.openModal();
 
