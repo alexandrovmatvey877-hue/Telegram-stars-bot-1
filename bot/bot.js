@@ -55,6 +55,13 @@ bot.on("callback_query", async (query) => {
 
         await bot.answerCallbackQuery(query.id);
 
+        // Удаляем главное меню
+        await bot.deleteMessage(
+            query.message.chat.id,
+            query.message.message_id
+        );
+
+        // Отправляем профиль
         await bot.sendMessage(
             query.message.chat.id,
 
@@ -62,11 +69,70 @@ bot.on("callback_query", async (query) => {
 
 🆔 ID: ${user.id}
 👤 Имя: ${user.first_name || "Не указано"}
-📛 Username: ${user.username ? "@" + user.username : "Не указан"}`
+📛 Username: ${user.username ? "@" + user.username : "Не указан"}`,
+
+            {
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            {
+                                text: "⬅️ Назад",
+                                callback_data: "back"
+                            }
+                        ]
+                    ]
+                }
+            }
+        );
+
+    }
+
+    if (query.data === "back") {
+
+        await bot.answerCallbackQuery(query.id);
+
+        // Удаляем профиль
+        await bot.deleteMessage(
+            query.message.chat.id,
+            query.message.message_id
+        );
+
+        // Отправляем главное меню заново
+        await bot.sendMessage(
+            query.message.chat.id,
+
+`⭐ Добро пожаловать в WHITE STARS!
+
+Выберите действие:`,
+
+            {
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            {
+                                text: "📢 Канал",
+                                url: CHANNEL
+                            }
+                        ],
+                        [
+                            {
+                                text: "🚀 Зайти в Mini App",
+                                web_app: {
+                                    url: MINI_APP
+                                }
+                            }
+                        ],
+                        [
+                            {
+                                text: "👤 Профиль",
+                                callback_data: "profile"
+                            }
+                        ]
+                    ]
+                }
+            }
         );
 
     }
 
 });
-
-console.log("🤖 WHITE STARS bot started");
