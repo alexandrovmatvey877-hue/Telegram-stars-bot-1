@@ -2,46 +2,31 @@ require("dotenv").config();
 
 const TelegramBot = require("node-telegram-bot-api");
 
-
-const bot = new TelegramBot(
-    process.env.BOT_TOKEN,
-    {
-        polling: true
-    }
-);
-
+const bot = new TelegramBot(process.env.BOT_TOKEN, {
+    polling: true
+});
 
 const MINI_APP = "https://white-stars.onrender.com/";
-
 const CHANNEL = "https://t.me/White_stars_post";
 
-
-bot.onText(/\/start/, async (msg) => {
+bot.onText(/\/start/, (msg) => {
 
     const chatId = msg.chat.id;
 
-
     bot.sendMessage(
         chatId,
-
-        `⭐ Добро пожаловать в White Stars!
-
-Ваше цифровое пространство уже доступно.
+`⭐ Добро пожаловать в WHITE STARS!
 
 Выберите действие:`,
-
         {
             reply_markup: {
-
                 inline_keyboard: [
-
                     [
                         {
                             text: "📢 Канал",
                             url: CHANNEL
                         }
                     ],
-
                     [
                         {
                             text: "🚀 Зайти в Mini App",
@@ -50,23 +35,38 @@ bot.onText(/\/start/, async (msg) => {
                             }
                         }
                     ],
-
                     [
                         {
                             text: "👤 Профиль",
-                            web_app: {
-                                url: MINI_APP + "profile.html"
-                            }
+                            callback_data: "profile"
                         }
                     ]
-
                 ]
-
             }
         }
     );
-
 });
 
+bot.on("callback_query", async (query) => {
+
+    if (query.data === "profile") {
+
+        const user = query.from;
+
+        await bot.answerCallbackQuery(query.id);
+
+        await bot.sendMessage(
+            query.message.chat.id,
+
+`👤 Ваш профиль
+
+🆔 ID: ${user.id}
+👤 Имя: ${user.first_name || "Не указано"}
+📛 Username: ${user.username ? "@" + user.username : "Не указан"}`
+        );
+
+    }
+
+});
 
 console.log("🤖 WHITE STARS bot started");
