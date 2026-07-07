@@ -1,5 +1,6 @@
-
 require("dotenv").config();
+
+const monitor = require("./services/monitor");
 
 const express = require("express");
 const cors = require("cors");
