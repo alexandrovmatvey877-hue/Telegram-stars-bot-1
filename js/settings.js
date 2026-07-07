@@ -293,11 +293,11 @@ async function connectTonWallet() {
 
     try {
 
-        await connector.openModal();
-
-        connector.onStatusChange(async wallet => {
+        const unsubscribe = connector.onStatusChange(async wallet => {
 
             if (!wallet) return;
+
+            unsubscribe();
 
             const address = wallet.account.address;
 
@@ -317,6 +317,8 @@ async function connectTonWallet() {
             renderSettings("wallet");
 
         });
+
+        await connector.openModal();
 
     } catch (err) {
 
