@@ -1,6 +1,3 @@
-// наверное до этого я никогда не найду
-const fetch = require("node-fetch");
-
 async function getTonPrice() {
 
     try {
@@ -10,7 +7,7 @@ async function getTonPrice() {
         );
 
         const data = await response.json();
-
+//сисики жопа сисики жопа
         return data["the-open-network"].rub;
 
     } catch (err) {
@@ -26,4 +23,3 @@ async function getTonPrice() {
 module.exports = {
     getTonPrice
 };
-//нихуя себе... дошел...
