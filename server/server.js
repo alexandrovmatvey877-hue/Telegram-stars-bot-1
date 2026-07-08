@@ -105,7 +105,6 @@ const price = await monitor.getTonPrice();
 
 console.log("TON PRICE =", price);
 
-alert("TON PRICE =", price);
         app.listen(PORT, () => {
             console.log(`🚀 WHITE STARS started on port ${PORT}`);
         });
