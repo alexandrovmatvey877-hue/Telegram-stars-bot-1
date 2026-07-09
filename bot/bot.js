@@ -9,6 +9,9 @@ const TelegramBot = require("node-telegram-bot-api");
 const bot = new TelegramBot(process.env.BOT_TOKEN, {
     polling: true
 });
+bot.on("polling_error", (err) => {
+    console.log("POLL ERROR:", err.message);
+});
 
 const MINI_APP = "https://white-stars.onrender.com/";
 const CHANNEL = "https://t.me/White_stars_post";
