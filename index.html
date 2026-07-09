@@ -37,7 +37,7 @@
             overflow-x: hidden;
         }
 
-        /* ––– ЧЁРНАЯ ДЫРА (наклонный диск) ––– */
+        /* ––– ЧЁРНАЯ ДЫРА (классический вариант с круглыми кольцами) ––– */
         .black-hole-bg {
             position: fixed;
             top: 0;
@@ -50,106 +50,100 @@
             overflow: hidden;
         }
 
-        /* Абсолютно чёрный центр */
         .bh-center {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 28px;
-            height: 28px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: #000;
-            box-shadow: 0 0 60px 25px rgba(0,0,0,0.98);
-            z-index: 10;
+            box-shadow: 0 0 80px 30px rgba(0, 0, 0, 0.95), 0 0 150px 60px rgba(0, 0, 0, 0.8);
+            z-index: 4;
         }
 
-        /* Задний диск (эллипс, позади центра) */
-        .bh-disk-back {
+        .bh-accretion-1 {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 180px;
-            height: 70px;
+            transform: translate(-50%, -50%);
+            width: 340px;
+            height: 340px;
             border-radius: 50%;
             background: conic-gradient(from 0deg,
-                transparent 0deg, transparent 15deg,
-                rgba(255,200,60,0.95) 18deg, rgba(255,180,30,0.75) 21deg, transparent 26deg,
-                transparent 55deg,
-                rgba(255,200,60,0.85) 58deg, rgba(255,180,30,0.65) 61deg, transparent 65deg,
-                transparent 95deg,
-                rgba(255,200,60,0.75) 98deg, rgba(255,180,30,0.55) 101deg, transparent 106deg,
-                transparent 140deg,
-                rgba(255,200,60,0.85) 143deg, rgba(255,180,30,0.65) 146deg, transparent 150deg,
-                transparent 185deg,
-                rgba(255,200,60,0.95) 188deg, rgba(255,180,30,0.75) 191deg, transparent 196deg,
-                transparent 230deg,
-                rgba(255,200,60,0.75) 233deg, rgba(255,180,30,0.55) 236deg, transparent 240deg,
-                transparent 280deg,
-                rgba(255,200,60,0.85) 283deg, rgba(255,180,30,0.65) 286deg, transparent 290deg,
-                transparent 325deg,
-                rgba(255,200,60,0.95) 328deg, rgba(255,180,30,0.75) 331deg, transparent 336deg,
-                transparent 360deg);
-            filter: blur(3px);
+                    transparent 0deg,
+                    rgba(255, 180, 50, 0.07) 20deg,
+                    rgba(255, 200, 60, 0.25) 45deg,
+                    rgba(255, 180, 30, 0.5) 70deg,
+                    rgba(255, 200, 60, 0.3) 95deg,
+                    rgba(255, 160, 20, 0.15) 120deg,
+                    transparent 160deg,
+                    rgba(255, 180, 40, 0.1) 200deg,
+                    rgba(255, 170, 40, 0.35) 240deg,
+                    rgba(255, 200, 70, 0.5) 270deg,
+                    rgba(255, 160, 30, 0.2) 300deg,
+                    transparent 340deg,
+                    transparent 360deg);
+            filter: blur(18px);
             z-index: 2;
-            transform: translate(-50%, -50%) rotate(-15deg);
-            animation: bh-disk-rotate 18s linear infinite;
+            animation: bh-rotate 22s linear infinite;
             will-change: transform;
         }
 
-        .bh-disk-mid {
+        .bh-accretion-2 {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 130px;
-            height: 50px;
+            transform: translate(-50%, -50%) rotate(180deg);
+            width: 280px;
+            height: 280px;
             border-radius: 50%;
             background: conic-gradient(from 0deg,
-                transparent 0deg, transparent 20deg,
-                rgba(255,220,80,0.85) 23deg, rgba(255,200,60,0.65) 26deg, transparent 30deg,
-                transparent 60deg,
-                rgba(255,220,80,0.75) 63deg, rgba(255,200,60,0.55) 66deg, transparent 70deg,
-                transparent 110deg,
-                rgba(255,220,80,0.85) 113deg, rgba(255,200,60,0.65) 116deg, transparent 120deg,
-                transparent 160deg,
-                rgba(255,220,80,0.75) 163deg, rgba(255,200,60,0.55) 166deg, transparent 170deg,
-                transparent 210deg,
-                rgba(255,220,80,0.85) 213deg, rgba(255,200,60,0.65) 216deg, transparent 220deg,
-                transparent 260deg,
-                rgba(255,220,80,0.75) 263deg, rgba(255,200,60,0.55) 266deg, transparent 270deg,
-                transparent 310deg,
-                rgba(255,220,80,0.85) 313deg, rgba(255,200,60,0.65) 316deg, transparent 320deg,
-                transparent 360deg);
-            filter: blur(2px);
+                    transparent 0deg,
+                    rgba(255, 200, 60, 0.05) 30deg,
+                    rgba(255, 180, 40, 0.4) 60deg,
+                    rgba(255, 220, 80, 0.6) 85deg,
+                    rgba(255, 180, 30, 0.3) 100deg,
+                    transparent 140deg,
+                    transparent 220deg,
+                    rgba(255, 170, 40, 0.2) 260deg,
+                    rgba(255, 190, 50, 0.5) 290deg,
+                    rgba(255, 160, 30, 0.3) 310deg,
+                    transparent 340deg,
+                    transparent 360deg);
+            filter: blur(10px);
             z-index: 3;
-            transform: translate(-50%, -50%) rotate(12deg);
-            animation: bh-disk-rotate 14s linear infinite reverse;
+            animation: bh-rotate 16s linear infinite reverse;
             will-change: transform;
         }
 
-        /* Передний край диска (дуга над центром) */
-        .bh-disk-front {
+        .bh-accretion-3 {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 100px;
-            height: 38px;
+            transform: translate(-50%, -50%) rotate(90deg);
+            width: 220px;
+            height: 220px;
             border-radius: 50%;
-            background: conic-gradient(from 90deg,
-                transparent 0deg, transparent 40deg,
-                rgba(255,240,100,0.95) 42deg, rgba(255,200,60,0.85) 44deg, transparent 48deg,
-                transparent 80deg,
-                rgba(255,240,100,0.85) 82deg, rgba(255,200,60,0.75) 84deg, transparent 88deg,
-                transparent 130deg,
-                rgba(255,240,100,0.95) 132deg, rgba(255,200,60,0.85) 134deg, transparent 138deg,
-                transparent 180deg,
-                transparent 360deg);
-            filter: blur(1.5px);
-            z-index: 12;
-            transform: translate(-50%, -65%) rotate(-8deg);
-            animation: bh-disk-rotate 10s linear infinite;
+            background: conic-gradient(from 0deg,
+                    transparent 0deg,
+                    rgba(255, 200, 70, 0.03) 15deg,
+                    rgba(255, 190, 50, 0.55) 40deg,
+                    rgba(255, 220, 80, 0.7) 55deg,
+                    rgba(255, 180, 30, 0.4) 65deg,
+                    rgba(255, 160, 30, 0.1) 80deg,
+                    transparent 110deg,
+                    transparent 250deg,
+                    rgba(255, 180, 40, 0.3) 280deg,
+                    rgba(255, 200, 60, 0.55) 300deg,
+                    rgba(255, 160, 30, 0.2) 315deg,
+                    transparent 340deg,
+                    transparent 360deg);
+            filter: blur(6px);
+            z-index: 5;
+            animation: bh-rotate 12s linear infinite;
             will-change: transform;
-            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
         }
 
         .bh-photon-ring {
@@ -157,29 +151,27 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 70px;
-            height: 70px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            border: 1.5px solid rgba(255,200,70,0.4);
-            box-shadow: 0 0 10px 3px rgba(255,190,50,0.5), 0 0 24px 8px rgba(255,170,30,0.25);
-            z-index: 8;
-            animation: bh-photon-pulse 3.5s ease-in-out infinite;
+            border: 1.5px solid rgba(255, 200, 70, 0.25);
+            box-shadow: 0 0 6px 2px rgba(255, 190, 50, 0.3), 0 0 20px 8px rgba(255, 170, 30, 0.15),
+                        inset 0 0 6px 2px rgba(255, 200, 60, 0.2);
+            z-index: 6;
+            animation: bh-photon-pulse 4s ease-in-out infinite;
+            will-change: transform, box-shadow;
         }
 
-        @keyframes bh-disk-rotate {
-            from { transform: translate(-50%, -50%) rotate(var(--rot, 0deg)); }
-            to { transform: translate(-50%, -50%) rotate(calc(var(--rot, 0deg) + 360deg)); }
+        @keyframes bh-rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
-        .bh-disk-back { --rot: -15deg; }
-        .bh-disk-mid { --rot: 12deg; }
-        .bh-disk-front { --rot: -8deg; }
 
         @keyframes bh-photon-pulse {
-            0%, 100% { box-shadow: 0 0 6px 2px rgba(255,190,50,0.3), 0 0 20px 8px rgba(255,170,30,0.15); }
-            50% { box-shadow: 0 0 14px 4px rgba(255,200,60,0.5), 0 0 30px 12px rgba(255,180,40,0.3); }
+            0%, 100% { box-shadow: 0 0 6px 2px rgba(255, 190, 50, 0.3), 0 0 20px 8px rgba(255, 170, 30, 0.15), inset 0 0 6px 2px rgba(255, 200, 60, 0.2); }
+            50% { box-shadow: 0 0 12px 4px rgba(255, 200, 60, 0.45), 0 0 30px 12px rgba(255, 180, 40, 0.25), inset 0 0 10px 3px rgba(255, 210, 70, 0.3); }
         }
 
-        /* Редкие звёзды */
         .star-dot {
             position: absolute;
             width: 2px;
@@ -212,16 +204,16 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             pointer-events: all;
         }
         .loader-overlay.hidden { opacity: 0; pointer-events: none; }
 
-        .loader-svg-container { position: relative; width: 160px; height: 160px; margin-bottom: 20px; }
+        .loader-svg-container { position: relative; width: 180px; height: 180px; margin-bottom: 24px; }
         .loader-circle-bg { fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 2; }
         .loader-circle-path {
             fill: none; stroke: rgba(255,255,255,0.7); stroke-width: 2.5;
-            stroke-linecap: round; stroke-dasharray: 439; stroke-dashoffset: 439;
+            stroke-linecap: round; stroke-dasharray: 502; stroke-dashoffset: 502;
             animation: loader-draw 1.3s cubic-bezier(0.65,0,0.35,1) forwards;
         }
         .loader-circle-path.snake {
@@ -232,18 +224,18 @@
 
         @keyframes loader-draw { to { stroke-dashoffset: 0; } }
         @keyframes loader-snake {
-            0% { stroke-dasharray: 50 439; stroke-dashoffset: 439; }
-            30% { stroke-dasharray: 70 439; stroke-dashoffset: 300; }
-            60% { stroke-dasharray: 90 439; stroke-dashoffset: 100; }
-            85% { stroke-dasharray: 45 439; stroke-dashoffset: 0; }
-            100% { stroke-dasharray: 439 0; stroke-dashoffset: 0; }
+            0% { stroke-dasharray: 60 502; stroke-dashoffset: 502; }
+            30% { stroke-dasharray: 80 502; stroke-dashoffset: 340; }
+            60% { stroke-dasharray: 100 502; stroke-dashoffset: 100; }
+            85% { stroke-dasharray: 50 502; stroke-dashoffset: 0; }
+            100% { stroke-dasharray: 502 0; stroke-dashoffset: 0; }
         }
 
         .loader-logo { display: flex; gap: 3px; flex-wrap: wrap; justify-content: center; opacity: 0; transition: opacity 0.2s; }
         .loader-logo.visible { opacity: 1; }
         .loader-logo span {
-            display: inline-block; font-size: 28px; font-weight: 900; color: #fff;
-            text-shadow: 0 0 15px rgba(200,180,255,0.5); opacity: 0;
+            display: inline-block; font-size: 30px; font-weight: 900; color: #fff;
+            text-shadow: 0 0 20px rgba(200,180,255,0.5); opacity: 0;
             transform: scale(0.2) translateY(18px); letter-spacing: -0.5px;
         }
         .loader-logo span.jelly-in { animation: jellyIn 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards; }
@@ -260,7 +252,7 @@
         .main-content {
             position: relative; z-index: 1; width: 100%; max-width: 460px;
             opacity: 0; transform: translateY(20px);
-            transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.34,1.3,0.64,1);
+            transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.34,1.3,0.64,1);
             pointer-events: none;
         }
         .main-content.revealed { opacity: 1; transform: translateY(0); pointer-events: all; }
@@ -287,10 +279,10 @@
 
         .logo {
             text-align: center; font-size: 36px; font-weight: 900;
-            color: #ffffff;
-            text-shadow: 0 2px 30px rgba(130,110,255,0.3);
-            opacity: 0;
-            transform: translateY(40px) scale(0.8);
+            background: linear-gradient(135deg, #ffffff 0%, #c8c8ff 40%, #e0d8ff 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 20px rgba(130,110,255,0.35));
+            opacity: 0; transform: translateY(40px) scale(0.8);
         }
         .main-content.revealed .logo {
             animation: logoFlyIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
@@ -313,34 +305,20 @@
 
         .promo-carousel {
             margin-top: 24px;
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
-            border-radius: 60px;
-            padding: 12px 24px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            overflow: hidden;
-            min-height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
+            background: rgba(255,255,255,0.05); backdrop-filter: blur(12px);
+            border-radius: 60px; padding: 12px 24px; text-align: center;
+            border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            min-height: 48px; display: flex; align-items: center; justify-content: center;
         }
         .promo-text {
-            font-size: 15px;
-            font-weight: 600;
-            color: #fff;
-            letter-spacing: -0.2px;
+            font-size: 15px; font-weight: 600; color: #fff;
             text-shadow: 0 0 12px rgba(255,200,100,0.3);
             transition: opacity 0.5s ease, transform 0.5s ease;
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .balance { margin-top: 24px; padding: 28px 24px; border-radius: 36px; background: rgba(255,255,255,0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.45); }
         .balance-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.4px; color: rgba(255,255,255,0.35); }
-        .balance-value { font-size: 44px; font-weight: 800; margin-top: 6px; color: #fff; text-shadow: 0 2px 30px rgba(130,110,255,0.2); }
+        .balance-value { font-size: 44px; font-weight: 800; margin-top: 6px; background: linear-gradient(135deg, #fff, #d8d8ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .topup { width: 100%; height: 56px; margin-top: 20px; border: none; border-radius: 60px; background: linear-gradient(135deg, rgba(130,90,255,0.28), rgba(200,110,255,0.14)); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-weight: 700; cursor: pointer; transition: all 0.35s; }
         .topup:hover { background: linear-gradient(135deg, rgba(130,90,255,0.38), rgba(200,110,255,0.22)); border-color: rgba(255,255,255,0.18); transform: translateY(-2px); }
 
@@ -350,7 +328,7 @@
         .card { background: rgba(255,255,255,0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.05); padding: 20px 16px; border-radius: 32px; cursor: pointer; transition: all 0.35s; }
         .card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.1); box-shadow: 0 14px 30px -12px rgba(120,90,255,0.25); }
 
-        .card-visual { width: 60px; height: 60px; }
+        .card-visual { width: 60px; height: 60px; position: relative; display: flex; align-items: center; justify-content: center; }
         .star-core, .crown-core, .gift-core, .nft-core { font-size: 36px; }
         .star-particle { position: absolute; width: 5px; height: 5px; background: rgba(255,210,80,0.8); border-radius: 50%; animation: star-orbit 3s linear infinite; }
         @keyframes star-orbit { 0% { transform: rotate(0deg) translateX(24px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(24px) rotate(-360deg); } }
@@ -364,6 +342,9 @@
         @keyframes nft-wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(6deg); } 50% { transform: rotate(-5deg); } 75% { transform: rotate(3deg); } }
         .card:hover .nft-core { animation: nft-wiggle 0.6s; filter: drop-shadow(0 0 16px rgba(0,255,200,0.7)); }
 
+        .card-title { margin-top: 12px; font-size: 17px; font-weight: 700; color: #fff; }
+        .card-text { margin-top: 5px; font-size: 12px; color: rgba(255,255,255,0.45); }
+
         .links { margin-top: 40px; border-radius: 36px; background: rgba(255,255,255,0.025); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.04); }
         .link { display: flex; justify-content: space-between; padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.03); cursor: pointer; transition: background 0.3s; color: rgba(255,255,255,0.75); }
         .link:hover { background: rgba(255,255,255,0.03); padding-left: 26px; }
@@ -372,12 +353,11 @@
 
         @media (max-width: 420px) {
             .glass-container { padding: 20px 18px 24px; border-radius: 48px 48px 36px 36px; }
-            .bh-disk-back { width: 140px; height: 52px; }
-            .bh-disk-mid { width: 100px; height: 38px; }
-            .bh-disk-front { width: 80px; height: 30px; }
-            .bh-center { width: 22px; height: 22px; }
-            .bh-photon-ring { width: 54px; height: 54px; }
-            .promo-carousel { padding: 10px 20px; }
+            .bh-accretion-1 { width: 240px; height: 240px; }
+            .bh-accretion-2 { width: 200px; height: 200px; }
+            .bh-accretion-3 { width: 160px; height: 160px; }
+            .bh-center { width: 30px; height: 30px; }
+            .bh-photon-ring { width: 120px; height: 120px; }
         }
 
         button { outline: none; -webkit-appearance: none; }
@@ -385,10 +365,10 @@
 </head>
 <body>
     <div class="black-hole-bg" aria-hidden="true">
-        <div class="bh-disk-back"></div>
-        <div class="bh-disk-mid"></div>
+        <div class="bh-accretion-1"></div>
+        <div class="bh-accretion-2"></div>
+        <div class="bh-accretion-3"></div>
         <div class="bh-center"></div>
-        <div class="bh-disk-front"></div>
         <div class="bh-photon-ring"></div>
         <div class="star-dot"></div><div class="star-dot"></div><div class="star-dot"></div>
         <div class="star-dot"></div><div class="star-dot"></div><div class="star-dot"></div>
@@ -396,7 +376,7 @@
 
     <div class="loader-overlay" id="loader" aria-hidden="false">
         <div class="loader-svg-container">
-            <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" class="loader-circle-bg"/><circle cx="80" cy="80" r="70" class="loader-circle-path" id="loaderCircle"/></svg>
+            <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" class="loader-circle-bg"/><circle cx="100" cy="100" r="80" class="loader-circle-path" id="loaderCircle"/></svg>
         </div>
         <div class="loader-logo" id="loaderLogo">
             <span>W</span><span>H</span><span>I</span><span>T</span><span>E</span><span>&nbsp;</span><span>S</span><span>T</span><span>A</span><span>R</span><span>S</span>
@@ -410,17 +390,12 @@
         <div class="glass-container">
             <div class="logo">⭐ WHITE STARS</div>
             <div class="subtitle" id="greeting">Покупка цифровых товаров Telegram</div>
-
-            <div class="promo-carousel" id="promoCarousel">
-                <span class="promo-text" id="promoText">🔥 Акция -20% на Stars</span>
-            </div>
-
+            <div class="promo-carousel"><span class="promo-text" id="promoText">🔥 Акция -20% на Stars</span></div>
             <div class="balance">
                 <div class="balance-title">Баланс аккаунта</div>
                 <div class="balance-value" id="balance">0.00 ₽</div>
                 <button class="topup" onclick="topup()">Пополнить баланс</button>
             </div>
-
             <div class="section">
                 <h2>Каталог</h2>
                 <div class="cards">
@@ -430,7 +405,6 @@
                     <div class="card" onclick="buyNFT()"><div class="card-visual nft-visual"><div class="nft-core">🖼</div></div><div class="card-title">NFT</div><div class="card-text">NFT Fragment и другие цифровые товары.</div></div>
                 </div>
             </div>
-
             <div class="links">
                 <div class="link" onclick="openPrices()"><span>💰 Тарифы</span><span class="arrow">›</span></div>
                 <div class="link" onclick="openPrivacy()"><span>🔒 Политика конфиденциальности</span><span class="arrow">›</span></div>
@@ -442,7 +416,6 @@
     </div>
 
     <script>
-        // ––– Telegram WebApp (не изменять) –––
         const tg = window.Telegram.WebApp;
         tg.ready(); tg.expand(); tg.disableVerticalSwipes();
         tg.setHeaderColor("bg_color"); tg.setBackgroundColor("bg_color");
@@ -468,7 +441,6 @@
                 }).catch(err => { alert(err); console.error(err); });
         }
 
-        // ––– Бизнес-функции (не изменять) –––
         function topup() { window.location.href = "pages/topup.html"; }
         function buyStars() { tg.showAlert("Покупка Telegram Stars скоро станет доступна."); }
         function buyPremium() { tg.showAlert("Покупка Telegram Premium скоро станет доступна."); }
@@ -479,7 +451,6 @@
         function openTerms() { window.location.href = "pages/terms.html"; }
         function openSupport() { tg.openTelegramLink("https://t.me/WHITE_STARS_CONNECT"); }
     </script>
-
     <script>
         (function() {
             const loader = document.getElementById('loader');
@@ -488,16 +459,11 @@
             const logoSpans = loaderLogo.querySelectorAll('span');
             const mainContent = document.getElementById('mainContent');
             const greenDot = document.getElementById('greenDot');
-            const balanceEl = document.getElementById('balance');
             const promoText = document.getElementById('promoText');
 
-            let dataReady = false;
-            let loaderHidden = false;
-
-            // Карусель объявлений
             const promos = ["🔥 Акция -20% на Stars", "⚡ Новые NFT в каталоге", "💎 Premium со скидкой", "🎁 Подарки уже в продаже"];
             let promoIndex = 0;
-            function rotatePromo() {
+            setInterval(() => {
                 promoIndex = (promoIndex + 1) % promos.length;
                 promoText.style.opacity = '0';
                 promoText.style.transform = 'translateY(10px)';
@@ -506,85 +472,63 @@
                     promoText.style.opacity = '1';
                     promoText.style.transform = 'translateY(0)';
                 }, 400);
-            }
-            setInterval(rotatePromo, 4000);
+            }, 4000);
 
-            function hideLoaderAndReveal() {
-                if (loaderHidden) return;
-                loaderHidden = true;
-                if (loader) loader.classList.add('hidden');
+            // Запуск анимации загрузки и гарантированное завершение
+            function startLoaderAnimation() {
+                // draw начинается сразу, snake через 800ms, буквы через 1900ms
+                setTimeout(() => loaderCircle.classList.add('snake'), 800);
+                setTimeout(() => loaderLogo.classList.add('visible'), 1200);
+                setTimeout(() => {
+                    logoSpans.forEach((s, i) => setTimeout(() => s.classList.add('jelly-in'), i * 55));
+                }, 1900);
+            }
+
+            // Скрываем loader с плавным растворением и показываем интерфейс
+            function revealInterface() {
+                if (loader.classList.contains('hidden')) return;
+                loader.classList.add('hidden');
                 mainContent.classList.add('revealed');
                 if (greenDot) greenDot.classList.add('active');
             }
 
-            function startLoaderAnimation() {
-                setTimeout(() => {
-                    if (loaderHidden) return;
-                    loaderCircle.classList.add('snake');
-                    setTimeout(() => {
-                        if (loaderHidden) return;
-                        loaderLogo.classList.add('visible');
-                    }, 400);
-                    setTimeout(() => {
-                        if (loaderHidden) return;
-                        logoSpans.forEach((s, i) => setTimeout(() => s.classList.add('jelly-in'), i * 55));
-                    }, 700);
-                }, 800);
-            }
+            // Анимация всегда длится ~3.5 секунд, после этого скрываем loader
+            const MIN_LOADER_DURATION = 3500;
+            startLoaderAnimation();
+            setTimeout(revealInterface, MIN_LOADER_DURATION);
 
-            // Ожидание данных: следим за изменением баланса
-            if (balanceEl) {
-                const observer = new MutationObserver(() => {
-                    const current = balanceEl.innerText;
-                    if (current !== "0.00 ₽" && !dataReady) {
-                        dataReady = true;
-                        hideLoaderAndReveal();
-                    }
-                });
-                observer.observe(balanceEl, { childList: true, characterData: true, subtree: true });
-            }
-
-            // Таймаут 6 секунд
+            // Дополнительный таймаут на случай, если сервер вообще не ответит (7с)
             setTimeout(() => {
-                if (!dataReady && !loaderHidden) {
-                    hideLoaderAndReveal();
+                if (!mainContent.classList.contains('revealed')) {
+                    revealInterface();
                 }
-            }, 6000);
-
-            if (loader && !loaderHidden) {
-                startLoaderAnimation();
-            } else {
-                hideLoaderAndReveal();
-            }
+            }, 7000);
 
             // Адаптивная производительность
             const isLowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
             if (isLowPower) {
-                document.querySelectorAll('.bh-disk-back, .bh-disk-mid, .bh-disk-front').forEach(el => {
-                    el.style.filter = 'blur(1.5px)';
-                    el.style.animationDuration = '25s';
+                document.querySelectorAll('.bh-accretion-1, .bh-accretion-2, .bh-accretion-3').forEach(el => {
+                    el.style.filter = 'blur(6px)';
+                    el.style.animationDuration = '30s';
                 });
                 document.querySelectorAll('.star-particle,.crown-sparkle').forEach(el => el.style.display = 'none');
                 document.querySelector('.glass-container').style.animation = 'none';
             }
-
             let lastTime = performance.now(), frames = 0;
             const fpsInterval = setInterval(() => {
                 frames++;
                 const now = performance.now();
                 if (now - lastTime >= 2000) {
-                    const fps = Math.round((frames * 1000) / (now - lastTime));
-                    if (fps < 25 && !isLowPower) {
-                        document.querySelectorAll('.bh-disk-back, .bh-disk-mid, .bh-disk-front').forEach(el => {
-                            el.style.animationDuration = '35s';
-                            el.style.filter = 'blur(1px)';
+                    if (Math.round((frames * 1000) / (now - lastTime)) < 25 && !isLowPower) {
+                        document.querySelectorAll('.bh-accretion-1, .bh-accretion-2, .bh-accretion-3').forEach(el => {
+                            el.style.animationDuration = '40s';
+                            el.style.filter = 'blur(4px)';
                         });
                         document.querySelectorAll('.star-particle,.crown-sparkle').forEach(el => el.style.display = 'none');
                         document.querySelector('.glass-container').style.animation = 'none';
                         clearInterval(fpsInterval);
                     }
-                    frames = 0;
-                    lastTime = now;
+                    frames = 0; lastTime = now;
                 }
             }, 2000);
             setTimeout(() => clearInterval(fpsInterval), 15000);
