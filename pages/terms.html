@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Пользовательское соглашение | WHITE STARS</title>
     <style>
         /* ============================================
@@ -134,22 +134,34 @@
             z-index: 2;
         }
 
-        .back {
-            display: inline-block;
-            margin-bottom: 20px;
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 450;
-            font-size: 14px;
-            letter-spacing: 0.2px;
-            transition: color 0.3s ease;
-            border-bottom: 1px solid transparent;
-            padding-bottom: 2px;
-        }
+        .back,
+.back:visited,
+.back:active,
+.back:focus {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 450;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+}
         .back:hover {
             color: var(--gold);
             border-bottom-color: var(--gold-dim);
         }
+.back:visited {
+    color: var(--text-muted);
+}
+
+.back:active {
+    color: var(--text-muted);
+}
+
+.back:focus {
+    outline: none;
+    color: var(--text-muted);
+}
 
         .brand-title {
             font-size: 36px;
