@@ -1,5 +1,4 @@
 const db = require("../config/database");
-const db = require("../config/database");
 async function getTonPrice() {
 
     try {
@@ -50,10 +49,6 @@ async function updatePrices() {
     if (!tonRate) {
         return;
     }
-
-    // Себестоимость одной звезды в TON
-    const TON_PER_STAR = 0.013;
-
     // Наценка 10%
     const MARKUP = 1.10;
 
