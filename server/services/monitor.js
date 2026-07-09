@@ -1,4 +1,3 @@
-const prices = require("./prices");
 const db = require("../config/database");
 async function getTonPrice() {
 
@@ -51,6 +50,7 @@ async function getStarPriceTon() {
 }
 async function updatePrices() {
 
+    const prices = require("./prices");
     const result = await prices.calculatePrices();
 
     if (!result) {
