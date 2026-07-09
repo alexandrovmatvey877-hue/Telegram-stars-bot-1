@@ -16,7 +16,6 @@
         html {
             -webkit-tap-highlight-color: transparent;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             background: #000001;
         }
 
@@ -31,15 +30,14 @@
             background: #000001;
             padding: 16px;
             margin: 0;
-            overflow-x: hidden;
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            overflow-x: hidden;
         }
 
-        /* ––– BLACK HOLE BACKGROUND ––– */
+        /* ––– ЧЁРНАЯ ДЫРА (наклонный диск) ––– */
         .black-hole-bg {
             position: fixed;
             top: 0;
@@ -52,110 +50,106 @@
             overflow: hidden;
         }
 
-        /* Центр — абсолютная тьма */
+        /* Абсолютно чёрный центр */
         .bh-center {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: #000;
-            box-shadow: 0 0 60px 20px rgba(0,0,0,0.98);
+            box-shadow: 0 0 60px 25px rgba(0,0,0,0.98);
             z-index: 10;
         }
 
-        /* Аккреционный диск — тонкие яркие линии */
-        .bh-accretion-1 {
+        /* Задний диск (эллипс, позади центра) */
+        .bh-disk-back {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg,
-                transparent 0deg, transparent 25deg,
-                rgba(255,200,60,0.9) 28deg, rgba(255,180,30,0.6) 32deg, transparent 35deg,
-                transparent 70deg,
-                rgba(255,200,60,0.8) 73deg, rgba(255,180,30,0.5) 76deg, transparent 80deg,
-                transparent 120deg,
-                rgba(255,200,60,0.7) 123deg, rgba(255,180,30,0.4) 126deg, transparent 130deg,
-                transparent 170deg,
-                rgba(255,200,60,0.8) 173deg, rgba(255,180,30,0.5) 176deg, transparent 180deg,
-                transparent 220deg,
-                rgba(255,200,60,0.7) 223deg, rgba(255,180,30,0.4) 226deg, transparent 230deg,
-                transparent 270deg,
-                rgba(255,200,60,0.9) 273deg, rgba(255,180,30,0.6) 276deg, transparent 280deg,
-                transparent 320deg,
-                rgba(255,200,60,0.8) 323deg, rgba(255,180,30,0.5) 326deg, transparent 330deg,
-                transparent 360deg);
-            filter: blur(3px);
-            z-index: 3;
-            animation: bh-rotate 18s linear infinite;
-            will-change: transform;
-        }
-
-        .bh-accretion-2 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(40deg);
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg,
-                transparent 0deg, transparent 20deg,
-                rgba(255,220,80,0.8) 23deg, rgba(255,200,60,0.5) 26deg, transparent 30deg,
-                transparent 60deg,
-                rgba(255,220,80,0.7) 63deg, rgba(255,200,60,0.4) 66deg, transparent 70deg,
-                transparent 110deg,
-                rgba(255,220,80,0.8) 113deg, rgba(255,200,60,0.5) 116deg, transparent 120deg,
-                transparent 160deg,
-                rgba(255,220,80,0.7) 163deg, rgba(255,200,60,0.4) 166deg, transparent 170deg,
-                transparent 210deg,
-                rgba(255,220,80,0.8) 213deg, rgba(255,200,60,0.5) 216deg, transparent 220deg,
-                transparent 260deg,
-                rgba(255,220,80,0.7) 263deg, rgba(255,200,60,0.4) 266deg, transparent 270deg,
-                transparent 310deg,
-                rgba(255,220,80,0.8) 313deg, rgba(255,200,60,0.5) 316deg, transparent 320deg,
-                transparent 360deg);
-            filter: blur(2px);
-            z-index: 5;
-            animation: bh-rotate 14s linear infinite reverse;
-            will-change: transform;
-        }
-
-        .bh-accretion-3 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(120deg);
-            width: 120px;
-            height: 120px;
+            width: 180px;
+            height: 70px;
             border-radius: 50%;
             background: conic-gradient(from 0deg,
                 transparent 0deg, transparent 15deg,
-                rgba(255,240,100,0.9) 18deg, rgba(255,200,60,0.7) 20deg, transparent 24deg,
-                transparent 50deg,
-                rgba(255,240,100,0.8) 53deg, rgba(255,200,60,0.6) 56deg, transparent 60deg,
-                transparent 90deg,
-                rgba(255,240,100,0.9) 93deg, rgba(255,200,60,0.7) 96deg, transparent 100deg,
+                rgba(255,200,60,0.95) 18deg, rgba(255,180,30,0.75) 21deg, transparent 26deg,
+                transparent 55deg,
+                rgba(255,200,60,0.85) 58deg, rgba(255,180,30,0.65) 61deg, transparent 65deg,
+                transparent 95deg,
+                rgba(255,200,60,0.75) 98deg, rgba(255,180,30,0.55) 101deg, transparent 106deg,
                 transparent 140deg,
-                rgba(255,240,100,0.8) 143deg, rgba(255,200,60,0.6) 146deg, transparent 150deg,
-                transparent 190deg,
-                rgba(255,240,100,0.9) 193deg, rgba(255,200,60,0.7) 196deg, transparent 200deg,
-                transparent 240deg,
-                rgba(255,240,100,0.8) 243deg, rgba(255,200,60,0.6) 246deg, transparent 250deg,
-                transparent 290deg,
-                rgba(255,240,100,0.9) 293deg, rgba(255,200,60,0.7) 296deg, transparent 300deg,
-                transparent 340deg,
+                rgba(255,200,60,0.85) 143deg, rgba(255,180,30,0.65) 146deg, transparent 150deg,
+                transparent 185deg,
+                rgba(255,200,60,0.95) 188deg, rgba(255,180,30,0.75) 191deg, transparent 196deg,
+                transparent 230deg,
+                rgba(255,200,60,0.75) 233deg, rgba(255,180,30,0.55) 236deg, transparent 240deg,
+                transparent 280deg,
+                rgba(255,200,60,0.85) 283deg, rgba(255,180,30,0.65) 286deg, transparent 290deg,
+                transparent 325deg,
+                rgba(255,200,60,0.95) 328deg, rgba(255,180,30,0.75) 331deg, transparent 336deg,
+                transparent 360deg);
+            filter: blur(3px);
+            z-index: 2;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            animation: bh-disk-rotate 18s linear infinite;
+            will-change: transform;
+        }
+
+        .bh-disk-mid {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 130px;
+            height: 50px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg,
+                transparent 0deg, transparent 20deg,
+                rgba(255,220,80,0.85) 23deg, rgba(255,200,60,0.65) 26deg, transparent 30deg,
+                transparent 60deg,
+                rgba(255,220,80,0.75) 63deg, rgba(255,200,60,0.55) 66deg, transparent 70deg,
+                transparent 110deg,
+                rgba(255,220,80,0.85) 113deg, rgba(255,200,60,0.65) 116deg, transparent 120deg,
+                transparent 160deg,
+                rgba(255,220,80,0.75) 163deg, rgba(255,200,60,0.55) 166deg, transparent 170deg,
+                transparent 210deg,
+                rgba(255,220,80,0.85) 213deg, rgba(255,200,60,0.65) 216deg, transparent 220deg,
+                transparent 260deg,
+                rgba(255,220,80,0.75) 263deg, rgba(255,200,60,0.55) 266deg, transparent 270deg,
+                transparent 310deg,
+                rgba(255,220,80,0.85) 313deg, rgba(255,200,60,0.65) 316deg, transparent 320deg,
+                transparent 360deg);
+            filter: blur(2px);
+            z-index: 3;
+            transform: translate(-50%, -50%) rotate(12deg);
+            animation: bh-disk-rotate 14s linear infinite reverse;
+            will-change: transform;
+        }
+
+        /* Передний край диска (дуга над центром) */
+        .bh-disk-front {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 38px;
+            border-radius: 50%;
+            background: conic-gradient(from 90deg,
+                transparent 0deg, transparent 40deg,
+                rgba(255,240,100,0.95) 42deg, rgba(255,200,60,0.85) 44deg, transparent 48deg,
+                transparent 80deg,
+                rgba(255,240,100,0.85) 82deg, rgba(255,200,60,0.75) 84deg, transparent 88deg,
+                transparent 130deg,
+                rgba(255,240,100,0.95) 132deg, rgba(255,200,60,0.85) 134deg, transparent 138deg,
+                transparent 180deg,
                 transparent 360deg);
             filter: blur(1.5px);
-            z-index: 6;
-            animation: bh-rotate 10s linear infinite;
+            z-index: 12;
+            transform: translate(-50%, -65%) rotate(-8deg);
+            animation: bh-disk-rotate 10s linear infinite;
             will-change: transform;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
         }
 
         .bh-photon-ring {
@@ -163,16 +157,29 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            border: 1px solid rgba(255,200,70,0.35);
-            box-shadow: 0 0 8px 2px rgba(255,190,50,0.4), 0 0 20px 6px rgba(255,170,30,0.2);
+            border: 1.5px solid rgba(255,200,70,0.4);
+            box-shadow: 0 0 10px 3px rgba(255,190,50,0.5), 0 0 24px 8px rgba(255,170,30,0.25);
             z-index: 8;
             animation: bh-photon-pulse 3.5s ease-in-out infinite;
         }
 
-        /* Редкие AMOLED-звезды */
+        @keyframes bh-disk-rotate {
+            from { transform: translate(-50%, -50%) rotate(var(--rot, 0deg)); }
+            to { transform: translate(-50%, -50%) rotate(calc(var(--rot, 0deg) + 360deg)); }
+        }
+        .bh-disk-back { --rot: -15deg; }
+        .bh-disk-mid { --rot: 12deg; }
+        .bh-disk-front { --rot: -8deg; }
+
+        @keyframes bh-photon-pulse {
+            0%, 100% { box-shadow: 0 0 6px 2px rgba(255,190,50,0.3), 0 0 20px 8px rgba(255,170,30,0.15); }
+            50% { box-shadow: 0 0 14px 4px rgba(255,200,60,0.5), 0 0 30px 12px rgba(255,180,40,0.3); }
+        }
+
+        /* Редкие звёзды */
         .star-dot {
             position: absolute;
             width: 2px;
@@ -183,29 +190,19 @@
             animation: star-twinkle 5s ease-in-out infinite;
             z-index: 1;
         }
-        .star-dot:nth-child(1) { top: 12%; left: 18%; animation-delay: 0s; }
+        .star-dot:nth-child(1) { top: 12%; left: 18%; }
         .star-dot:nth-child(2) { top: 78%; left: 82%; animation-delay: -2s; }
         .star-dot:nth-child(3) { top: 25%; left: 88%; animation-delay: -3.5s; }
         .star-dot:nth-child(4) { top: 80%; left: 15%; animation-delay: -1.2s; }
         .star-dot:nth-child(5) { top: 45%; left: 92%; animation-delay: -4s; }
         .star-dot:nth-child(6) { top: 90%; left: 55%; animation-delay: -0.6s; }
 
-        @keyframes bh-rotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        @keyframes bh-photon-pulse {
-            0%, 100% { box-shadow: 0 0 6px 2px rgba(255,190,50,0.3), 0 0 20px 8px rgba(255,170,30,0.15), inset 0 0 6px 2px rgba(255,200,60,0.2); }
-            50% { box-shadow: 0 0 14px 4px rgba(255,200,60,0.5), 0 0 30px 12px rgba(255,180,40,0.3), inset 0 0 10px 3px rgba(255,210,70,0.35); }
-        }
-
         @keyframes star-twinkle {
             0%, 100% { opacity: 0.2; transform: scale(1); }
             50% { opacity: 0.7; transform: scale(1.3); }
         }
 
-        /* ––– LOADER OVERLAY ––– */
+        /* ––– LOADER ––– */
         .loader-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -215,16 +212,16 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1);
+            transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1);
             pointer-events: all;
         }
         .loader-overlay.hidden { opacity: 0; pointer-events: none; }
 
-        .loader-svg-container { position: relative; width: 180px; height: 180px; margin-bottom: 24px; }
+        .loader-svg-container { position: relative; width: 160px; height: 160px; margin-bottom: 20px; }
         .loader-circle-bg { fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 2; }
         .loader-circle-path {
             fill: none; stroke: rgba(255,255,255,0.7); stroke-width: 2.5;
-            stroke-linecap: round; stroke-dasharray: 502; stroke-dashoffset: 502;
+            stroke-linecap: round; stroke-dasharray: 439; stroke-dashoffset: 439;
             animation: loader-draw 1.3s cubic-bezier(0.65,0,0.35,1) forwards;
         }
         .loader-circle-path.snake {
@@ -235,18 +232,18 @@
 
         @keyframes loader-draw { to { stroke-dashoffset: 0; } }
         @keyframes loader-snake {
-            0% { stroke-dasharray: 60 502; stroke-dashoffset: 502; }
-            30% { stroke-dasharray: 80 502; stroke-dashoffset: 340; }
-            60% { stroke-dasharray: 100 502; stroke-dashoffset: 100; }
-            85% { stroke-dasharray: 50 502; stroke-dashoffset: 0; }
-            100% { stroke-dasharray: 502 0; stroke-dashoffset: 0; }
+            0% { stroke-dasharray: 50 439; stroke-dashoffset: 439; }
+            30% { stroke-dasharray: 70 439; stroke-dashoffset: 300; }
+            60% { stroke-dasharray: 90 439; stroke-dashoffset: 100; }
+            85% { stroke-dasharray: 45 439; stroke-dashoffset: 0; }
+            100% { stroke-dasharray: 439 0; stroke-dashoffset: 0; }
         }
 
         .loader-logo { display: flex; gap: 3px; flex-wrap: wrap; justify-content: center; opacity: 0; transition: opacity 0.2s; }
         .loader-logo.visible { opacity: 1; }
         .loader-logo span {
-            display: inline-block; font-size: 30px; font-weight: 900; color: #fff;
-            text-shadow: 0 0 20px rgba(200,180,255,0.5); opacity: 0;
+            display: inline-block; font-size: 28px; font-weight: 900; color: #fff;
+            text-shadow: 0 0 15px rgba(200,180,255,0.5); opacity: 0;
             transform: scale(0.2) translateY(18px); letter-spacing: -0.5px;
         }
         .loader-logo span.jelly-in { animation: jellyIn 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards; }
@@ -263,12 +260,11 @@
         .main-content {
             position: relative; z-index: 1; width: 100%; max-width: 460px;
             opacity: 0; transform: translateY(20px);
-            transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.34,1.3,0.64,1);
+            transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.34,1.3,0.64,1);
             pointer-events: none;
         }
         .main-content.revealed { opacity: 1; transform: translateY(0); pointer-events: all; }
 
-        /* mac os dots */
         .macos-dots { display: flex; gap: 8px; padding: 0 0 14px 10px; }
         .dot { width: 11px; height: 11px; border-radius: 50%; transition: all 0.5s; }
         .dot-red { background: #ff5f57; box-shadow: 0 0 6px rgba(255,95,87,0.5); }
@@ -291,10 +287,23 @@
 
         .logo {
             text-align: center; font-size: 36px; font-weight: 900;
-            background: linear-gradient(135deg, #ffffff 0%, #c8c8ff 40%, #e0d8ff 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 20px rgba(130,110,255,0.35));
+            color: #ffffff;
+            text-shadow: 0 2px 30px rgba(130,110,255,0.3);
+            opacity: 0;
+            transform: translateY(40px) scale(0.8);
         }
+        .main-content.revealed .logo {
+            animation: logoFlyIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation-delay: 0.25s;
+        }
+
+        @keyframes logoFlyIn {
+            0% { opacity: 0; transform: translateY(40px) scale(0.8); }
+            60% { opacity: 1; transform: translateY(-4px) scale(1.02); }
+            80% { transform: translateY(2px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
         .subtitle {
             text-align: center; margin-top: 8px; font-size: 15px; color: rgba(255,255,255,0.7);
             backdrop-filter: blur(8px); background: rgba(255,255,255,0.04);
@@ -302,7 +311,6 @@
         }
         .subtitle b { font-weight: 700; color: #c8d0ff; }
 
-        /* Карусель объявлений */
         .promo-carousel {
             margin-top: 24px;
             background: rgba(255,255,255,0.05);
@@ -330,10 +338,9 @@
             transform: translateY(0);
         }
 
-        /* Баланс и кнопки без изменений */
         .balance { margin-top: 24px; padding: 28px 24px; border-radius: 36px; background: rgba(255,255,255,0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.45); }
         .balance-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1.4px; color: rgba(255,255,255,0.35); }
-        .balance-value { font-size: 44px; font-weight: 800; margin-top: 6px; background: linear-gradient(135deg, #fff, #d8d8ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .balance-value { font-size: 44px; font-weight: 800; margin-top: 6px; color: #fff; text-shadow: 0 2px 30px rgba(130,110,255,0.2); }
         .topup { width: 100%; height: 56px; margin-top: 20px; border: none; border-radius: 60px; background: linear-gradient(135deg, rgba(130,90,255,0.28), rgba(200,110,255,0.14)); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-weight: 700; cursor: pointer; transition: all 0.35s; }
         .topup:hover { background: linear-gradient(135deg, rgba(130,90,255,0.38), rgba(200,110,255,0.22)); border-color: rgba(255,255,255,0.18); transform: translateY(-2px); }
 
@@ -361,16 +368,16 @@
         .link { display: flex; justify-content: space-between; padding: 20px 22px; border-bottom: 1px solid rgba(255,255,255,0.03); cursor: pointer; transition: background 0.3s; color: rgba(255,255,255,0.75); }
         .link:hover { background: rgba(255,255,255,0.03); padding-left: 26px; }
         .arrow { font-size: 24px; color: rgba(255,255,255,0.18); }
-        .footer { text-align: center; font-size: 12px; color: rgba(255,255,255,0.16); margin-top: 32px; border-top: 1px solid rgba(255,255,255,0.025); padding-top: 8px; }
+        .footer { text-align: center; font-size: 13px; color: rgba(255,255,255,0.2); margin-top: 32px; border-top: 1px solid rgba(255,255,255,0.03); padding-top: 8px; }
 
         @media (max-width: 420px) {
-            .glass-container { padding: 20px 16px 24px; }
-            .bh-accretion-1 { width: 140px; height: 140px; }
-            .bh-accretion-2 { width: 110px; height: 110px; }
-            .bh-accretion-3 { width: 80px; height: 80px; }
-            .bh-center { width: 30px; height: 30px; }
-            .bh-photon-ring { width: 60px; height: 60px; }
-            .promo-carousel { padding: 10px 18px; }
+            .glass-container { padding: 20px 18px 24px; border-radius: 48px 48px 36px 36px; }
+            .bh-disk-back { width: 140px; height: 52px; }
+            .bh-disk-mid { width: 100px; height: 38px; }
+            .bh-disk-front { width: 80px; height: 30px; }
+            .bh-center { width: 22px; height: 22px; }
+            .bh-photon-ring { width: 54px; height: 54px; }
+            .promo-carousel { padding: 10px 20px; }
         }
 
         button { outline: none; -webkit-appearance: none; }
@@ -378,10 +385,10 @@
 </head>
 <body>
     <div class="black-hole-bg" aria-hidden="true">
-        <div class="bh-accretion-1"></div>
-        <div class="bh-accretion-2"></div>
-        <div class="bh-accretion-3"></div>
+        <div class="bh-disk-back"></div>
+        <div class="bh-disk-mid"></div>
         <div class="bh-center"></div>
+        <div class="bh-disk-front"></div>
         <div class="bh-photon-ring"></div>
         <div class="star-dot"></div><div class="star-dot"></div><div class="star-dot"></div>
         <div class="star-dot"></div><div class="star-dot"></div><div class="star-dot"></div>
@@ -389,7 +396,7 @@
 
     <div class="loader-overlay" id="loader" aria-hidden="false">
         <div class="loader-svg-container">
-            <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" class="loader-circle-bg"/><circle cx="100" cy="100" r="80" class="loader-circle-path" id="loaderCircle"/></svg>
+            <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" class="loader-circle-bg"/><circle cx="80" cy="80" r="70" class="loader-circle-path" id="loaderCircle"/></svg>
         </div>
         <div class="loader-logo" id="loaderLogo">
             <span>W</span><span>H</span><span>I</span><span>T</span><span>E</span><span>&nbsp;</span><span>S</span><span>T</span><span>A</span><span>R</span><span>S</span>
@@ -404,7 +411,6 @@
             <div class="logo">⭐ WHITE STARS</div>
             <div class="subtitle" id="greeting">Покупка цифровых товаров Telegram</div>
 
-            <!-- Карусель объявлений -->
             <div class="promo-carousel" id="promoCarousel">
                 <span class="promo-text" id="promoText">🔥 Акция -20% на Stars</span>
             </div>
@@ -436,6 +442,7 @@
     </div>
 
     <script>
+        // ––– Telegram WebApp (не изменять) –––
         const tg = window.Telegram.WebApp;
         tg.ready(); tg.expand(); tg.disableVerticalSwipes();
         tg.setHeaderColor("bg_color"); tg.setBackgroundColor("bg_color");
@@ -461,6 +468,7 @@
                 }).catch(err => { alert(err); console.error(err); });
         }
 
+        // ––– Бизнес-функции (не изменять) –––
         function topup() { window.location.href = "pages/topup.html"; }
         function buyStars() { tg.showAlert("Покупка Telegram Stars скоро станет доступна."); }
         function buyPremium() { tg.showAlert("Покупка Telegram Premium скоро станет доступна."); }
@@ -482,8 +490,11 @@
             const greenDot = document.getElementById('greenDot');
             const balanceEl = document.getElementById('balance');
             const promoText = document.getElementById('promoText');
-            let previousBalance = balanceEl ? balanceEl.innerText : '';
 
+            let dataReady = false;
+            let loaderHidden = false;
+
+            // Карусель объявлений
             const promos = ["🔥 Акция -20% на Stars", "⚡ Новые NFT в каталоге", "💎 Premium со скидкой", "🎁 Подарки уже в продаже"];
             let promoIndex = 0;
             function rotatePromo() {
@@ -498,77 +509,82 @@
             }
             setInterval(rotatePromo, 4000);
 
-            function startLoaderSequence() {
-                setTimeout(() => {
-                    loaderCircle.classList.add('snake');
-                    setTimeout(() => loaderLogo.classList.add('visible'), 400);
-                    setTimeout(() => {
-                        logoSpans.forEach((s, i) => setTimeout(() => s.classList.add('jelly-in'), i * 55));
-                    }, 700);
-                    setTimeout(() => {
-                        loader.classList.add('hidden');
-                        setTimeout(() => {
-                            mainContent.classList.add('revealed');
-                            setTimeout(() => { if(greenDot) greenDot.classList.add('active'); }, 400);
-                        }, 350);
-                    }, 2100);
-                }, 1350);
-            }
-
-            function quickReveal() {
+            function hideLoaderAndReveal() {
+                if (loaderHidden) return;
+                loaderHidden = true;
                 if (loader) loader.classList.add('hidden');
                 mainContent.classList.add('revealed');
                 if (greenDot) greenDot.classList.add('active');
             }
 
-            // Проверка первого посещения
-            const visited = localStorage.getItem('whitestars_visited');
-            if (!visited) {
-                localStorage.setItem('whitestars_visited', 'true');
-                if (loader && loaderCircle && loaderLogo) startLoaderSequence();
-                else quickReveal();
-            } else {
-                quickReveal();
+            function startLoaderAnimation() {
+                setTimeout(() => {
+                    if (loaderHidden) return;
+                    loaderCircle.classList.add('snake');
+                    setTimeout(() => {
+                        if (loaderHidden) return;
+                        loaderLogo.classList.add('visible');
+                    }, 400);
+                    setTimeout(() => {
+                        if (loaderHidden) return;
+                        logoSpans.forEach((s, i) => setTimeout(() => s.classList.add('jelly-in'), i * 55));
+                    }, 700);
+                }, 800);
             }
 
-            // Observer баланса
+            // Ожидание данных: следим за изменением баланса
             if (balanceEl) {
                 const observer = new MutationObserver(() => {
-                    const cur = balanceEl.innerText;
-                    if (cur !== previousBalance) {
-                        previousBalance = cur;
-                        balanceEl.classList.remove('balance-updated');
-                        void balanceEl.offsetWidth;
-                        balanceEl.classList.add('balance-updated');
-                        setTimeout(() => balanceEl.classList.remove('balance-updated'), 700);
+                    const current = balanceEl.innerText;
+                    if (current !== "0.00 ₽" && !dataReady) {
+                        dataReady = true;
+                        hideLoaderAndReveal();
                     }
                 });
                 observer.observe(balanceEl, { childList: true, characterData: true, subtree: true });
             }
 
+            // Таймаут 6 секунд
+            setTimeout(() => {
+                if (!dataReady && !loaderHidden) {
+                    hideLoaderAndReveal();
+                }
+            }, 6000);
+
+            if (loader && !loaderHidden) {
+                startLoaderAnimation();
+            } else {
+                hideLoaderAndReveal();
+            }
+
             // Адаптивная производительность
             const isLowPower = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
             if (isLowPower) {
-                document.querySelectorAll('.bh-accretion-1,.bh-accretion-2,.bh-accretion-3').forEach(el => {
-                    el.style.filter = 'blur(2px)'; el.style.animationDuration = '25s';
+                document.querySelectorAll('.bh-disk-back, .bh-disk-mid, .bh-disk-front').forEach(el => {
+                    el.style.filter = 'blur(1.5px)';
+                    el.style.animationDuration = '25s';
                 });
                 document.querySelectorAll('.star-particle,.crown-sparkle').forEach(el => el.style.display = 'none');
                 document.querySelector('.glass-container').style.animation = 'none';
             }
+
             let lastTime = performance.now(), frames = 0;
             const fpsInterval = setInterval(() => {
-                frames++; const now = performance.now();
+                frames++;
+                const now = performance.now();
                 if (now - lastTime >= 2000) {
                     const fps = Math.round((frames * 1000) / (now - lastTime));
                     if (fps < 25 && !isLowPower) {
-                        document.querySelectorAll('.bh-accretion-1,.bh-accretion-2,.bh-accretion-3').forEach(el => {
-                            el.style.animationDuration = '35s'; el.style.filter = 'blur(1px)';
+                        document.querySelectorAll('.bh-disk-back, .bh-disk-mid, .bh-disk-front').forEach(el => {
+                            el.style.animationDuration = '35s';
+                            el.style.filter = 'blur(1px)';
                         });
                         document.querySelectorAll('.star-particle,.crown-sparkle').forEach(el => el.style.display = 'none');
                         document.querySelector('.glass-container').style.animation = 'none';
                         clearInterval(fpsInterval);
                     }
-                    frames = 0; lastTime = now;
+                    frames = 0;
+                    lastTime = now;
                 }
             }, 2000);
             setTimeout(() => clearInterval(fpsInterval), 15000);
