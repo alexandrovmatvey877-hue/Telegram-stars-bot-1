@@ -1,4 +1,9 @@
 const db = require("../config/database");
+// ======================
+// SAFETY
+// ======================
+
+let warningCounter = 0;
 async function getTonPrice() {
 
     try {
@@ -48,10 +53,53 @@ async function getStarPriceTon() {
     }
 
 }
+function checkSafety(result) {
+
+    const values = Object.values(result);
+
+    const MAX_PRICE_PER_STAR = 2;
+    const MIN_PRICE_PER_STAR = 1;
+
+    const maxReached = values.some((price, index) => {
+        const stars = [50, 75, 100, 150, 250, 500, 1000][index];
+        return price >= stars * MAX_PRICE_PER_STAR;
+    });
+
+    const minReached = values.some((price, index) => {
+        const stars = [50, 75, 100, 150, 250, 500, 1000][index];
+        return price <= stars * MIN_PRICE_PER_STAR;
+    });
+
+    if (maxReached) {
+
+        warningCounter++;
+
+        console.warn(`⚠ WARNING: достигнут потолок (${warningCounter})`);
+
+    } else if (minReached) {
+
+        warningCounter++;
+
+        console.warn(`⚠ WARNING: достигнут пол (${warningCounter})`);
+
+    } else {
+
+        warningCounter = 0;
+
+    }
+
+}
 async function updatePrices() {
 
     const prices = require("./prices");
     const result = await prices.calculatePrices();
+
+if (!result) {
+    console.log("❌ Не удалось получить цены");
+    return;
+}
+
+checkSafety(result);
 
     if (!result) {
         console.log("❌ Не удалось получить цены");
