@@ -1,3 +1,4 @@
+console.log("SERVER STARTING", process.pid);
 require("dotenv").config();
 
 const monitor = require("./services/monitor");
