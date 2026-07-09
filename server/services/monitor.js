@@ -1,3 +1,4 @@
+const prices = require("./prices");
 const db = require("../config/database");
 async function getTonPrice() {
 
@@ -44,35 +45,11 @@ async function getStarPriceTon() {
 }
 async function updatePrices() {
 
-    const tonRate = await getTonPrice();
+    const result = await prices.calculatePrices();
 
-    if (!tonRate) {
+    if (!result) {
+        console.log("❌ Не удалось получить цены");
         return;
-    }
-    // Наценка 10%
-    const MARKUP = 1.10;
-
-    // Ограничения
-    const MIN_STAR_PRICE = 1.00;
-    const MAX_STAR_PRICE = 1.50;
-
-    const packs = [50, 75, 100, 150, 250, 500, 1000];
-
-    const result = {};
-
-    for (const stars of packs) {
-
-        const costRub = stars * TON_PER_STAR * tonRate;
-
-        let price = costRub * MARKUP;
-
-        const min = stars * MIN_STAR_PRICE;
-        const max = stars * MAX_STAR_PRICE;
-
-        price = Math.max(price, min);
-        price = Math.min(price, max);
-
-        result["stars" + stars] = Math.ceil(price);
     }
 
     await db.query(`
@@ -97,6 +74,10 @@ async function updatePrices() {
         result.stars1000
     ]);
 
+    console.log("✅ Цены обновлены:");
+    console.log(result);
+
+}
     console.log("✅ Цены обновлены:", result);
 
 }
