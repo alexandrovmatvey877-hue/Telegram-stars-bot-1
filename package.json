@@ -4,8 +4,7 @@
   "description": "WHITE STARS Server",
   "main": "server/server.js",
   "scripts": {
-  "start": "concurrently \"node server/server.js\" \"node bot/bot.js\""
-},
+  "start": "node bot/bot.js"
   "dependencies": {
     "dotenv": "^17.2.1",
     "express": "^4.19.2",
