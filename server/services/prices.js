@@ -8,7 +8,7 @@ const MARKUP = 1.10;
 
 // ограничения
 const MIN_PRICE_PER_STAR = 1.00;
-const MAX_PRICE_PER_STAR = 1.50;
+const MAX_PRICE_PER_STAR = 2.00;
 
 async function calculatePrices() {
 
