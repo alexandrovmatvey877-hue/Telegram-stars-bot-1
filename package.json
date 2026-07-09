@@ -5,6 +5,7 @@
   "main": "server/server.js",
   "scripts": {
   "start": "node bot/bot.js"
+},
   "dependencies": {
     "dotenv": "^17.2.1",
     "express": "^4.19.2",
