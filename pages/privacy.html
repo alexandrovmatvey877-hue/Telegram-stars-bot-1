@@ -7,14 +7,15 @@
     <style>
         /* ============================================
            БАЗА — МАКСИМАЛЬНО ЛЁГКАЯ
-        ============================================ */,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
+        ============================================ */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         :root {
             --bg: #0b0d11;
@@ -46,7 +47,7 @@
         }
 
         /* ============================================
-           ФОН — ОДИН ЛЁГКИЙ ГРАДИЕНТ
+           ФОН — ЧЁТКИЙ КОСМОС, БЕЗ РАЗМЫТИЯ
         ============================================ */
         body::before {
             content: '';
@@ -61,7 +62,7 @@
         }
 
         /* ============================================
-           ЗВЁЗДЫ — ТОЛЬКО 20 ШТУК, STATIC
+           ЗВЁЗДЫ — 20 ШТУК, STATIC
         ============================================ */
         .stars {
             position: fixed;
@@ -81,7 +82,7 @@
         }
 
         /* ============================================
-           ОСНОВНОЙ КОНТЕЙНЕР — ОДИН BLUR
+           ОСНОВНОЙ КОНТЕЙНЕР — ТОЛЬКО ЗДЕСЬ BLUR
         ============================================ */
         .container {
             position: relative;
@@ -99,7 +100,6 @@
             opacity: 0;
             transform: translateY(12px);
             animation: containerIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            will-change: transform, opacity;
         }
 
         @keyframes containerIn {
@@ -110,24 +110,7 @@
         }
 
         /* ============================================
-           ЗОЛОТОЙ АКЦЕНТ — ЛЁГКИЙ ГЛОУ
-        ============================================ */
-        .gold-glow {
-            position: absolute;
-            right: -40px;
-            top: 20%;
-            width: 260px;
-            height: 300px;
-            pointer-events: none;
-            z-index: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(248, 216, 106, 0.12), rgba(248, 216, 106, 0.03) 50%, transparent 70%);
-            filter: blur(60px);
-            will-change: transform;
-        }
-
-        /* ============================================
-           КОНТЕНТ — ПОВЕРХ ВСЕГО
+           КОНТЕНТ
         ============================================ */
         .content {
             position: relative;
@@ -145,8 +128,8 @@
             transition: color 0.3s ease;
             border-bottom: 1px solid transparent;
             padding-bottom: 2px;
-    user-select: none;
-    -webkit-touch-callout: none;
+            user-select: none;
+            -webkit-touch-callout: none;
         }
         .back:hover {
             color: var(--gold);
@@ -188,12 +171,10 @@
         }
 
         /* ============================================
-           КАРТОЧКА — ВТОРОЙ СЛОЙ СТЕКЛА
+           КАРТОЧКА — ЛЁГКИЙ ФОН, БЕЗ BLUR
         ============================================ */
         .card {
-            background: rgba(255, 255, 255, 0.015);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.02);
             padding: 28px 32px;
             border-radius: 28px;
             border: 1px solid rgba(255, 255, 255, 0.025);
@@ -264,19 +245,20 @@
         }
 
         /* ============================================
-           КНОПКА
+           КНОПКА — БЕЗ СИНИХ ПОДСВЕТОК, БЕЗ BLUR
         ============================================ */
         button {
             width: 100%;
             height: 54px;
             border: none;
             outline: none;
-    -webkit-appearance: none;
-    user-select: none;
+            -webkit-appearance: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
             border-radius: 28px;
             background: rgba(255, 255, 255, 0.015);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
             color: #fff;
             font-size: 16px;
             font-weight: 470;
@@ -290,16 +272,24 @@
             transform: translateY(6px);
         }
         button:hover {
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
             background: rgba(248, 216, 106, 0.03);
             border-color: rgba(248, 216, 106, 0.06);
             transform: translateY(-1px);
         }
+        button:focus {
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
         button:active {
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
             transform: scale(0.98);
         }
         button:focus-visible {
-    outline: none;
-}
+            outline: none;
+        }
 
         /* ============================================
            АДАПТИВНОСТЬ
@@ -318,13 +308,6 @@
             .card {
                 padding: 22px 20px;
                 border-radius: 24px;
-            }
-            .gold-glow {
-                width: 180px;
-                height: 220px;
-                right: -20px;
-                filter: blur(50px);
-                opacity: 0.6;
             }
             p,
             li {
@@ -358,15 +341,6 @@
             .card {
                 padding: 16px 12px;
                 border-radius: 18px;
-                backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);
-            }
-            .gold-glow {
-                width: 120px;
-                height: 150px;
-                right: -10px;
-                filter: blur(40px);
-                opacity: 0.3;
             }
             p,
             li {
@@ -424,16 +398,13 @@
                 --glass-bg: rgba(255, 255, 255, 0.06);
                 --glass-border: rgba(255, 255, 255, 0.15);
             }
-            .gold-glow {
-                opacity: 0 !important;
-            }
         }
     </style>
 </head>
 <body>
 
     <!-- ============================================
-    ЗВЁЗДЫ — ВСЕГО 20, STATIC
+    ЗВЁЗДЫ — 20 ШТУК, STATIC
     ============================================ -->
     <div class="stars" aria-hidden="true" id="stars"></div>
 
@@ -441,9 +412,6 @@
     ОСНОВНОЙ КОНТЕЙНЕР
     ============================================ -->
     <main class="container" role="main">
-
-        <!-- Золотой глоу — лёгкий акцент -->
-        <div class="gold-glow" aria-hidden="true"></div>
 
         <div class="content">
             <a class="back" href="../index.html" aria-label="На главную">← На главную</a>
@@ -543,9 +511,6 @@
         (function() {
             'use strict';
 
-            // ============================================
-            // ЗВЁЗДЫ — 20 ШТУК, STATIC, БЕЗ АНИМАЦИЙ
-            // ============================================
             const container = document.getElementById('stars');
             if (container) {
                 const count = 20;
@@ -564,11 +529,6 @@
                 }
                 container.appendChild(fragment);
             }
-
-            // ============================================
-            // ВСЁ. НИКАКИХ RAF, ПАРАЛЛАКСОВ, ДВИЖЕНИЙ.
-            // ПРОЦЕССОР ОТДЫХАЕТ. БЮДЖЕТКИ ЖИВУТ.
-            // ============================================
 
         })();
     </script>
