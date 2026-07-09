@@ -9,7 +9,13 @@ async function getTonPrice() {
         );
 
         const data = await response.json();
-        return data["the-open-network"].rub;
+
+if (!data["the-open-network"] || data["the-open-network"].rub == null) {
+    console.error("TON PRICE ERROR: неверный ответ API", data);
+    return null;
+}
+
+return data["the-open-network"].rub;
 
     } catch (err) {
 
