@@ -117,7 +117,7 @@ monitor.updatePrices();
 // Обновление каждые 10 минут
 setInterval(() => {
     monitor.updatePrices();
-}, 10 * 60 * 1000);
+}, 5 * 60 * 1000);
 
     } catch (err) {
 
