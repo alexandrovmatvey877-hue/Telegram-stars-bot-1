@@ -1,519 +1,613 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>WHITE STARS</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>WHITE STARS</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    /* ––– RESET & BASE ––– */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+html {
+  -webkit-tap-highlight-color: transparent;
+}
 
-        html {
-            -webkit-tap-highlight-color: transparent;
-            -webkit-font-smoothing: antialiased;
-            background: #000001;
-        }
+button,
+.card,
+.link {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
 
-        button, .card, .link {
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
-            user-select: none;
-        }
+    body {
+    min-height: 100dvh;
+    background: #080c1a;
+    padding: 16px;
+    margin: 0;
+    overflow-x: hidden;
+    position: relative;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
 
-        body {
-            min-height: 100dvh;
-            background: #000001;
-            padding: 16px;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
-        }
+    /* ––– FLOATING GLASS ORBS (Samsung Flex UI style) ––– */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(50px);
+      pointer-events: none;
+      z-index: 0;
+      animation: floatOrb 14s ease-in-out infinite alternate;
+    }
 
-        /* ––– ЧЁРНАЯ ДЫРА (облегчённая версия) ––– */
-        .black-hole-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            background: #000001;
-            overflow: hidden;
-        }
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      top: -150px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(120, 80, 255, 0.45), rgba(200, 100, 255, 0.1));
+      animation-delay: 0s;
+    }
 
-        .bh-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #000;
-            box-shadow: 0 0 60px 20px rgba(0,0,0,0.95);
-            z-index: 4;
-        }
+    .orb-2 {
+      width: 350px;
+      height: 350px;
+      bottom: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(0, 220, 255, 0.35), rgba(0, 100, 255, 0.05));
+      animation-delay: -4s;
+    }
 
-        .bh-accretion-1 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg,
-                transparent 0deg,
-                rgba(255,200,60,0.06) 30deg,
-                rgba(255,180,40,0.2) 55deg,
-                rgba(255,170,30,0.35) 80deg,
-                transparent 130deg,
-                rgba(255,180,40,0.15) 200deg,
-                rgba(255,200,60,0.25) 240deg,
-                rgba(255,170,30,0.2) 270deg,
-                transparent 320deg,
-                transparent 360deg);
-            filter: blur(12px);
-            z-index: 2;
-            animation: bh-rotate 24s linear infinite;
-        }
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(255, 100, 200, 0.2), rgba(255, 50, 100, 0.05));
+      animation-delay: -8s;
+    }
 
-        .bh-accretion-2 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(180deg);
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg,
-                transparent 0deg,
-                rgba(255,200,60,0.05) 40deg,
-                rgba(255,180,40,0.3) 70deg,
-                rgba(255,200,60,0.4) 95deg,
-                transparent 130deg,
-                transparent 200deg,
-                rgba(255,170,40,0.2) 250deg,
-                rgba(255,200,60,0.35) 280deg,
-                transparent 330deg,
-                transparent 360deg);
-            filter: blur(8px);
-            z-index: 3;
-            animation: bh-rotate 18s linear infinite reverse;
-        }
+    .orb-4 {
+      width: 250px;
+      height: 250px;
+      top: 20%;
+      right: 20%;
+      background: radial-gradient(circle, rgba(255, 200, 50, 0.2), rgba(255, 150, 0, 0.05));
+      animation-delay: -12s;
+    }
 
-        .bh-accretion-3 {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(90deg);
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg,
-                transparent 0deg,
-                rgba(255,190,50,0.4) 30deg,
-                rgba(255,200,60,0.5) 50deg,
-                rgba(255,170,30,0.3) 70deg,
-                transparent 100deg,
-                transparent 240deg,
-                rgba(255,180,40,0.3) 270deg,
-                rgba(255,200,60,0.4) 290deg,
-                transparent 330deg,
-                transparent 360deg);
-            filter: blur(5px);
-            z-index: 5;
-            animation: bh-rotate 14s linear infinite;
-        }
+    @keyframes floatOrb {
+      0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+      }
+      25% {
+        transform: translate(30px, -40px) scale(1.1) rotate(5deg);
+      }
+      50% {
+        transform: translate(-20px, 20px) scale(0.9) rotate(-3deg);
+      }
+      75% {
+        transform: translate(40px, 30px) scale(1.05) rotate(7deg);
+      }
+      100% {
+        transform: translate(-30px, -20px) scale(0.95) rotate(-5deg);
+      }
+    }
 
-        .bh-photon-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,200,70,0.2);
-            box-shadow: 0 0 6px 2px rgba(255,190,50,0.25);
-            z-index: 6;
-            animation: bh-photon-pulse 5s ease-in-out infinite;
-        }
+    /* ––– GLASS CARD CONTAINER ––– */
+    .glass-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 56px 56px 40px 40px;
+      box-shadow: 0 40px 60px -20px rgba(0, 0, 0, 0.7),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      padding: 28px 24px 32px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
 
-        @keyframes bh-rotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
+    /* ––– LIQUID GLASS ANIMATIONS ––– */
+    @keyframes liquidShimmer {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0% 0%; }
+    }
 
-        @keyframes bh-photon-pulse {
-            0%, 100% { box-shadow: 0 0 6px 2px rgba(255,190,50,0.25); }
-            50% { box-shadow: 0 0 10px 3px rgba(255,200,60,0.35); }
-        }
+    .glass-container {
+animation:none;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 70%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.07) 0%, transparent 60%);
+      background-blend-mode: overlay;
+      background-size: 200% 200%;
+    }
 
-        .star-dot {
-            position: absolute;
-            width: 1.5px;
-            height: 1.5px;
-            background: #fff;
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: star-twinkle 6s ease-in-out infinite;
-            z-index: 1;
-        }
-        .star-dot:nth-child(1) { top: 12%; left: 18%; }
-        .star-dot:nth-child(2) { top: 78%; left: 82%; animation-delay: -2s; }
-        .star-dot:nth-child(3) { top: 25%; left: 88%; animation-delay: -3.5s; }
-        .star-dot:nth-child(4) { top: 80%; left: 15%; animation-delay: -1.2s; }
-        .star-dot:nth-child(5) { top: 45%; left: 92%; animation-delay: -4s; }
-        .star-dot:nth-child(6) { top: 90%; left: 55%; animation-delay: -0.6s; }
+    /* ––– TYPOGRAPHY ––– */
+    .logo {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      text-shadow: 0 2px 30px rgba(100, 80, 255, 0.4);
+      background: linear-gradient(135deg, #ffffff 0%, #b0b8ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        @keyframes star-twinkle {
-            0%, 100% { opacity: 0.15; }
-            50% { opacity: 0.5; }
-        }
+    .subtitle {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 8px 20px;
+      border-radius: 80px;
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+      width: auto;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      letter-spacing: 0.2px;
+      backdrop-filter: blur(8px);
+    }
 
-        /* ––– LOADER ––– */
-        .loader-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000001;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1);
-            pointer-events: all;
-        }
-        .loader-overlay.hidden { opacity: 0; pointer-events: none; }
+    .subtitle b {
+      font-weight: 700;
+      color: #a8b8ff;
+      text-shadow: 0 0 20px rgba(100, 80, 255, 0.3);
+    }
 
-        .loader-svg-container { position: relative; width: 150px; height: 150px; margin-bottom: 20px; }
-        .loader-circle-bg { fill: none; stroke: rgba(255,255,255,0.05); stroke-width: 2; }
-        .loader-circle-path {
-            fill: none; stroke: rgba(255,255,255,0.6); stroke-width: 2.5;
-            stroke-linecap: round; stroke-dasharray: 439; stroke-dashoffset: 439;
-            animation: loader-draw 1.2s cubic-bezier(0.65,0,0.35,1) forwards;
-        }
-        .loader-circle-path.snake {
-            animation: loader-snake 1.5s cubic-bezier(0.45,0,0.25,1) forwards;
-            stroke: rgba(255,200,80,0.8);
-            filter: drop-shadow(0 0 5px rgba(255,180,40,0.4));
-        }
+    /* ––– BALANCE CARD ––– */
+    .balance {
+      margin-top: 32px;
+      padding: 28px 24px;
+      border-radius: 36px;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: all 0.2s ease;
+    }
 
-        @keyframes loader-draw { to { stroke-dashoffset: 0; } }
-        @keyframes loader-snake {
-            0% { stroke-dasharray: 50 439; stroke-dashoffset: 439; }
-            30% { stroke-dasharray: 70 439; stroke-dashoffset: 300; }
-            60% { stroke-dasharray: 90 439; stroke-dashoffset: 100; }
-            85% { stroke-dasharray: 45 439; stroke-dashoffset: 0; }
-            100% { stroke-dasharray: 439 0; stroke-dashoffset: 0; }
-        }
+    .balance-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(255, 255, 255, 0.4);
+    }
 
-        .loader-logo { display: flex; gap: 3px; justify-content: center; opacity: 0; transition: opacity 0.2s; }
-        .loader-logo.visible { opacity: 1; }
-        .loader-logo span {
-            display: inline-block; font-size: 24px; font-weight: 900; color: #fff;
-            text-shadow: 0 0 12px rgba(200,180,255,0.4); opacity: 0;
-            transform: scale(0.3) translateY(14px);
-        }
-        .loader-logo span.jelly-in { animation: jellyIn 0.65s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+    .balance-value {
+      font-size: 42px;
+      font-weight: 800;
+      margin-top: 6px;
+      color: #ffffff;
+      text-shadow: 0 2px 30px rgba(100, 80, 255, 0.2);
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff 0%, #d0d8ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        @keyframes jellyIn {
-            0% { opacity:0; transform: scale(0.3) translateY(14px); }
-            55% { opacity:1; transform: scale(1.12) translateY(-3px); }
-            80% { transform: scale(0.94) translateY(1px); }
-            100% { opacity:1; transform: scale(1) translateY(0); }
-        }
+    /* ––– BUTTONS (glass) ––– */
+    .topup {
+      width: 100%;
+      height: 56px;
+      margin-top: 20px;
+      border: none;
+outline: none;
+-webkit-appearance: none;
+      border-radius: 60px;
+      background: linear-gradient(135deg, rgba(120, 80, 255, 0.3), rgba(200, 100, 255, 0.15));
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.3);
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
 
-        /* ––– MAIN CONTENT ––– */
-        .main-content {
-            position: relative; z-index: 1; width: 100%; max-width: 460px;
-            opacity: 0; transform: translateY(15px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-            pointer-events: none;
-        }
-        .main-content.revealed { opacity: 1; transform: translateY(0); pointer-events: all; }
+    .topup::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
 
-        .macos-dots { display: flex; gap: 8px; padding: 0 0 12px 10px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-red { background: #ff5f57; }
-        .dot-yellow { background: #ffbd2e; }
-        .dot-green { background: #28c840; transition: box-shadow 0.5s; }
-        .dot-green.active { box-shadow: 0 0 10px #32e04a; }
+    .topup:hover::before {
+      left: 100%;
+    }
 
-        .glass-container {
-            background: rgba(255,255,255,0.04);
-            backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-            border-radius: 48px 48px 36px 36px;
-            box-shadow: 0 30px 50px -20px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08);
-            padding: 24px 20px 28px; border: 1px solid rgba(255,255,255,0.06);
-        }
+    .topup:active {
+      transform: scale(0.94);
+      background: linear-gradient(135deg, rgba(120, 80, 255, 0.5), rgba(200, 100, 255, 0.3));
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
 
-        .logo {
-            text-align: center; font-size: 32px; font-weight: 900;
-            color: #fff; text-shadow: 0 2px 15px rgba(130,110,255,0.25);
-            opacity: 0; transform: translateY(30px);
-        }
-        .main-content.revealed .logo {
-            animation: logoFlyIn 0.7s cubic-bezier(0.34,1.4,0.64,1) forwards;
-            animation-delay: 0.2s;
-        }
+    .topup:hover {
+      background: linear-gradient(135deg, rgba(120, 80, 255, 0.4), rgba(200, 100, 255, 0.25));
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -10px rgba(100, 80, 255, 0.3);
+    }
 
-        @keyframes logoFlyIn {
-            0% { opacity: 0; transform: translateY(30px) scale(0.85); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
+    /* ––– SECTION ––– */
+    .section {
+      margin-top: 40px;
+    }
 
-        .subtitle {
-            text-align: center; margin-top: 6px; font-size: 14px; color: rgba(255,255,255,0.65);
-            background: rgba(255,255,255,0.04); backdrop-filter: blur(6px);
-            padding: 6px 18px; border-radius: 80px; display: inline-block; border: 1px solid rgba(255,255,255,0.05);
-        }
-        .subtitle b { font-weight: 700; color: #c8d0ff; }
+    .section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 18px;
+      padding-left: 6px;
+      letter-spacing: -0.2px;
+      text-shadow: 0 1px 20px rgba(0,0,0,0.2);
+    }
 
-        .promo-carousel {
-            margin-top: 18px;
-            background: rgba(255,255,255,0.04); backdrop-filter: blur(10px);
-            border-radius: 48px; padding: 10px 20px;
-            border: 1px solid rgba(255,255,255,0.06);
-            min-height: 40px; display: flex; align-items: center; justify-content: center;
-        }
-        .promo-text {
-            font-size: 14px; font-weight: 600; color: #fff;
-            transition: opacity 0.5s, transform 0.5s;
-        }
+    /* ––– CARDS GRID (glass) ––– */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
 
-        .balance { margin-top: 18px; padding: 22px 20px; border-radius: 32px; background: rgba(255,255,255,0.03); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.05); }
-        .balance-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.3); }
-        .balance-value { font-size: 40px; font-weight: 800; margin-top: 4px; color: #fff; }
-        .topup { width: 100%; height: 48px; margin-top: 16px; border: none; border-radius: 50px; background: linear-gradient(135deg, rgba(130,90,255,0.25), rgba(200,110,255,0.12)); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-weight: 700; cursor: pointer; transition: all 0.3s; }
-        .topup:hover { background: linear-gradient(135deg, rgba(130,90,255,0.35), rgba(200,110,255,0.2)); }
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 20px 16px;
+      border-radius: 32px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+    }
 
-        .section { margin-top: 32px; }
-        .section h2 { font-size: 19px; color: rgba(255,255,255,0.8); margin-bottom: 14px; }
-        .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .card { background: rgba(255,255,255,0.03); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.05); padding: 18px 14px; border-radius: 28px; cursor: pointer; transition: all 0.3s; }
-        .card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.1); }
+    .card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
 
-        .card-visual { width: 48px; height: 48px; position: relative; display: flex; align-items: center; justify-content: center; }
-        .star-core, .crown-core, .gift-core, .nft-core { font-size: 30px; }
-        .star-particle { position: absolute; width: 4px; height: 4px; background: rgba(255,210,80,0.7); border-radius: 50%; animation: star-orbit 3s linear infinite; }
-        @keyframes star-orbit { 0% { transform: rotate(0deg) translateX(18px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(18px) rotate(-360deg); } }
+    .card:hover::after {
+      opacity: 1;
+    }
 
-        .card-title { margin-top: 10px; font-size: 15px; font-weight: 700; color: #fff; }
-        .card-text { margin-top: 4px; font-size: 11px; color: rgba(255,255,255,0.4); }
+    .card:active {
+      transform: scale(0.93);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
 
-        .links { margin-top: 32px; border-radius: 32px; background: rgba(255,255,255,0.025); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.04); }
-        .link { display: flex; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,0.03); cursor: pointer; color: rgba(255,255,255,0.7); font-size: 14px; transition: background 0.3s; }
-        .link:hover { background: rgba(255,255,255,0.03); }
-        .arrow { font-size: 20px; color: rgba(255,255,255,0.2); }
-        .footer { text-align: center; font-size: 11px; color: rgba(255,255,255,0.15); margin-top: 24px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.02); }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 12px 28px -12px rgba(100, 80, 255, 0.2);
+    }
 
-        @media (max-width: 420px) {
-            .glass-container { padding: 18px 14px 22px; }
-            .bh-accretion-1 { width: 200px; height: 200px; }
-            .bh-accretion-2 { width: 160px; height: 160px; }
-            .bh-accretion-3 { width: 120px; height: 120px; }
-            .bh-photon-ring { width: 90px; height: 90px; }
-        }
+    .card-icon {
+      font-size: 34px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+      transition: transform 0.3s ease;
+    }
 
-        button { outline: none; -webkit-appearance: none; }
-    </style>
+    .card:hover .card-icon {
+      transform: scale(1.1) rotate(-5deg);
+    }
+
+    .card-title {
+      margin-top: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+    }
+
+    .card-text {
+      margin-top: 6px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 400;
+    }
+
+    /* ––– LINKS (glass) ––– */
+    .links {
+      margin-top: 40px;
+      border-radius: 36px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.3);
+    }
+
+    .link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 22px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+      background: transparent;
+      position: relative;
+    }
+
+    .link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .link:hover::before {
+      transform: translateX(100%);
+    }
+
+    .link:active {
+      background: rgba(255, 255, 255, 0.06);
+      transform: scale(0.98);
+    }
+
+    .link:last-child {
+      border-bottom: none;
+    }
+
+    .link:hover {
+      background: rgba(255, 255, 255, 0.04);
+      padding-left: 26px;
+    }
+
+    .arrow {
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .link:hover .arrow {
+      color: rgba(255, 255, 255, 0.5);
+      transform: translateX(4px);
+    }
+
+    .link:active .arrow {
+      transform: translateX(8px);
+    }
+
+    /* ––– FOOTER ––– */
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.2);
+      margin-top: 32px;
+      letter-spacing: 0.5px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    /* ––– ADMIN BUTTON ––– */
+    .balance .topup:last-child {
+      margin-top: 12px;
+      background: linear-gradient(135deg, rgba(60, 40, 120, 0.4), rgba(100, 60, 180, 0.2));
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .balance .topup:last-child:active {
+      background: linear-gradient(135deg, rgba(60, 40, 120, 0.6), rgba(100, 60, 180, 0.3));
+    }
+
+    /* ––– RESPONSIVE ––– */
+    @media (max-width: 420px) {
+      .glass-container { padding: 20px 16px 24px; border-radius: 40px 40px 32px 32px; }
+      .balance-value { font-size: 34px; }
+      .card { padding: 16px 14px; }
+      .orb-1 { width: 300px; height: 300px; }
+      .orb-2 { width: 250px; height: 250px; }
+      .logo { font-size: 30px; }
+      .subtitle { font-size: 14px; padding: 6px 16px; }
+      .balance { padding: 20px 18px; }
+      .link { padding: 16px 18px; }
+    }
+button {
+  outline: none;
+  -webkit-appearance: none;
+}
+  </style>
 </head>
 <body>
-    <div class="black-hole-bg" aria-hidden="true">
-        <div class="bh-accretion-1"></div>
-        <div class="bh-accretion-2"></div>
-        <div class="bh-accretion-3"></div>
-        <div class="bh-center"></div>
-        <div class="bh-photon-ring"></div>
-        <div class="star-dot"></div><div class="star-dot"></div><div class="star-dot"></div>
-        <div class="star-dot"></div><div class="star-dot"></div><div class="star-dot"></div>
+
+  <!-- ––– FLOATING ORBS (Samsung Flex UI style) ––– -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="orb orb-4"></div>
+
+  <!-- ––– MAIN GLASS CONTAINER ––– -->
+  <div class="glass-container">
+
+    <div class="logo">⭐ WHITE STARS</div>
+    <div class="subtitle" id="greeting">Покупка цифровых товаров Telegram</div>
+
+    <!-- BALANCE -->
+    <div class="balance">
+      <div class="balance-title">Баланс аккаунта</div>
+      <div class="balance-value" id="balance">0.00 ₽</div>
+      <button class="topup" onclick="topup()">Пополнить баланс</button>
     </div>
 
-    <div class="loader-overlay" id="loader" aria-hidden="false">
-        <div class="loader-svg-container">
-            <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" class="loader-circle-bg"/><circle cx="80" cy="80" r="70" class="loader-circle-path" id="loaderCircle"/></svg>
+    <!-- CATALOG -->
+    <div class="section">
+      <h2>Каталог</h2>
+      <div class="cards">
+        <div class="card" onclick="buyStars()">
+          <div class="card-icon">⭐</div>
+          <div class="card-title">Telegram Stars</div>
+          <div class="card-text">Пополнение Stars по выгодному курсу.</div>
         </div>
-        <div class="loader-logo" id="loaderLogo">
-            <span>W</span><span>H</span><span>I</span><span>T</span><span>E</span><span>&nbsp;</span><span>S</span><span>T</span><span>A</span><span>R</span><span>S</span>
+        <div class="card" onclick="buyPremium()">
+          <div class="card-icon">👑</div>
+          <div class="card-title">Premium</div>
+          <div class="card-text">Покупка Telegram Premium.</div>
         </div>
+        <div class="card" onclick="buyGift()">
+          <div class="card-icon">🎁</div>
+          <div class="card-title">Подарки</div>
+          <div class="card-text">Покупка Telegram Gifts.</div>
+        </div>
+        <div class="card" onclick="buyNFT()">
+          <div class="card-icon">🖼</div>
+          <div class="card-title">NFT</div>
+          <div class="card-text">NFT Fragment и другие цифровые товары.</div>
+        </div>
+      </div>
     </div>
 
-    <div class="main-content" id="mainContent" aria-hidden="true">
-        <div class="macos-dots">
-            <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green" id="greenDot"></span>
-        </div>
-        <div class="glass-container">
-            <div class="logo">⭐ WHITE STARS</div>
-            <div class="subtitle" id="greeting">Покупка цифровых товаров Telegram</div>
-            <div class="promo-carousel"><span class="promo-text" id="promoText">🔥 Акция -20% на Stars</span></div>
-            <div class="balance">
-                <div class="balance-title">Баланс аккаунта</div>
-                <div class="balance-value" id="balance">0.00 ₽</div>
-                <button class="topup" onclick="topup()">Пополнить баланс</button>
-            </div>
-            <div class="section">
-                <h2>Каталог</h2>
-                <div class="cards">
-                    <div class="card" onclick="buyStars()"><div class="card-visual"><div class="star-orbit"><div class="star-particle"></div><div class="star-particle"></div></div><div class="star-core">⭐</div></div><div class="card-title">Stars</div><div class="card-text">Пополнение Telegram Stars</div></div>
-                    <div class="card" onclick="buyPremium()"><div class="card-visual"><div class="crown-core">👑</div></div><div class="card-title">Premium</div><div class="card-text">Telegram Premium</div></div>
-                    <div class="card" onclick="buyGift()"><div class="card-visual"><div class="gift-core">🎁</div></div><div class="card-title">Подарки</div><div class="card-text">Telegram Gifts</div></div>
-                    <div class="card" onclick="buyNFT()"><div class="card-visual"><div class="nft-core">🖼</div></div><div class="card-title">NFT</div><div class="card-text">Цифровые товары</div></div>
-                </div>
-            </div>
-            <div class="links">
-                <div class="link" onclick="openPrices()"><span>💰 Тарифы</span><span class="arrow">›</span></div>
-                <div class="link" onclick="openPrivacy()"><span>🔒 Политика</span><span class="arrow">›</span></div>
-                <div class="link" onclick="openTerms()"><span>📄 Соглашение</span><span class="arrow">›</span></div>
-                <div class="link" onclick="openSupport()"><span>💬 Поддержка</span><span class="arrow">›</span></div>
-            </div>
-            <div class="footer">WHITE STARS © 2026</div>
-        </div>
+    <!-- LINKS -->
+    <div class="links">
+      <div class="link" onclick="openPrices()">
+        <span>💰 Тарифы</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="link" onclick="openPrivacy()">
+        <span>🔒 Политика конфиденциальности</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="link" onclick="openTerms()">
+        <span>📄 Пользовательское соглашение</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="link" onclick="openSupport()">
+        <span>💬 Поддержка</span>
+        <span class="arrow">›</span>
+      </div>
     </div>
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.ready(); tg.expand(); tg.disableVerticalSwipes();
-        tg.setHeaderColor("bg_color"); tg.setBackgroundColor("bg_color");
-        const user = tg.initDataUnsafe?.user;
-        const ADMIN_ID = "6508463020";
+    <div class="footer">WHITE STARS © 2026</div>
+  </div>
 
-        if (user) {
-            document.getElementById("greeting").innerHTML = `Добро пожаловать, <b>${user.first_name}</b>`;
-            if (String(user.id) === ADMIN_ID) {
-                const adminBtn = document.createElement("button");
-                adminBtn.className = "topup"; adminBtn.style.marginTop = "12px";
-                adminBtn.innerText = "⚙️ Админ-панель";
-                adminBtn.onclick = () => { window.location.href = "admin.html"; };
-                document.querySelector(".balance").appendChild(adminBtn);
-            }
-            fetch("https://white-stars-api.onrender.com/api/users/register", {
-                method: "POST", headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ telegram_id: String(user.id), username: user.username || "", first_name: user.first_name || "", last_name: user.last_name || "", avatar: user.photo_url || "" })
-            }).catch(err => alert("ERROR:\n" + err));
-            fetch(`https://white-stars-api.onrender.com/api/users/${user.id}`)
-                .then(r => r.json()).then(profile => {
-                    const balanceEl = document.getElementById("balance");
-                    const target = Number(profile.user.balance).toFixed(2);
-                    animateBalance(balanceEl, target);
-                }).catch(err => { alert(err); console.error(err); });
-        }
+  <script>
+    // ––– TELEGRAM WEB APP –––
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+    tg.disableVerticalSwipes();
+    tg.setHeaderColor("bg_color");
+    tg.setBackgroundColor("bg_color");
 
-        function animateBalance(el, target) {
-            let current = 0;
-            const duration = 800;
-            const start = performance.now();
-            function update(now) {
-                const progress = Math.min((now - start) / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                current = (eased * target).toFixed(2);
-                el.innerText = current + " ₽";
-                if (progress < 1) requestAnimationFrame(update);
-            }
-            requestAnimationFrame(update);
-        }
+    console.log("Telegram:", tg);
+    console.log("initData:", tg.initData);
+    console.log("initDataUnsafe:", tg.initDataUnsafe);
+    console.log("user:", tg.initDataUnsafe?.user);
 
-        function topup() { window.location.href = "pages/topup.html"; }
-        function buyStars() { tg.showAlert("Покупка Telegram Stars скоро станет доступна."); }
-        function buyPremium() { tg.showAlert("Покупка Telegram Premium скоро станет доступна."); }
-        function buyGift() { tg.showAlert("Покупка Telegram Gifts скоро станет доступна."); }
-        function buyNFT() { tg.showAlert("Покупка NFT скоро станет доступна."); }
-        function openPrices() { window.location.href = "pages/prices.html"; }
-        function openPrivacy() { window.location.href = "pages/privacy.html"; }
-        function openTerms() { window.location.href = "pages/terms.html"; }
-        function openSupport() { tg.openTelegramLink("https://t.me/WHITE_STARS_CONNECT"); }
-    </script>
-    <script>
-        (function() {
-            const loader = document.getElementById('loader');
-            const loaderCircle = document.getElementById('loaderCircle');
-            const loaderLogo = document.getElementById('loaderLogo');
-            const logoSpans = loaderLogo.querySelectorAll('span');
-            const mainContent = document.getElementById('mainContent');
-            const greenDot = document.getElementById('greenDot');
-            const promoText = document.getElementById('promoText');
-            const balanceEl = document.getElementById('balance');
+    const user = tg.initDataUnsafe?.user;
+    const ADMIN_ID = "6508463020";
 
-            const promos = ["🔥 Акция -20% на Stars", "⚡ Новые NFT", "💎 Premium скидка", "🎁 Подарки"];
-            let promoIndex = 0;
-            setInterval(() => {
-                promoIndex = (promoIndex + 1) % promos.length;
-                promoText.style.opacity = '0';
-                setTimeout(() => {
-                    promoText.textContent = promos[promoIndex];
-                    promoText.style.opacity = '1';
-                }, 400);
-            }, 4000);
+    // ––– GREETING –––
+    if (user) {
+      document.getElementById("greeting").innerHTML =
+        `Добро пожаловать, <b>${user.first_name}</b>`;
 
-            function startLoaderAnimation() {
-                setTimeout(() => loaderCircle.classList.add('snake'), 700);
-                setTimeout(() => loaderLogo.classList.add('visible'), 1000);
-                setTimeout(() => {
-                    logoSpans.forEach((s, i) => setTimeout(() => s.classList.add('jelly-in'), i * 50));
-                }, 1500);
-            }
+      // ––– ADMIN PANEL BUTTON –––
+      if (String(user.id) === ADMIN_ID) {
+        const adminBtn = document.createElement("button");
+        adminBtn.className = "topup";
+        adminBtn.style.marginTop = "12px";
+        adminBtn.innerText = "⚙️ Админ-панель";
+        adminBtn.onclick = () => {
+          window.location.href = "admin.html";
+        };
+        document.querySelector(".balance").appendChild(adminBtn);
+      }
 
-            function revealInterface() {
-                if (loader.classList.contains('hidden')) return;
-                loader.classList.add('hidden');
-                mainContent.classList.add('revealed');
-                if (greenDot) greenDot.classList.add('active');
-            }
+      // ––– REGISTER USER –––
+      fetch("https://white-stars-api.onrender.com/api/users/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          telegram_id: String(user.id),
+          username: user.username || "",
+          first_name: user.first_name || "",
+          last_name: user.last_name || "",
+          avatar: user.photo_url || ""
+        })
+      }).catch(err => alert("ERROR:\n" + err));
 
-            const MIN_LOADER_DURATION = 3000;
-            let dataReady = false;
+      // ––– FETCH BALANCE –––
+      fetch(`https://white-stars-api.onrender.com/api/users/${user.id}`)
+        .then(async res => {
+          console.log("STATUS:", res.status);
+          const data = await res.json();
+          console.log("DATA:", data);
+          return data;
+        })
+        .then(profile => {
+          document.getElementById("balance").innerText =
+            Number(profile.user.balance).toFixed(2) + " ₽";
+        })
+        .catch(err => {
+          alert(err);
+          console.error(err);
+        });
+    }
 
-            if (balanceEl) {
-                const observer = new MutationObserver(() => {
-                    if (balanceEl.innerText !== "0.00 ₽") {
-                        dataReady = true;
-                    }
-                });
-                observer.observe(balanceEl, { childList: true, characterData: true, subtree: true });
-            }
-
-            const visited = sessionStorage.getItem('ws_visited');
-            if (!visited) {
-                sessionStorage.setItem('ws_visited', 'true');
-                startLoaderAnimation();
-                setTimeout(() => {
-                    if (!dataReady) {
-                        // Ждём еще немного
-                        const checkInterval = setInterval(() => {
-                            if (dataReady) {
-                                clearInterval(checkInterval);
-                                revealInterface();
-                            }
-                        }, 200);
-                        setTimeout(() => {
-                            clearInterval(checkInterval);
-                            revealInterface();
-                        }, 4000);
-                    } else {
-                        revealInterface();
-                    }
-                }, MIN_LOADER_DURATION);
-            } else {
-                // Повторный заход — без лоадера
-                if (loader) loader.classList.add('hidden');
-                mainContent.classList.add('revealed');
-                if (greenDot) greenDot.classList.add('active');
-            }
-
-            setTimeout(() => {
-                if (!mainContent.classList.contains('revealed')) revealInterface();
-            }, 7000);
-        })();
-    </script>
+    // ––– FUNCTIONS (unchanged) –––
+    function topup() { window.location.href = "pages/topup.html"; }
+    function buyStars() { tg.showAlert("Покупка Telegram Stars скоро станет доступна."); }
+    function buyPremium() { tg.showAlert("Покупка Telegram Premium скоро станет доступна."); }
+    function buyGift() { tg.showAlert("Покупка Telegram Gifts скоро станет доступна."); }
+    function buyNFT() { tg.showAlert("Покупка NFT скоро станет доступна."); }
+    function openPrices() { window.location.href = "pages/prices.html"; }
+    function openPrivacy() { window.location.href = "pages/privacy.html"; }
+    function openTerms() { window.location.href = "pages/terms.html"; }
+    function openSupport() { tg.openTelegramLink("https://t.me/WHITE_STARS_CONNECT"); }
+  </script>
 </body>
 </html>
