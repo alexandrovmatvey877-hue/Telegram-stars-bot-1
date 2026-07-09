@@ -80,7 +80,6 @@ async function updatePrices() {
 }
     console.log("✅ Цены обновлены:", result);
 
-}
 
 module.exports = {
     getTonPrice,
