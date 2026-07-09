@@ -1,8 +1,6 @@
-console.log("BOT STARTING", process.pid);
-bot.on("polling_error", (err) => {
-    console.log("POLL ERROR:", err.message);
-});
 require("dotenv").config();
+
+console.log("BOT STARTING", process.pid);
 
 const TelegramBot = require("node-telegram-bot-api");
 
