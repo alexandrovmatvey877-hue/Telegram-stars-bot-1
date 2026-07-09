@@ -1,4 +1,5 @@
 const db = require("../config/database");
+const db = require("../config/database");
 async function getTonPrice() {
 
     try {
@@ -13,6 +14,29 @@ async function getTonPrice() {
     } catch (err) {
 
         console.error("TON PRICE ERROR:", err);
+
+        return null;
+
+    }
+
+}
+async function getStarPriceTon() {
+
+    try {
+
+        const response = await fetch(
+            "https://fragment-api.ydns.eu:8443/api/v1/prices"
+        );
+
+        const data = await response.json();
+
+        return Number(
+            data.stars.price_with_commission_kyc
+        );
+
+    } catch (err) {
+
+        console.error("STAR PRICE ERROR:", err);
 
         return null;
 
@@ -84,5 +108,6 @@ async function updatePrices() {
 
 module.exports = {
     getTonPrice,
+    getStarPriceTon,
     updatePrices
 };
