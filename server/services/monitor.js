@@ -51,7 +51,7 @@ async function getTonPrice() {
                 "TON PRICE ERROR: неверный ответ API",
                 data
             );
-
+            serviceStatus.fragment = "ERROR";
             await salesGuard.stopSales(
                 "CoinGecko invalid response"
             );
@@ -62,6 +62,7 @@ async function getTonPrice() {
 
         const price = data["the-open-network"].rub;
 
+serviceStatus.ton = "OK";
 
         tonCache.price = price;
         tonCache.updatedAt = now;
@@ -83,7 +84,7 @@ async function getTonPrice() {
             err
         );
 
-
+        serviceStatus.ton = "ERROR";
         await salesGuard.stopSales(
             "CoinGecko connection failed"
         );
@@ -108,7 +109,7 @@ async function getStarPriceTon() {
                 "FRAGMENT ERROR:",
                 response.status
             );
-
+            serviceStatus.fragment = "ERROR";
             await salesGuard.stopSales(
                 "Fragment API unavailable"
             );
@@ -129,7 +130,7 @@ async function getStarPriceTon() {
                 "FRAGMENT INVALID DATA",
                 data
             );
-
+            serviceStatus.fragment = "ERROR";
             await salesGuard.stopSales(
                 "Fragment invalid response"
             );
@@ -137,7 +138,7 @@ async function getStarPriceTon() {
             return null;
         }
 
-
+        serviceStatus.fragment = "OK";
         return Number(
             data.stars.price_with_commission_kyc
         );
@@ -150,7 +151,7 @@ async function getStarPriceTon() {
             err
         );
 
-
+        serviceStatus.fragment = "ERROR";
         await salesGuard.stopSales(
             "Fragment connection failed"
         );
@@ -207,7 +208,7 @@ async function emergencyStop() {
     console.error("🚨 EMERGENCY MODE");
 
     emergencyMode = true;
-
+    serviceStatus.fragment = "ERROR";
     await salesGuard.stopSales(
         "Automatic safety stop"
     );
@@ -228,7 +229,7 @@ async function emergencyRecover() {
     emergencyMode = false;
 
     console.log("🟢 EMERGENCY RECOVER");
-
+    serviceStatus.fragment = "ERROR";
     await salesGuard.startSales();
 
     console.log("✅ Продажи автоматически включены");
@@ -278,12 +279,19 @@ checkSafety(result);
     console.log("✅ Цены обновлены:");
     console.log(result);
 console.log("Safety counter =", warningCounter);
+serviceStatus.lastUpdate = new Date();
 await emergencyRecover();
 
 }
 
+function getServiceStatus() {
+    return serviceStatus;
+}
+
+
 module.exports = {
     getTonPrice,
     getStarPriceTon,
-    updatePrices
+    updatePrices,
+    getServiceStatus
 };
