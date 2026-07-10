@@ -1,4 +1,6 @@
 const db = require("../config/database");
+const salesGuard = require("../services/salesGuard");
+const passwordGuard = require("../services/passwordGuard");
 
 // =========================
 // Все пользователи
@@ -121,6 +123,68 @@ exports.getStats = async (req, res) => {
         `);
 
         res.json(result.rows[0]);
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            success: false
+        });
+
+    }
+
+};
+exports.changeSalesState = async (req, res) => {
+
+    try {
+
+        const { action, password } = req.body;
+
+        if (action === "stop") {
+
+            if (!passwordGuard.checkStopPassword(password)) {
+
+                return res.status(403).json({
+                    success: false,
+                    message: "Неверный пароль"
+                });
+
+            }
+
+            await salesGuard.stopSales("Manual stop");
+
+            return res.json({
+                success: true,
+                status: "STOPPED"
+            });
+
+        }
+
+        if (action === "start") {
+
+            if (!passwordGuard.checkStartPassword(password)) {
+
+                return res.status(403).json({
+                    success: false,
+                    message: "Неверный пароль"
+                });
+
+            }
+
+            await salesGuard.startSales();
+
+            return res.json({
+                success: true,
+                status: "STARTED"
+            });
+
+        }
+
+        return res.status(400).json({
+            success: false,
+            message: "Unknown action"
+        });
 
     } catch (err) {
 
