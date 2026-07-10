@@ -195,6 +195,8 @@ async function emergencyStop() {
 
     console.error("🚨 EMERGENCY MODE");
 
+    emergencyMode = true;
+
     await salesGuard.stopSales(
         "Automatic safety stop"
     );
