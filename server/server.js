@@ -61,6 +61,7 @@ app.use("/api/wallet", require("./routes/wallet"));
 app.use("/api/balance", require("./routes/balance"));
 app.use("/api/operations", require("./routes/operations"));
 app.use("/api/admin", require("./routes/admin"));
+app.use("/api/health", require("./routes/health"));
 
 // =========================
 // ROOT
