@@ -244,6 +244,8 @@ if (!result) {
 
     warningCounter++;
 
+    serviceStatus.lastUpdate = new Date();
+
     console.warn(
         `⚠ WARNING: не удалось рассчитать цены (${warningCounter})`
     );
