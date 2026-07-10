@@ -15,4 +15,7 @@ router.get("/stats", adminController.getStats);
 // Ручной стоп/запуск продаж
 router.post("/sales", adminController.changeSalesState);
 
+// Статус системы
+router.get("/system", adminController.getSystemStatus);
+
 module.exports = router;
