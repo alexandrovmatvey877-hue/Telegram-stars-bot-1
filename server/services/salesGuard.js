@@ -7,9 +7,12 @@ async function stopSales(reason) {
         UPDATE settings
         SET
             sales_enabled = false,
+            sales_stop_reason = $1,
             updated_at = NOW()
         WHERE id = 1
-    `);
+    `, [
+        reason
+    ]);
 
     console.log("🔴 SALES STOPPED:", reason);
 }
@@ -21,6 +24,7 @@ async function startSales() {
         UPDATE settings
         SET
             sales_enabled = true,
+            sales_stop_reason = NULL,
             updated_at = NOW()
         WHERE id = 1
     `);
