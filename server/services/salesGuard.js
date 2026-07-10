@@ -78,6 +78,6 @@ module.exports = {
     stopSales,
     startSales,
     canSell,
-    getStatus
+    getStatus,
     getSalesInfo
 };
