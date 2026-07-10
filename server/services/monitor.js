@@ -40,15 +40,59 @@ async function getStarPriceTon() {
             "https://fragment-api.ydns.eu:8443/api/v1/prices"
         );
 
+        if (!response.ok) {
+
+            console.error(
+                "FRAGMENT ERROR:",
+                response.status
+            );
+
+            await salesGuard.stopSales(
+                "Fragment API unavailable"
+            );
+
+            return null;
+        }
+
+
         const data = await response.json();
+
+
+        if (
+            !data.stars ||
+            !data.stars.price_with_commission_kyc
+        ) {
+
+            console.error(
+                "FRAGMENT INVALID DATA",
+                data
+            );
+
+            await salesGuard.stopSales(
+                "Fragment invalid response"
+            );
+
+            return null;
+        }
+
 
         return Number(
             data.stars.price_with_commission_kyc
         );
 
+
     } catch (err) {
 
-        console.error("STAR PRICE ERROR:", err);
+        console.error(
+            "STAR PRICE ERROR:",
+            err
+        );
+
+
+        await salesGuard.stopSales(
+            "Fragment connection failed"
+        );
+
 
         return null;
 
