@@ -13,6 +13,6 @@ router.post("/balance", adminController.updateBalance);
 router.get("/stats", adminController.getStats);
 
 // Ручной стоп/запуск продаж
-router.post("/sales", adminController.changeSalesState);
+//router.post("/sales", adminController.changeSalesState);
 
 module.exports = router;
