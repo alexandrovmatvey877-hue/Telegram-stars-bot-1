@@ -126,6 +126,48 @@ await salesGuard.stopSales(
     }
 
 }
+function checkTonAge() {
+
+    if (!tonCache.updatedAt) {
+        return;
+    }
+
+    const age = Date.now() - tonCache.updatedAt;
+
+
+    if (age >= TON_MAX_OFFLINE_TIME) {
+
+        console.error(
+            "🔴 TON price too old:",
+            Math.floor(age / 3600000),
+            "hours"
+        );
+
+        serviceStatus.ton = "ERROR";
+        updateSystemStatus();
+
+        salesGuard.stopSales(
+            "TON price outdated"
+        );
+
+        return;
+    }
+
+
+    if (age >= TON_CACHE_TIME) {
+
+        console.warn(
+            "🟡 TON price old:",
+            Math.floor(age / 60000),
+            "minutes"
+        );
+
+        serviceStatus.ton = "WARNING";
+        updateSystemStatus();
+
+    }
+
+}
 async function getStarPriceTon() {
 
     try {
@@ -276,6 +318,8 @@ await salesGuard.startSales();
 }
 async function updatePrices() {
 
+    checkTonAge();
+
     const prices = require("./prices");
     const result = await prices.calculatePrices();
 
@@ -339,11 +383,12 @@ function updateSystemStatus() {
     ) {
 
         serviceStatus.status = "RED";
-
     } else if (
-        serviceStatus.ton === "UNKNOWN" ||
-        serviceStatus.fragment === "UNKNOWN"
-    ) {
+    serviceStatus.ton === "UNKNOWN" ||
+    serviceStatus.fragment === "UNKNOWN" ||
+    serviceStatus.ton === "WARNING" ||
+    serviceStatus.fragment === "WARNING"
+){
 
         serviceStatus.status = "YELLOW";
 
