@@ -103,7 +103,11 @@ app.listen(PORT, () => {
 
 (async () => {
     try {
-await db.query("SELECT NOW()");
+
+        await db.query("SELECT NOW()");
+
+        monitor.setDatabaseStatus("OK");
+
         await initDatabase();
 
 const price = await monitor.getTonPrice();
