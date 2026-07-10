@@ -197,3 +197,30 @@ exports.changeSalesState = async (req, res) => {
     }
 
 };
+exports.getSystemStatus = async (req, res) => {
+
+    try {
+
+        const status = require("../services/monitor")
+            .getServiceStatus();
+
+        const sales = require("../services/salesGuard")
+            .getSalesInfo();
+
+        res.json({
+            success: true,
+            system: status,
+            sales
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            success: false
+        });
+
+    }
+
+};
