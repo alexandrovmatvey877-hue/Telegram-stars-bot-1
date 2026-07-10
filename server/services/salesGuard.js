@@ -5,9 +5,9 @@ let salesInfo = {
     stoppedAt: null
 };
 
-async function stopSales(reason) {
+async function stopSales(reason, source = "automatic") {
 
-salesInfo.source = "automatic";
+salesInfo.source = source;
 salesInfo.reason = reason;
 salesInfo.stoppedAt = new Date();
 
