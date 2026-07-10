@@ -140,8 +140,6 @@ async function updatePrices() {
     const prices = require("./prices");
     const result = await prices.calculatePrices();
 
-const result = await prices.calculatePrices();
-
 if (!result) {
 
     warningCounter++;
