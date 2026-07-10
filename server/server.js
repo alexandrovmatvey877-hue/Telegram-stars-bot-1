@@ -97,6 +97,10 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
+app.listen(PORT, () => {
+    console.log(`🚀 WHITE STARS started on port ${PORT}`);
+});
+
 (async () => {
     try {
 await db.query("SELECT NOW()");
@@ -107,10 +111,6 @@ const price = await monitor.getTonPrice();
 console.log("TON PRICE =", price);
 
 await monitor.updatePrices();
-
-app.listen(PORT, () => {
-    console.log(`🚀 WHITE STARS started on port ${PORT}`);
-});
 
 // Обновление каждые 5 минут
 setInterval(() => {
