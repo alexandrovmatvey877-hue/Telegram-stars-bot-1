@@ -76,6 +76,7 @@ language TEXT DEFAULT 'ru'
             mode TEXT DEFAULT 'auto',
 
             sales_enabled BOOLEAN DEFAULT true,
+            sales_stop_reason TEXT,
             deposits_enabled BOOLEAN DEFAULT true,
             referrals_enabled BOOLEAN DEFAULT true,
             balance_payment_enabled BOOLEAN DEFAULT true,
