@@ -125,22 +125,41 @@ updateSystemStatus();
 
     } catch (err) {
 
-        console.error(
-            "TON PRICE ERROR:",
-            err
-        );
+    console.error(
+        "TON PRICE ERROR:",
+        err
+    );
 
-        serviceStatus.ton = "ERROR";
-updateSystemStatus();
+    if (tonCache.price) {
 
-await salesGuard.stopSales(
-    "CoinGecko connection failed"
-);
+        const offlineTime = Date.now() - tonCache.updatedAt;
 
+        if (offlineTime < TON_MAX_OFFLINE_TIME) {
 
-        return null;
+            serviceStatus.ton = "WARNING";
+            updateSystemStatus();
+
+            console.log(
+                "🟡 Using cached TON price after error:",
+                tonCache.price
+            );
+
+            return tonCache.price;
+
+        }
 
     }
+
+    serviceStatus.ton = "ERROR";
+    updateSystemStatus();
+
+    await salesGuard.stopSales(
+        "TON price unavailable"
+    );
+
+    return null;
+
+}
 
 }
 function checkTonAge() {
@@ -396,8 +415,7 @@ function updateSystemStatus() {
 
     if (
         serviceStatus.ton === "ERROR" ||
-        serviceStatus.fragment === "ERROR" ||
-        serviceStatus.database === "ERROR"
+        serviceStatus.fragment === "ERROR"
     ) {
 
         serviceStatus.status = "RED";
@@ -405,8 +423,7 @@ function updateSystemStatus() {
     } else if (
         serviceStatus.ton === "WARNING" ||
         serviceStatus.ton === "UNKNOWN" ||
-        serviceStatus.fragment === "UNKNOWN" ||
-        serviceStatus.database === "UNKNOWN"
+        serviceStatus.fragment === "UNKNOWN"
     ) {
 
         serviceStatus.status = "YELLOW";
