@@ -5,12 +5,14 @@ const salesGuard = require("./salesGuard");
 // ======================
 
 let warningCounter = 0;
-let emergencyMode = false
+let emergencyMode = false;
 let serviceStatus = {
     ton: "UNKNOWN",
     fragment: "UNKNOWN",
+    database: "UNKNOWN",
+    status: "GREEN",
     lastUpdate: null
-};;
+};
 let tonCache = {
     price: null,
     updatedAt: 0
@@ -43,26 +45,30 @@ async function getTonPrice() {
 
 
         if (
-            !data["the-open-network"] ||
-            data["the-open-network"].rub == null
-        ) {
+    !data["the-open-network"] ||
+    data["the-open-network"].rub == null
+) {
 
-            console.error(
-                "TON PRICE ERROR: неверный ответ API",
-                data
-            );
-            serviceStatus.fragment = "ERROR";
-            await salesGuard.stopSales(
-                "CoinGecko invalid response"
-            );
+    console.error(
+        "TON PRICE ERROR: неверный ответ API",
+        data
+    );
 
-            return null;
-        }
+    serviceStatus.ton = "ERROR";
+    updateSystemStatus();
+
+    await salesGuard.stopSales(
+        "CoinGecko invalid response"
+    );
+
+    return null;
+}
 
 
         const price = data["the-open-network"].rub;
 
 serviceStatus.ton = "OK";
+updateSystemStatus();
 
         tonCache.price = price;
         tonCache.updatedAt = now;
@@ -85,9 +91,11 @@ serviceStatus.ton = "OK";
         );
 
         serviceStatus.ton = "ERROR";
-        await salesGuard.stopSales(
-            "CoinGecko connection failed"
-        );
+updateSystemStatus();
+
+await salesGuard.stopSales(
+    "CoinGecko connection failed"
+);
 
 
         return null;
@@ -110,6 +118,7 @@ async function getStarPriceTon() {
                 response.status
             );
             serviceStatus.fragment = "ERROR";
+updateSystemStatus();
             await salesGuard.stopSales(
                 "Fragment API unavailable"
             );
@@ -131,6 +140,7 @@ async function getStarPriceTon() {
                 data
             );
             serviceStatus.fragment = "ERROR";
+updateSystemStatus();
             await salesGuard.stopSales(
                 "Fragment invalid response"
             );
@@ -139,6 +149,7 @@ async function getStarPriceTon() {
         }
 
         serviceStatus.fragment = "OK";
+        updateSystemStatus();
         return Number(
             data.stars.price_with_commission_kyc
         );
@@ -152,6 +163,7 @@ async function getStarPriceTon() {
         );
 
         serviceStatus.fragment = "ERROR";
+updateSystemStatus();
         await salesGuard.stopSales(
             "Fragment connection failed"
         );
@@ -208,7 +220,9 @@ async function emergencyStop() {
     console.error("🚨 EMERGENCY MODE");
 
     emergencyMode = true;
-    serviceStatus.fragment = "ERROR";
+
+    serviceStatus.status = "RED";
+
     await salesGuard.stopSales(
         "Automatic safety stop"
     );
@@ -229,8 +243,10 @@ async function emergencyRecover() {
     emergencyMode = false;
 
     console.log("🟢 EMERGENCY RECOVER");
-    serviceStatus.fragment = "ERROR";
-    await salesGuard.startSales();
+
+serviceStatus.status = "GREEN";
+
+await salesGuard.startSales();
 
     console.log("✅ Продажи автоматически включены");
 
@@ -250,9 +266,9 @@ if (!result) {
         `⚠ WARNING: не удалось рассчитать цены (${warningCounter})`
     );
 
-    return;
+    console.log("SERVICE STATUS:", serviceStatus);
 
-console.log("SERVICE STATUS:", serviceStatus);
+    return;
 
 }
 
@@ -290,6 +306,30 @@ await emergencyRecover();
 
 function getServiceStatus() {
     return serviceStatus;
+}
+
+function updateSystemStatus() {
+
+    if (
+        serviceStatus.ton === "ERROR" ||
+        serviceStatus.fragment === "ERROR"
+    ) {
+
+        serviceStatus.status = "RED";
+
+    } else if (
+        serviceStatus.ton === "UNKNOWN" ||
+        serviceStatus.fragment === "UNKNOWN"
+    ) {
+
+        serviceStatus.status = "YELLOW";
+
+    } else {
+
+        serviceStatus.status = "GREEN";
+
+    }
+
 }
 
 
