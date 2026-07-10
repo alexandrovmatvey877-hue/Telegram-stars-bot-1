@@ -224,31 +224,3 @@ exports.getSystemStatus = async (req, res) => {
     }
 
 };
-// =========================
-// Состояние системы
-// =========================
-
-exports.getSystemStatus = async (req, res) => {
-
-    try {
-
-        const monitor = require("../services/monitor");
-        const salesGuard = require("../services/salesGuard");
-
-        res.json({
-            success: true,
-            system: monitor.getServiceStatus(),
-            sales: salesGuard.getSalesInfo()
-        });
-
-    } catch (err) {
-
-        console.error(err);
-
-        res.status(500).json({
-            success: false
-        });
-
-    }
-
-};
