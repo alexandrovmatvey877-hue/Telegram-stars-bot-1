@@ -182,3 +182,65 @@ function setSystemStatus(status, info = "") {
     }
 
 }
+async function loadSystemStatus(){
+
+    try {
+
+        const response = await fetch("/admin/system");
+
+        const data = await response.json();
+
+
+        if(!data.success){
+            return;
+        }
+
+
+        const system = data.system;
+
+
+        if(system.status === "GREEN"){
+
+            setSystemStatus(
+                "normal",
+                "Все системы работают"
+            );
+
+        }
+
+
+        else if(system.status === "YELLOW"){
+
+            setSystemStatus(
+                "warning",
+                "Есть предупреждения"
+            );
+
+        }
+
+
+        else if(system.status === "RED"){
+
+            setSystemStatus(
+                "emergency",
+                "Продажи остановлены"
+            );
+
+        }
+
+
+    } catch(err){
+
+        console.error(
+            "SYSTEM STATUS ERROR:",
+            err
+        );
+
+        setSystemStatus(
+            "emergency",
+            "Нет связи с сервером"
+        );
+
+    }
+
+}
