@@ -152,7 +152,7 @@ exports.changeSalesState = async (req, res) => {
 
             }
 
-            await salesGuard.stopSales("Manual stop");
+            await salesGuard.stopSales("Manual stop", "manual");
 
             return res.json({
                 success: true,
