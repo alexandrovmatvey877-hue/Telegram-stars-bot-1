@@ -15,10 +15,12 @@ let serviceStatus = {
 };
 let tonCache = {
     price: null,
-    updatedAt: 0
+    updatedAt: 0,
+    errorCount: 0
 };
 
 const TON_CACHE_TIME = 10 * 60 * 1000;
+const TON_MAX_OFFLINE_TIME = 5 * 60 * 60 * 1000;
 async function getTonPrice() {
 
     const now = Date.now();
@@ -54,14 +56,34 @@ async function getTonPrice() {
         data
     );
 
-    serviceStatus.ton = "ERROR";
+    tonCache.errorCount++;
+
+console.warn(
+    "⚠ CoinGecko unavailable. Errors:",
+    tonCache.errorCount
+);
+
+
+if (tonCache.price) {
+
+    serviceStatus.ton = "WARNING";
     updateSystemStatus();
 
-    await salesGuard.stopSales(
-        "CoinGecko invalid response"
+    console.log(
+        "🟡 Using cached TON price:",
+        tonCache.price
     );
 
-    return null;
+    return tonCache.price;
+
+}
+
+
+serviceStatus.ton = "ERROR";
+updateSystemStatus();
+
+return null;
+
 }
 
 
@@ -72,6 +94,7 @@ updateSystemStatus();
 
         tonCache.price = price;
         tonCache.updatedAt = now;
+        tonCache.errorCount = 0;
 
 
         console.log(
