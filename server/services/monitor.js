@@ -4,6 +4,7 @@ const db = require("../config/database");
 // ======================
 
 let warningCounter = 0;
+let emergencyMode = false;
 async function getTonPrice() {
 
     try {
@@ -87,6 +88,51 @@ function checkSafety(result) {
         warningCounter = 0;
 
     }
+if (warningCounter >= 5) {
+
+    emergencyStop();
+
+}
+
+}
+async function emergencyStop() {
+
+    console.error("🚨 EMERGENCY MODE");
+
+    await db.query(`
+        UPDATE settings
+        SET
+            sales_enabled = false,
+            updated_at = NOW()
+        WHERE id = 1
+    `);
+
+    console.error("⛔ Продажи автоматически отключены");
+
+}
+async function emergencyRecover() {
+
+    if (!emergencyMode) {
+        return;
+    }
+
+    if (warningCounter !== 0) {
+        return;
+    }
+
+    emergencyMode = false;
+
+    console.log("🟢 EMERGENCY RECOVER");
+
+    await db.query(`
+        UPDATE settings
+        SET
+            sales_enabled = true,
+            updated_at = NOW()
+        WHERE id = 1
+    `);
+
+    console.log("✅ Продажи автоматически включены");
 
 }
 async function updatePrices() {
@@ -94,17 +140,21 @@ async function updatePrices() {
     const prices = require("./prices");
     const result = await prices.calculatePrices();
 
+const result = await prices.calculatePrices();
+
 if (!result) {
-    console.log("❌ Не удалось получить цены");
+
+    warningCounter++;
+
+    console.warn(
+        `⚠ WARNING: не удалось рассчитать цены (${warningCounter})`
+    );
+
     return;
+
 }
 
 checkSafety(result);
-
-    if (!result) {
-        console.log("❌ Не удалось получить цены");
-        return;
-    }
 
     await db.query(`
         UPDATE settings
@@ -130,6 +180,8 @@ checkSafety(result);
 
     console.log("✅ Цены обновлены:");
     console.log(result);
+console.log("Safety counter =", warningCounter);
+await emergencyRecover();
 
 }
 
