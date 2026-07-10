@@ -7,6 +7,19 @@ const TelegramBot = require("node-telegram-bot-api");
 const bot = new TelegramBot(process.env.BOT_TOKEN, {
     polling: true
 });
+bot.getMe()
+    .then((info) => {
+        console.log(
+            "BOT CONNECTED:",
+            info.username
+        );
+    })
+    .catch(err => {
+        console.error(
+            "BOT CONNECTION ERROR:",
+            err.message
+        );
+    });
 bot.on("polling_error", (err) => {
     console.log("POLL ERROR:", err.message);
 });
