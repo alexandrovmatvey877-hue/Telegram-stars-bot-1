@@ -1,7 +1,15 @@
 const db = require("../config/database");
-
+let salesInfo = {
+    source: "system",
+    reason: null,
+    stoppedAt: null
+};
 
 async function stopSales(reason) {
+
+salesInfo.source = "automatic";
+salesInfo.reason = reason;
+salesInfo.stoppedAt = new Date();
 
     await db.query(`
         UPDATE settings
@@ -20,7 +28,11 @@ async function stopSales(reason) {
 
 async function startSales() {
 
-    await db.query(`
+ salesInfo.source = "system";
+salesInfo.reason = null;
+salesInfo.stoppedAt = null;
+  
+ await db.query(`
         UPDATE settings
         SET
             sales_enabled = true,
@@ -58,10 +70,14 @@ async function getStatus() {
     return result.rows[0];
 }
 
+function getSalesInfo() {
+    return salesInfo;
+}
 
 module.exports = {
     stopSales,
     startSales,
     canSell,
     getStatus
+    getSalesInfo
 };
