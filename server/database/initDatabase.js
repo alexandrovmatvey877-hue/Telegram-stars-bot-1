@@ -85,12 +85,12 @@ language TEXT DEFAULT 'ru'
 
         );
 
+        `);
+
 await db.query(`
     ALTER TABLE settings
     ADD COLUMN IF NOT EXISTS sales_stop_reason TEXT;
 `);
-
-        `);
 
         // ===========================
         // OPERATIONS
