@@ -80,7 +80,6 @@ document.querySelectorAll(".settings-tab").forEach(tab => {
     };
 
 });
-setSystemStatus("normal");
 
     // ---------- вкладки --------------
 
