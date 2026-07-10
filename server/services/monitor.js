@@ -252,6 +252,8 @@ if (!result) {
 
     return;
 
+console.log("SERVICE STATUS:", serviceStatus);
+
 }
 
 checkSafety(result);
