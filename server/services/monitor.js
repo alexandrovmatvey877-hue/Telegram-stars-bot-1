@@ -407,6 +407,14 @@ await emergencyRecover();
 
 }
 
+function setDatabaseStatus(status) {
+
+    serviceStatus.database = status;
+
+    updateSystemStatus();
+
+}
+
 function getServiceStatus() {
     return serviceStatus;
 }
@@ -440,5 +448,6 @@ module.exports = {
     getTonPrice,
     getStarPriceTon,
     updatePrices,
-    getServiceStatus
+    getServiceStatus,
+    setDatabaseStatus
 };
