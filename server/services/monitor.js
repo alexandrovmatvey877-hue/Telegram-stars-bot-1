@@ -6,7 +6,28 @@ const salesGuard = require("./salesGuard");
 
 let warningCounter = 0;
 let emergencyMode = false;
+let tonCache = {
+    price: null,
+    updatedAt: 0
+};
+
+const TON_CACHE_TIME = 10 * 60 * 1000;
 async function getTonPrice() {
+
+    const now = Date.now();
+
+
+    if (
+        tonCache.price &&
+        now - tonCache.updatedAt < TON_CACHE_TIME
+    ) {
+
+        console.log("🟢 TON price from cache");
+
+        return tonCache.price;
+
+    }
+
 
     try {
 
@@ -14,18 +35,48 @@ async function getTonPrice() {
             "https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=rub"
         );
 
+
         const data = await response.json();
 
-if (!data["the-open-network"] || data["the-open-network"].rub == null) {
-    console.error("TON PRICE ERROR: неверный ответ API", data);
-    return null;
-}
 
-return data["the-open-network"].rub;
+        if (
+            !data["the-open-network"] ||
+            data["the-open-network"].rub == null
+        ) {
+
+            console.error(
+                "TON PRICE ERROR: неверный ответ API",
+                data
+            );
+
+            return null;
+
+        }
+
+
+        const price = data["the-open-network"].rub;
+
+
+        tonCache.price = price;
+        tonCache.updatedAt = now;
+
+
+        console.log(
+            "💎 TON price updated:",
+            price
+        );
+
+
+        return price;
+
 
     } catch (err) {
 
-        console.error("TON PRICE ERROR:", err);
+        console.error(
+            "TON PRICE ERROR:",
+            err
+        );
+
 
         return null;
 
