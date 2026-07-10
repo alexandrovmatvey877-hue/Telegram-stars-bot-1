@@ -1,32 +1,59 @@
-let salesState = {
-    enabled: true,
-    status: "GREEN",
-    reason: null
-};
+const db = require("../config/database");
 
-function stopSales(reason) {
-    salesState.enabled = false;
-    salesState.status = "RED";
-    salesState.reason = reason;
+
+async function stopSales(reason) {
+
+    await db.query(`
+        UPDATE settings
+        SET
+            sales_enabled = false,
+            updated_at = NOW()
+        WHERE id = 1
+    `);
 
     console.log("🔴 SALES STOPPED:", reason);
 }
 
-function startSales() {
-    salesState.enabled = true;
-    salesState.status = "GREEN";
-    salesState.reason = null;
+
+async function startSales() {
+
+    await db.query(`
+        UPDATE settings
+        SET
+            sales_enabled = true,
+            updated_at = NOW()
+        WHERE id = 1
+    `);
 
     console.log("🟢 SALES STARTED");
 }
 
-function canSell() {
-    return salesState.enabled;
+
+async function canSell() {
+
+    const result = await db.query(`
+        SELECT sales_enabled
+        FROM settings
+        WHERE id = 1
+    `);
+
+    return result.rows[0]?.sales_enabled === true;
 }
 
-function getStatus() {
-    return salesState;
+
+async function getStatus() {
+
+    const result = await db.query(`
+        SELECT 
+            sales_enabled,
+            updated_at
+        FROM settings
+        WHERE id = 1
+    `);
+
+    return result.rows[0];
 }
+
 
 module.exports = {
     stopSales,
