@@ -16,24 +16,15 @@ async function getTonPrice() {
 
     const now = Date.now();
 
-
     if (
-    !data["the-open-network"] ||
-    data["the-open-network"].rub == null
-) {
+        tonCache.price &&
+        now - tonCache.updatedAt < TON_CACHE_TIME
+    ) {
 
-    console.error(
-        "TON PRICE ERROR: неверный ответ API",
-        data
-    );
+        console.log("🟢 TON price from cache");
 
-    await salesGuard.stopSales(
-        "CoinGecko invalid response"
-    );
-
-    return null;
-
-}
+        return tonCache.price;
+    }
 
 
     try {
@@ -56,8 +47,11 @@ async function getTonPrice() {
                 data
             );
 
-            return null;
+            await salesGuard.stopSales(
+                "CoinGecko invalid response"
+            );
 
+            return null;
         }
 
 
@@ -79,18 +73,20 @@ async function getTonPrice() {
 
     } catch (err) {
 
-    console.error(
-        "TON PRICE ERROR:",
-        err
-    );
+        console.error(
+            "TON PRICE ERROR:",
+            err
+        );
 
-    await salesGuard.stopSales(
-        "CoinGecko connection failed"
-    );
 
-    return null;
+        await salesGuard.stopSales(
+            "CoinGecko connection failed"
+        );
 
-}
+
+        return null;
+
+    }
 
 }
 async function getStarPriceTon() {
