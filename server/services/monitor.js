@@ -1,4 +1,5 @@
 const db = require("../config/database");
+const salesGuard = require("./salesGuard");
 // ======================
 // SAFETY
 // ======================
@@ -99,13 +100,9 @@ async function emergencyStop() {
 
     console.error("🚨 EMERGENCY MODE");
 
-    await db.query(`
-        UPDATE settings
-        SET
-            sales_enabled = false,
-            updated_at = NOW()
-        WHERE id = 1
-    `);
+    await salesGuard.stopSales(
+        "Automatic safety stop"
+    );
 
     console.error("⛔ Продажи автоматически отключены");
 
@@ -124,13 +121,7 @@ async function emergencyRecover() {
 
     console.log("🟢 EMERGENCY RECOVER");
 
-    await db.query(`
-        UPDATE settings
-        SET
-            sales_enabled = true,
-            updated_at = NOW()
-        WHERE id = 1
-    `);
+    await salesGuard.startSales();
 
     console.log("✅ Продажи автоматически включены");
 
