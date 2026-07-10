@@ -81,13 +81,16 @@ document.querySelectorAll(".settings-tab").forEach(tab => {
 
 });
 
-    // ---------- вкладки --------------
-
-    // ---------- вкладки настроек ----------
-
     // ---------- первая загрузка ----------
-    Users.loadUsers();
+Users.loadUsers();
 Settings.loadSettings();
+
+loadSystemStatus();
+
+setInterval(
+    loadSystemStatus,
+    30000
+);
 
 });
 
