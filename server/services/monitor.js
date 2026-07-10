@@ -66,15 +66,32 @@ console.warn(
 
 if (tonCache.price) {
 
-    serviceStatus.ton = "WARNING";
-    updateSystemStatus();
+    const offlineTime = now - tonCache.updatedAt;
 
-    console.log(
-        "🟡 Using cached TON price:",
-        tonCache.price
-    );
+    if (offlineTime < TON_MAX_OFFLINE_TIME) {
 
-    return tonCache.price;
+        serviceStatus.ton = "WARNING";
+        updateSystemStatus();
+
+        console.log(
+            "🟡 Using cached TON price:",
+            tonCache.price
+        );
+
+        return tonCache.price;
+
+    } else {
+
+        serviceStatus.ton = "ERROR";
+        updateSystemStatus();
+
+        await salesGuard.stopSales(
+            "TON price outdated"
+        );
+
+        return null;
+
+    }
 
 }
 
@@ -379,16 +396,18 @@ function updateSystemStatus() {
 
     if (
         serviceStatus.ton === "ERROR" ||
-        serviceStatus.fragment === "ERROR"
+        serviceStatus.fragment === "ERROR" ||
+        serviceStatus.database === "ERROR"
     ) {
 
         serviceStatus.status = "RED";
+
     } else if (
-    serviceStatus.ton === "UNKNOWN" ||
-    serviceStatus.fragment === "UNKNOWN" ||
-    serviceStatus.ton === "WARNING" ||
-    serviceStatus.fragment === "WARNING"
-){
+        serviceStatus.ton === "WARNING" ||
+        serviceStatus.ton === "UNKNOWN" ||
+        serviceStatus.fragment === "UNKNOWN" ||
+        serviceStatus.database === "UNKNOWN"
+    ) {
 
         serviceStatus.status = "YELLOW";
 
@@ -399,7 +418,6 @@ function updateSystemStatus() {
     }
 
 }
-
 
 module.exports = {
     getTonPrice,
