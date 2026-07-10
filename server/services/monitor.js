@@ -5,7 +5,12 @@ const salesGuard = require("./salesGuard");
 // ======================
 
 let warningCounter = 0;
-let emergencyMode = false;
+let emergencyMode = false
+let serviceStatus = {
+    ton: "UNKNOWN",
+    fragment: "UNKNOWN",
+    lastUpdate: null
+};;
 let tonCache = {
     price: null,
     updatedAt: 0
