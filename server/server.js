@@ -108,13 +108,11 @@ console.log("TON PRICE =", price);
 
 await monitor.updatePrices();
 
-        app.listen(PORT, () => {
-            console.log(`🚀 WHITE STARS started on port ${PORT}`);
-        });
-// Первый запуск сразу после старта
-monitor.updatePrices();
+app.listen(PORT, () => {
+    console.log(`🚀 WHITE STARS started on port ${PORT}`);
+});
 
-// Обновление каждые 10 минут
+// Обновление каждые 5 минут
 setInterval(() => {
     monitor.updatePrices();
 }, 5 * 60 * 1000);
