@@ -80,6 +80,7 @@ document.querySelectorAll(".settings-tab").forEach(tab => {
     };
 
 });
+setSystemStatus("normal");
 
     // ---------- вкладки --------------
 
@@ -133,6 +134,51 @@ if (btn) {
     if (page === "operations") {
 
         Operations.loadOperations();
+
+    }
+
+}
+// ======================
+// SYSTEM STATUS
+// ======================
+
+function setSystemStatus(status, info = "") {
+
+    const green = document.getElementById("statusGreen");
+    const yellow = document.getElementById("statusYellow");
+    const red = document.getElementById("statusRed");
+
+    const title = document.getElementById("statusTitle");
+    const text = document.getElementById("statusInfo");
+
+    if (!green) return;
+
+    green.classList.remove("active");
+    yellow.classList.remove("active");
+    red.classList.remove("active");
+
+    switch (status) {
+
+        case "normal":
+
+            green.classList.add("active");
+            title.textContent = "NORMAL";
+            text.textContent = info || "Все системы работают";
+            break;
+
+        case "warning":
+
+            yellow.classList.add("active");
+            title.textContent = "WARNING";
+            text.textContent = info || "Обнаружены проблемы";
+            break;
+
+        case "emergency":
+
+            red.classList.add("active");
+            title.textContent = "EMERGENCY";
+            text.textContent = info || "Продажи остановлены";
+            break;
 
     }
 
