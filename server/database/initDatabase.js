@@ -91,6 +91,10 @@ await db.query(`
     ALTER TABLE settings
     ADD COLUMN IF NOT EXISTS sales_stop_reason TEXT;
 `);
+await db.query(`
+    ALTER TABLE settings
+    ADD COLUMN IF NOT EXISTS system_status TEXT DEFAULT 'GREEN';
+`);
 
         // ===========================
         // OPERATIONS
