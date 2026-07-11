@@ -192,6 +192,8 @@ async function loadSystemStatus(){
 
         const response = await fetch("/api/health");
 
+console.log(response.status);
+
         const data = await response.json();
 
 console.log(data);
@@ -235,17 +237,18 @@ console.log(data);
         }
 
 
-    } catch(err){
+    } catch (err) {
 
-        console.error(
-            "SYSTEM STATUS ERROR:",
-            err
-        );
+    console.error("SYSTEM STATUS ERROR:", err);
 
-        setSystemStatus(
-            "emergency",
-            "Нет связи с сервером"
-        );
+    alert(err.message);
+
+    setSystemStatus(
+        "emergency",
+        "Нет связи с сервером"
+          );
+
+       }
 
     }
 
