@@ -57,6 +57,16 @@ async function saveSystem(system) {
 async function getHealth() {
     return await api("/api/health");
 }
+async function changeSales(action, password) {
+    return await api(
+        "/api/admin/sales",
+        "POST",
+        {
+            action,
+            password
+        }
+    );
+}
 window.API = {
     getUsers,
     getSettings,
@@ -64,5 +74,6 @@ window.API = {
     getOperations,
     getSystem,
     saveSystem,
-    getHealth
+    getHealth,
+    changeSales
 };
