@@ -66,7 +66,7 @@ VALUES(
                     first_name=$3,
                     last_name=$4,
                     avatar=$5,
-                    last_seen = EXTRACT(EPOCH FROM NOW()) * 1000
+                    last_seen = NOW()
                 WHERE telegram_id=$1
             `, [
                 telegram_id,
