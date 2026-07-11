@@ -1,4 +1,78 @@
 document.addEventListener("DOMContentLoaded", () => {
+const stopBtn = document.getElementById("stopSalesBtn");
+
+if(stopBtn){
+
+    stopBtn.onclick = async () => {
+
+        const password = prompt(
+            "Введите пароль остановки:"
+        );
+
+        if(!password) return;
+
+
+        try {
+
+            const result = await API.changeSales(
+                "stop",
+                password
+            );
+
+            alert(
+                "Продажи остановлены"
+            );
+
+            loadSystemStatus();
+
+
+        } catch(err){
+
+            alert(err.message);
+
+        }
+
+    };
+
+}
+
+
+const startBtn = document.getElementById("startSalesBtn");
+
+if(startBtn){
+
+    startBtn.onclick = async () => {
+
+        const password = prompt(
+            "Введите пароль запуска:"
+        );
+
+        if(!password) return;
+
+
+        try {
+
+            const result = await API.changeSales(
+                "start",
+                password
+            );
+
+            alert(
+                "Продажи запущены"
+            );
+
+            loadSystemStatus();
+
+
+        } catch(err){
+
+            alert(err.message);
+
+        }
+
+    };
+
+}
 
     // ---------- кнопка назад ----------
     const homeBtn = document.getElementById("homeBtn");
