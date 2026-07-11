@@ -18,6 +18,32 @@ let tonCache = {
     updatedAt: 0,
     errorCount: 0
 };
+async function getSavedTonPrice() {
+
+    const result = await db.query(
+        `
+        SELECT ton_rate, updated_at
+        FROM settings
+        WHERE id=1
+        `
+    );
+
+    if (!result.rows.length) {
+        return null;
+    }
+
+    const row = result.rows[0];
+
+    if (!row.ton_rate) {
+        return null;
+    }
+
+    return {
+        price: Number(row.ton_rate),
+        updatedAt: new Date(row.updated_at).getTime()
+    };
+
+}
 
 const TON_CACHE_TIME = 10 * 60 * 1000;
 const TON_MAX_OFFLINE_TIME = 5 * 60 * 60 * 1000;
@@ -93,6 +119,24 @@ if (tonCache.price) {
 
     }
 
+}
+
+const saved = await getSavedTonPrice();
+
+if (saved) {
+
+    tonCache.price = saved.price;
+    tonCache.updatedAt = saved.updatedAt;
+
+    serviceStatus.ton = "WARNING";
+    updateSystemStatus();
+
+    console.warn(
+        "🟡 Using saved TON price:",
+        saved.price
+    );
+
+    return saved.price;
 }
 
 
@@ -363,8 +407,6 @@ if (!result) {
 
     warningCounter++;
 
-    serviceStatus.lastUpdate = new Date();
-
     console.warn(
         `⚠ WARNING: не удалось рассчитать цены (${warningCounter})`
     );
@@ -387,17 +429,19 @@ checkSafety(result);
             stars250=$5,
             stars500=$6,
             stars1000=$7,
+            ton_rate=$8,
             updated_at=NOW()
         WHERE id=1
     `, [
-        result.stars50,
-        result.stars75,
-        result.stars100,
-        result.stars150,
-        result.stars250,
-        result.stars500,
-        result.stars1000
-    ]);
+    result.stars50,
+    result.stars75,
+    result.stars100,
+    result.stars150,
+    result.stars250,
+    result.stars500,
+    result.stars1000,
+    tonCache.price
+]
 
     console.log("✅ Цены обновлены:");
     console.log(result);
@@ -443,11 +487,10 @@ function updateSystemStatus() {
     }
 
 }
-
 module.exports = {
-    getTonPrice,
-    getStarPriceTon,
-    updatePrices,
-    getServiceStatus,
-    setDatabaseStatus
+getTonPrice,
+getStarPriceTon,
+updatePrices,
+getServiceStatus,
+setDatabaseStatus
 };
