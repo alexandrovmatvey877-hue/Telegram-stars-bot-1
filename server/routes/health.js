@@ -1,4 +1,5 @@
 const express = require("express");
+console.log("✅ HEALTH ROUTE LOADED");
 const router = express.Router();
 
 const monitor = require("../services/monitor");
