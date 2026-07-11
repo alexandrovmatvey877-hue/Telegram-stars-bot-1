@@ -251,5 +251,3 @@ console.log(data);
        }
 
     }
-
-}
