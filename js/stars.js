@@ -1,21 +1,14 @@
-// ======================
-// WHITE STARS
-// Telegram Stars purchase
-// ======================
-
-
 const tg = window.Telegram.WebApp;
 
 tg.ready();
 tg.expand();
 
 
-// Временно
-// Потом будем брать из API /api/settings
-const STAR_PRICE = 1.27;
+let prices = {};
+
+let selectedStars = 0;
 
 
-// Разрешённые пакеты
 const PACKS = [
     50,
     75,
@@ -32,40 +25,113 @@ const PACKS = [
 ];
 
 
-let selectedStars = 0;
+// ======================
+// Загрузка цен
+// ======================
+
+async function loadPrices(){
+
+    try {
+
+
+        const response = await fetch(
+            "https://white-stars-api.onrender.com/api/settings"
+        );
+
+
+        const data = await response.json();
+
+
+        prices = {
+
+            50: data.stars50,
+            75: data.stars75,
+            100: data.stars100,
+            150: data.stars150,
+            250: data.stars250,
+            500: data.stars500,
+            1000: data.stars1000
+
+        };
+
+
+        console.log(
+            "PRICES:",
+            prices
+        );
+
+
+        loadPacks();
+
+
+        updateCalculation();
+
+
+    } catch(err){
+
+        console.error(
+            "PRICE LOAD ERROR:",
+            err
+        );
+
+
+        tg.showAlert(
+            "Ошибка загрузки цен"
+        );
+
+    }
+
+}
 
 
 
 // ======================
-// Создание кнопок пакетов
+// Создание пакетов
 // ======================
 
 function loadPacks(){
 
-    const container = document.getElementById("packs");
 
-    if(!container) return;
+    const container =
+        document.getElementById("packs");
+
+
+    if(!container)
+        return;
+
+
+
+    container.innerHTML = "";
+
 
 
     PACKS.forEach(amount => {
 
 
-        const button = document.createElement("button");
+        const button =
+            document.createElement("button");
 
 
-        button.className = "pack";
+        button.className =
+            "pack";
 
-        button.innerText = amount + " ⭐";
+
+        button.innerText =
+            amount + " ⭐";
+
 
 
         button.onclick = () => {
+
 
             selectPack(
                 amount,
                 button
             );
 
+
         };
+
 
 
         container.appendChild(button);
@@ -73,12 +139,14 @@ function loadPacks(){
 
     });
 
+
 }
 
 
 
+
 // ======================
-// Выбор пакета
+// Выбор
 // ======================
 
 function selectPack(amount, button){
@@ -87,13 +155,15 @@ function selectPack(amount, button){
     selectedStars = amount;
 
 
+
     document
-        .querySelectorAll(".pack")
-        .forEach(btn => {
+    .querySelectorAll(".pack")
+    .forEach(btn => {
 
-            btn.classList.remove("active");
+        btn.classList.remove("active");
 
-        });
+    });
+
 
 
     button.classList.add("active");
@@ -102,7 +172,10 @@ function selectPack(amount, button){
 
     updateCalculation();
 
+
 }
+
+
 
 
 
@@ -113,50 +186,39 @@ function selectPack(amount, button){
 function updateCalculation(){
 
 
-    const stars =
-        document.getElementById("starsAmount");
-
-
     const price =
-        document.getElementById("price");
-
-
-
-    if(stars){
-
-        stars.innerText =
-            selectedStars + " ⭐";
-
-    }
-
-
-
-    if(price){
-
-        const total =
-            selectedStars * STAR_PRICE;
-
-
-        price.innerText =
-            total.toFixed(2) + " ₽";
-
-    }
+        prices[selectedStars] || 0;
 
 
 
     const rate =
-        document.getElementById("rate");
+        selectedStars
+        ? price / selectedStars
+        : 0;
 
 
-    if(rate){
 
-        rate.innerText =
-            "1 ⭐ = " + STAR_PRICE + " ₽";
+    document.getElementById("starsAmount")
+        .innerText =
+        selectedStars + " ⭐";
 
-    }
+
+
+    document.getElementById("price")
+        .innerText =
+        price.toFixed(2) + " ₽";
+
+
+
+    document.getElementById("rate")
+        .innerText =
+        "1 ⭐ = " +
+        rate.toFixed(2) +
+        " ₽";
 
 
 }
+
 
 
 
@@ -178,41 +240,31 @@ function buyStars(){
 
     if(!username){
 
-
         tg.showAlert(
             "Введите username получателя"
         );
 
-
         return;
-
     }
 
 
 
-    if(selectedStars === 0){
-
+    if(!selectedStars){
 
         tg.showAlert(
             "Выберите количество Stars"
         );
 
-
         return;
-
     }
 
 
 
-
-    // Заглушка до подключения оплаты
-
-
     console.log({
 
-        username,
+        receiver: username,
         stars: selectedStars,
-        price: selectedStars * STAR_PRICE
+        price: prices[selectedStars]
 
     });
 
@@ -228,17 +280,7 @@ function buyStars(){
 
 
 
-// ======================
-// Старт
-// ======================
-
 document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        loadPacks();
-
-        updateCalculation();
-
-    }
+"DOMContentLoaded",
+loadPrices
 );
