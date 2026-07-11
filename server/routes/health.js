@@ -8,10 +8,14 @@ const salesGuard = require("../services/salesGuard");
 
 router.get("/", async (req, res) => {
 
+   console.log("HEALTH REQUEST");
+
     try {
 
         const system = monitor.getServiceStatus();
         const sales = salesGuard.getSalesInfo();
+
+console.log("HEALTH RESPONSE:", system
 
         res.json({
             success: true,
