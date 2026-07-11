@@ -1,4 +1,5 @@
 const express = require("express");
+console.log("✅ ADMIN ROUTE LOADED");
 const router = express.Router();
 
 const adminController = require("../controllers/adminController");
