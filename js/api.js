@@ -54,11 +54,15 @@ async function getSystem() {
 async function saveSystem(system) {
     return await api("/api/settings/system", "POST", system);
 }
+async function getHealth() {
+    return await api("/api/health");
+}
 window.API = {
     getUsers,
     getSettings,
     saveSettings,
     getOperations,
     getSystem,
-    saveSystem
+    saveSystem,
+    getHealth
 };
