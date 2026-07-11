@@ -156,7 +156,54 @@
 
 </div>
 
+<div class="form">
 
+    <h3>Получатель</h3>
+
+    <input 
+        id="username"
+        placeholder="@username"
+    >
+
+
+    <h3>Количество Stars</h3>
+
+    <div id="packs"></div>
+
+
+    <div class="calculator">
+
+        <div>
+            Курс:
+            <span id="rate">
+                0 ₽
+            </span>
+        </div>
+
+
+        <div>
+            Количество:
+            <span id="starsAmount">
+                0 ⭐
+            </span>
+        </div>
+
+
+        <div>
+            Стоимость:
+            <span id="price">
+                0 ₽
+            </span>
+        </div>
+
+    </div>
+
+
+    <button onclick="buyStars()">
+        Вывести Stars
+    </button>
+
+</div>
 
 
 <script src="../js/stars.js"></script>
