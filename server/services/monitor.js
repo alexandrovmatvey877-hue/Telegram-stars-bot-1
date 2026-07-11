@@ -442,6 +442,7 @@ checkSafety(result);
     result.stars1000,
     tonCache.price
 ]
+)
 
     console.log("✅ Цены обновлены:");
     console.log(result);
