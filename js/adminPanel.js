@@ -190,11 +190,9 @@ async function loadSystemStatus(){
 
     try {
 
-        const response = await fetch("/api/health");
+        const data = await API.getHealth();
 
 console.log(response.status);
-
-        const data = await response.json();
 
 console.log(data);
 
