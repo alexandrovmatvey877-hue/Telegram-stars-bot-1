@@ -1,1 +1,187 @@
-.
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WHITE STARS — Stars</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<link rel="stylesheet" href="../css/stars.css">
+
+</head>
+
+<body>
+
+
+<div class="glass-container">
+
+
+    <div class="logo">
+        ⭐ Telegram Stars
+    </div>
+
+
+    <div class="subtitle">
+        Покупка Stars для любого пользователя
+    </div>
+
+
+
+    <!-- Получатель -->
+
+    <div class="card">
+
+        <div class="card-title">
+            Получатель
+        </div>
+
+        <input
+            id="username"
+            class="input"
+            type="text"
+            placeholder="@username"
+        >
+
+    </div>
+
+
+
+
+    <!-- Выбор количества -->
+
+    <div class="section">
+
+        <h2>
+            Количество Stars
+        </h2>
+
+
+        <div 
+            class="packs"
+            id="packs"
+        >
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <!-- Расчет -->
+
+    <div class="card calculation">
+
+
+        <div class="card-title">
+            Расчет
+        </div>
+
+
+        <div class="info-row">
+
+            <span>
+                Курс:
+            </span>
+
+            <span id="rate">
+                1 ⭐ = 0 ₽
+            </span>
+
+        </div>
+
+
+
+        <div class="info-row">
+
+            <span>
+                Stars:
+            </span>
+
+            <span id="starsAmount">
+                0 ⭐
+            </span>
+
+        </div>
+
+
+
+        <div class="total">
+
+            <span>
+                Итого:
+            </span>
+
+            <span id="price">
+                0 ₽
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <!-- Кнопка -->
+
+    <button
+        class="topup"
+        onclick="buyStars()"
+    >
+        Купить Stars
+    </button>
+
+
+
+
+
+    <!-- Назад -->
+
+    <button
+        class="back"
+        onclick="goBack()"
+    >
+        ← Назад
+    </button>
+
+
+
+</div>
+
+
+
+
+<script src="../js/stars.js"></script>
+
+
+<script>
+
+
+const tg = window.Telegram.WebApp;
+
+tg.ready();
+tg.expand();
+
+
+
+function goBack(){
+
+    window.location.href="../index.html";
+
+}
+
+
+</script>
+
+
+
+</body>
+</html>
