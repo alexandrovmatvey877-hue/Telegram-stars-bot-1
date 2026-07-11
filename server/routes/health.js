@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
         const system = monitor.getServiceStatus();
         const sales = salesGuard.getSalesInfo();
 
-console.log("HEALTH RESPONSE:", system
+console.log("HEALTH RESPONSE:", system);
 
         res.json({
             success: true,
