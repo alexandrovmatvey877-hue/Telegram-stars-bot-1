@@ -521,7 +521,42 @@ function updateSystemStatus() {
 function getPremiumPrices() {
     return premiumCache;
 }
+async function getPremiumPrices(){
 
+    const response = await fetch(
+        "https://fragment-api.ydns.eu:8443/api/v1/prices"
+    );
+
+
+    const data = await response.json();
+
+
+    if(!data.premium){
+
+        throw new Error(
+            "Premium prices unavailable"
+        );
+
+    }
+
+
+    return {
+
+        "3": Number(
+            data.premium["3_months"].price_with_commission_kyc
+        ),
+
+        "6": Number(
+            data.premium["6_months"].price_with_commission_kyc
+        ),
+
+        "12": Number(
+            data.premium["12_months"].price_with_commission_kyc
+        )
+
+    };
+
+}
 module.exports = {
     getTonPrice,
     getStarPriceTon,
