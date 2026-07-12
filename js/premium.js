@@ -147,7 +147,7 @@ function updateCalculator(){
     document.getElementById(
         "price"
     ).innerText =
-    Number(price).toFixed(2)
+    Number(price).toFixed(0)
     + " ₽";
 
 }
