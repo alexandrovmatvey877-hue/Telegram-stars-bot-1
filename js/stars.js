@@ -4,11 +4,12 @@ tg.ready();
 tg.expand();
 
 
-let prices = {};
+// =======================
+// НАСТРОЙКИ
+// =======================
 
-let selectedStars = 0;
-
-let starRate = 0;
+const API =
+"https://white-stars-api.onrender.com/api/settings";
 
 
 const PACKS = [
@@ -27,74 +28,124 @@ const PACKS = [
 ];
 
 
+
+let prices = {};
+
+let selectedStars = 0;
+
+let starRate = 0;
+
+
+
 // =======================
 // Загрузка цен
 // =======================
 
 async function loadPrices(){
 
-    const res = await fetch(
-        "https://white-stars-api.onrender.com/api/settings"
-    );
+
+    try {
 
 
-    const data = await res.json();
+        const response = await fetch(API);
+
+
+        const data = await response.json();
 
 
 
-    prices = {
+        prices = {
 
-        50:data.stars50,
-        75:data.stars75,
-        100:data.stars100,
-        150:data.stars150,
-        250:data.stars250,
-        500:data.stars500,
-        1000:data.stars1000
+            50: data.stars50,
+            75: data.stars75,
+            100: data.stars100,
+            150: data.stars150,
+            250: data.stars250,
+            500: data.stars500,
+            1000: data.stars1000
 
-    };
-
-
-    // считаем курс 1 звезды
-    starRate =
-        prices[100] / 100;
+        };
 
 
-    createButtons();
+
+        // курс одной звезды
+        starRate =
+            prices[100] / 100;
 
 
-    updateCalculator();
+
+        createButtons();
+
+
+
+        updateCalculator();
+
+
+
+        console.log(
+            "STARS PRICES:",
+            prices
+        );
+
+
+
+    } catch(error){
+
+
+        console.error(
+            "PRICE LOAD ERROR:",
+            error
+        );
+
+
+        tg.showAlert(
+            "Не удалось загрузить цены"
+        );
+
+
+    }
+
 
 }
 
 
 
-
 // =======================
-// Кнопки пакетов
+// Создание кнопок
 // =======================
 
 function createButtons(){
 
 
-    const box =
+    const container =
     document.getElementById("packs");
 
 
 
-    PACKS.forEach(stars=>{
+    container.innerHTML = "";
 
 
-        const btn =
+
+    PACKS.forEach(stars => {
+
+
+
+        const button =
         document.createElement("button");
 
 
-        btn.innerText =
-        stars+" ⭐";
+
+        button.className =
+        "pack-button";
 
 
 
-        btn.onclick = ()=>{
+        button.innerText =
+        `${stars} ⭐`;
+
+
+
+        button.onclick = ()=>{
 
 
             selectedStars = stars;
@@ -103,11 +154,23 @@ function createButtons(){
             updateCalculator();
 
 
+
+            document
+            .querySelectorAll(".pack-button")
+            .forEach(btn =>
+                btn.classList.remove("active")
+            );
+
+
+            button.classList.add("active");
+
+
         };
 
 
 
-        box.appendChild(btn);
+        container.appendChild(button);
+
 
 
     });
@@ -125,29 +188,60 @@ function createButtons(){
 function updateCalculator(){
 
 
-    let price =
-    selectedStars * starRate;
+    let price = 0;
 
 
 
-    document.getElementById("starsAmount")
-    .innerText =
-    selectedStars+" ⭐";
+    if(selectedStars){
+
+
+        if(prices[selectedStars]){
+
+
+            price =
+            prices[selectedStars];
+
+
+        } else {
+
+
+            // если пакета нет в БД
+            // считаем через курс
+
+
+            price =
+            selectedStars * starRate;
+
+
+        }
+
+
+    }
 
 
 
-    document.getElementById("price")
-    .innerText =
-    price.toFixed(2)+" ₽";
+    document.getElementById(
+        "starsAmount"
+    ).innerText =
+    `${selectedStars} ⭐`;
 
 
 
-    document.getElementById("rate")
-    .innerText =
-    starRate.toFixed(2)+" ₽";
+    document.getElementById(
+        "rate"
+    ).innerText =
+    `${starRate.toFixed(2)} ₽`;
+
+
+
+    document.getElementById(
+        "price"
+    ).innerText =
+    `${Math.ceil(price)} ₽`;
+
+
 
 }
-
 
 
 
@@ -169,11 +263,14 @@ function buyStars(){
 
     if(!username){
 
+
         tg.showAlert(
             "Введите получателя"
         );
 
+
         return;
+
 
     }
 
@@ -181,34 +278,51 @@ function buyStars(){
 
     if(!selectedStars){
 
+
         tg.showAlert(
             "Выберите количество Stars"
         );
 
+
         return;
 
+
     }
+
+
+
+    const price =
+    prices[selectedStars] ||
+    Math.ceil(selectedStars * starRate);
 
 
 
     console.log({
 
         username,
+
         stars:selectedStars,
-        price:selectedStars*starRate
+
+        price
+
 
     });
 
 
 
-    // временная заглушка
+    // =====================
+    // ВРЕМЕННО
+    // =====================
+
 
     tg.showAlert(
         "Недостаточно средств"
     );
 
 
+
 }
+
 
 
 
