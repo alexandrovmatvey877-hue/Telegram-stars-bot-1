@@ -444,19 +444,22 @@ if (!result) {
 checkSafety(result);
 
     await db.query(`
-        UPDATE settings
-        SET
-            stars50=$1,
-            stars75=$2,
-            stars100=$3,
-            stars150=$4,
-            stars250=$5,
-            stars500=$6,
-            stars1000=$7,
-            ton_rate=$8,
-            updated_at=NOW()
-        WHERE id=1
-    `, [
+    UPDATE settings
+    SET
+        stars50=$1,
+        stars75=$2,
+        stars100=$3,
+        stars150=$4,
+        stars250=$5,
+        stars500=$6,
+        stars1000=$7,
+
+        ton_rate=$8,
+        stars_rate=$9,
+
+        updated_at=NOW()
+    WHERE id=1
+`, [
     result.stars50,
     result.stars75,
     result.stars100,
@@ -464,9 +467,10 @@ checkSafety(result);
     result.stars250,
     result.stars500,
     result.stars1000,
-    tonCache.price
-]
-)
+
+    tonCache.price,
+    starTon
+]);
 
     console.log("✅ Цены обновлены:");
     console.log(result);
