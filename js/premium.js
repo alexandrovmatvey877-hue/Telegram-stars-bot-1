@@ -68,7 +68,7 @@ function createButtons(){
 
 
     const box =
-    document.getElementById("periods");
+document.getElementById("premiumPlans");
 
 
     box.innerHTML = "";
@@ -137,9 +137,7 @@ function updateCalculator(){
 
 
 
-    document.getElementById(
-        "period"
-    ).innerText =
+    document.getElementById("months").innerText =
     selectedPeriod ?
     selectedPeriod + " месяцев" :
     "Не выбрано";
