@@ -94,15 +94,8 @@ body {
   }
 }
 
-/* ––– BACK BUTTON ––– */
-button {
-  outline: none;
-  -webkit-appearance: none;
-  border: none;
-  cursor: pointer;
-}
-
-.back-button {
+/* ––– BACK BUTTON (прямой селектор на кнопку вне контейнера) ––– */
+body > button {
   position: relative;
   z-index: 1;
   display: inline-block;
@@ -119,16 +112,19 @@ button {
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   letter-spacing: 0.3px;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
 }
 
-.back-button:hover {
+body > button:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px -8px rgba(100, 80, 255, 0.2);
 }
 
-.back-button:active {
+body > button:active {
   transform: scale(0.94);
   background: rgba(255, 255, 255, 0.12);
 }
@@ -235,6 +231,9 @@ button {
   gap: 12px;
 }
 
+/* ––– PACK BUTTONS (селектор на все кнопки внутри #packs) ––– */
+#packs button,
+.packs button,
 .pack-btn {
   padding: 16px 12px;
   border-radius: 20px;
@@ -252,8 +251,12 @@ button {
   position: relative;
   overflow: hidden;
   text-align: center;
+  outline: none;
+  -webkit-appearance: none;
 }
 
+#packs button::before,
+.packs button::before,
 .pack-btn::before {
   content: '';
   position: absolute;
@@ -265,10 +268,14 @@ button {
   transition: left 0.6s ease;
 }
 
+#packs button:hover::before,
+.packs button:hover::before,
 .pack-btn:hover::before {
   left: 100%;
 }
 
+#packs button:hover,
+.packs button:hover,
 .pack-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.18);
@@ -276,13 +283,21 @@ button {
   box-shadow: 0 10px 24px -8px rgba(100, 80, 255, 0.25);
 }
 
+#packs button:active,
+.packs button:active,
 .pack-btn:active {
   transform: scale(0.93);
   background: rgba(255, 255, 255, 0.12);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.pack-btn.selected {
+/* Стиль для выбранной кнопки (если JS добавляет класс .selected или .active) */
+#packs button.selected,
+.packs button.selected,
+.pack-btn.selected,
+#packs button.active,
+.packs button.active,
+.pack-btn.active {
   background: linear-gradient(135deg, rgba(120, 80, 255, 0.4), rgba(200, 100, 255, 0.25));
   border-color: rgba(255, 255, 255, 0.25);
   box-shadow: 0 0 28px rgba(100, 80, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -410,6 +425,11 @@ button {
     padding: 12px;
   }
 
+  body > button {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
   .logo {
     font-size: 30px;
   }
@@ -432,6 +452,8 @@ button {
     gap: 10px;
   }
 
+  #packs button,
+  .packs button,
   .pack-btn {
     padding: 14px 10px;
     font-size: 13px;
@@ -446,11 +468,6 @@ button {
   .orb-2 {
     width: 250px;
     height: 250px;
-  }
-
-  .back-button {
-    padding: 10px 16px;
-    font-size: 14px;
   }
 
   .buy-button {
