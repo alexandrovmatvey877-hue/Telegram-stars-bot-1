@@ -5,6 +5,7 @@ tg.expand();
 
 
 let prices = {};
+console.log("PREMIUM JS LOADED");
 
 let selectedPeriod = 0;
 
@@ -20,9 +21,10 @@ async function loadPremium(){
         const res = await fetch(
             "https://white-stars-api.onrender.com/api/premium"
         );
-
+console.log("PREMIUM RESPONSE:", res.status);
 
         const data = await res.json();
+        console.log("PREMIUM DATA:", data);
 
 
         if(!data.success){
