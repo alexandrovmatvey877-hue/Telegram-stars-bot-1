@@ -18,6 +18,11 @@ let tonCache = {
     updatedAt: 0,
     errorCount: 0
 };
+let premiumCache = {
+    3: null,
+    6: null,
+    12: null
+};
 async function getSavedTonPrice() {
 
     const result = await db.query(
@@ -70,6 +75,25 @@ async function getTonPrice() {
 
 
         const data = await response.json();
+
+// Premium
+if (data.premium) {
+
+    premiumCache[3] = Number(
+        data.premium["3_months"].price_with_commission_kyc
+    );
+
+    premiumCache[6] = Number(
+        data.premium["6_months"].price_with_commission_kyc
+    );
+
+    premiumCache[12] = Number(
+        data.premium["12_months"].price_with_commission_kyc
+    );
+
+    console.log("👑 Premium updated:", premiumCache);
+
+}
 
 
         if (
@@ -488,10 +512,15 @@ function updateSystemStatus() {
     }
 
 }
+function getPremiumPrices() {
+    return premiumCache;
+}
+
 module.exports = {
-getTonPrice,
-getStarPriceTon,
-updatePrices,
-getServiceStatus,
-setDatabaseStatus
+    getTonPrice,
+    getStarPriceTon,
+    getPremiumPrices,
+    updatePrices,
+    getServiceStatus,
+    setDatabaseStatus
 };
