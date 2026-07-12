@@ -57,6 +57,7 @@ app.use("/images", express.static(path.join(ROOT, "images")));
 
 app.use("/api/users", require("./routes/users"));
 app.use("/api/settings", require("./routes/settings"));
+app.use("/api/premium", require("./routes/premium"));
 app.use("/api/wallet", require("./routes/wallet"));
 app.use("/api/balance", require("./routes/balance"));
 app.use("/api/operations", require("./routes/operations"));
