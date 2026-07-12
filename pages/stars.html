@@ -1,62 +1,68 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Stars — WHITE STARS</title>
 
-<title>WHITE STARS — Stars</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-<link rel="stylesheet" href="../css/stars.css">
-
+    <link rel="stylesheet" href="../css/stars.css">
 </head>
+
 
 <body>
 
 
-<div class="glass-container">
+<div class="container">
 
 
-    <div class="logo">
-        ⭐ Telegram Stars
+    <div class="header">
+
+        <div class="logo">
+            ⭐ WHITE STARS
+        </div>
+
+        <div class="subtitle">
+            Покупка Telegram Stars
+        </div>
+
     </div>
 
 
-    <div class="subtitle">
-        Покупка Stars для любого пользователя
-    </div>
 
-
-
-    <!-- Получатель -->
 
     <div class="card">
 
-        <div class="card-title">
-            Получатель
-        </div>
 
-        <input
+        <h2>
+            Получатель
+        </h2>
+
+
+        <input 
             id="username"
-            class="input"
             type="text"
             placeholder="@username"
         >
 
+
+
     </div>
 
 
 
 
-    <!-- Выбор количества -->
 
-    <div class="section">
+    <div class="card">
+
 
         <h2>
-            Количество Stars
+            Выберите количество
         </h2>
+
 
 
         <div 
@@ -64,6 +70,13 @@
             id="packs"
         >
 
+
+            <!--
+            Кнопки создаются JS
+            из PACKS
+            -->
+
+
         </div>
 
 
@@ -73,55 +86,63 @@
 
 
 
-    <!-- Расчет -->
 
-    <div class="card calculation">
+    <div class="card calculator">
 
 
-        <div class="card-title">
+        <h2>
             Расчет
-        </div>
+        </h2>
 
 
-        <div class="info-row">
-
-            <span>
-                Курс:
-            </span>
-
-            <span id="rate">
-                1 ⭐ = 0 ₽
-            </span>
-
-        </div>
-
-
-
-        <div class="info-row">
+        <div class="row">
 
             <span>
-                Stars:
+                Stars
             </span>
+
 
             <span id="starsAmount">
                 0 ⭐
             </span>
 
         </div>
+
+
+
+
+        <div class="row">
+
+            <span>
+                Цена 1 ⭐
+            </span>
+
+
+            <span id="rate">
+                0 ₽
+            </span>
+
+        </div>
+
+
 
 
 
         <div class="total">
 
+
             <span>
-                Итого:
+                К оплате
             </span>
 
-            <span id="price">
+
+            <strong id="price">
                 0 ₽
-            </span>
+            </strong>
+
 
         </div>
+
 
 
     </div>
@@ -130,105 +151,48 @@
 
 
 
-    <!-- Кнопка -->
 
-    <button
-        class="topup"
+    <button 
+        class="buy-button"
         onclick="buyStars()"
     >
+
         Купить Stars
+
     </button>
 
 
 
 
 
-    <!-- Назад -->
 
-    <button
-        class="back"
-        onclick="goBack()"
-    >
-        ← Назад
-    </button>
+    <div class="info">
 
 
-
-</div>
-
-<div class="form">
-
-    <h3>Получатель</h3>
-
-    <input 
-        id="username"
-        placeholder="@username"
-    >
+        <p>
+            ⭐ Stars поступают напрямую на указанный аккаунт Telegram.
+        </p>
 
 
-    <h3>Количество Stars</h3>
+        <p>
+            🔒 Безопасная покупка через WHITE STARS.
+        </p>
 
-    <div id="packs"></div>
-
-
-    <div class="calculator">
-
-        <div>
-            Курс:
-            <span id="rate">
-                0 ₽
-            </span>
-        </div>
-
-
-        <div>
-            Количество:
-            <span id="starsAmount">
-                0 ⭐
-            </span>
-        </div>
-
-
-        <div>
-            Стоимость:
-            <span id="price">
-                0 ₽
-            </span>
-        </div>
 
     </div>
 
 
-    <button onclick="buyStars()">
-        Вывести Stars
-    </button>
+
 
 </div>
+
+
+
 
 
 <script src="../js/stars.js"></script>
 
 
-<script>
-
-
-const tg = window.Telegram.WebApp;
-
-tg.ready();
-tg.expand();
-
-
-
-function goBack(){
-
-    window.location.href="../index.html";
-
-}
-
-
-</script>
-
-
-
 </body>
+
 </html>
