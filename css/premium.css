@@ -11,6 +11,7 @@ html {
 }
 
 button,
+input,
 .card {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
@@ -93,15 +94,8 @@ body {
   }
 }
 
-/* ––– BACK BUTTON ––– */
-button {
-  outline: none;
-  -webkit-appearance: none;
-  border: none;
-  cursor: pointer;
-}
-
-.back-button {
+/* ––– BACK BUTTON (прямой селектор) ––– */
+body > button {
   position: relative;
   z-index: 1;
   display: inline-block;
@@ -115,19 +109,22 @@ button {
   color: rgba(255, 255, 255, 0.8);
   font-size: 15px;
   font-weight: 600;
+  cursor: pointer;
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   letter-spacing: 0.3px;
+  outline: none;
+  -webkit-appearance: none;
 }
 
-.back-button:hover {
+body > button:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px -8px rgba(100, 80, 255, 0.2);
 }
 
-.back-button:active {
+body > button:active {
   transform: scale(0.94);
   background: rgba(255, 255, 255, 0.12);
 }
@@ -199,6 +196,35 @@ button {
   text-shadow: 0 1px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* ––– USERNAME INPUT ––– */
+.username-input {
+  width: 100%;
+  padding: 14px 16px;
+  margin: 12px 0;
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.3s ease;
+  letter-spacing: 0.2px;
+}
+
+.username-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 400;
+}
+
+.username-input:focus {
+  border-color: rgba(120, 80, 255, 0.5);
+  box-shadow: 0 0 20px rgba(100, 80, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 /* ––– PREMIUM PLANS ––– */
 #premiumPlans {
   display: flex;
@@ -206,58 +232,65 @@ button {
   gap: 10px;
 }
 
-.plan-btn {
+#premiumPlans button {
   width: 100%;
   padding: 16px 18px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: #ffffff;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   letter-spacing: 0.3px;
   text-align: left;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  outline: none;
+  -webkit-appearance: none;
+  position: relative;
+  overflow: hidden;
 }
 
-.plan-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px -6px rgba(100, 80, 255, 0.2);
+#premiumPlans button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  transition: left 0.6s ease;
 }
 
-.plan-btn:active {
+#premiumPlans button:hover::before {
+  left: 100%;
+}
+
+#premiumPlans button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px -8px rgba(100, 80, 255, 0.25);
+}
+
+#premiumPlans button:active {
   transform: scale(0.97);
   background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.plan-btn.selected {
-  background: linear-gradient(135deg, rgba(120, 80, 255, 0.35), rgba(200, 100, 255, 0.2));
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 24px rgba(100, 80, 255, 0.25);
-}
-
-.plan-btn .plan-duration {
+#premiumPlans button.selected,
+#premiumPlans button.active {
+  background: linear-gradient(135deg, rgba(120, 80, 255, 0.4), rgba(200, 100, 255, 0.25));
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 28px rgba(100, 80, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   font-weight: 700;
-  font-size: 16px;
-}
-
-.plan-btn .plan-price {
-  font-size: 18px;
-  font-weight: 800;
-  color: #ffffff;
-  background: linear-gradient(135deg, #ffffff 0%, #d0d8ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 /* ––– CALCULATOR ––– */
@@ -265,7 +298,7 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 10px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 15px;
   color: rgba(255, 255, 255, 0.7);
@@ -368,6 +401,11 @@ button {
     padding: 12px;
   }
 
+  body > button {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
   .logo {
     font-size: 30px;
   }
@@ -386,13 +424,15 @@ button {
     font-size: 16px;
   }
 
-  .plan-btn {
+  #premiumPlans button {
     padding: 14px 16px;
     font-size: 14px;
+    border-radius: 18px;
   }
 
-  .plan-btn .plan-price {
-    font-size: 16px;
+  .username-input {
+    padding: 12px 14px;
+    font-size: 14px;
   }
 
   .orb-1 {
@@ -403,11 +443,6 @@ button {
   .orb-2 {
     width: 250px;
     height: 250px;
-  }
-
-  .back-button {
-    padding: 10px 16px;
-    font-size: 14px;
   }
 
   .buy-button {
