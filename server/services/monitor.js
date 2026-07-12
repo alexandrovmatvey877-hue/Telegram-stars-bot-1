@@ -427,6 +427,8 @@ async function updatePrices() {
     const prices = require("./prices");
     const result = await prices.calculatePrices();
 
+const starTon = await getStarPriceTon();
+
 if (!result) {
 
     warningCounter++;
