@@ -148,7 +148,7 @@ function updateCalculator(){
         "price"
     ).innerText =
     Number(price).toFixed(2)
-    + " TON";
+    + " ₽";
 
 }
 
