@@ -181,10 +181,16 @@ function switchPage(page) {
         .forEach(t => t.classList.remove("active"));
 
     const pages = {
-        users: "usersPage",
-        operations: "operationsPage",
-        settings: "settingsPage"
-    };
+
+    users:"usersPage",
+
+    operations:"operationsPage",
+
+    settings:"settingsPage",
+
+    wheel:"wheelPage"
+
+};
 
     document.getElementById(pages[page]).classList.add("active");
 
