@@ -1,7 +1,40 @@
 let spinning = false;
 
 
-async function spinWheel(){
+const wheel =
+document.getElementById("wheel");
+
+
+const button =
+document.getElementById("spinBtn");
+
+
+
+button.onclick = async ()=>{
+
+
+if(spinning)
+return;
+
+
+
+spinning=true;
+
+button.disabled=true;
+
+
+
+const rotate =
+3600 + Math.floor(Math.random()*360);
+
+
+
+wheel.style.transform =
+`rotate(${rotate}deg)`;
+
+
+
+try{
 
 
 const user =
@@ -9,29 +42,8 @@ window.Telegram.WebApp
 .initDataUnsafe.user;
 
 
-if(!user){
 
-alert("Telegram user error");
-
-return;
-
-}
-
-
-
-const wheel =
-document.getElementById("wheel");
-
-
-wheel.style.transform =
-`rotate(${3600}deg)`;
-
-
-
-try{
-
-
-const res =
+const response =
 await fetch(
 "https://white-stars-api.onrender.com/api/wheel/spin",
 {
@@ -39,7 +51,9 @@ await fetch(
 method:"POST",
 
 headers:{
+
 "Content-Type":"application/json"
+
 },
 
 body:JSON.stringify({
@@ -55,7 +69,7 @@ telegram_id:user.id
 
 
 const data =
-await res.json();
+await response.json();
 
 
 
@@ -65,22 +79,24 @@ setTimeout(()=>{
 if(data.success){
 
 
-document.getElementById("result")
+document.getElementById(
+"lastPrize"
+)
 .innerText =
-"🎉 Вы выиграли: "
-+
 data.prize.name;
 
 
 }else{
 
 
-document.getElementById("result")
-.innerText =
-"Ошибка";
-
+alert(data.message);
 
 }
+
+
+button.disabled=false;
+
+spinning=false;
 
 
 },5000);
@@ -93,6 +109,13 @@ document.getElementById("result")
 console.error(err);
 
 
-}
+button.disabled=false;
+
+spinning=false;
+
 
 }
+
+
+
+};
