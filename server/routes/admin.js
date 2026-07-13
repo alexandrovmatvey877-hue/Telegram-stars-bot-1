@@ -1,8 +1,14 @@
 const express = require("express");
+
 console.log("✅ ADMIN ROUTE LOADED");
+
 const router = express.Router();
 
+const adminGuard = require("../middleware/security/adminGuard");
+
 const adminController = require("../controllers/adminController");
+
+router.use(adminGuard);
 
 // Получить всех пользователей
 router.get("/users", adminController.getUsers);
