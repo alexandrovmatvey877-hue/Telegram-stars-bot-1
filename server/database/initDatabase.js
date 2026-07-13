@@ -192,6 +192,110 @@ CREATE TABLE IF NOT EXISTS orders(
 );
 
 `);
+// ===========================
+// WHEEL SETTINGS
+// ===========================
+
+await db.query(`
+
+CREATE TABLE IF NOT EXISTS wheel_settings(
+
+    id SERIAL PRIMARY KEY,
+
+    enabled BOOLEAN DEFAULT true,
+
+    cost DOUBLE PRECISION DEFAULT 0,
+
+    cooldown INTEGER DEFAULT 86400,
+
+    updated_at TIMESTAMP DEFAULT NOW()
+
+);
+
+`);
+
+
+// ===========================
+// WHEEL PRIZES
+// ===========================
+
+await db.query(`
+
+CREATE TABLE IF NOT EXISTS wheel_prizes(
+
+    id SERIAL PRIMARY KEY,
+
+    name TEXT NOT NULL,
+
+    type TEXT NOT NULL,
+
+    value DOUBLE PRECISION DEFAULT 0,
+
+    chance DOUBLE PRECISION DEFAULT 0,
+
+    enabled BOOLEAN DEFAULT true
+
+);
+
+`);
+
+
+// ===========================
+// WHEEL HISTORY
+// ===========================
+
+await db.query(`
+
+CREATE TABLE IF NOT EXISTS wheel_history(
+
+    id SERIAL PRIMARY KEY,
+
+    telegram_id TEXT NOT NULL,
+
+    prize_id INTEGER,
+
+    prize_name TEXT,
+
+    created_at TIMESTAMP DEFAULT NOW()
+
+);
+
+`);
+
+
+// DEFAULT SETTINGS
+
+await db.query(`
+
+INSERT INTO wheel_settings(id)
+
+VALUES(1)
+
+ON CONFLICT(id)
+
+DO NOTHING;
+
+`);
+
+
+// DEFAULT PRIZES
+
+await db.query(`
+
+INSERT INTO wheel_prizes
+(name,type,value,chance)
+
+SELECT
+'10 Stars',
+'stars',
+10,
+50
+
+WHERE NOT EXISTS(
+SELECT 1 FROM wheel_prizes
+);
+
+`);
 
         console.log("✅ Database initialized");
 
