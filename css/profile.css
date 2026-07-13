@@ -1,0 +1,519 @@
+/* ============================================
+   PROFILE.CSS — Glass UI для профиля
+   Стиль полностью соответствует index.html
+   ============================================ */
+
+/* ––– RESET & BASE ––– */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button,
+.card,
+.link {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
+body {
+    min-height: 100dvh;
+    background: #080c1a;
+    padding: 16px;
+    padding-bottom: 90px;
+    margin: 0;
+    overflow-x: hidden;
+    position: relative;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ––– FLOATING ORBS ––– */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 0;
+    animation: floatOrb 14s ease-in-out infinite alternate;
+}
+
+body::before {
+    width: 400px;
+    height: 400px;
+    top: -150px;
+    right: -100px;
+    background: radial-gradient(circle, rgba(120, 80, 255, 0.45), rgba(200, 100, 255, 0.1));
+    animation-delay: 0s;
+}
+
+body::after {
+    width: 350px;
+    height: 350px;
+    bottom: -100px;
+    left: -100px;
+    background: radial-gradient(circle, rgba(0, 220, 255, 0.35), rgba(0, 100, 255, 0.05));
+    animation-delay: -4s;
+}
+
+@keyframes floatOrb {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(30px, -40px) scale(1.1) rotate(5deg); }
+    50% { transform: translate(-20px, 20px) scale(0.9) rotate(-3deg); }
+    75% { transform: translate(40px, 30px) scale(1.05) rotate(7deg); }
+    100% { transform: translate(-30px, -20px) scale(0.95) rotate(-5deg); }
+}
+
+/* ––– CONTAINER ––– */
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 56px 56px 40px 40px;
+    box-shadow: 0 40px 60px -20px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    padding: 28px 24px 32px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 70%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.07) 0%, transparent 60%);
+    background-blend-mode: overlay;
+    background-size: 200% 200%;
+}
+
+/* ––– PROFILE CARD ––– */
+.profile-card {
+    text-align: center;
+    padding: 20px 16px 24px;
+    border-radius: 36px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 16px;
+    display: block;
+    background: rgba(255, 255, 255, 0.05);
+    border: 3px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 60px rgba(120, 80, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+.avatar:hover {
+    transform: scale(1.03);
+    border-color: rgba(120, 80, 255, 0.2);
+    box-shadow: 0 8px 40px rgba(120, 80, 255, 0.2);
+}
+
+.profile-card h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #ffffff 0%, #b0b8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.profile-card #username {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 4px;
+    padding: 4px 16px;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ––– CARDS ––– */
+.card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 20px 22px;
+    border-radius: 28px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+    margin-bottom: 16px;
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+.card:last-of-type {
+    margin-bottom: 24px;
+}
+
+.card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 12px;
+    letter-spacing: -0.2px;
+}
+
+.card #balance {
+    font-size: 34px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 2px 30px rgba(100, 80, 255, 0.2);
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff 0%, #d0d8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.card p {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 6px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.card p:last-child {
+    border-bottom: none;
+}
+
+.card p span {
+    font-weight: 700;
+    color: #a8b8ff;
+    font-size: 16px;
+    background: rgba(120, 80, 255, 0.08);
+    padding: 2px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(120, 80, 255, 0.06);
+}
+
+/* ––– BACK BUTTON ––– */
+button {
+    width: 100%;
+    height: 56px;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    border-radius: 60px;
+    background: linear-gradient(135deg, rgba(120, 80, 255, 0.3), rgba(200, 100, 255, 0.15));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+    box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:active {
+    transform: scale(0.94);
+    background: linear-gradient(135deg, rgba(120, 80, 255, 0.5), rgba(200, 100, 255, 0.3));
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+    background: linear-gradient(135deg, rgba(120, 80, 255, 0.4), rgba(200, 100, 255, 0.25));
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -10px rgba(100, 80, 255, 0.3);
+}
+
+/* ––– BOTTOM MENU ––– */
+.bottom-menu {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 460px;
+    height: 72px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(8, 12, 26, 0.88);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    z-index: 999;
+    padding: 0 8px;
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+    border-radius: 28px 28px 0 0;
+}
+
+.bottom-menu button {
+    background: none;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+    position: relative;
+    cursor: pointer;
+    min-width: 56px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    margin: 0;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+}
+
+.bottom-menu button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: radial-gradient(circle at 50% 30%, rgba(120, 80, 255, 0.06), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.bottom-menu button:hover::before {
+    opacity: 1;
+}
+
+.bottom-menu button:hover {
+    color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.bottom-menu button:active {
+    transform: scale(0.92);
+}
+
+.bottom-menu button.active {
+    color: #a8b8ff;
+}
+
+.bottom-menu button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 3px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #7850ff, #b060ff);
+    box-shadow: 0 0 20px rgba(120, 80, 255, 0.3);
+}
+
+.bottom-menu span {
+    font-size: 22px;
+    line-height: 1.2;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.bottom-menu small {
+    font-size: 9px;
+    opacity: 0.6;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.bottom-menu button.active small {
+    opacity: 1;
+}
+
+/* ––– RESPONSIVE ––– */
+@media (max-width: 420px) {
+    .container {
+        padding: 20px 16px 24px;
+        border-radius: 40px 40px 32px 32px;
+    }
+    
+    .profile-card {
+        padding: 16px 14px 20px;
+        border-radius: 28px;
+    }
+    
+    .avatar {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 12px;
+    }
+    
+    .profile-card h2 {
+        font-size: 20px;
+    }
+    
+    .card {
+        padding: 16px 18px;
+        border-radius: 24px;
+    }
+    
+    .card #balance {
+        font-size: 28px;
+    }
+    
+    .card h3 {
+        font-size: 15px;
+    }
+    
+    .card p {
+        font-size: 14px;
+    }
+    
+    .card p span {
+        font-size: 14px;
+        padding: 2px 12px;
+    }
+    
+    button {
+        height: 48px;
+        font-size: 15px;
+    }
+    
+    .bottom-menu {
+        height: 64px;
+        padding: 0 4px;
+        border-radius: 20px 20px 0 0;
+    }
+    
+    .bottom-menu button {
+        min-width: 44px;
+        padding: 4px 8px;
+        font-size: 9px;
+    }
+    
+    .bottom-menu span {
+        font-size: 18px;
+    }
+    
+    .bottom-menu small {
+        font-size: 8px;
+    }
+    
+    .bottom-menu button.active::after {
+        width: 14px;
+        height: 2px;
+        bottom: 3px;
+    }
+}
+
+@media (max-width: 360px) {
+    .container {
+        padding: 16px 12px 20px;
+        border-radius: 32px 32px 24px 24px;
+    }
+    
+    .avatar {
+        width: 64px;
+        height: 64px;
+    }
+    
+    .profile-card h2 {
+        font-size: 18px;
+    }
+    
+    .profile-card #username {
+        font-size: 13px;
+    }
+    
+    .card #balance {
+        font-size: 24px;
+    }
+    
+    .card {
+        padding: 14px 14px;
+        border-radius: 20px;
+    }
+    
+    .card p {
+        font-size: 13px;
+        padding: 4px 0;
+    }
+    
+    .card p span {
+        font-size: 13px;
+        padding: 1px 10px;
+    }
+    
+    button {
+        height: 44px;
+        font-size: 14px;
+    }
+}
+
+/* ––– UTILITY ––– */
+.text-muted {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 13px;
+}
+
+.mt-2 {
+    margin-top: 8px;
+}
+
+.mb-2 {
+    margin-bottom: 8px;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
