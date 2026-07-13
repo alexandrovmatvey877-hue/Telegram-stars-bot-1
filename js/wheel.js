@@ -127,7 +127,16 @@ telegram_id:user.id
 const data =
 await response.json();
 
+const step = 360 / data.prize.total;
 
+const angle =
+(data.prize.index * step) + step / 2;
+
+const rotate =
+3600 - angle;
+
+wheel.style.transform =
+`rotate(${rotate}deg)`;
 
 setTimeout(()=>{
 
