@@ -24,4 +24,9 @@ router.get(
 wheelController.getInfo
 );
 
+router.get(
+"/",
+wheelController.getWheel
+);
+
 module.exports = router;
