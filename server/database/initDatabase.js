@@ -100,6 +100,20 @@ await db.query(`
     ADD COLUMN IF NOT EXISTS sales_stop_reason TEXT;
 `);
 await db.query(`
+ALTER TABLE users
+ADD COLUMN IF NOT EXISTS wheel_spins INTEGER DEFAULT 3;
+`);
+
+await db.query(`
+ALTER TABLE users
+ADD COLUMN IF NOT EXISTS last_spin TIMESTAMP;
+`);
+
+await db.query(`
+ALTER TABLE users
+ADD COLUMN IF NOT EXISTS next_spin TIMESTAMP;
+`);
+await db.query(`
     ALTER TABLE settings
     ADD COLUMN IF NOT EXISTS system_status TEXT DEFAULT 'GREEN';
 `);
