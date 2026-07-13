@@ -45,6 +45,11 @@ theme TEXT DEFAULT 'dark',
 font_size TEXT DEFAULT 'normal',
 
 language TEXT DEFAULT 'ru'
+
+,
+wheel_spins INTEGER DEFAULT 3,
+last_spin TIMESTAMP,
+next_spin TIMESTAMP
 ,
 wheel_spins INTEGER DEFAULT 1,
 
