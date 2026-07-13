@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<link rel="stylesheet" href="css/components.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>WHITE STARS</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  
+
 <style>
     /* ––– RESET & BASE ––– */
     * {
@@ -15,30 +14,32 @@
       box-sizing: border-box;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-html {
-  -webkit-tap-highlight-color: transparent;
-}
 
-button,
-.card,
-.link {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  user-select: none;
-}
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button,
+    .card,
+    .link {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      user-select: none;
+    }
 
     body {
-    min-height: 100dvh;
-    background: #080c1a;
-    padding: 16px;
-    margin: 0;
-    overflow-x: hidden;
-    position: relative;
-    display: block;
-    -webkit-overflow-scrolling: touch;
-}
+      min-height: 100dvh;
+      background: #080c1a;
+      padding: 16px;
+      padding-bottom: 90px;
+      margin: 0;
+      overflow-x: hidden;
+      position: relative;
+      display: block;
+      -webkit-overflow-scrolling: touch;
+    }
 
-    /* ––– FLOATING GLASS ORBS (Samsung Flex UI style) ––– */
+    /* ––– FLOATING GLASS ORBS ––– */
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -86,21 +87,11 @@ button,
     }
 
     @keyframes floatOrb {
-      0% {
-        transform: translate(0, 0) scale(1) rotate(0deg);
-      }
-      25% {
-        transform: translate(30px, -40px) scale(1.1) rotate(5deg);
-      }
-      50% {
-        transform: translate(-20px, 20px) scale(0.9) rotate(-3deg);
-      }
-      75% {
-        transform: translate(40px, 30px) scale(1.05) rotate(7deg);
-      }
-      100% {
-        transform: translate(-30px, -20px) scale(0.95) rotate(-5deg);
-      }
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      25% { transform: translate(30px, -40px) scale(1.1) rotate(5deg); }
+      50% { transform: translate(-20px, 20px) scale(0.9) rotate(-3deg); }
+      75% { transform: translate(40px, 30px) scale(1.05) rotate(7deg); }
+      100% { transform: translate(-30px, -20px) scale(0.95) rotate(-5deg); }
     }
 
     /* ––– GLASS CARD CONTAINER ––– */
@@ -119,17 +110,6 @@ button,
       padding: 28px 24px 32px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       transition: all 0.3s ease;
-    }
-
-    /* ––– LIQUID GLASS ANIMATIONS ––– */
-    @keyframes liquidShimmer {
-      0% { background-position: 0% 0%; }
-      50% { background-position: 100% 100%; }
-      100% { background-position: 0% 0%; }
-    }
-
-    .glass-container {
-animation:none;
       background-image: 
         radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 70%),
         radial-gradient(circle at 80% 70%, rgba(255,255,255,0.07) 0%, transparent 60%);
@@ -176,9 +156,93 @@ animation:none;
       text-shadow: 0 0 20px rgba(100, 80, 255, 0.3);
     }
 
+    /* ––– PROMO SLIDER ––– */
+    .promo-slider {
+      margin-top: 20px;
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.3);
+    }
+
+    .promo-track {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    .promo-card {
+      min-width: 100%;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      min-height: 80px;
+    }
+
+    .promo-card img {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      object-fit: cover;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
+    }
+
+    .promo-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.4;
+      text-align: left;
+    }
+
+    .promo-text br {
+      display: block;
+      content: '';
+      margin: 2px 0;
+    }
+
+    .promo-text .highlight {
+      color: #a8b8ff;
+      font-weight: 700;
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 0 14px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .dots span.active {
+      background: #a8b8ff;
+      width: 24px;
+      border-radius: 4px;
+      box-shadow: 0 0 20px rgba(120, 80, 255, 0.3);
+    }
+
     /* ––– BALANCE CARD ––– */
     .balance {
-      margin-top: 32px;
+      margin-top: 24px;
       padding: 28px 24px;
       border-radius: 36px;
       background: rgba(255, 255, 255, 0.04);
@@ -187,6 +251,12 @@ animation:none;
       border: 1px solid rgba(255, 255, 255, 0.06);
       box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.08);
       transition: all 0.2s ease;
+    }
+
+    .balance-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .balance-title {
@@ -210,14 +280,14 @@ animation:none;
       background-clip: text;
     }
 
-    /* ––– BUTTONS (glass) ––– */
+    /* ––– BUTTONS ––– */
     .topup {
       width: 100%;
       height: 56px;
       margin-top: 20px;
       border: none;
-outline: none;
--webkit-appearance: none;
+      outline: none;
+      -webkit-appearance: none;
       border-radius: 60px;
       background: linear-gradient(135deg, rgba(120, 80, 255, 0.3), rgba(200, 100, 255, 0.15));
       backdrop-filter: blur(8px);
@@ -262,26 +332,63 @@ outline: none;
       box-shadow: 0 12px 28px -10px rgba(100, 80, 255, 0.3);
     }
 
+    .balance .topup:last-child {
+      margin-top: 12px;
+      background: linear-gradient(135deg, rgba(60, 40, 120, 0.4), rgba(100, 60, 180, 0.2));
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .balance .topup:last-child:active {
+      background: linear-gradient(135deg, rgba(60, 40, 120, 0.6), rgba(100, 60, 180, 0.3));
+    }
+
     /* ––– SECTION ––– */
     .section {
-      margin-top: 40px;
+      margin-top: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 0 4px;
     }
 
     .section h2 {
       font-size: 22px;
       font-weight: 700;
       color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 18px;
-      padding-left: 6px;
       letter-spacing: -0.2px;
       text-shadow: 0 1px 20px rgba(0,0,0,0.2);
     }
 
-    /* ––– CARDS GRID (glass) ––– */
+    .section-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .section-link:hover {
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .section-link:active {
+      transform: scale(0.95);
+    }
+
+    /* ––– CARDS ––– */
     .cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 14px;
     }
 
     .card {
@@ -289,13 +396,14 @@ outline: none;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 20px 16px;
-      border-radius: 32px;
+      padding: 18px 14px;
+      border-radius: 28px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255,255,255,0.05);
       position: relative;
       overflow: hidden;
+      text-align: left;
     }
 
     .card::after {
@@ -327,7 +435,7 @@ outline: none;
     }
 
     .card-icon {
-      font-size: 34px;
+      font-size: 30px;
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
       transition: transform 0.3s ease;
     }
@@ -337,25 +445,40 @@ outline: none;
     }
 
     .card-title {
-      margin-top: 12px;
-      font-size: 18px;
+      margin-top: 10px;
+      font-size: 16px;
       font-weight: 700;
       color: #ffffff;
       letter-spacing: -0.2px;
     }
 
     .card-text {
-      margin-top: 6px;
-      font-size: 13px;
-      line-height: 1.4;
-      color: rgba(255, 255, 255, 0.5);
+      margin-top: 4px;
+      font-size: 12px;
+      line-height: 1.3;
+      color: rgba(255, 255, 255, 0.4);
       font-weight: 400;
     }
 
-    /* ––– LINKS (glass) ––– */
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: rgba(120, 80, 255, 0.2);
+      color: #a8b8ff;
+      border: 1px solid rgba(120, 80, 255, 0.15);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    /* ––– LINKS ––– */
     .links {
-      margin-top: 40px;
-      border-radius: 36px;
+      margin-top: 32px;
+      border-radius: 32px;
       overflow: hidden;
       background: rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(12px);
@@ -368,11 +491,11 @@ outline: none;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 22px;
+      padding: 18px 20px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       cursor: pointer;
       transition: all 0.3s ease;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.7);
       font-weight: 500;
       background: transparent;
       position: relative;
@@ -405,17 +528,27 @@ outline: none;
 
     .link:hover {
       background: rgba(255, 255, 255, 0.04);
-      padding-left: 26px;
+      padding-left: 24px;
+    }
+
+    .link-icon {
+      font-size: 18px;
+      margin-right: 12px;
+    }
+
+    .link-left {
+      display: flex;
+      align-items: center;
     }
 
     .arrow {
-      font-size: 24px;
-      color: rgba(255, 255, 255, 0.2);
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.15);
       transition: all 0.3s ease;
     }
 
     .link:hover .arrow {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.4);
       transform: translateX(4px);
     }
 
@@ -426,47 +559,202 @@ outline: none;
     /* ––– FOOTER ––– */
     .footer {
       text-align: center;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.2);
-      margin-top: 32px;
+      color: rgba(255, 255, 255, 0.15);
+      margin-top: 28px;
       letter-spacing: 0.5px;
-      padding-top: 8px;
+      padding-top: 12px;
       border-top: 1px solid rgba(255, 255, 255, 0.03);
     }
 
-    /* ––– ADMIN BUTTON ––– */
-    .balance .topup:last-child {
-      margin-top: 12px;
-      background: linear-gradient(135deg, rgba(60, 40, 120, 0.4), rgba(100, 60, 180, 0.2));
-      border-color: rgba(255, 255, 255, 0.08);
+    /* ––– BOTTOM MENU ––– */
+    .bottom-menu {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 460px;
+      height: 72px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: rgba(8, 12, 26, 0.88);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 999;
+      padding: 0 8px;
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+      border-radius: 28px 28px 0 0;
     }
 
-    .balance .topup:last-child:active {
-      background: linear-gradient(135deg, rgba(60, 40, 120, 0.6), rgba(100, 60, 180, 0.3));
+    .bottom-menu button {
+      background: none;
+      border: none;
+      outline: none;
+      -webkit-appearance: none;
+      color: rgba(255, 255, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 16px;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      position: relative;
+      cursor: pointer;
+      min-width: 56px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .bottom-menu button::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: radial-gradient(circle at 50% 30%, rgba(120, 80, 255, 0.06), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .bottom-menu button:hover::before {
+      opacity: 1;
+    }
+
+    .bottom-menu button:hover {
+      color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .bottom-menu button:active {
+      transform: scale(0.92);
+    }
+
+    .bottom-menu button.active {
+      color: #a8b8ff;
+    }
+
+    .bottom-menu button.active::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 3px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #7850ff, #b060ff);
+      box-shadow: 0 0 20px rgba(120, 80, 255, 0.3);
+    }
+
+    .bottom-menu span {
+      font-size: 22px;
+      line-height: 1.2;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .bottom-menu small {
+      font-size: 9px;
+      opacity: 0.6;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .bottom-menu button.active small {
+      opacity: 1;
     }
 
     /* ––– RESPONSIVE ––– */
     @media (max-width: 420px) {
-      .glass-container { padding: 20px 16px 24px; border-radius: 40px 40px 32px 32px; }
+      .glass-container { 
+        padding: 20px 16px 24px; 
+        border-radius: 40px 40px 32px 32px; 
+      }
       .balance-value { font-size: 34px; }
-      .card { padding: 16px 14px; }
+      .card { padding: 14px 12px; border-radius: 24px; }
+      .card-icon { font-size: 26px; }
+      .card-title { font-size: 15px; }
+      .card-text { font-size: 11px; }
       .orb-1 { width: 300px; height: 300px; }
       .orb-2 { width: 250px; height: 250px; }
       .logo { font-size: 30px; }
       .subtitle { font-size: 14px; padding: 6px 16px; }
       .balance { padding: 20px 18px; }
-      .link { padding: 16px 18px; }
+      .link { padding: 14px 16px; }
+      .promo-card { padding: 16px 18px; min-height: 70px; }
+      .promo-card img { width: 44px; height: 44px; }
+      .promo-text { font-size: 13px; }
+      .bottom-menu {
+        height: 64px;
+        padding: 0 4px;
+        border-radius: 20px 20px 0 0;
+      }
+      .bottom-menu button {
+        min-width: 44px;
+        padding: 4px 8px;
+        font-size: 9px;
+      }
+      .bottom-menu span {
+        font-size: 18px;
+      }
+      .bottom-menu small {
+        font-size: 8px;
+      }
+      .bottom-menu button.active::after {
+        width: 14px;
+        height: 2px;
+        bottom: 3px;
+      }
     }
-button {
-  outline: none;
-  -webkit-appearance: none;
-}
+
+    @media (max-width: 360px) {
+      .cards {
+        gap: 10px;
+      }
+      .card {
+        padding: 12px 10px;
+        border-radius: 20px;
+      }
+      .card-icon {
+        font-size: 22px;
+      }
+      .card-title {
+        font-size: 13px;
+        margin-top: 8px;
+      }
+      .card-text {
+        font-size: 10px;
+      }
+      .balance-value {
+        font-size: 28px;
+      }
+      .topup {
+        height: 48px;
+        font-size: 15px;
+        margin-top: 16px;
+      }
+      .balance .topup:last-child {
+        margin-top: 10px;
+      }
+      .section h2 {
+        font-size: 18px;
+      }
+    }
+
+    button {
+      outline: none;
+      -webkit-appearance: none;
+    }
   </style>
 </head>
 <body>
 
-  <!-- ––– FLOATING ORBS (Samsung Flex UI style) ––– -->
+  <!-- ––– FLOATING ORBS ––– -->
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
@@ -477,31 +765,31 @@ button {
 
     <div class="logo">⭐ WHITE STARS</div>
 
-    <!-- ПРОМО-СЛАЙДЕР ПЕРЕНЕСЁН СЮДА -->
+    <!-- ПРОМО-СЛАЙДЕР -->
     <div class="promo-slider">
       <div class="promo-track">
         <div class="promo-card">
-          <img src="images/banner1.png" alt="">
+          <img src="images/banner1.png" alt="" onerror="this.style.display='none'">
           <div class="promo-text">
             🔥 Акция недели
             <br>
-            Скидки на Telegram Stars
+            Скидки на <span class="highlight">Telegram Stars</span>
           </div>
         </div>
         <div class="promo-card">
-          <img src="images/banner2.png" alt="">
+          <img src="images/banner2.png" alt="" onerror="this.style.display='none'">
           <div class="promo-text">
             👑 Premium выгоднее
             <br>
-            Лучшие цены WHITE STARS
+            Лучшие цены <span class="highlight">WHITE STARS</span>
           </div>
         </div>
         <div class="promo-card">
-          <img src="images/banner3.png" alt="">
+          <img src="images/banner3.png" alt="" onerror="this.style.display='none'">
           <div class="promo-text">
             ⭐ Скоро NFT Market
             <br>
-            Следи за обновлениями
+            Следи за <span class="highlight">обновлениями</span>
           </div>
         </div>
       </div>
@@ -516,19 +804,25 @@ button {
 
     <!-- BALANCE -->
     <div class="balance">
-      <div class="balance-title">Баланс аккаунта</div>
+      <div class="balance-top">
+        <div class="balance-title">Баланс аккаунта</div>
+      </div>
       <div class="balance-value" id="balance">0.00 ₽</div>
       <button class="topup" onclick="topup()">Пополнить баланс</button>
     </div>
 
     <!-- CATALOG -->
     <div class="section">
-      <h2>Каталог</h2>
+      <div class="section-header">
+        <h2>Каталог</h2>
+        <span class="section-link" onclick="alert('Весь каталог')">Смотреть все →</span>
+      </div>
       <div class="cards">
         <div class="card" onclick="buyStars()">
           <div class="card-icon">⭐</div>
           <div class="card-title">Telegram Stars</div>
           <div class="card-text">Пополнение Stars по выгодному курсу.</div>
+          <span class="card-badge">Популярно</span>
         </div>
         <div class="card" onclick="buyPremium()">
           <div class="card-icon">👑</div>
@@ -539,6 +833,7 @@ button {
           <div class="card-icon">🎁</div>
           <div class="card-title">Подарки</div>
           <div class="card-text">Покупка Telegram Gifts.</div>
+          <span class="card-badge">Новинка</span>
         </div>
         <div class="card" onclick="buyNFT()">
           <div class="card-icon">🖼</div>
@@ -551,19 +846,31 @@ button {
     <!-- LINKS -->
     <div class="links">
       <div class="link" onclick="openPrices()">
-        <span>💰 Тарифы</span>
+        <span class="link-left">
+          <span class="link-icon">💰</span>
+          <span>Тарифы</span>
+        </span>
         <span class="arrow">›</span>
       </div>
       <div class="link" onclick="openPrivacy()">
-        <span>🔒 Политика конфиденциальности</span>
+        <span class="link-left">
+          <span class="link-icon">🔒</span>
+          <span>Политика конфиденциальности</span>
+        </span>
         <span class="arrow">›</span>
       </div>
       <div class="link" onclick="openTerms()">
-        <span>📄 Пользовательское соглашение</span>
+        <span class="link-left">
+          <span class="link-icon">📄</span>
+          <span>Пользовательское соглашение</span>
+        </span>
         <span class="arrow">›</span>
       </div>
       <div class="link" onclick="openSupport()">
-        <span>💬 Поддержка</span>
+        <span class="link-left">
+          <span class="link-icon">💬</span>
+          <span>Поддержка</span>
+        </span>
         <span class="arrow">›</span>
       </div>
     </div>
@@ -636,7 +943,7 @@ button {
         });
     }
 
-    // ––– FUNCTIONS (unchanged) –––
+    // ––– FUNCTIONS –––
     function topup() { window.location.href = "pages/topup.html"; }
     function buyStars() {
     window.location.href = "pages/stars.html";
@@ -657,43 +964,61 @@ function buyNFT() {
     function openPrivacy() { window.location.href = "pages/privacy.html"; }
     function openTerms() { window.location.href = "pages/terms.html"; }
     function openSupport() { tg.openTelegramLink("https://t.me/WHITE_STARS_CONNECT"); }
+
+    // ––– SLIDER –––
+    (function() {
+      const track = document.querySelector('.promo-track');
+      const dots = document.querySelectorAll('.dots span');
+      let current = 0;
+      const total = dots.length;
+
+      function goTo(index) {
+        if (index < 0) index = total - 1;
+        if (index >= total) index = 0;
+        current = index;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((d, i) => {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => goTo(i));
+      });
+
+      // Auto-slide
+      let interval = setInterval(() => goTo(current + 1), 4000);
+
+      // Pause on touch/click
+      const slider = document.querySelector('.promo-slider');
+      slider.addEventListener('touchstart', () => clearInterval(interval));
+      slider.addEventListener('touchend', () => {
+        interval = setInterval(() => goTo(current + 1), 4000);
+      });
+      slider.addEventListener('mouseenter', () => clearInterval(interval));
+      slider.addEventListener('mouseleave', () => {
+        interval = setInterval(() => goTo(current + 1), 4000);
+      });
+    })();
   </script>
-  <script src="js/slider.js"></script>
-<nav class="bottom-menu">
 
-    <button onclick="location.href='index.html'">
-
-        <span>🏠</span>
-        <small>Главная</small>
-
+  <nav class="bottom-menu">
+    <button class="active" onclick="location.href='index.html'">
+      <span>🏠</span>
+      <small>Главная</small>
     </button>
-
-
     <button onclick="location.href='pages/profile.html'">
-
-        <span>👤</span>
-        <small>Профиль</small>
-
+      <span>👤</span>
+      <small>Профиль</small>
     </button>
-
-
     <button onclick="location.href='pages/wheel.html'">
-
-        <span>🎡</span>
-        <small>Колесо</small>
-
+      <span>🎡</span>
+      <small>Колесо</small>
     </button>
-
-
     <button onclick="location.href='pages/settings.html'">
-
-        <span>⚙️</span>
-        <small>Настройки</small>
-
+      <span>⚙️</span>
+      <small>Настройки</small>
     </button>
-
-
-</nav>
-<script src="js/menu.js"></script>
+  </nav>
 </body>
 </html>
