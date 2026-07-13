@@ -330,3 +330,155 @@ exports.getSystemStatus = async (req, res) => {
     }
 
 };
+// =======================
+// WHEEL ADMIN
+// =======================
+
+
+exports.getWheelPrizes = async (req,res)=>{
+
+    try{
+
+        const db = require("../config/database");
+
+        const result = await db.query(`
+
+        SELECT *
+
+        FROM wheel_prizes
+
+        ORDER BY id
+
+        `);
+
+
+        res.json({
+
+            success:true,
+
+            prizes:result.rows
+
+        });
+
+
+    }catch(err){
+
+        console.error(err);
+
+        res.status(500).json({
+
+            success:false
+
+        });
+
+    }
+
+};
+
+
+
+exports.addWheelPrize = async(req,res)=>{
+
+    try{
+
+        const db = require("../config/database");
+
+
+        const {
+            name,
+            type,
+            value,
+            chance
+        } = req.body;
+
+
+
+        await db.query(`
+
+        INSERT INTO wheel_prizes
+        (
+        name,
+        type,
+        value,
+        chance
+        )
+
+        VALUES($1,$2,$3,$4)
+
+        `,[
+
+        name,
+        type,
+        value,
+        chance
+
+        ]);
+
+
+
+        res.json({
+
+            success:true
+
+        });
+
+
+
+    }catch(err){
+
+        console.error(err);
+
+        res.status(500).json({
+
+            success:false
+
+        });
+
+    }
+
+};
+
+
+
+exports.deleteWheelPrize = async(req,res)=>{
+
+    try{
+
+        const db = require("../config/database");
+
+
+        await db.query(
+
+        `
+        DELETE FROM wheel_prizes
+        WHERE id=$1
+        `,
+
+        [
+            req.params.id
+        ]
+
+        );
+
+
+        res.json({
+
+            success:true
+
+        });
+
+
+    }catch(err){
+
+        console.error(err);
+
+
+        res.status(500).json({
+
+            success:false
+
+        });
+
+    }
+
+};
