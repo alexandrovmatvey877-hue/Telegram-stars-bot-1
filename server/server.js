@@ -74,6 +74,7 @@ app.use("/api/balance", require("./routes/balance"));
 app.use("/api/operations", require("./routes/operations"));
 app.use("/api/admin", require("./routes/admin"));
 app.use("/api/health", require("./routes/health"));
+app.use("/api/wheel", require("./routes/wheel"));
 
 // =========================
 // ROOT
