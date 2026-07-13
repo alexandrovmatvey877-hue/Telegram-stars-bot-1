@@ -109,9 +109,7 @@ new Date();
 const seconds =
 (now-last)/1000;
 
-
-
-const now = Date.now();
+const currentTime = Date.now();
 
 const lastSpin = player.last_spin
     ? new Date(player.last_spin).getTime()
