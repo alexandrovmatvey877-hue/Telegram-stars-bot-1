@@ -25,4 +25,22 @@ router.post("/sales", adminController.changeSalesState);
 // Статус системы
 router.get("/system", adminController.getSystemStatus);
 
+//рулетка гет
+router.get(
+"/wheel/prizes",
+adminController.getWheelPrizes
+);
+
+//рулетка пост
+router.post(
+"/wheel/prizes",
+adminController.addWheelPrize
+);
+
+//удаленре рулетки
+router.delete(
+"/wheel/prizes/:id",
+adminController.deleteWheelPrize
+);
+
 module.exports = router;
