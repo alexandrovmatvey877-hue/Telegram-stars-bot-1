@@ -9,6 +9,7 @@ const path = require("path");
 
 const initDatabase = require("./database/initDatabase");
 const errorHandler = require("./middleware/errorHandler");
+const securityHeaders = require("./middleware/security/securityHeaders");
 
 const app = express();
 
@@ -30,6 +31,7 @@ const db = require("./config/database");
 // =========================
 
 app.use(cors());
+app.use(securityHeaders);
 
 app.use(express.json({
     limit: "1mb"
