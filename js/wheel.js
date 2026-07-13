@@ -203,19 +203,23 @@ button.onclick = async()=>{
         setTimeout(()=>{
 
 
-            document.getElementById(
-                "lastPrize"
-            ).innerText =
-            prize.name;
+    document.getElementById(
+        "lastPrize"
+    ).innerText =
+    prize.name;
 
 
+    alert(
+        "🎉 Вы выиграли: " + prize.name
+    );
 
-            resetButton();
 
-            loadInfo();
+    resetButton();
+
+    loadInfo();
 
 
-        },5000);
+},5000);
 
 
 
