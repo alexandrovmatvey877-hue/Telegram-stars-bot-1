@@ -1,5 +1,5 @@
 const API_URL = "https://white-stars-api.onrender.com";
-const ADMIN_KEY = "white-stars-super-admin";
+const ADMIN_KEY = "WS_ADMIN_9f82jd72hd82hd82";
 
 async function api(path, method = "GET", body = null) {
 
