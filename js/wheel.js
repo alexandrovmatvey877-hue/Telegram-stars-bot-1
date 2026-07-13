@@ -129,6 +129,7 @@ gradient;
 
 
 loadWheel();
+loadInfo();
 
 button.onclick = async ()=>{
 
@@ -236,3 +237,41 @@ spinning=false;
 
 
 };
+
+async function loadInfo(){
+
+const user =
+Telegram.WebApp.initDataUnsafe.user;
+
+const res =
+await fetch(
+`https://white-stars-api.onrender.com/api/wheel/info/${user.id}`
+);
+
+const data =
+await res.json();
+
+if(!data.success) return;
+
+document.getElementById("spins").innerText =
+data.spins;
+
+if(data.cooldown===0){
+
+document.getElementById("cooldown").innerText =
+"Доступен";
+
+}else{
+
+const h =
+Math.floor(data.cooldown/3600);
+
+const m =
+Math.floor((data.cooldown%3600)/60);
+
+document.getElementById("cooldown").innerText =
+`${h}ч ${m}м`;
+
+}
+
+}
