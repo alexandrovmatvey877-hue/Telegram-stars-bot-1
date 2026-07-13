@@ -140,6 +140,18 @@ await db.query(`
 
         `);
 
+CREATE TABLE IF NOT EXISTS security_logs (
+
+    id SERIAL PRIMARY KEY,
+
+    action TEXT NOT NULL,
+
+    data JSONB,
+
+    created_at TIMESTAMP DEFAULT NOW()
+
+);
+
         console.log("✅ Database initialized");
 
     } catch (err) {
