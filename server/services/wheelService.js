@@ -61,6 +61,20 @@ async function spin(telegram_id){
 
 const db = require("../config/database");
 
+const user = await db.query(`
+SELECT
+balance,
+wheel_spins,
+last_spin
+FROM users
+WHERE telegram_id=$1
+`, [telegram_id]);
+
+if (!user.rows.length) {
+    throw new Error("User not found");
+}
+
+const player = user.rows[0];
 
 // Проверяем последнюю прокрутку
 
