@@ -2,26 +2,115 @@
 <html lang="ru">
 
 <head>
-<link rel="stylesheet" href="../css/components.css">
-
-<title>Настройки</title>
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Настройки — WHITE STARS</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="../css/settings.css">
 </head>
-
 
 <body>
 
-<h1>
-⚙️ Настройки
-</h1>
+    <!-- ––– FLOATING ORBS ––– -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
 
-<p>
-В разработке
-</p>
+    <!-- ––– MAIN GLASS CONTAINER ––– -->
+    <div class="glass-container">
 
-<script src="js/menu.js"></script>
+        <!-- HEADER -->
+        <div class="settings-header">
+            <button class="back-btn" onclick="goBack()">← Назад</button>
+            <div class="settings-title">⚙️ Настройки</div>
+            <div class="header-spacer"></div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="settings-content">
+            <div class="settings-card">
+                <div class="settings-icon">🚧</div>
+                <h2>В разработке</h2>
+                <p>Мы работаем над этим разделом.<br>Скоро здесь появится управление настройками.</p>
+                <div class="settings-loader">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <!-- PREVIEW SETTINGS ITEMS (UI only) -->
+            <div class="settings-group">
+                <div class="settings-item disabled">
+                    <div class="settings-item-left">
+                        <span class="settings-item-icon">🌙</span>
+                        <span class="settings-item-label">Тёмная тема</span>
+                    </div>
+                    <span class="settings-item-status">Вкл</span>
+                </div>
+                <div class="settings-item disabled">
+                    <div class="settings-item-left">
+                        <span class="settings-item-icon">🔔</span>
+                        <span class="settings-item-label">Уведомления</span>
+                    </div>
+                    <span class="settings-item-status">Вкл</span>
+                </div>
+                <div class="settings-item disabled">
+                    <div class="settings-item-left">
+                        <span class="settings-item-icon">🌐</span>
+                        <span class="settings-item-label">Язык</span>
+                    </div>
+                    <span class="settings-item-status">Русский</span>
+                </div>
+                <div class="settings-item disabled">
+                    <div class="settings-item-left">
+                        <span class="settings-item-icon">🔐</span>
+                        <span class="settings-item-label">Безопасность</span>
+                    </div>
+                    <span class="settings-item-status">Настроено</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">WHITE STARS © 2026</div>
+    </div>
+
+    <!-- ––– BOTTOM MENU ––– -->
+    <nav class="bottom-menu">
+        <button onclick="location.href='../index.html'">
+            <span>🏠</span>
+            <small>Главная</small>
+        </button>
+        <button onclick="location.href='profile.html'">
+            <span>👤</span>
+            <small>Профиль</small>
+        </button>
+        <button onclick="location.href='wheel.html'">
+            <span>🎡</span>
+            <small>Колесо</small>
+        </button>
+        <button class="active" onclick="location.href='settings.html'">
+            <span>⚙️</span>
+            <small>Настройки</small>
+        </button>
+    </nav>
+
+    <script>
+        // ––– TELEGRAM WEB APP –––
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+        tg.disableVerticalSwipes();
+        tg.setHeaderColor("bg_color");
+        tg.setBackgroundColor("bg_color");
+
+        // ––– GO BACK –––
+        function goBack() {
+            window.location.href = "../index.html";
+        }
+    </script>
+
 </body>
 
 </html>
