@@ -1,6 +1,6 @@
 /* ============================================
    WHEEL.CSS — Колесо фортуны WHITE STARS
-   Стиль полностью соответствует index.html
+   Полностью соответствует канону index.html
    ============================================ */
 
 /* ––– RESET & BASE ––– */
@@ -13,15 +13,13 @@
 
 html {
     -webkit-tap-highlight-color: transparent;
-    height: 100%;
 }
 
 body {
     min-height: 100dvh;
-    height: 100%;
     background: #080c1a;
     padding: 16px;
-    padding-bottom: 90px; /* Отступ для bottom-menu */
+    padding-bottom: 90px;
     margin: 0;
     overflow-x: hidden;
     position: relative;
@@ -30,7 +28,9 @@ body {
 }
 
 /* ––– FLOATING ORBS ––– */
-.orb {
+body::before,
+body::after {
+    content: '';
     position: fixed;
     border-radius: 50%;
     filter: blur(50px);
@@ -39,7 +39,7 @@ body {
     animation: floatOrb 14s ease-in-out infinite alternate;
 }
 
-.orb-1 {
+body::before {
     width: 400px;
     height: 400px;
     top: -150px;
@@ -48,32 +48,13 @@ body {
     animation-delay: 0s;
 }
 
-.orb-2 {
+body::after {
     width: 350px;
     height: 350px;
     bottom: -100px;
     left: -100px;
     background: radial-gradient(circle, rgba(0, 220, 255, 0.35), rgba(0, 100, 255, 0.05));
     animation-delay: -4s;
-}
-
-.orb-3 {
-    width: 300px;
-    height: 300px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(255, 100, 200, 0.2), rgba(255, 50, 100, 0.05));
-    animation-delay: -8s;
-}
-
-.orb-4 {
-    width: 250px;
-    height: 250px;
-    top: 20%;
-    right: 20%;
-    background: radial-gradient(circle, rgba(255, 200, 50, 0.2), rgba(255, 150, 0, 0.05));
-    animation-delay: -12s;
 }
 
 @keyframes floatOrb {
@@ -84,8 +65,8 @@ body {
     100% { transform: translate(-30px, -20px) scale(0.95) rotate(-5deg); }
 }
 
-/* ––– GLASS CONTAINER ––– */
-.glass-container {
+/* ––– CONTAINER ––– */
+.container {
     position: relative;
     z-index: 1;
     width: 100%;
@@ -107,63 +88,10 @@ body {
     background-size: 200% 200%;
 }
 
-/* ––– HEADER ––– */
-.wheel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-    gap: 12px;
-}
-
-.back-btn {
-    height: 44px;
-    padding: 0 20px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 40px;
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-    outline: none;
-    -webkit-appearance: none;
-    font-family: inherit;
-}
-
-.back-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-    transition: left 0.6s ease;
-}
-
-.back-btn:hover::before {
-    left: 100%;
-}
-
-.back-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: translateX(-2px);
-}
-
-.back-btn:active {
-    transform: scale(0.94);
-}
-
-.wheel-title {
-    font-size: 22px;
+/* ––– TITLE ––– */
+.container h1 {
+    text-align: center;
+    font-size: 28px;
     font-weight: 800;
     color: #ffffff;
     letter-spacing: -0.3px;
@@ -172,44 +100,32 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-align: center;
+    margin-bottom: 8px;
 }
 
-.header-spacer {
-    width: 44px;
-    flex-shrink: 0;
-}
-
-/* ––– SUBTITLE ––– */
-.subtitle {
-    text-align: center;
-    margin-top: 4px;
-    margin-bottom: 20px;
+/* ––– SUBTITLE (добавляем через псевдоэлемент) ––– */
+.container h1::after {
+    content: 'Покрути и выиграй приз!';
+    display: block;
     font-size: 14px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.4);
-    padding: 6px 16px;
-    border-radius: 80px;
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    width: auto;
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.4);
+    background: none;
+    margin-top: 6px;
     letter-spacing: 0.2px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    background: rgba(255, 255, 255, 0.03);
 }
 
-/* ––– WHEEL ––– */
+/* ––– WHEEL BOX ––– */
 .wheel-box {
-    margin-top: 10px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
 
+/* ––– WHEEL ––– */
 .wheel {
     width: 260px;
     height: 260px;
@@ -285,8 +201,8 @@ body {
     }
 }
 
-/* ––– BUTTONS ––– */
-#spinBtn {
+/* ––– BUTTON ––– */
+.wheel-box button {
     width: auto;
     min-width: 200px;
     height: 52px;
@@ -312,7 +228,7 @@ body {
     font-family: inherit;
 }
 
-#spinBtn::before {
+.wheel-box button::before {
     content: '';
     position: absolute;
     top: 0;
@@ -323,24 +239,24 @@ body {
     transition: left 0.6s ease;
 }
 
-#spinBtn:hover::before {
+.wheel-box button:hover::before {
     left: 100%;
 }
 
-#spinBtn:active {
+.wheel-box button:active {
     transform: scale(0.94);
     background: linear-gradient(135deg, rgba(120, 80, 255, 0.5), rgba(200, 100, 255, 0.3));
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-#spinBtn:hover {
+.wheel-box button:hover {
     background: linear-gradient(135deg, rgba(120, 80, 255, 0.4), rgba(200, 100, 255, 0.25));
     border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
     box-shadow: 0 12px 28px -10px rgba(100, 80, 255, 0.3);
 }
 
-#spinBtn:disabled {
+.wheel-box button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     transform: none !important;
@@ -349,7 +265,7 @@ body {
 
 /* ––– RESULT ––– */
 #result {
-    margin-top: 20px;
+    margin-top: 24px;
     font-size: 18px;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.6);
@@ -360,11 +276,13 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    display: inline-block;
-    transition: all 0.4s ease;
+    display: block;
     text-align: center;
-    width: auto;
-    min-width: 120px;
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.4s ease;
 }
 
 #result.win {
@@ -378,18 +296,6 @@ body {
     color: #f87171;
     border-color: rgba(248, 113, 113, 0.15);
     background: rgba(248, 113, 113, 0.05);
-}
-
-/* ––– FOOTER ––– */
-.footer {
-    text-align: center;
-    font-size: 12px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.15);
-    margin-top: 32px;
-    letter-spacing: 0.5px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 /* ============================================
@@ -515,33 +421,17 @@ body {
         padding-bottom: 80px;
     }
 
-    .glass-container {
-        padding: 18px 16px 24px;
+    .container {
+        padding: 20px 16px 24px;
         border-radius: 40px 40px 32px 32px;
     }
 
-    .wheel-header {
-        margin-bottom: 4px;
+    .container h1 {
+        font-size: 22px;
     }
 
-    .back-btn {
-        height: 38px;
-        padding: 0 16px;
+    .container h1::after {
         font-size: 13px;
-    }
-
-    .wheel-title {
-        font-size: 18px;
-    }
-
-    .header-spacer {
-        width: 38px;
-    }
-
-    .subtitle {
-        font-size: 13px;
-        padding: 4px 14px;
-        margin-bottom: 16px;
     }
 
     .wheel {
@@ -559,7 +449,7 @@ body {
         top: -12px;
     }
 
-    #spinBtn {
+    .wheel-box button {
         min-width: 160px;
         height: 46px;
         font-size: 14px;
@@ -570,13 +460,8 @@ body {
     #result {
         font-size: 15px;
         padding: 8px 16px;
-        margin-top: 16px;
-        min-width: 100px;
-    }
-
-    .footer {
-        font-size: 11px;
-        margin-top: 24px;
+        margin-top: 18px;
+        max-width: 280px;
     }
 
     .bottom-menu {
@@ -612,23 +497,17 @@ body {
         padding-bottom: 76px;
     }
 
-    .glass-container {
-        padding: 14px 12px 18px;
+    .container {
+        padding: 16px 12px 20px;
         border-radius: 32px 32px 24px 24px;
     }
 
-    .wheel-title {
-        font-size: 16px;
+    .container h1 {
+        font-size: 18px;
     }
 
-    .back-btn {
-        height: 34px;
-        padding: 0 12px;
+    .container h1::after {
         font-size: 12px;
-    }
-
-    .header-spacer {
-        width: 34px;
     }
 
     .wheel {
@@ -646,7 +525,7 @@ body {
         top: -10px;
     }
 
-    #spinBtn {
+    .wheel-box button {
         min-width: 140px;
         height: 40px;
         font-size: 13px;
@@ -658,11 +537,7 @@ body {
         font-size: 13px;
         padding: 6px 14px;
         margin-top: 14px;
-        min-width: 80px;
-    }
-
-    .subtitle {
-        font-size: 12px;
+        max-width: 240px;
     }
 
     .bottom-menu {
@@ -684,20 +559,21 @@ body {
     .bottom-menu small {
         font-size: 7px;
     }
+
+    .bottom-menu button.active::after {
+        width: 12px;
+        height: 2px;
+        bottom: 2px;
+    }
 }
 
 /* ––– УТИЛИТЫ ДЛЯ СОВМЕСТИМОСТИ ––– */
-/* Предотвращаем конфликты с глобальными стилями */
-button:not(.bottom-menu button):not(.back-btn) {
-    /* Сброс для всех кнопок, кроме меню и back-btn */
-}
-
-/* Сброс для body, чтобы не было конфликтов */
-.no-overflow {
-    overflow: hidden;
+/* Сброс для всех кнопок, кроме меню */
+button:not(.bottom-menu button) {
+    /* Специфичные стили только для кнопок не из меню */
 }
 
 /* Для корректной работы position: fixed */
-.fixed-safe {
-    transform: none !important;
+.no-overflow {
+    overflow: hidden;
 }
