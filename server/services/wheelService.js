@@ -111,11 +111,37 @@ const seconds =
 
 
 
-if(seconds < 86400){
+const now = Date.now();
 
-throw new Error(
-"Колесо доступно раз в сутки"
-);
+const lastSpin = player.last_spin
+    ? new Date(player.last_spin).getTime()
+    : 0;
+
+const cooldown = 24 * 60 * 60 * 1000;
+
+const freeReady = (now - lastSpin) >= cooldown;
+
+if (freeReady) {
+
+    await db.query(`
+        UPDATE users
+        SET last_spin = NOW()
+        WHERE telegram_id=$1
+    `, [telegram_id]);
+
+} else {
+
+    if (Number(player.wheel_spins) <= 0) {
+
+        throw new Error("Нет спинов");
+
+    }
+
+    await db.query(`
+        UPDATE users
+        SET wheel_spins = wheel_spins - 1
+        WHERE telegram_id=$1
+    `, [telegram_id]);
 
 }
 
