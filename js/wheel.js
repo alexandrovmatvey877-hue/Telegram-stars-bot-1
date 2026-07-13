@@ -10,6 +10,58 @@ document.getElementById("wheel");
 const button =
 document.getElementById("spinBtn");
 
+document
+.getElementById("buySpinBtn")
+.onclick = async()=>{
+
+const user =
+Telegram.WebApp
+.initDataUnsafe.user;
+
+const res =
+await fetch(
+
+"https://white-stars-api.onrender.com/api/wheel/buy",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+telegram_id:user.id
+
+})
+
+}
+
+);
+
+const data =
+await res.json();
+
+alert(
+
+data.success
+
+?
+
+"Спин куплен"
+
+:
+
+data.message
+
+);
+
+};
+
 async function loadWheel(){
 
 
