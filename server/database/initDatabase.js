@@ -281,6 +281,10 @@ DO NOTHING;
 
 `);
 
+await db.query(`
+DELETE FROM wheel_prizes;
+`);
+
 
 // DEFAULT PRIZES
 
@@ -289,31 +293,31 @@ await db.query(`
 INSERT INTO wheel_prizes
 (name,type,value,chance)
 
-SELECT
-'10 Stars',
-'stars',
-10,
-50
+SELECT * FROM (
+
+VALUES
+
+('5 Stars','stars',5,35),
+
+('10 Stars','stars',10,25),
+
+('50 Stars','stars',50,10),
+
+('100 Stars','stars',100,3),
+
+('Бонус','balance',20,20),
+
+('Пусто','none',0,7)
+
+) AS prizes(
+name,
+type,
+value,
+chance
+)
 
 WHERE NOT EXISTS(
 SELECT 1 FROM wheel_prizes
-);
-
-`);
-await db.query(`
-
-CREATE TABLE IF NOT EXISTS spin_history(
-
-id SERIAL PRIMARY KEY,
-
-telegram_id TEXT,
-
-amount INTEGER,
-
-price DOUBLE PRECISION,
-
-created_at TIMESTAMP DEFAULT NOW()
-
 );
 
 `);
