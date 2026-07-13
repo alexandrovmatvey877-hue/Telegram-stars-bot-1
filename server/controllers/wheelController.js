@@ -100,3 +100,53 @@ exports.spin = async(req,res)=>{
 
 
 };
+
+//хуй знает чо
+exports.getInfo = async(req,res)=>{
+
+try{
+
+const db =
+require("../config/database");
+
+
+const user =
+await db.query(`
+
+SELECT
+
+wheel_spins,
+
+last_spin
+
+FROM users
+
+WHERE telegram_id=$1
+
+`,
+[
+req.params.telegram_id
+]
+);
+
+
+
+res.json({
+
+success:true,
+
+info:user.rows[0]
+
+});
+
+
+}catch(err){
+
+res.status(500).json({
+success:false
+});
+
+}
+
+
+};
