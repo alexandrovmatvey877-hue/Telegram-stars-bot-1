@@ -79,12 +79,21 @@ button {
     background: transparent;
 }
 
+/* ========== HEADER ========== */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
     gap: 20px;
+    flex-wrap: wrap;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
 }
 
 .logo {
@@ -105,6 +114,7 @@ button {
     font-size: 30px;
     font-weight: 700;
     box-shadow: 0 4px 20px rgba(74, 124, 247, 0.2);
+    flex-shrink: 0;
 }
 
 .logo-text h1 {
@@ -119,9 +129,124 @@ button {
     font-size: 14px;
 }
 
+/* System Status */
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.traffic-lights {
+    display: flex;
+    gap: 10px;
+}
+
+.light {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    opacity: 0.2;
+    transition: all 0.3s ease;
+}
+
+.light.active {
+    opacity: 1;
+    box-shadow: 0 0 18px currentColor;
+}
+
+.green {
+    background: #22c55e;
+    color: #22c55e;
+}
+
+.yellow {
+    background: #facc15;
+    color: #facc15;
+}
+
+.red {
+    background: #ef4444;
+    color: #ef4444;
+}
+
+.status-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.status-text span {
+    font-weight: 700;
+    font-size: 16px;
+    color: #f0f2f6;
+}
+
+.status-text small {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Stop Panel */
+.stop-panel {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 16px 8px 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.stop-panel h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+}
+
+#stopSalesBtn,
+#startSalesBtn {
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
+
+#stopSalesBtn {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+}
+
+#stopSalesBtn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    transform: translateY(-1px);
+}
+
+#startSalesBtn {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+}
+
+#startSalesBtn:hover {
+    background: rgba(34, 197, 94, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Header buttons */
 .header-buttons {
     display: flex;
     gap: 12px;
+    flex-shrink: 0;
 }
 
 .header-buttons button {
@@ -166,6 +291,7 @@ button {
     transform: scale(0.96);
 }
 
+/* ========== TABS ========== */
 .tabs {
     display: flex;
     gap: 12px;
@@ -213,6 +339,7 @@ button {
     box-shadow: 0 4px 20px rgba(74, 124, 247, 0.05);
 }
 
+/* ========== PAGES ========== */
 .page {
     display: none;
 }
@@ -220,6 +347,7 @@ button {
     display: block;
 }
 
+/* ========== SEARCH PANEL ========== */
 .search-panel {
     display: flex;
     gap: 14px;
@@ -311,6 +439,7 @@ button {
     transform: scale(0.96);
 }
 
+/* ========== USER CARD ========== */
 .user-card {
     display: flex;
     justify-content: space-between;
@@ -356,6 +485,7 @@ button {
     border: 2px solid rgba(255, 255, 255, 0.05);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
+    flex-shrink: 0;
 }
 
 .user-card:hover .avatar {
@@ -422,6 +552,7 @@ button {
     color: rgba(255, 255, 255, 0.15);
 }
 
+/* ========== SETTINGS ========== */
 .settings-tabs {
     display: flex;
     gap: 12px;
@@ -551,6 +682,7 @@ button {
     transform: scale(0.96);
 }
 
+/* ========== OPERATIONS ========== */
 .operation-card {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(8px);
@@ -562,7 +694,97 @@ button {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-/* Lens flare effect for all buttons */
+/* ========== WHEEL PAGE ========== */
+#wheelPage h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #f0f2f6;
+}
+
+.wheel-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.wheel-form input {
+    flex: 1;
+    min-width: 140px;
+    height: 46px;
+    padding: 0 16px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f0f2f6;
+    transition: border-color 0.3s ease;
+}
+
+.wheel-form input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.wheel-form input:focus {
+    border-color: rgba(74, 124, 247, 0.2);
+}
+
+#addWheelPrizeBtn {
+    height: 46px;
+    padding: 0 28px;
+    border: 1px solid rgba(74, 124, 247, 0.1);
+    border-radius: 14px;
+    background: rgba(74, 124, 247, 0.05);
+    color: #4a7cf7;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+#addWheelPrizeBtn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(74, 124, 247, 0.08), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+#addWheelPrizeBtn:hover::before {
+    opacity: 1;
+}
+
+#addWheelPrizeBtn:hover {
+    background: rgba(74, 124, 247, 0.08);
+    border-color: rgba(74, 124, 247, 0.2);
+    transform: translateY(-1px);
+}
+
+#addWheelPrizeBtn:active {
+    transform: scale(0.96);
+}
+
+#wheelList {
+    min-height: 60px;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 14px;
+}
+
+/* ========== LENS FLARE ========== */
 button::after {
     content: '';
     position: absolute;
@@ -580,14 +802,36 @@ button:hover::after {
     left: 200%;
 }
 
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+    .header-left {
+        gap: 18px;
+    }
+    .stop-panel h3 {
+        display: none;
+    }
+}
+
 @media (max-width: 900px) {
     .header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+    }
+    .header-left {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        width: 100%;
+    }
+    .system-status {
+        width: 100%;
+    }
+    .stop-panel {
+        width: 100%;
+        justify-content: center;
     }
     .header-buttons {
         width: 100%;
-        display: flex;
     }
     .header-buttons button {
         flex: 1;
@@ -620,6 +864,15 @@ button:hover::after {
         border-radius: 28px;
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
+    }
+    .wheel-form {
+        flex-direction: column;
+    }
+    .wheel-form input {
+        min-width: unset;
+    }
+    #addWheelPrizeBtn {
+        width: 100%;
     }
 }
 
@@ -656,84 +909,21 @@ button:hover::after {
         bottom: -80px;
         left: -60px;
     }
-}
-.system-status{
-
-display:flex;
-align-items:center;
-gap:15px;
-
-margin:15px 0;
-padding:15px;
-
-background:#151515;
-border-radius:15px;
-
-}
-
-.traffic-lights{
-
-display:flex;
-gap:10px;
-
-}
-
-.light{
-
-width:16px;
-height:16px;
-
-border-radius:50%;
-
-opacity:.25;
-
-transition:.3s;
-
-}
-
-.light.active{
-
-opacity:1;
-
-box-shadow:0 0 15px currentColor;
-
-}
-
-.green{
-
-background:#22c55e;
-
-}
-
-.yellow{
-
-background:#facc15;
-
-}
-
-.red{
-
-background:#ef4444;
-
-}
-
-.status-text{
-
-display:flex;
-flex-direction:column;
-
-}
-
-.status-text span{
-
-font-weight:700;
-
-font-size:18px;
-
-}
-
-.status-text small{
-
-opacity:.7;
-
+    .stop-panel {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .stop-panel h3 {
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+    }
+    .settings-tabs {
+        flex-direction: column;
+    }
+    .settings-tab {
+        width: 100%;
+        text-align: center;
+    }
 }
