@@ -102,52 +102,70 @@ exports.spin = async(req,res)=>{
 };
 
 //хуй знает чо
-exports.getInfo = async(req,res)=>{
+exports.getInfo = async (req, res) => {
 
-try{
+    try {
 
-const db =
-require("../config/database");
+        const db = require("../config/database");
 
+        const result = await db.query(`
+            SELECT
+                wheel_spins,
+                last_spin
+            FROM users
+            WHERE telegram_id=$1
+        `, [req.params.telegram_id]);
 
-const user =
-await db.query(`
+        if (!result.rows.length) {
+            return res.status(404).json({
+                success: false
+            });
+        }
 
-SELECT
+        const user = result.rows[0];
 
-wheel_spins,
+        const cooldown = 24 * 60 * 60 * 1000;
 
-last_spin
+        const last = user.last_spin
+            ? new Date(user.last_spin).getTime()
+            : 0;
 
-FROM users
+        const now = Date.now();
 
-WHERE telegram_id=$1
+        let seconds = 0;
 
-`,
-[
-req.params.telegram_id
-]
-);
+        if (last) {
 
+            seconds = Math.max(
+                0,
+                Math.floor(
+                    (cooldown - (now - last)) / 1000
+                )
+            );
 
+        }
 
-res.json({
+        res.json({
 
-success:true,
+            success: true,
 
-info:user.rows[0]
+            spins: user.wheel_spins,
 
-});
+            cooldown: seconds,
 
+            last_spin: user.last_spin
 
-}catch(err){
+        });
 
-res.status(500).json({
-success:false
-});
+    } catch (err) {
 
-}
+        console.error(err);
 
+        res.status(500).json({
+            success: false
+        });
+
+    }
 
 };
 
