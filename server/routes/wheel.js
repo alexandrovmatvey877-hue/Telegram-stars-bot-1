@@ -19,6 +19,9 @@ router.post(
 wheelController.spin
 );
 
-
+router.get(
+"/info/:telegram_id",
+wheelController.getInfo
+);
 
 module.exports = router;
