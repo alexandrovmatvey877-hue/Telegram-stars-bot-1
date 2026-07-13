@@ -150,3 +150,39 @@ success:false
 
 
 };
+
+//жопа?
+exports.getWheel = async(req,res)=>{
+
+try{
+
+const wheelService =
+require("../services/wheelService");
+
+
+const prizes =
+await wheelService.getPrizes();
+
+
+res.json({
+
+success:true,
+
+prizes
+
+});
+
+
+}catch(err){
+
+console.error(err);
+
+res.status(500).json({
+
+success:false
+
+});
+
+}
+
+};
