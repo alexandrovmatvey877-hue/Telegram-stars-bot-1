@@ -29,4 +29,9 @@ router.get(
 wheelController.getWheel
 );
 
+router.post(
+"/buy",
+wheelController.buySpin
+);
+
 module.exports = router;
