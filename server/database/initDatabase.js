@@ -159,6 +159,39 @@ CREATE TABLE IF NOT EXISTS security_logs(
 );
 
 `);
+// ===========================
+// ORDERS
+// ===========================
+
+await db.query(`
+
+CREATE TABLE IF NOT EXISTS orders(
+
+    id SERIAL PRIMARY KEY,
+
+    order_id TEXT UNIQUE NOT NULL,
+
+    telegram_id TEXT NOT NULL,
+
+    type TEXT NOT NULL,
+
+    product TEXT NOT NULL,
+
+    amount DOUBLE PRECISION DEFAULT 0,
+
+    currency TEXT DEFAULT 'RUB',
+
+    status TEXT DEFAULT 'pending',
+
+    payment_id TEXT,
+
+    created_at TIMESTAMP DEFAULT NOW(),
+
+    paid_at TIMESTAMP
+
+);
+
+`);
 
         console.log("✅ Database initialized");
 
