@@ -1,6 +1,8 @@
 let spinning = false;
 
 
+let prizes = [];
+
 const wheel =
 document.getElementById("wheel");
 
