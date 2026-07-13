@@ -1,0 +1,44 @@
+.bottom-menu{
+
+position:fixed;
+bottom:0;
+left:0;
+
+width:100%;
+height:70px;
+
+display:flex;
+justify-content:space-around;
+align-items:center;
+
+background:rgba(20,20,20,.85);
+backdrop-filter:blur(15px);
+
+border-top:1px solid rgba(255,255,255,.1);
+
+z-index:999;
+
+}
+
+
+.bottom-menu button{
+
+background:none;
+border:none;
+
+color:white;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+
+font-size:12px;
+
+}
+
+
+.bottom-menu span{
+
+font-size:22px;
+
+}
