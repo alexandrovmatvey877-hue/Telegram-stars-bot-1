@@ -300,6 +300,23 @@ SELECT 1 FROM wheel_prizes
 );
 
 `);
+await db.query(`
+
+CREATE TABLE IF NOT EXISTS spin_history(
+
+id SERIAL PRIMARY KEY,
+
+telegram_id TEXT,
+
+amount INTEGER,
+
+price DOUBLE PRECISION,
+
+created_at TIMESTAMP DEFAULT NOW()
+
+);
+
+`);
 
         console.log("✅ Database initialized");
 
