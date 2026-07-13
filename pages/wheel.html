@@ -27,13 +27,53 @@
 </h1>
 
 
-<div class="wheel-box">
+<div class="wheel-container">
 
-    <div class="wheel" id="wheel">
 
-        🎁
+<div class="pointer">
+▼
+</div>
 
-    </div>
+
+<div class="wheel" id="wheel">
+
+</div>
+
+
+<button id="spinBtn">
+🎡 Крутить
+</button>
+
+
+<div class="wheel-info">
+
+<p>
+🎟 Спины:
+<span id="spins">
+1
+</span>
+</p>
+
+<p>
+⏳ Следующий спин:
+<span id="cooldown">
+Доступен
+</span>
+</p>
+
+
+<p>
+Последний выигрыш:
+<span id="lastPrize">
+-
+</span>
+</p>
+
+
+</div>
+
+
+</div>
 
 
     <button onclick="spinWheel()">
