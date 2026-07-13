@@ -189,10 +189,6 @@ prize.name
 
 ]);
 
-
-
-const prizes = await getPrizes();
-
 const index = prizes.findIndex(p => p.id === prize.id);
 
 return {
