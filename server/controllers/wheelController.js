@@ -186,3 +186,85 @@ success:false
 }
 
 };
+exports.buySpin = async(req,res)=>{
+
+try{
+
+const db = require("../config/database");
+
+const {
+telegram_id
+}=req.body;
+
+const price = 20;
+
+const user = await db.query(
+
+`SELECT balance,wheel_spins
+FROM users
+WHERE telegram_id=$1`,
+
+[telegram_id]
+
+);
+
+if(!user.rows.length){
+
+return res.status(404).json({
+
+success:false
+
+});
+
+}
+
+if(Number(user.rows[0].balance)<price){
+
+return res.json({
+
+success:false,
+
+message:"Недостаточно средств"
+
+});
+
+}
+
+await db.query(
+
+`UPDATE users
+
+SET
+
+balance=balance-$1,
+
+wheel_spins=wheel_spins+1
+
+WHERE telegram_id=$2`,
+
+[
+price,
+telegram_id
+]
+
+);
+
+res.json({
+
+success:true
+
+});
+
+}catch(err){
+
+console.error(err);
+
+res.status(500).json({
+
+success:false
+
+});
+
+}
+
+};
