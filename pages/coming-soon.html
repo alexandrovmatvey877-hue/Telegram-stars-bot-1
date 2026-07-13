@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>В разработке</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<link rel="stylesheet" href="../css/coming-soon.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="icon">
+        ⚙️
+    </div>
+
+    <h1 id="title">
+        Раздел в разработке
+    </h1>
+
+    <p id="description">
+        Совсем скоро здесь появятся новые возможности.
+    </p>
+
+    <button onclick="goBack()">
+        ← Назад
+    </button>
+
+</div>
+
+<script>
+
+const tg = window.Telegram.WebApp;
+
+tg.ready();
+
+tg.expand();
+
+function goBack(){
+
+    if(window.history.length > 1){
+
+        history.back();
+
+    }else{
+
+        location.href="../index.html";
+
+    }
+
+}
+
+const params = new URLSearchParams(location.search);
+
+const page = params.get("page");
+
+if(page==="gift"){
+
+    document.getElementById("title").innerText="Telegram Gifts";
+
+    document.getElementById("description").innerText="Покупка и продажа подарков скоро станет доступна.";
+
+}
+
+if(page==="nft"){
+
+    document.getElementById("title").innerText="NFT Fragment";
+
+    document.getElementById("description").innerText="Раздел NFT находится в активной разработке.";
+
+}
+
+</script>
+
+</body>
+</html>
