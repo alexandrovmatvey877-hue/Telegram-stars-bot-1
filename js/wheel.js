@@ -139,7 +139,8 @@ return;
 
 spinning=true;
 
-button.disabled=true;
+button.disabled = true;
+button.innerText = "Крутим...";
 
 try{
 
@@ -207,11 +208,9 @@ alert(data.message);
 
 }
 
+spinning = false;
 
-button.disabled=false;
-
-spinning=false;
-
+loadInfo();
 
 },5000);
 
@@ -256,6 +255,23 @@ if(data.cooldown===0){
 
 document.getElementById("cooldown").innerText =
 "Доступен";
+
+const canSpin =
+data.spins > 0 || data.cooldown === 0;
+
+button.disabled = !canSpin;
+
+if(canSpin){
+
+button.innerText =
+"🎡 Крутить";
+
+}else{
+
+button.innerText =
+"Нет спинов";
+
+}
 
 }else{
 
