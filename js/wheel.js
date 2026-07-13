@@ -131,6 +131,7 @@ loadInfo();
 
 button.onclick = async ()=>{
 
+console.log("SPIN CLICKED");
 
 if(spinning)
 return;
