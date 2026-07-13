@@ -59,83 +59,58 @@ return prizes[0];
 
 async function spin(telegram_id){
 
-
 const db = require("../config/database");
 
 
-// настройки
+// Проверяем последнюю прокрутку
 
-const settings =
-await db.query(`
+const lastSpin = await db.query(`
 
-SELECT *
+SELECT created_at
 
-FROM wheel_settings
-
-WHERE id=1
-
-`);
-
-
-const cost =
-Number(settings.rows[0].cost || 0);
-
-
-
-if(cost > 0){
-
-
-const user =
-await db.query(`
-
-SELECT balance
-
-FROM users
+FROM wheel_history
 
 WHERE telegram_id=$1
 
+ORDER BY created_at DESC
+
+LIMIT 1
+
 `,[
 telegram_id
 ]);
 
 
+if(lastSpin.rows.length){
 
-if(!user.rows.length){
 
-throw new Error("User not found");
+const last =
+new Date(lastSpin.rows[0].created_at);
+
+
+const now =
+new Date();
+
+
+const seconds =
+(now-last)/1000;
+
+
+
+if(seconds < 86400){
+
+throw new Error(
+"Колесо доступно раз в сутки"
+);
 
 }
-
-
-
-if(Number(user.rows[0].balance) < cost){
-
-throw new Error("Недостаточно средств");
-
-}
-
-
-
-await db.query(`
-
-UPDATE users
-
-SET balance = balance - $1
-
-WHERE telegram_id=$2
-
-`,[
-cost,
-telegram_id
-]);
 
 
 }
 
 
 
-// выбираем приз
-
+// Получаем призы
 
 const prizes =
 await getPrizes();
@@ -144,11 +119,15 @@ await getPrizes();
 
 if(!prizes.length){
 
-throw new Error("No prizes");
+throw new Error(
+"No prizes"
+);
 
 }
 
 
+
+// Выбираем приз
 
 const prize =
 randomPrize(prizes);
@@ -156,8 +135,35 @@ randomPrize(prizes);
 
 
 
-// история
+// Начисляем награду
 
+if(
+prize.type === "stars"
+){
+
+
+await db.query(`
+
+UPDATE users
+
+SET balance = balance + $1
+
+WHERE telegram_id=$2
+
+`,[
+
+prize.value,
+
+telegram_id
+
+]);
+
+
+}
+
+
+
+// Записываем историю
 
 await db.query(`
 
@@ -182,34 +188,6 @@ prize.id,
 prize.name
 
 ]);
-
-
-
-
-// выдача Stars
-
-
-if(prize.type === "stars"){
-
-
-await db.query(`
-
-UPDATE users
-
-SET balance = balance + $1
-
-WHERE telegram_id=$2
-
-`,[
-
-prize.value,
-
-telegram_id
-
-]);
-
-
-}
 
 
 
