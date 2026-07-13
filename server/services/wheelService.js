@@ -191,7 +191,15 @@ prize.name
 
 
 
-return prize;
+const prizes = await getPrizes();
+
+const index = prizes.findIndex(p => p.id === prize.id);
+
+return {
+    ...prize,
+    index,
+    total: prizes.length
+};
 
 
 }
