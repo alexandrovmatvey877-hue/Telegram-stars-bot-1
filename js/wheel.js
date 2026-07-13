@@ -87,8 +87,6 @@ createWheel();
 
 }
 
-
-
 function createWheel(){
 
 
@@ -193,9 +191,7 @@ wheel.style.transform =
 
 setTimeout(()=>{
 
-
 if(data.success){
-
 
 document.getElementById(
 "lastPrize"
@@ -203,9 +199,9 @@ document.getElementById(
 .innerText =
 data.prize.name;
 
+loadInfo();
 
 }else{
-
 
 alert(data.message);
 
