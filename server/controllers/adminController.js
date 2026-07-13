@@ -1,6 +1,7 @@
 const db = require("../config/database");
 const salesGuard = require("../services/salesGuard");
 const passwordGuard = require("../services/passwordGuard");
+const securityLogger = require("../services/securityLogger");
 
 // =========================
 // Все пользователи
@@ -39,6 +40,27 @@ exports.updateBalance = async (req, res) => {
     try {
 
         const { telegram_id, action, amount } = req.body;
+const value = Number(amount);
+
+
+if (!Number.isFinite(value)) {
+
+    return res.status(400).json({
+        success:false,
+        message:"Invalid amount"
+    });
+
+}
+
+
+if (value <= 0) {
+
+    return res.status(400).json({
+        success:false,
+        message:"Amount must be positive"
+    });
+
+}
 
         const result = await db.query(
             "SELECT balance FROM users WHERE telegram_id=$1",
@@ -80,6 +102,15 @@ exports.updateBalance = async (req, res) => {
             "UPDATE users SET balance=$1 WHERE telegram_id=$2",
             [balance, telegram_id]
         );
+await securityLogger.log(
+    "ADMIN_BALANCE_CHANGE",
+    {
+        telegram_id,
+        action,
+        amount:value,
+        new_balance:balance
+    }
+);
 
         res.json({
             success: true,
