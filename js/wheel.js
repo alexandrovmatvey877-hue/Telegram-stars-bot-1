@@ -10,7 +10,73 @@ document.getElementById("wheel");
 const button =
 document.getElementById("spinBtn");
 
+async function loadWheel(){
 
+
+const res =
+await fetch(
+"https://white-stars-api.onrender.com/api/wheel"
+);
+
+
+const data =
+await res.json();
+
+
+if(data.success){
+
+prizes=data.prizes;
+
+
+createWheel();
+
+}
+
+
+}
+
+
+
+function createWheel(){
+
+
+const step =
+360 / prizes.length;
+
+
+let gradient =
+"conic-gradient(";
+
+
+prizes.forEach((p,i)=>{
+
+
+gradient +=
+`
+hsl(${i*50},80%,60%)
+${i*step}deg
+${(i+1)*step}deg,
+`;
+
+});
+
+
+gradient =
+gradient.slice(0,-1);
+
+
+gradient += ")";
+
+
+wheel.style.background =
+gradient;
+
+
+}
+
+
+
+loadWheel();
 
 button.onclick = async ()=>{
 
