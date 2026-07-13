@@ -37,93 +37,168 @@ exports.getUsers = async (req, res) => {
 
 exports.updateBalance = async (req, res) => {
 
+    const client = await db.connect();
+
     try {
 
         const { telegram_id, action, amount } = req.body;
-const value = Number(amount);
+
+        const value = Number(amount);
 
 
-if (!Number.isFinite(value)) {
+        if (!Number.isFinite(value) || value <= 0) {
 
-    return res.status(400).json({
-        success:false,
-        message:"Invalid amount"
-    });
+            return res.status(400).json({
+                success:false,
+                message:"Invalid amount"
+            });
 
-}
+        }
 
 
-if (value <= 0) {
+        await client.query("BEGIN");
 
-    return res.status(400).json({
-        success:false,
-        message:"Amount must be positive"
-    });
 
-}
-
-        const result = await db.query(
-            "SELECT balance FROM users WHERE telegram_id=$1",
+        const result = await client.query(
+            `
+            SELECT balance
+            FROM users
+            WHERE telegram_id=$1
+            FOR UPDATE
+            `,
             [telegram_id]
         );
 
+
         if (!result.rows.length) {
+
+            await client.query("ROLLBACK");
+
             return res.status(404).json({
-                success: false,
-                message: "User not found"
+                success:false,
+                message:"User not found"
             });
+
         }
+
 
         let balance = Number(result.rows[0].balance);
 
-        switch (action) {
+
+
+        switch(action){
+
 
             case "add":
-                balance += Number(amount);
+
+                balance += value;
+
                 break;
+
+
 
             case "subtract":
-                balance -= Number(amount);
+
+                balance -= value;
+
                 break;
+
+
 
             case "set":
-                balance = Number(amount);
+
+                balance = value;
+
                 break;
 
+
+
             default:
+
+                await client.query("ROLLBACK");
+
                 return res.status(400).json({
-                    success: false,
-                    message: "Invalid action"
+                    success:false,
+                    message:"Invalid action"
                 });
 
         }
 
-        await db.query(
-            "UPDATE users SET balance=$1 WHERE telegram_id=$2",
-            [balance, telegram_id]
+
+
+        if(balance < 0){
+
+            await client.query("ROLLBACK");
+
+            return res.status(400).json({
+                success:false,
+                message:"Balance cannot be negative"
+            });
+
+        }
+
+
+
+        await client.query(
+            `
+            UPDATE users
+            SET balance=$1
+            WHERE telegram_id=$2
+            `,
+            [
+                balance,
+                telegram_id
+            ]
         );
-await securityLogger.log(
-    "ADMIN_BALANCE_CHANGE",
-    {
-        telegram_id,
-        action,
-        amount:value,
-        new_balance:balance
-    }
-);
+
+
+
+        await client.query("COMMIT");
+
+
+
+        await securityLogger.log(
+            "ADMIN_BALANCE_CHANGE",
+            {
+                telegram_id,
+                action,
+                amount:value,
+                new_balance:balance
+            }
+        );
+
+
 
         res.json({
-            success: true,
+
+            success:true,
+
             balance
+
         });
 
-    } catch (err) {
+
+
+    } catch(err){
+
+
+        await client.query("ROLLBACK");
+
 
         console.error(err);
 
+
         res.status(500).json({
-            success: false
+            success:false
         });
+
+
+
+    } finally {
+
+
+        client.release();
+
 
     }
 
