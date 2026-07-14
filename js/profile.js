@@ -112,7 +112,7 @@ async function loadProfile(){
         // Реферальная ссылка
 
         refLink =
-        `https://t.me/WHITE_STARS_BOT?start=${u.telegram_id}`;
+        `https://t.me/white_stars_one_bot?start=${u.telegram_id}`;
 
 
 
