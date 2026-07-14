@@ -54,6 +54,9 @@ wheel_spins INTEGER DEFAULT 1,
 
 last_spin TIMESTAMP
 
+referrer_id BIGINT DEFAULT NULL,
+referral_count INTEGER DEFAULT 0,
+
         );
 
         `);
