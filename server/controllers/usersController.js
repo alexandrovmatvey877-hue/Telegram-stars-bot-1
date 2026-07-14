@@ -9,12 +9,13 @@ exports.register = async (req, res) => {
 console.log("REGISTER V2 START");
 console.log(req.body);
         const {
-            telegram_id,
-            username,
-            first_name,
-            last_name,
-            avatar
-        } = req.body;
+    telegram_id,
+    username,
+    first_name,
+    last_name,
+    avatar,
+    referrer_id
+} = req.body;
 
         if (!telegram_id) {
             return res.status(400).json({
@@ -37,6 +38,7 @@ INSERT INTO users(
     first_name,
     last_name,
     avatar,
+    referrer_id,
     registered_at,
     last_seen
 )
@@ -46,6 +48,7 @@ VALUES(
     $3,
     $4,
     $5,
+    $6,
     NOW(),
     NOW()
 )
@@ -54,8 +57,20 @@ VALUES(
     username,
     first_name,
     last_name,
-    avatar
+    avatar,
+    referrer_id || null
 ]);
+
+if (
+    referrer_id &&
+    Number(referrer_id) !== Number(telegram_id)
+){
+    await db.query(`
+        UPDATE users
+        SET referral_count = referral_count + 1
+        WHERE telegram_id = $1
+    `,[referrer_id]);
+}
 
         } else {
 
