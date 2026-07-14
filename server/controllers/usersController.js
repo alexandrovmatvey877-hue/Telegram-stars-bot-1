@@ -1,78 +1,102 @@
 const db = require("../config/database");
 
+
 // =======================
 // Регистрация пользователя
 // =======================
 
 exports.register = async (req, res) => {
+
     try {
-console.log("REGISTER V2 START");
-console.log(req.body);
-        const {
-    telegram_id,
-    username,
-    first_name,
-    last_name,
-    avatar,
-    referrer_id
-} = req.body;
+
+        console.log("REGISTER START");
+        console.log(req.body);
+
+        let {
+            telegram_id,
+            username,
+            first_name,
+            last_name,
+            avatar,
+            referrer_id
+        } = req.body;
+
 
         if (!telegram_id) {
             return res.status(400).json({
-                success: false,
-                message: "telegram_id is required"
+                success:false,
+                message:"telegram_id is required"
             });
         }
 
+
+        telegram_id = String(telegram_id);
+
+        if (referrer_id) {
+            referrer_id = String(referrer_id);
+        }
+
+
         const user = await db.query(
-            "SELECT * FROM users WHERE telegram_id = $1",
+            "SELECT * FROM users WHERE telegram_id=$1",
             [telegram_id]
         );
 
+
+        // Новый пользователь
         if (user.rows.length === 0) {
-console.log("NEW USER");
+
+
             await db.query(`
-INSERT INTO users(
-    telegram_id,
-    username,
-    first_name,
-    last_name,
-    avatar,
-    referrer_id,
-    registered_at,
-    last_seen
-)
-VALUES(
-    $1,
-    $2,
-    $3,
-    $4,
-    $5,
-    $6,
-    NOW(),
-    NOW()
-)
-`,[
-    telegram_id,
-    username,
-    first_name,
-    last_name,
-    avatar,
-    referrer_id || null
-]);
+                INSERT INTO users(
+                    telegram_id,
+                    username,
+                    first_name,
+                    last_name,
+                    avatar,
+                    referrer_id,
+                    registered_at,
+                    last_seen
+                )
+                VALUES(
+                    $1,$2,$3,$4,$5,$6,NOW(),NOW()
+                )
+            `,
+            [
+                telegram_id,
+                username || "",
+                first_name || "",
+                last_name || "",
+                avatar || "",
+                referrer_id || null
+            ]);
 
-if (
-    referrer_id &&
-    Number(referrer_id) !== Number(telegram_id)
-){
-    await db.query(`
-        UPDATE users
-        SET referral_count = referral_count + 1
-        WHERE telegram_id = $1
-    `,[referrer_id]);
-}
 
-        } else {
+
+            // Добавляем реферала пригласившему
+
+            if (
+                referrer_id &&
+                referrer_id !== telegram_id
+            ){
+
+                await db.query(`
+                    UPDATE users
+                    SET referral_count = referral_count + 1
+                    WHERE telegram_id=$1
+                `,
+                [
+                    referrer_id
+                ]);
+
+            }
+
+
+        } 
+        
+        // Уже существует
+        else {
+
 
             await db.query(`
                 UPDATE users
@@ -81,91 +105,126 @@ if (
                     first_name=$3,
                     last_name=$4,
                     avatar=$5,
-                    last_seen = NOW()
+                    last_seen=NOW()
                 WHERE telegram_id=$1
-            `, [
+            `,
+            [
                 telegram_id,
-                username,
-                first_name,
-                last_name,
-                avatar
+                username || "",
+                first_name || "",
+                last_name || "",
+                avatar || ""
             ]);
 
         }
 
-        return res.json({
-            success: true
-        });
 
-    } catch (err) {
-
-    console.error("REGISTER ERROR:");
-    console.error(err);
-    console.error(err.stack);
-
-    res.status(500).json({
-        success: false,
-        message: err.message
-    });
-
-}
-};
-
-// =======================
-// Получение профиля
-// =======================
-
-exports.getProfile = async (req, res) => {
-
-    try {
-
-        const { telegram_id } = req.params;
-
-        const result = await db.query(
-            "SELECT * FROM users WHERE telegram_id=$1",
-            [telegram_id]
-        );
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found"
-            });
-        }
 
         res.json({
-            success: true,
-            user: result.rows[0]
+            success:true
         });
 
-    } catch (err) {
 
+
+    } catch(err){
+
+        console.error("REGISTER ERROR");
         console.error(err);
 
+
         res.status(500).json({
-            success: false
+            success:false,
+            message:err.message
         });
 
     }
 
 };
 
+
+
+// =======================
+// Получение профиля
+// =======================
+
+exports.getProfile = async(req,res)=>{
+
+    try{
+
+        const {telegram_id}=req.params;
+
+
+        const result = await db.query(`
+            SELECT 
+                u.*,
+                r.username AS referrer_username,
+                r.first_name AS referrer_name
+
+            FROM users u
+
+            LEFT JOIN users r
+            ON u.referrer_id = r.telegram_id
+
+            WHERE u.telegram_id=$1
+        `,
+        [
+            telegram_id
+        ]);
+
+
+
+        if(result.rows.length===0){
+
+            return res.status(404).json({
+                success:false
+            });
+
+        }
+
+
+
+        res.json({
+            success:true,
+            user:result.rows[0]
+        });
+
+
+
+    }catch(err){
+
+        console.error(err);
+
+        res.status(500).json({
+            success:false
+        });
+
+    }
+
+};
+
+
+
+
 // =======================
 // Обновление профиля
 // =======================
 
-exports.updateProfile = async (req, res) => {
+exports.updateProfile = async(req,res)=>{
 
-    try {
 
-        const { telegram_id } = req.params;
+    try{
+
+        const {telegram_id}=req.params;
+
 
         const {
             username,
             first_name,
             last_name,
             avatar
-        } = req.body;
+        }=req.body;
+
+
 
         await db.query(`
             UPDATE users
@@ -175,7 +234,8 @@ exports.updateProfile = async (req, res) => {
                 last_name=$4,
                 avatar=$5
             WHERE telegram_id=$1
-        `, [
+        `,
+        [
             telegram_id,
             username,
             first_name,
@@ -183,91 +243,204 @@ exports.updateProfile = async (req, res) => {
             avatar
         ]);
 
+
+
         res.json({
-            success: true
+            success:true
         });
 
-    } catch (err) {
+
+    }catch(err){
 
         console.error(err);
 
         res.status(500).json({
-            success: false
+            success:false
         });
 
     }
 
+
 };
+
+
+
 
 // =======================
 // Статистика
 // =======================
 
-exports.getStats = async (req, res) => {
+exports.getStats = async(req,res)=>{
 
-    try {
 
-        const { telegram_id } = req.params;
+    try{
+
+
+        const {telegram_id}=req.params;
+
 
         const result = await db.query(`
             SELECT
+
                 balance,
                 total_spent,
                 total_deposit,
-                referral_count
+                referral_count,
+                referrer_id
+
             FROM users
+
             WHERE telegram_id=$1
-        `, [telegram_id]);
+        `,
+        [
+            telegram_id
+        ]);
 
-        if (result.rows.length === 0) {
 
-            return res.status(404).json({
-                success: false
-            });
-
-        }
 
         res.json({
-            success: true,
-            stats: result.rows[0]
+            success:true,
+            stats:result.rows[0]
         });
 
-    } catch (err) {
+
+
+    }catch(err){
 
         console.error(err);
 
         res.status(500).json({
-            success: false
+            success:false
         });
 
     }
 
+
 };
+
+
+
+
 // =======================
-// Все пользователи
+// Все пользователи ADMIN
 // =======================
 
-exports.getAllUsers = async (req, res) => {
+exports.getAllUsers = async(req,res)=>{
 
-    try {
+
+    try{
+
 
         const result = await db.query(`
-            SELECT *
-            FROM users
+
+            SELECT
+
+                u.*,
+
+                r.username AS referrer_username,
+                r.first_name AS referrer_name
+
+
+            FROM users u
+
+
+            LEFT JOIN users r
+
+            ON u.referrer_id = r.telegram_id
+
+
             ORDER BY registered_at DESC
+
+
         `);
+
+
 
         res.json(result.rows);
 
-    } catch (err) {
+
+
+    }catch(err){
+
 
         console.error(err);
 
+
         res.status(500).json({
-            success: false,
-            message: "Failed to load users"
+            success:false,
+            message:"Failed to load users"
         });
 
+
     }
+
+
+};
+
+
+
+
+// =======================
+// Получить рефералов
+// =======================
+
+exports.getReferrals = async(req,res)=>{
+
+
+    try{
+
+
+        const {telegram_id}=req.params;
+
+
+
+        const result = await db.query(`
+
+            SELECT
+
+                telegram_id,
+                username,
+                first_name,
+                registered_at
+
+
+            FROM users
+
+
+            WHERE referrer_id=$1
+
+
+            ORDER BY registered_at DESC
+
+
+        `,
+        [
+            telegram_id
+        ]);
+
+
+
+        res.json({
+
+            success:true,
+            referrals:result.rows
+
+        });
+
+
+
+    }catch(err){
+
+
+        console.error(err);
+
+
+        res.status(500).json({
+            success:false
+        });
+
+
+    }
+
 
 };
