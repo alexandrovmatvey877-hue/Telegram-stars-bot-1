@@ -17,7 +17,10 @@
 
 <div class="container">
 
-    <header class="header">
+
+<header class="header">
+
+
 <div class="system-status" id="systemStatus">
 
     <div class="traffic-lights">
@@ -28,9 +31,13 @@
 
     </div>
 
+
     <div class="status-text">
 
-        <span id="statusTitle">NORMAL</span>
+        <span id="statusTitle">
+            NORMAL
+        </span>
+
         <small id="statusInfo">
             Все системы работают
         </small>
@@ -39,214 +46,349 @@
 
 </div>
 
+
+
 <div class="stop-panel">
 
-    <h3>🚨 Управление продажами</h3>
+<h3>
+🚨 Управление продажами
+</h3>
 
-    <button id="stopSalesBtn">
-        🛑 Остановить продажи
-    </button>
 
-    <button id="startSalesBtn">
-        ▶️ Запустить продажи
-    </button>
+<button id="stopSalesBtn">
+🛑 Остановить продажи
+</button>
+
+
+<button id="startSalesBtn">
+▶️ Запустить продажи
+</button>
+
 
 </div>
 
-        <div class="logo">
-
-            <div class="logo-icon">
-                ⭐
-            </div>
-
-            <div class="logo-text">
-                <h1>White Stars</h1>
-                <p>Админ-панель</p>
-            </div>
-
-        </div>
-
-        <div class="header-buttons">
-
-            <button id="homeBtn">
-                ← Назад
-            </button>
-
-            <button id="reloadBtn">
-                ⟳ Обновить
-            </button>
-
-        </div>
-
-    </header>
 
 
-    <nav class="tabs">
+<div class="logo">
 
-    <button class="tab active" data-page="users">
-        👥 Пользователи
-    </button>
+<div class="logo-icon">
+⭐
+</div>
 
-    <button class="tab" data-page="operations">
-        📄 Операции
-    </button>
 
-    <button class="tab" data-page="settings">
-        ⚙️ Настройки
-    </button>
-<button class="tab" data-page="wheel">
-    🎡 Рулетка
+<div class="logo-text">
+
+<h1>
+White Stars
+</h1>
+
+<p>
+Админ-панель
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<div class="header-buttons">
+
+
+<button id="homeBtn">
+← Назад
 </button>
+
+
+<button id="reloadBtn">
+⟳ Обновить
+</button>
+
+
+</div>
+
+
+</header>
+
+
+
+
+<nav class="tabs">
+
+
+<button class="tab active" data-page="users">
+👥 Пользователи
+</button>
+
+
+<button class="tab" data-page="operations">
+📄 Операции
+</button>
+
+
+<button class="tab" data-page="settings">
+⚙️ Настройки
+</button>
+
+
+<button class="tab" data-page="wheel">
+🎡 Рулетка
+</button>
+
 
 </nav>
 
 
-    <main>
-
-        <section id="usersPage" class="page active">
-
-            <div class="search-panel">
-
-                <input
-                    id="searchInput"
-                    type="text"
-                    placeholder="Поиск пользователя">
-
-                <select id="sortSelect">
-
-                    <option value="last_seen">
-                        Последний вход
-                    </option>
-
-                    <option value="balance">
-                        Баланс
-                    </option>
-
-                    <option value="registered">
-                        Регистрация
-                    </option>
-
-                    <option value="deposit">
-                        Пополнения
-                    </option>
-
-                    <option value="spent">
-                        Покупки
-                    </option>
-
-                </select>
-
-                <button id="refreshUsers">
-                    Обновить
-                </button>
-
-            </div>
-
-            <div id="usersList"></div>
-
-        </section>
 
 
 
-        <section id="operationsPage" class="page">
-
-            <div id="operationsList"></div>
-
-        </section>
-<div id="wheelPage" class="page">
-
-    <h2>
-        🎡 Управление рулеткой
-    </h2>
-
-
-    <div class="wheel-form">
-
-
-        <input 
-        id="wheelName"
-        placeholder="Название приза">
-
-
-        <input 
-        id="wheelType"
-        placeholder="Тип (stars/premium)">
-
-
-        <input 
-        id="wheelValue"
-        placeholder="Количество">
-
-
-        <input 
-        id="wheelChance"
-        placeholder="Шанс %">
-
-
-        <button id="addWheelPrizeBtn">
-
-            Добавить приз
-
-        </button>
-
-
-    </div>
+<main>
 
 
 
-    <div id="wheelList">
+<section id="usersPage" class="page active">
 
-        Загрузка...
 
-    </div>
+
+<div class="search-panel">
+
+
+
+<input
+
+id="searchInput"
+
+type="text"
+
+placeholder="Поиск пользователя">
+
+
+<select id="sortSelect">
+
+
+<option value="last_seen">
+Последний вход
+</option>
+
+
+<option value="balance">
+Баланс
+</option>
+
+
+<option value="registered">
+Регистрация
+</option>
+
+
+<option value="deposit">
+Пополнения
+</option>
+
+
+<option value="spent">
+Покупки
+</option>
+
+
+<option value="referrals">
+Рефералы
+</option>
+
+
+</select>
+
+
+
+<button id="refreshUsers">
+
+Обновить
+
+</button>
+
 
 
 </div>
 
 
 
-        <section id="settingsPage" class="page">
 
-            <div class="settings-tabs">
 
-    <button class="settings-tab active" data-settings="prices">
-        📊 Тарифы
-    </button>
-
-    <button class="settings-tab" data-settings="wallet">
-        💎 TON Кошелек
-    </button>
-
-    <button class="settings-tab" data-settings="services">
-        🛠 Услуги
-    </button>
-
-    <button class="settings-tab" data-settings="notifications">
-        🔔 Уведомления
-    </button>
-
-    <button class="settings-tab" data-settings="system">
-        ⚙️ Система
-    </button>
+<div id="usersList">
 
 </div>
 
-            <div id="settingsContent"></div>
 
-        </section>
 
-    </main>
+</section>
+
+
+
+
+
+
+
+<section id="operationsPage" class="page">
+
+<div id="operationsList">
 
 </div>
+
+</section>
+
+
+
+
+
+
+
+<section id="wheelPage" class="page">
+
+
+<h2>
+🎡 Управление рулеткой
+</h2>
+
+
+
+<div class="wheel-form">
+
+
+<input
+id="wheelName"
+placeholder="Название приза">
+
+
+<input
+id="wheelType"
+placeholder="Тип (stars/premium)">
+
+
+<input
+id="wheelValue"
+placeholder="Количество">
+
+
+<input
+id="wheelChance"
+placeholder="Шанс %">
+
+
+
+<button id="addWheelPrizeBtn">
+
+Добавить приз
+
+</button>
+
+
+</div>
+
+
+
+<div id="wheelList">
+
+Загрузка...
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<section id="settingsPage" class="page">
+
+
+<div class="settings-tabs">
+
+
+<button class="settings-tab active" data-settings="prices">
+
+📊 Тарифы
+
+</button>
+
+
+
+<button class="settings-tab" data-settings="wallet">
+
+💎 TON Кошелек
+
+</button>
+
+
+
+<button class="settings-tab" data-settings="services">
+
+🛠 Услуги
+
+</button>
+
+
+
+<button class="settings-tab" data-settings="notifications">
+
+🔔 Уведомления
+
+</button>
+
+
+
+<button class="settings-tab" data-settings="system">
+
+⚙️ Система
+
+</button>
+
+
+
+</div>
+
+
+
+<div id="settingsContent">
+
+</div>
+
+
+
+</section>
+
+
+
+</main>
+
+
+</div>
+
+
+
+
 
 <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
+
 <script src="js/api.js"></script>
+
 <script src="js/ton.js"></script>
+
 <script src="js/users.js"></script>
+
 <script src="js/settings.js"></script>
+
 <script src="js/operations.js"></script>
+
 <script src="js/adminPanel.js"></script>
+
 <script src="js/admin/wheelAdmin.js"></script>
+
+
 
 </body>
 </html>
