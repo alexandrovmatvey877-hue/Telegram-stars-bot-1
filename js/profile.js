@@ -4,7 +4,13 @@ tg.ready();
 tg.expand();
 
 
-const user = tg.initDataUnsafe.user;
+const API = "https://white-stars-api.onrender.com";
+
+const user = tg.initDataUnsafe?.user;
+
+
+let refLink = "";
+
 
 
 async function loadProfile(){
@@ -23,9 +29,7 @@ async function loadProfile(){
 
 
         const response = await fetch(
-
-            `https://white-stars-api.onrender.com/api/users/${user.id}`
-
+            `${API}/api/users/${user.id}`
         );
 
 
@@ -34,6 +38,8 @@ async function loadProfile(){
 
 
         if(!data.success){
+
+            console.error("Profile load failed");
 
             return;
 
@@ -45,17 +51,23 @@ async function loadProfile(){
 
 
 
+        // Имя
+
         document.getElementById("name")
         .innerText =
         `${u.first_name || ""} ${u.last_name || ""}`;
 
 
 
+        // Username
+
         document.getElementById("username")
         .innerText =
         "@" + (u.username || "user");
 
 
+
+        // Баланс
 
         document.getElementById("balance")
         .innerText =
@@ -64,23 +76,29 @@ async function loadProfile(){
 
 
 
+        // Статистика
+
         document.getElementById("spent")
         .innerText =
-        u.total_spent;
+        Number(u.total_spent || 0)
+        .toFixed(2);
 
 
 
         document.getElementById("deposit")
         .innerText =
-        u.total_deposit;
+        Number(u.total_deposit || 0)
+        .toFixed(2);
 
 
 
         document.getElementById("refs")
         .innerText =
-        u.referral_count;
+        u.referral_count || 0;
 
 
+
+        // Аватар
 
         if(u.avatar){
 
@@ -91,9 +109,33 @@ async function loadProfile(){
 
 
 
+        // Реферальная ссылка
+
+        refLink =
+        `https://t.me/WHITE_STARS_BOT?start=${u.telegram_id}`;
+
+
+
+        const refElement =
+        document.getElementById("refLink");
+
+
+        if(refElement){
+
+            refElement.innerText = refLink;
+
+        }
+
+
+
     }catch(err){
 
-        console.error(err);
+
+        console.error(
+            "PROFILE ERROR:",
+            err
+        );
+
 
     }
 
@@ -102,11 +144,59 @@ async function loadProfile(){
 
 
 
+
+// Копирование реферальной ссылки
+
+async function copyRefLink(){
+
+
+    if(!refLink){
+
+        alert("Ссылка еще не загрузилась");
+
+        return;
+
+    }
+
+
+
+    try{
+
+
+        await navigator.clipboard.writeText(refLink);
+
+
+        alert(
+            "✅ Реферальная ссылка скопирована"
+        );
+
+
+    }catch(err){
+
+
+        console.error(err);
+
+
+        alert(
+            "Не удалось скопировать ссылку"
+        );
+
+
+    }
+
+
+}
+
+
+
+
 function goBack(){
 
     history.back();
 
 }
+
+
 
 
 loadProfile();
