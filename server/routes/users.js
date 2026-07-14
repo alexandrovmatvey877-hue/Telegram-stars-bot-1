@@ -3,19 +3,65 @@ const router = express.Router();
 
 const usersController = require("../controllers/usersController");
 
-// Регистрация / авторизация пользователя
-router.post("/register", usersController.register);
 
-// Все пользователи (админка)
-router.get("/", usersController.getAllUsers);
+// =======================
+// РЕГИСТРАЦИЯ
+// =======================
 
-// Получить профиль
-router.get("/:telegram_id", usersController.getProfile);
+router.post(
+    "/register",
+    usersController.register
+);
 
-// Обновить пользователя
-router.put("/:telegram_id", usersController.updateProfile);
 
-// Статистика пользователя
-router.get("/:telegram_id/stats", usersController.getStats);
+// =======================
+// АДМИНКА - ВСЕ ПОЛЬЗОВАТЕЛИ
+// =======================
+
+router.get(
+    "/",
+    usersController.getAllUsers
+);
+
+
+// =======================
+// ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ
+// =======================
+
+router.get(
+    "/:telegram_id",
+    usersController.getProfile
+);
+
+
+// =======================
+// ОБНОВЛЕНИЕ ПРОФИЛЯ
+// =======================
+
+router.put(
+    "/:telegram_id",
+    usersController.updateProfile
+);
+
+
+// =======================
+// СТАТИСТИКА
+// =======================
+
+router.get(
+    "/:telegram_id/stats",
+    usersController.getStats
+);
+
+
+// =======================
+// РЕФЕРАЛЫ ПОЛЬЗОВАТЕЛЯ
+// =======================
+
+router.get(
+    "/:telegram_id/referrals",
+    usersController.getReferrals
+);
+
 
 module.exports = router;
