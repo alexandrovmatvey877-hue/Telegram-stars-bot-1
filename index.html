@@ -898,8 +898,8 @@ const startParam = tg.initDataUnsafe?.start_param || "";
 
     // ––– GREETING –––
     if (user) {
-      document.getElementById("greeting").innerHTML =
-        `Добро пожаловать, <b>${user.first_name}</b>`;
+      document.getElementById("greeting").textContent =
+  `Добро пожаловать, ${user.first_name}`;
 
       // ––– ADMIN PANEL BUTTON –––
       if (String(user.id) === ADMIN_ID) {
