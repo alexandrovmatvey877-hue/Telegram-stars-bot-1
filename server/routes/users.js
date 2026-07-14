@@ -4,63 +4,39 @@ const router = express.Router();
 const usersController = require("../controllers/usersController");
 
 
-// =======================
-// РЕГИСТРАЦИЯ
-// =======================
-
-router.post(
-    "/register",
-    usersController.register
-);
+// Регистрация
+router.post("/register", usersController.register);
 
 
-// =======================
-// АДМИНКА - ВСЕ ПОЛЬЗОВАТЕЛИ
-// =======================
+// Админка
+router.get("/", usersController.getAllUsers);
 
+
+// Рефералы
 router.get(
-    "/",
-    usersController.getAllUsers
+    "/:telegram_id/referrals",
+    usersController.getReferrals
 );
 
 
-// =======================
-// ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ
-// =======================
-
-router.get(
-    "/:telegram_id",
-    usersController.getProfile
-);
-
-
-// =======================
-// ОБНОВЛЕНИЕ ПРОФИЛЯ
-// =======================
-
-router.put(
-    "/:telegram_id",
-    usersController.updateProfile
-);
-
-
-// =======================
-// СТАТИСТИКА
-// =======================
-
+// Статистика
 router.get(
     "/:telegram_id/stats",
     usersController.getStats
 );
 
 
-// =======================
-// РЕФЕРАЛЫ ПОЛЬЗОВАТЕЛЯ
-// =======================
-
+// Профиль
 router.get(
-    "/:telegram_id/referrals",
-    usersController.getReferrals
+    "/:telegram_id",
+    usersController.getProfile
+);
+
+
+// Обновление
+router.put(
+    "/:telegram_id",
+    usersController.updateProfile
 );
 
 
