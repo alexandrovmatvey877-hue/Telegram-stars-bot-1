@@ -744,6 +744,9 @@
                 year: 'numeric'
             }) : 'неизвестно';
 
+const referralLink = 
+`https://t.me/WHITE_STARS_ONE_BOT?start=${user.telegram_id}`;
+
             container.innerHTML = `
                 <div class="profile-card">
                     <!-- Шапка профиля -->
@@ -771,9 +774,18 @@
                             <div class="stat-label">📥 Пополнено</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-value">${user.referral_count || 0}</div>
-                            <div class="stat-label">👥 Рефералов</div>
-                        </div>
+    <div class="stat-value">${user.referral_count || 0}</div>
+    <div class="stat-label">👥 Рефералов</div>
+</div>
+
+<div class="stat-item">
+    <div class="stat-value">
+        🔗
+    </div>
+    <div class="stat-label">
+        Реф. ссылка
+    </div>
+</div>
                     </div>
 
                     <!-- ИЗМЕНЕНИЕ БАЛАНСА -->
@@ -787,6 +799,39 @@
                         </div>
                         <div id="balanceMessage"></div>
                     </div>
+
+<div class="balance-edit">
+
+<h4>
+🔗 Персональная ссылка
+</h4>
+
+
+<input 
+readonly
+id="refLink"
+value="${referralLink}"
+style="
+width:100%;
+padding:12px;
+border-radius:15px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+color:white;
+">
+
+
+<button 
+class="btn btn-black"
+style="margin-top:10px;width:100%"
+onclick="copyReferral()">
+
+📋 Скопировать ссылку
+
+</button>
+
+
+</div>
 
                     <!-- Детальная информация -->
                     <div style="margin-top:20px;">
@@ -877,7 +922,19 @@
         }
 
         // ============ ЗАГРУЗКА ПРИ СТАРТЕ ============
-        document.addEventListener('DOMContentLoaded', loadProfile);
+ 
+function copyReferral(){
+
+const input=document.getElementById("refLink");
+
+input.select();
+
+navigator.clipboard.writeText(input.value);
+
+alert("✅ Ссылка скопирована");
+
+}
+       document.addEventListener('DOMContentLoaded', loadProfile);
 
         // ============ ГЛОБАЛЬНЫЙ ДОСТУП ============
         window.changeBalance = changeBalance;
