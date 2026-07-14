@@ -20,11 +20,10 @@
 <div class="container">
 
 
+    <!-- ПРОФИЛЬ -->
     <div class="profile-card">
 
-
-        <img id="avatar" class="avatar">
-
+        <img id="avatar" class="avatar" src="" alt="">
 
         <h2 id="name">
             Загрузка...
@@ -34,11 +33,11 @@
         <p id="username">
         </p>
 
-
     </div>
 
 
 
+    <!-- БАЛАНС -->
     <div class="card">
 
         <h3>
@@ -46,13 +45,14 @@
         </h3>
 
         <div id="balance">
-            0 ⭐
+            0 ₽
         </div>
 
     </div>
 
 
 
+    <!-- СТАТИСТИКА -->
     <div class="card">
 
         <h3>
@@ -65,6 +65,7 @@
             <span id="spent">
                 0
             </span>
+            ₽
         </p>
 
 
@@ -73,11 +74,12 @@
             <span id="deposit">
                 0
             </span>
+            ₽
         </p>
 
 
         <p>
-            Рефералы:
+            👥 Рефералы:
             <span id="refs">
                 0
             </span>
@@ -88,6 +90,38 @@
 
 
 
+    <!-- РЕФЕРАЛЬНАЯ СИСТЕМА -->
+    <div class="card">
+
+        <h3>
+            🔗 Реферальная система
+        </h3>
+
+
+        <p>
+            Приглашайте друзей и получайте бонусы WHITE STARS ⭐
+        </p>
+
+
+        <div class="ref-box">
+
+            <span id="refLink">
+                Загрузка...
+            </span>
+
+        </div>
+
+
+        <button onclick="copyRefLink()">
+            📋 Скопировать ссылку
+        </button>
+
+
+    </div>
+
+
+
+    <!-- НАЗАД -->
     <button onclick="goBack()">
         ← Назад
     </button>
@@ -96,8 +130,11 @@
 </div>
 
 
+
 <script src="../js/profile.js"></script>
-<script src="js/menu.js"></script>
+<script src="../js/menu.js"></script>
+
+
 </body>
 
 </html>
