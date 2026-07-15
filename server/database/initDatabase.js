@@ -374,6 +374,19 @@ CREATE TABLE IF NOT EXISTS promo_uses (
 
 );
 `);
+// ===========================
+// RESET PROMOCODES TEMP
+// ===========================
+
+await db.query(`
+    DELETE FROM promo_uses;
+`);
+
+await db.query(`
+    DELETE FROM promocodes;
+`);
+
+console.log("⚠️ PROMOCODES RESET DONE");
 
         console.log("✅ Database initialized");
 
