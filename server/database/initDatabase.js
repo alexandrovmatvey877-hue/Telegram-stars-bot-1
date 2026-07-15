@@ -339,7 +339,6 @@ ALTER TABLE wheel_prizes
 ADD COLUMN IF NOT EXISTS color TEXT DEFAULT '#ffffff';
 `);
 
-`);
 
 await db.query(`
 ALTER TABLE wheel_history
