@@ -190,6 +190,8 @@ function switchPage(page) {
 
     wheel:"wheelPage"
 
+    promos:"promosPage"
+
 };
 
     document.getElementById(pages[page]).classList.add("active");
@@ -216,6 +218,12 @@ if (btn) {
     if (page === "operations") {
 
         Operations.loadOperations();
+
+    }
+    
+    if(page === "promos"){
+
+    Promos.load();
 
     }
 
