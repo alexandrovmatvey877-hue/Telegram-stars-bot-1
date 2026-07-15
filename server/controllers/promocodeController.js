@@ -1,0 +1,7 @@
+createPromo()
+
+usePromo()
+
+getPromos()
+
+getPromo()
