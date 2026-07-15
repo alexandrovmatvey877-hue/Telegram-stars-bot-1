@@ -190,7 +190,7 @@ function switchPage(page) {
 
     wheel:"wheelPage",
 
-    promos:"promosPage"
+    promocodes:"promocodesPage"
 
 };
 
