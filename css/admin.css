@@ -6,6 +6,10 @@
     box-sizing: border-box;
     font-family: Inter, Arial, sans-serif;
 }
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
 
 body {
     margin: 0;
@@ -134,6 +138,14 @@ button {
 
     transition:.2s;
 
+button,
+.tab,
+.settings-tab,
+.link {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+
+}
 }
 
 
