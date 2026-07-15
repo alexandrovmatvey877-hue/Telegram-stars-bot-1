@@ -12,52 +12,43 @@ async function initDatabase() {
 
         CREATE TABLE IF NOT EXISTS users(
 
-            id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
 
-            telegram_id TEXT UNIQUE,
+    telegram_id TEXT UNIQUE,
 
-            username TEXT,
-            first_name TEXT,
-            last_name TEXT,
+    username TEXT,
+    first_name TEXT,
+    last_name TEXT,
 
-            avatar TEXT,
+    avatar TEXT,
 
-            balance DOUBLE PRECISION DEFAULT 0,
+    balance DOUBLE PRECISION DEFAULT 0,
 
-            registered_at TIMESTAMP DEFAULT NOW(),
-            last_seen TIMESTAMP DEFAULT NOW(),
+    registered_at TIMESTAMP DEFAULT NOW(),
+    last_seen TIMESTAMP DEFAULT NOW(),
 
-            total_spent DOUBLE PRECISION DEFAULT 0,
-            total_deposit DOUBLE PRECISION DEFAULT 0,
+    total_spent DOUBLE PRECISION DEFAULT 0,
+    total_deposit DOUBLE PRECISION DEFAULT 0,
 
-            referral_count INTEGER DEFAULT 0,
-            referrer_id TEXT,
+    referral_count INTEGER DEFAULT 0,
+    referrer_id BIGINT DEFAULT NULL,
 
-            wallet_address TEXT,
-is_banned BOOLEAN DEFAULT false,
+    wallet_address TEXT,
 
-ban_reason TEXT,
+    is_banned BOOLEAN DEFAULT false,
+    ban_reason TEXT,
 
-warning_count INTEGER DEFAULT 0,
+    warning_count INTEGER DEFAULT 0,
 
-theme TEXT DEFAULT 'dark',
+    theme TEXT DEFAULT 'dark',
+    font_size TEXT DEFAULT 'normal',
+    language TEXT DEFAULT 'ru',
 
-font_size TEXT DEFAULT 'normal',
+    wheel_spins INTEGER DEFAULT 1,
+    last_spin TIMESTAMP,
+    next_spin TIMESTAMP
 
-language TEXT DEFAULT 'ru',
-
-wheel_spins INTEGER DEFAULT 3,
-last_spin TIMESTAMP,
-next_spin TIMESTAMP
-,
-wheel_spins INTEGER DEFAULT 1,
-
-last_spin TIMESTAMP
-
-referrer_id BIGINT DEFAULT NULL,
-referral_count INTEGER DEFAULT 0,
-
-        );
+             );
 
         `);
 
