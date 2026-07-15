@@ -12,4 +12,6 @@ router.get("/", promocodeController.getPromos);
 
 router.get("/:code", promocodeController.getPromo);
 
+router.patch("/:id", promocodeController.updatePromo);
+
 module.exports = router;
