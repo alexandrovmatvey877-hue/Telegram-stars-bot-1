@@ -136,6 +136,9 @@ White Stars
 🎡 Рулетка
 </button>
 
+<button class="tab" data-page="promocodes">
+🎁 Промокоды
+</button>
 
 </nav>
 
@@ -297,11 +300,81 @@ placeholder="Шанс %">
 
 </section>
 
+<section id="promocodesPage" class="page">
+
+<h2>
+🎁 Управление промокодами
+</h2>
 
 
+<div class="promo-form">
+
+<input
+id="promoCode"
+placeholder="Код промокода">
 
 
+<select id="promoType">
 
+<option value="balance">
+💰 Баланс
+</option>
+
+<option value="stars">
+⭐ Stars
+</option>
+
+<option value="premium">
+👑 Premium
+</option>
+
+<option value="gift">
+🎁 Gift
+</option>
+
+<option value="nft">
+🖼 NFT
+</option>
+
+</select>
+
+
+<input
+id="promoValue"
+placeholder="Награда">
+
+
+<input
+id="promoMaxUses"
+placeholder="Макс. активаций (0 = безлимит)">
+
+
+<input
+id="promoExpires"
+type="datetime-local">
+
+
+<button id="createPromoBtn">
+Создать промокод
+</button>
+
+
+</div>
+
+
+<h3>
+📋 Список промокодов
+</h3>
+
+
+<div id="promoList">
+
+Загрузка...
+
+</div>
+
+
+</section>
 
 <section id="settingsPage" class="page">
 
@@ -387,6 +460,8 @@ placeholder="Шанс %">
 <script src="js/adminPanel.js"></script>
 
 <script src="js/admin/wheelAdmin.js"></script>
+
+<script src="js/admin/promoAdmin.js"></script>
 
 
 
