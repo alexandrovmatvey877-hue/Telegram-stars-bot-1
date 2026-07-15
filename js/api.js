@@ -71,15 +71,13 @@ async function getPromos() {
     return await api("/api/promocodes");
 }
 
-
 async function createPromo(data) {
     return await api(
-        "/api/promocodes",
+        "/api/promocodes/create",
         "POST",
         data
     );
 }
-
 
 async function disablePromo(id) {
     return await api(
