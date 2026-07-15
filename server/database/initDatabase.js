@@ -357,6 +357,8 @@ CREATE TABLE IF NOT EXISTS promocodes (
 
     expires_at TIMESTAMP,
 
+    color TEXT DEFAULT '#ffffff',
+
     is_active BOOLEAN DEFAULT TRUE,
 
     created_at TIMESTAMP DEFAULT NOW()
