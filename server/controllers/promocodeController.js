@@ -214,25 +214,61 @@ exports.usePromo = async (req,res)=>{
 
         // Начисление
 
-        if(promo.type === "balance"){
+        switch (promo.type) {
+
+    case "balance":
+
+        await db.query(
+            `
+            UPDATE users
+            SET balance = balance + $1
+            WHERE telegram_id = $2
+            `,
+            [
+                promo.value,
+                telegram_id
+            ]
+        );
+
+        break;
 
 
-            await db.query(
+    case "stars":
 
-                `
-                UPDATE users
-                SET balance = balance + $1
-                WHERE telegram_id=$2
-                `,
-                [
-                    promo.value,
-                    telegram_id
-                ]
+        // позже
 
-            );
+        break;
 
 
-        }
+    case "premium":
+
+        // позже
+
+        break;
+
+
+    case "gift":
+
+        // позже
+
+        break;
+
+
+    case "nft":
+
+        // позже
+
+        break;
+
+
+    default:
+
+        return res.json({
+            success: false,
+            message: "Неизвестный тип промокода"
+        });
+
+}
 
 
 
