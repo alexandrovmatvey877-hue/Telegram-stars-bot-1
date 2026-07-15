@@ -188,7 +188,7 @@ function switchPage(page) {
 
     settings:"settingsPage",
 
-    wheel:"wheelPage"
+    wheel:"wheelPage",
 
     promos:"promosPage"
 
