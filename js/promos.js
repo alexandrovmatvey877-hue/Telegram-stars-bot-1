@@ -149,7 +149,7 @@ document.getElementById("promoMaxUses").value
 
 
 expires_at:
-document.getElementById("promoExpire").value || null
+document.getElementById("promoExpires").value || null
 
 
 };
