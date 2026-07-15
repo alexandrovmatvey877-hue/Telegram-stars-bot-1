@@ -286,3 +286,123 @@ success:false
 }
 
 };
+
+// ===============================
+// ИСТОРИЯ ВЫИГРЫШЕЙ ДЛЯ АДМИНКИ
+// ===============================
+
+exports.getHistory = async(req,res)=>{
+
+try{
+
+const db = require("../config/database");
+
+
+const result = await db.query(`
+
+SELECT
+
+wh.*,
+
+u.username,
+u.first_name
+
+FROM wheel_history wh
+
+LEFT JOIN users u
+ON u.telegram_id = wh.telegram_id
+
+ORDER BY wh.created_at DESC
+
+LIMIT 100
+
+`);
+
+
+res.json({
+
+success:true,
+
+history:result.rows
+
+});
+
+
+}catch(err){
+
+console.error(err);
+
+
+res.status(500).json({
+
+success:false
+
+});
+
+
+}
+
+};
+
+
+
+// ===============================
+// СТАТИСТИКА ПРИЗОВ
+// ===============================
+
+exports.getPrizeStats = async(req,res)=>{
+
+try{
+
+const db = require("../config/database");
+
+
+const result = await db.query(`
+
+SELECT
+
+wp.id,
+wp.name,
+wp.type,
+wp.value,
+wp.chance,
+
+COUNT(wh.id) AS wins
+
+FROM wheel_prizes wp
+
+LEFT JOIN wheel_history wh
+
+ON wh.prize_id = wp.id
+
+GROUP BY wp.id
+
+ORDER BY wp.id
+
+`);
+
+
+res.json({
+
+success:true,
+
+prizes:result.rows
+
+});
+
+
+}catch(err){
+
+console.error(err);
+
+
+res.status(500).json({
+
+success:false
+
+});
+
+
+}
+
+};
