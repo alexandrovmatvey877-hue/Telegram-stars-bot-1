@@ -467,3 +467,47 @@ exports.getPromo = async(req,res)=>{
 
 
 };
+// ===============================
+// ОБНОВЛЕНИЕ ПРОМОКОДА
+// ===============================
+exports.updatePromo = async(req,res)=>{
+
+    try{
+
+        const { id } = req.params;
+
+        const {
+            is_active
+        } = req.body;
+
+
+        await db.query(
+            `
+            UPDATE promocodes
+            SET is_active=$1
+            WHERE id=$2
+            `,
+            [
+                is_active,
+                id
+            ]
+        );
+
+
+        res.json({
+            success:true
+        });
+
+
+    }catch(err){
+
+        console.error(err);
+
+        res.status(500).json({
+            success:false,
+            message:"Ошибка сервера"
+        });
+
+    }
+
+};
