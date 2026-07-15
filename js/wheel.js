@@ -13,6 +13,7 @@ const API =
 // Купить спин
 // =====================
 
+if (buyBtn) {
 buyBtn.onclick = async()=>{
 
     const user =
@@ -48,7 +49,7 @@ buyBtn.onclick = async()=>{
 
 };
 
-
+}
 
 // =====================
 // Загрузка рулетки
@@ -192,6 +193,7 @@ function createWheel(){
 // Крутить
 // =====================
 
+if (button) {
 button.onclick = async()=>{
 
 
@@ -251,13 +253,17 @@ button.onclick = async()=>{
 
 
 
-        const step =
-        360 / prize.total;
+        let start = 0;
 
+for(let i = 0; i < prize.index; i++){
 
-        const angle =
-        (prize.index * step)
-        + step / 2;
+    start += Number(prizes[i].chance) * 3.6;
+
+}
+
+const angle =
+start +
+(Number(prize.chance) * 3.6 / 2);
 
 
 
@@ -312,7 +318,7 @@ button.onclick = async()=>{
 
 };
 
-
+}
 
 
 // =====================
