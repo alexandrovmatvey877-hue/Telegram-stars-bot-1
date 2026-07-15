@@ -83,33 +83,48 @@ async function loadWheel(){
 function createWheel(){
 
     if(!prizes.length)
-    return;
+        return;
 
 
-    const step =
-    360 / prizes.length;
+    let gradient = "conic-gradient(";
 
 
-    let gradient =
-    "conic-gradient(";
+    let current = 0;
 
 
     prizes.forEach((p,i)=>{
 
-        gradient +=
-        `hsl(${i*50},80%,60%)
-        ${i*step}deg
-        ${(i+1)*step}deg,`;
+
+        const chance = Number(p.chance);
+
+
+        const start = current;
+
+
+        const end = current + (chance * 3.6);
+
+
+
+        gradient += `
+        hsl(${i * 55},80%,60%)
+        ${start}deg
+        ${end}deg,
+        `;
+
+
+        current = end;
+
 
     });
 
 
+
     gradient =
-    gradient.slice(0,-1)+")";
+    gradient.slice(0,-1) + ")";
 
 
-    wheel.style.background =
-    gradient;
+    wheel.style.background = gradient;
+
 
 }
 
