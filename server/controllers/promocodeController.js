@@ -41,7 +41,7 @@ exports.createPromo = async (req, res) => {
             RETURNING *
             `,
             [
-                code.toUpperCase(),
+                code(),
                 type,
                 value,
                 max_uses || 0,
@@ -109,7 +109,7 @@ exports.usePromo = async (req,res)=>{
             WHERE code=$1
             `,
             [
-                code.toUpperCase()
+                code()
             ]
 
         );
@@ -386,7 +386,7 @@ exports.getPromo = async(req,res)=>{
             WHERE code=$1
             `,
             [
-                code.toUpperCase()
+                code()
             ]
 
         );
