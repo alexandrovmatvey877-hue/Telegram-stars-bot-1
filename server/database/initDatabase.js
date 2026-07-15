@@ -342,6 +342,47 @@ SELECT 1 FROM wheel_prizes
 );
 
 `);
+await db.query(`
+CREATE TABLE IF NOT EXISTS promocodes (
+
+    id SERIAL PRIMARY KEY,
+
+    code TEXT UNIQUE NOT NULL,
+
+    type TEXT NOT NULL,
+
+    value NUMERIC NOT NULL,
+
+    max_uses INTEGER DEFAULT 0,
+
+    used_count INTEGER DEFAULT 0,
+
+    expires_at TIMESTAMP,
+
+    is_active BOOLEAN DEFAULT TRUE,
+
+    created_at TIMESTAMP DEFAULT NOW()
+
+);
+`);
+
+await db.query(`
+CREATE TABLE IF NOT EXISTS promo_uses (
+
+    id SERIAL PRIMARY KEY,
+
+    promo_id INTEGER REFERENCES promocodes(id) ON DELETE CASCADE,
+
+    telegram_id BIGINT NOT NULL,
+
+    used_at TIMESTAMP DEFAULT NOW(),
+
+    reward NUMERIC DEFAULT 0,
+
+    UNIQUE(promo_id, telegram_id)
+
+);
+`);
 
         console.log("✅ Database initialized");
 
