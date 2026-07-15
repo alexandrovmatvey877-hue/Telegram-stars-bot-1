@@ -67,6 +67,29 @@ async function changeSales(action, password) {
         }
     );
 }
+async function getPromos() {
+    return await api("/api/promocodes");
+}
+
+
+async function createPromo(data) {
+    return await api(
+        "/api/promocodes",
+        "POST",
+        data
+    );
+}
+
+
+async function disablePromo(id) {
+    return await api(
+        `/api/promocodes/${id}`,
+        "PATCH",
+        {
+            is_active: false
+        }
+    );
+}
 window.API = {
     getUsers,
     getSettings,
@@ -75,5 +98,9 @@ window.API = {
     getSystem,
     saveSystem,
     getHealth,
-    changeSales
+    changeSales,
+
+    getPromos,
+    createPromo,
+    disablePromo
 };
