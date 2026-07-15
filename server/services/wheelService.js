@@ -196,22 +196,26 @@ async function spin(telegram_id){
 
 
     await db.query(`
-        INSERT INTO wheel_history(
-            telegram_id,
-            prize_id,
-            prize_name
-        )
+INSERT INTO wheel_history(
+    telegram_id,
+    prize_id,
+    prize_name,
+    prize_value
+)
 
-        VALUES(
-            $1,
-            $2,
-            $3
-        )
-    `,[
-        telegram_id,
-        prize.id,
-        prize.name
-    ]);
+VALUES(
+    $1,
+    $2,
+    $3,
+    $4
+)
+`,
+[
+    telegram_id,
+    prize.id,
+    prize.name,
+    prize.value
+]);
 
 
 
