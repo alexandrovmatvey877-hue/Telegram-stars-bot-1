@@ -406,3 +406,132 @@ success:false
 }
 
 };
+
+// админские штучки
+
+exports.adminGetPrizes = async(req,res)=>{
+
+try{
+
+const db=require("../config/database");
+
+const result=await db.query(`
+SELECT 
+wp.*,
+COUNT(wh.id) AS wins
+FROM wheel_prizes wp
+LEFT JOIN wheel_history wh
+ON wp.id=wh.prize_id
+GROUP BY wp.id
+ORDER BY wp.id
+`);
+
+res.json({
+success:true,
+prizes:result.rows
+});
+
+
+}catch(err){
+
+console.error(err);
+
+res.status(500).json({
+success:false
+});
+
+}
+
+};
+
+
+
+exports.adminAddPrize = async(req,res)=>{
+
+try{
+
+const db=require("../config/database");
+
+const {
+name,
+type,
+value,
+chance,
+color
+}=req.body;
+
+
+await db.query(`
+
+INSERT INTO wheel_prizes
+(
+name,
+type,
+value,
+chance,
+color
+)
+
+VALUES($1,$2,$3,$4,$5)
+
+`,
+[
+name,
+type,
+value,
+chance,
+color
+]);
+
+
+res.json({
+success:true
+});
+
+
+}catch(err){
+
+console.error(err);
+
+res.status(500).json({
+success:false
+});
+
+}
+
+};
+
+
+
+exports.adminDeletePrize = async(req,res)=>{
+
+try{
+
+const db=require("../config/database");
+
+
+await db.query(`
+DELETE FROM wheel_prizes
+WHERE id=$1
+`,
+[
+req.params.id
+]);
+
+
+res.json({
+success:true
+});
+
+
+}catch(err){
+
+console.error(err);
+
+res.status(500).json({
+success:false
+});
+
+}
+
+};
