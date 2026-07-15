@@ -333,6 +333,13 @@ SELECT 1 FROM wheel_prizes
 );
 
 `);
+
+await db.query(`
+ALTER TABLE wheel_history
+ADD COLUMN IF NOT EXISTS prize_value DOUBLE PRECISION DEFAULT 0;
+`);
+
+
 await db.query(`
 CREATE TABLE IF NOT EXISTS promocodes (
 
