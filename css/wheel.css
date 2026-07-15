@@ -1,132 +1,162 @@
-/* ============================================
-   wheel.css — WHITE STARS Wheel
-   Реальная разметка wheel.html
-   ============================================ */
+/* =========================================
+   WHITE STARS WHEEL
+   Glass Premium UI
+========================================= */
 
 
-/* ===== PAGE ===== */
+* {
+    box-sizing:border-box;
+}
+
 
 body {
-    margin: 0;
-    min-height: 100vh;
-    background: #080c1a;
-    color: white;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    margin:0;
+
+    min-height:100vh;
+
+    background:
+    radial-gradient(
+        circle at top,
+        #20263d,
+        #080c1a 60%
+    );
+
+    color:white;
+
+    font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
 }
+
 
 
 .container {
-    width: 100%;
-    max-width: 460px;
-    margin: 0 auto;
-    padding: 20px 16px 100px;
-    box-sizing: border-box;
-    position: relative;
+
+    max-width:500px;
+
+    margin:auto;
+
+    padding:25px 16px 100px;
+
 }
 
 
-/* ===== TITLE ===== */
+
+/* TITLE */
+
 
 h1 {
 
-    margin: 10px 0 28px;
+    text-align:center;
 
-    text-align: center;
+    font-size:30px;
 
-    font-size: 28px;
-    font-weight: 800;
+    font-weight:900;
 
-    letter-spacing: -0.5px;
+    margin-bottom:30px;
 
-    color: white;
 
     background:
     linear-gradient(
         135deg,
-        #ffffff,
-        #b8c0ff
+        #fff,
+        #bfc7ff
     );
 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+    -webkit-background-clip:text;
+
+    color:transparent;
 
 }
 
 
-/* ===== WHEEL AREA ===== */
+
+/* WHEEL BLOCK */
+
 
 .wheel-container {
 
-    position: relative;
+    display:flex;
 
-    width: 100%;
+    flex-direction:column;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items:center;
 
 }
 
 
-/* ===== POINTER ===== */
+
+/* POINTER */
+
 
 .pointer {
 
-    position: absolute;
+    position:absolute;
 
-    top: -18px;
+    top:8px;
 
-    z-index: 5;
+    z-index:10;
 
-    font-size: 34px;
+    font-size:35px;
 
-    color: #ffffff;
-
-    text-shadow:
-    0 0 15px rgba(120,80,255,.8);
+    filter:
+    drop-shadow(
+    0 0 15px white
+    );
 
 }
 
 
 
-/* ===== WHEEL ===== */
+/* WHEEL */
 
 
 .wheel {
 
-    width: min(330px, 80vw);
 
-    aspect-ratio: 1;
+    width:min(340px,85vw);
 
-    border-radius: 50%;
-
-
-    background:
-    conic-gradient(
-        #7850ff,
-        #00d9ff,
-        #ff6bff,
-        #7850ff
-    );
+    aspect-ratio:1;
 
 
-    margin-top: 25px;
+    border-radius:50%;
 
 
-    position: relative;
+    margin-top:45px;
+
+
+    border:
+
+    8px solid
+    rgba(255,255,255,.08);
+
 
 
     box-shadow:
 
-    0 0 0 8px rgba(255,255,255,.04),
 
-    0 20px 60px rgba(0,0,0,.6),
+    0 0 40px
+    rgba(255,255,255,.12),
 
-    inset 0 0 40px rgba(0,0,0,.35);
+
+    0 30px 80px
+    rgba(0,0,0,.7),
+
+
+    inset 0 0 40px
+    rgba(0,0,0,.5);
+
 
 
     transition:
-    transform 4.5s cubic-bezier(.17,.67,.12,1);
+
+    transform 5s
+    cubic-bezier(.17,.67,.12,1);
 
 
     overflow:hidden;
@@ -135,277 +165,285 @@ h1 {
 
 
 
-/* блеск сверху */
-
 .wheel::before {
 
     content:"";
+
 
     position:absolute;
 
     inset:0;
 
+
     border-radius:50%;
 
+
     background:
+
     linear-gradient(
         135deg,
-        rgba(255,255,255,.25),
+        rgba(255,255,255,.3),
         transparent 35%
     );
 
-
-    pointer-events:none;
 
 }
 
 
 
-/* центр колеса */
+/* CENTER */
+
 
 .wheel::after {
 
+
     content:"⭐";
+
 
     position:absolute;
 
+
     left:50%;
     top:50%;
+
 
     transform:
     translate(-50%,-50%);
 
 
-    width:65px;
-    height:65px;
+
+    width:75px;
+    height:75px;
 
 
     display:flex;
-    align-items:center;
+
     justify-content:center;
+
+    align-items:center;
+
+
+
+    background:
+
+    rgba(10,14,30,.95);
+
+
+
+    border:
+
+    2px solid
+    rgba(255,255,255,.15);
+
 
 
     border-radius:50%;
 
 
-    background:
-    rgba(8,12,26,.9);
+    font-size:32px;
 
-
-    border:
-    2px solid rgba(255,255,255,.12);
-
-
-    font-size:28px;
 
 
     box-shadow:
 
-    0 0 30px rgba(0,0,0,.7);
+    0 0 35px
+    rgba(255,255,255,.15);
+
 
 }
 
 
 
-/* ===== BUTTONS ===== */
+/* BUTTONS */
 
 
-#spinBtn,
-#buySpinBtn {
+button {
 
 
-    width: min(330px,80vw);
+    font-weight:800;
 
+    cursor:pointer;
 
     border:none;
 
 
-    border-radius:50px;
-
-
-    cursor:pointer;
-
-
-    font-weight:700;
-
-
     transition:.25s;
-
-
-    backdrop-filter:blur(15px);
 
 }
 
 
 
-/* MAIN BUTTON */
-
 #spinBtn {
 
-    height:56px;
 
-    margin-top:28px;
+    width:min(340px,85vw);
+
+
+    height:60px;
+
+
+    margin-top:30px;
+
+
+    border-radius:18px;
+
 
 
     background:
 
     linear-gradient(
         135deg,
-        rgba(120,80,255,.35),
-        rgba(0,220,255,.15)
+        white,
+        #c8c8c8
     );
 
 
+    color:#080c1a;
+
+
+
+    font-size:18px;
+
+
+
+    box-shadow:
+
+
+    0 15px 40px
+    rgba(255,255,255,.15);
+
+
+
+}
+
+
+
+#spinBtn:hover {
+
+
+    transform:
+    translateY(-3px);
+
+
+}
+
+
+
+#spinBtn:active {
+
+
+    transform:
+    scale(.96);
+
+
+}
+
+
+
+
+#buySpinBtn {
+
+
+    width:min(340px,85vw);
+
+
+    height:48px;
+
+
+    margin-top:14px;
+
+
+    border-radius:18px;
+
+
+    background:
+
+    rgba(255,255,255,.06);
+
+
+
     border:
-    1px solid rgba(255,255,255,.15);
+
+    1px solid
+    rgba(255,255,255,.12);
+
 
 
     color:white;
 
 
-    font-size:17px;
-
-
-    box-shadow:
-
-    0 15px 40px rgba(120,80,255,.25);
-
-}
-
-
-
-#spinBtn:hover:not(:disabled) {
-
-    transform:translateY(-2px);
-
-}
-
-
-#spinBtn:active:not(:disabled) {
-
-    transform:scale(.95);
-
-}
-
-
-#spinBtn:disabled {
-
-    opacity:.45;
-
-    cursor:not-allowed;
-
 }
 
 
 
 
-/* BUY BUTTON */
-
-#buySpinBtn {
-
-
-    height:46px;
-
-
-    margin-top:12px;
-
-
-    background:
-
-    rgba(255,255,255,.05);
-
-
-    border:
-    1px solid rgba(255,255,255,.08);
-
-
-    color:
-    rgba(255,255,255,.75);
-
-
-    font-size:15px;
-
-
-}
-
-
-
-#buySpinBtn:hover {
-
-    background:
-
-    rgba(255,255,255,.1);
-
-}
-
-
-
-
-/* ===== INFO ===== */
+/* INFO CARD */
 
 
 .wheel-info {
 
 
-    width:min(330px,80vw);
+    width:min(340px,85vw);
 
 
-    margin-top:22px;
+    margin-top:25px;
 
 
-    padding:18px;
+    padding:20px;
 
-
-    box-sizing:border-box;
-
-
-    display:flex;
-
-    flex-direction:column;
-
-
-    gap:14px;
-
-
-    background:
-
-    rgba(255,255,255,.04);
-
-
-    border:
-
-    1px solid rgba(255,255,255,.08);
 
 
     border-radius:26px;
 
 
-    backdrop-filter:blur(20px);
+
+    background:
+
+    rgba(255,255,255,.06);
+
+
+
+    border:
+
+    1px solid
+    rgba(255,255,255,.12);
+
+
+
+    backdrop-filter:
+
+    blur(25px);
+
+
+
+    box-shadow:
+
+    0 20px 60px
+    rgba(0,0,0,.5);
+
 
 
 }
-
 
 
 
 .wheel-info p {
 
 
-    margin:0;
-
-
     display:flex;
+
 
     justify-content:space-between;
 
-    align-items:center;
+
+    margin:12px 0;
 
 
     color:
-    rgba(255,255,255,.45);
+
+    rgba(255,255,255,.55);
 
 
-    font-size:14px;
 
 }
 
@@ -416,8 +454,7 @@ h1 {
 
     color:white;
 
-
-    font-weight:700;
+    font-weight:800;
 
 
 }
@@ -426,111 +463,90 @@ h1 {
 
 #lastPrize {
 
-    color:#b8c0ff;
+
+    color:#c7d0ff;
+
 
 }
-
 
 
 
 #cooldown {
 
+
     color:#8fe8ff;
+
 
 }
 
 
 
-/* ===== RESULT ===== */
+/* RESULT */
 
 
 #result {
 
 
-    margin:20px auto 0;
+    margin:25px auto;
 
 
-    max-width:330px;
+    width:min(340px,85vw);
 
 
-    min-height:50px;
+    min-height:55px;
 
 
     display:flex;
 
+
     justify-content:center;
+
 
     align-items:center;
 
-
-    text-align:center;
-
-
-    padding:0 20px;
-
-
-    box-sizing:border-box;
 
 
     border-radius:24px;
 
 
+
     background:
 
-    rgba(255,255,255,.04);
+    rgba(255,255,255,.05);
+
 
 
     border:
 
-    1px solid rgba(255,255,255,.08);
+    1px solid
+    rgba(255,255,255,.1);
 
 
-    color:white;
+
+    backdrop-filter:
+
+    blur(20px);
 
 
-    font-weight:700;
 
-
-    backdrop-filter:blur(15px);
+    font-weight:900;
 
 
 }
 
 
 
-
-/* ===== MOBILE ===== */
+/* MOBILE */
 
 
 @media(max-width:400px){
 
 
-    h1 {
-
-        font-size:24px;
-
-    }
-
-
     .wheel {
 
-        width:250px;
+        width:260px;
 
     }
 
-
-    #spinBtn,
-    #buySpinBtn {
-
-        width:250px;
-
-    }
-
-
-    .wheel-info {
-
-        width:250px;
-
-    }
 
 }
