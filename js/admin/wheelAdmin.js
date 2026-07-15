@@ -1,76 +1,155 @@
 const WHEEL_API =
-"https://white-stars-api.onrender.com/api/admin/wheel";
+"https://white-stars-api.onrender.com/api/wheel/admin";
 
 
+// =======================
+// Загрузка призов
+// =======================
 
 async function loadWheelPrizes(){
 
+    try{
 
-const res =
-await fetch(
-WHEEL_API + "/prizes"
-);
+        const res = await fetch(
+            WHEEL_API + "/prizes"
+        );
 
-
-const data =
-await res.json();
+        const data = await res.json();
 
 
-
-const box =
-document.getElementById("wheelList");
-
-
-if(!box) return;
+        const box =
+        document.getElementById("wheelList");
 
 
-
-box.innerHTML="";
-
+        if(!box) return;
 
 
-data.prizes.forEach(prize=>{
+        box.innerHTML="";
 
 
-box.innerHTML += `
-
-<div class="wheel-item">
-
-<b>${prize.name}</b>
-
-<br>
-
-Тип: ${prize.type}
-
-<br>
-
-Количество: ${prize.value}
-
-<br>
-
-Шанс: ${prize.chance}%
+        data.prizes.forEach(prize=>{
 
 
-<button onclick="deleteWheelPrize(${prize.id})">
+            box.innerHTML += `
 
-Удалить
-
-</button>
+            <div class="wheel-item">
 
 
-</div>
+                <div style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+                ">
 
-`;
+
+                <div style="
+                width:22px;
+                height:22px;
+                border-radius:6px;
+                background:${prize.color};
+                ">
+                </div>
 
 
-});
+                <b>${prize.name}</b>
 
+
+                </div>
+
+
+
+                <p>
+                🎁 Тип:
+                ${prize.type}
+                </p>
+
+
+                <p>
+                ⭐ Значение:
+                ${prize.value}
+                </p>
+
+
+                <p>
+                🎯 Шанс:
+                ${prize.chance}%
+                </p>
+
+
+                <p>
+                🏆 Выиграно:
+                ${prize.wins || 0}
+                раз
+                </p>
+
+
+
+                <button onclick="
+                deleteWheelPrize(${prize.id})
+                ">
+                🗑 Удалить
+                </button>
+
+
+            </div>
+
+            `;
+
+
+        });
+
+
+    }catch(err){
+
+        console.error(
+            "Wheel admin error:",
+            err
+        );
+
+    }
 
 }
 
 
 
+// =======================
+// Добавление
+// =======================
+
 async function addWheelPrize(){
+
+
+const data = {
+
+
+name:
+document.getElementById("wheelName").value,
+
+
+type:
+document.getElementById("wheelType").value,
+
+
+value:
+Number(
+document.getElementById("wheelValue").value
+),
+
+
+chance:
+Number(
+document.getElementById("wheelChance").value
+),
+
+
+color:
+document.getElementById("wheelColor")?.value
+||
+"#ffffff"
+
+
+};
+
 
 
 await fetch(
@@ -87,21 +166,7 @@ headers:{
 
 },
 
-body:JSON.stringify({
-
-name:
-document.getElementById("wheelName").value,
-
-type:
-document.getElementById("wheelType").value,
-
-value:
-Number(document.getElementById("wheelValue").value),
-
-chance:
-Number(document.getElementById("wheelChance").value)
-
-})
+body:JSON.stringify(data)
 
 }
 
@@ -115,6 +180,11 @@ loadWheelPrizes();
 }
 
 
+
+
+// =======================
+// Удаление
+// =======================
 
 async function deleteWheelPrize(id){
 
@@ -140,6 +210,8 @@ loadWheelPrizes();
 
 
 
+
+
 document.addEventListener(
 "DOMContentLoaded",
 ()=>{
@@ -158,6 +230,7 @@ btn.onclick =
 addWheelPrize;
 
 }
+
 
 
 loadWheelPrizes();
