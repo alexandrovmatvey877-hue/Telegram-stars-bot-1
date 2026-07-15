@@ -11,7 +11,7 @@ const initDatabase = require("./database/initDatabase");
 const errorHandler = require("./middleware/errorHandler");
 const securityHeaders = require("./middleware/security/securityHeaders");
 const rateLimiter = require("./middleware/security/rateLimiter");
-
+const promocodeRoutes = require("./routes/promocodes");
 const app = express();
 
 // =========================
@@ -75,6 +75,7 @@ app.use("/api/operations", require("./routes/operations"));
 app.use("/api/admin", require("./routes/admin"));
 app.use("/api/health", require("./routes/health"));
 app.use("/api/wheel", require("./routes/wheel"));
+app.use("/api/promocodes", promocodeRoutes);
 
 // =========================
 // ROOT
