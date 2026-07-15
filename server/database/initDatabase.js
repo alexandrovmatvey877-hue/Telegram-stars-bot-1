@@ -332,6 +332,8 @@ WHERE NOT EXISTS(
 SELECT 1 FROM wheel_prizes
 );
 
+`);
+
 await db.query(`
 ALTER TABLE wheel_prizes
 ADD COLUMN IF NOT EXISTS color TEXT DEFAULT '#ffffff';
