@@ -221,7 +221,7 @@ if (btn) {
 
     }
     
-    if(page === "promos"){
+    if(page === "promocodes"){
 
     Promos.load();
 
