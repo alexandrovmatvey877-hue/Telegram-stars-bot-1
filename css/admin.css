@@ -138,14 +138,20 @@ button {
 
     transition:.2s;
 
+}
+
+
+/* Убираем синие вспышки */
+
 button,
 .tab,
 .settings-tab,
 .link {
+
     -webkit-tap-highlight-color: transparent;
+
     user-select: none;
 
-}
 }
 
 
