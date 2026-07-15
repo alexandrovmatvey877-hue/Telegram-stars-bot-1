@@ -12,9 +12,14 @@ exports.getUsers = async (req, res) => {
     try {
 
         const result = await db.query(`
-            SELECT *
-            FROM users
-            ORDER BY registered_at DESC
+            SELECT 
+    u.*,
+    r.username AS referrer_username,
+    r.first_name AS referrer_name
+FROM users u
+LEFT JOIN users r
+ON u.referrer_id = r.telegram_id
+ORDER BY u.registered_at DESC
         `);
 
         res.json(result.rows);
