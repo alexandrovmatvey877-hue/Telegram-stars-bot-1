@@ -76,5 +76,22 @@ router.get(
 wheelController.getPrizeStats
 );
 
+router.get(
+"/admin/prizes",
+wheelController.adminGetPrizes
+);
+
+
+router.post(
+"/admin/prizes",
+wheelController.adminAddPrize
+);
+
+
+router.delete(
+"/admin/prizes/:id",
+wheelController.adminDeletePrize
+);
+
 
 module.exports = router;
