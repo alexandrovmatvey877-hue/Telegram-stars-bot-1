@@ -69,11 +69,68 @@ async function loadWheel(){
         prizes=data.prizes;
 
         createWheel();
-
+        renderPrizeList();
     }
 
 }
 
+
+// ======================
+// Создание листа информации
+// ======================
+function renderPrizeList(){
+
+    const box =
+    document.getElementById("prizeList");
+
+
+    if(!box)
+        return;
+
+
+    box.innerHTML="";
+
+
+    prizes.forEach((p,i)=>{
+
+
+        box.innerHTML += `
+
+        <div class="prize-item"
+        onclick="showPrize(${i})">
+
+
+            <div class="color-box"
+            style="
+            background:hsl(${i*55},80%,60%)
+            ">
+            </div>
+
+
+            <div>
+
+                <b>
+                ${p.name}
+                </b>
+
+                <br>
+
+                <small>
+                Шанс: ${p.chance}%
+                </small>
+
+            </div>
+
+
+        </div>
+
+        `;
+
+
+    });
+
+
+}
 
 
 // =====================
@@ -359,6 +416,28 @@ async function loadInfo(){
     ? "🎡 Крутить"
     : "Нет спинов";
 
+
+}
+//хуй знает что, я ебу что ли?
+function showPrize(index){
+
+    const p = prizes[index];
+
+
+    alert(
+`
+🎁 ${p.name}
+
+Шанс:
+${p.chance}%
+
+Тип:
+${p.type}
+
+Награда:
+${p.value}
+`
+    );
 
 }
 
