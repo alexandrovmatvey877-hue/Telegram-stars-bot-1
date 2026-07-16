@@ -1,3 +1,14 @@
+console.log("🔥 WHEEL START");
+
+window.onerror = function(message, source, line){
+    console.error(
+        "❌ JS ERROR:",
+        message,
+        source,
+        line
+    );
+};
+
 let spinning = false;
 let prizes = [];
 
