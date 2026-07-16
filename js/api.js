@@ -3,6 +3,8 @@ const ADMIN_KEY = "WS_ADMIN_9f82jd72hd82hd82";
 
 async function api(path, method = "GET", body = null) {
 
+    console.log("API:", API_URL + path);
+
     const options = {
         method,
         headers: {
@@ -11,25 +13,23 @@ async function api(path, method = "GET", body = null) {
         }
     };
 
-    if (body !== null) {
+    if (body) {
         options.body = JSON.stringify(body);
     }
 
     const response = await fetch(API_URL + path, options);
 
-    if (!response.ok) {
+    console.log("STATUS:", response.status);
 
-        let error = "Server error";
+    const text = await response.text();
 
-        try {
-            const data = await response.json();
-            error = data.error || error;
-        } catch {}
+    console.log("BODY:", text);
 
-        throw new Error(error);
+    try {
+        return JSON.parse(text);
+    } catch {
+        throw new Error(text);
     }
-
-    return await response.json();
 }
 
 async function getUsers() {
