@@ -88,6 +88,9 @@ async function disablePromo(id) {
         }
     );
 }
+async function getWheelPrizes() {
+    return await api("/api/admin/wheel/prizes");
+}
 window.API = {
     getUsers,
     getSettings,
@@ -101,4 +104,5 @@ window.API = {
     getPromos,
     createPromo,
     disablePromo
+    getWheelPrizes,
 };
