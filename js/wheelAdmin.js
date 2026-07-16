@@ -1,21 +1,21 @@
 console.log("🔥 WHEEL ADMIN LOADED");
 
+
 window.WheelAdmin = {
 
     async load() {
 
         try {
 
-            const data = await api(
-                "/api/admin/wheel/prizes"
-            );
+            const data = await API.getWheelPrizes();
 
-            console.log("WHEEL PRIZES:", data);
+            console.log("WHEEL DATA:", data);
+
 
             const box = document.getElementById("wheelPrizes");
 
             if (!box) {
-                console.warn("wheelPrizes container not found");
+                console.warn("wheelPrizes not found");
                 return;
             }
 
@@ -23,55 +23,24 @@ window.WheelAdmin = {
             box.innerHTML = "";
 
 
-            const prizes = data.prizes || [];
-
-
-            if (!prizes.length) {
-
-                box.innerHTML = `
-                    <div>
-                        Призов нет
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            prizes.forEach(prize => {
+            (data.prizes || []).forEach(p => {
 
                 box.innerHTML += `
-
-                <div class="wheel-prize-card">
-
-                    <b>${prize.name}</b>
-
-                    <br>
-
-                    Тип:
-                    ${prize.type}
-
-                    <br>
-
-                    Значение:
-                    ${prize.value}
-
-                    <br>
-
-                    Шанс:
-                    ${prize.chance}%
-
-                </div>
-
+                    <div class="wheel-prize-card">
+                        <b>${p.name}</b><br>
+                        Тип: ${p.type}<br>
+                        Значение: ${p.value}<br>
+                        Шанс: ${p.chance}%
+                    </div>
                 `;
 
             });
 
 
-        } catch(err) {
+        } catch(err){
 
             console.error(
-                "WHEEL ADMIN ERROR:",
+                "WHEEL ADMIN ERROR",
                 err
             );
 
@@ -83,14 +52,9 @@ window.WheelAdmin = {
 
 
 document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+"DOMContentLoaded",
+()=>{
 
-        if(window.WheelAdmin){
+    WheelAdmin.load();
 
-            WheelAdmin.load();
-
-        }
-
-    }
-);
+});
