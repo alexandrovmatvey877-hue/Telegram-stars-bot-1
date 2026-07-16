@@ -10,7 +10,7 @@ const securityLogger = require("../services/securityLogger");
 exports.getUsers = async (req, res) => {
 
     try {
-
+console.log("🔥 BEFORE DB");
         const result = await db.query(`
             SELECT 
     u.*,
@@ -339,7 +339,7 @@ exports.getSystemStatus = async (req, res) => {
 // WHEEL ADMIN
 // =======================
 
-
+console.log("🔥 ADMIN WHEEL PRIZES START");
 exports.getWheelPrizes = async (req,res)=>{
 
     try{
@@ -355,6 +355,7 @@ exports.getWheelPrizes = async (req,res)=>{
         ORDER BY id
 
         `);
+console.log("🔥 AFTER DB");
 
 
         res.json({
