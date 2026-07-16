@@ -340,7 +340,7 @@ exports.getSystemStatus = async (req, res) => {
 // =======================
 
 exports.getWheelPrizes = async (req,res)=>{
-
+console.log("GET WHEEL PRIZES 1");
 console.log("🔥 WHEEL PRIZES START");
 
 try{
@@ -355,9 +355,10 @@ FROM wheel_prizes
 ORDER BY id
 `);
 
+console.log("GET WHEEL PRIZES 2", result.rows.length);
 console.log("🔥 AFTER DB", result.rows.length);
 
-
+console.log("GET WHEEL PRIZES 3");
 res.json({
 
 success:true,
@@ -369,15 +370,13 @@ prizes:result.rows
 
 }catch(err){
 
-console.error("🔥 WHEEL ERROR", err);
+    console.error("GET WHEEL ERROR");
+    console.error(err);
 
-res.status(500).json({
-
-success:false,
-
-error:err.message
-
-});
+    res.status(500).json({
+        success:false,
+        error:err.message
+    });
 
 }
 
