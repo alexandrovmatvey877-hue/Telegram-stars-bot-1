@@ -470,5 +470,21 @@ ${p.value}
 
 
 
-loadWheel();
-loadInfo();
+console.log("🔥 BEFORE LOAD");
+
+loadWheel()
+.then(()=>{
+    console.log("✅ WHEEL LOADED");
+})
+.catch(err=>{
+    console.error("❌ LOAD WHEEL ERROR", err);
+});
+
+
+loadInfo()
+.then(()=>{
+    console.log("✅ INFO LOADED");
+})
+.catch(err=>{
+    console.error("❌ LOAD INFO ERROR", err);
+});
