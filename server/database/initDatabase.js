@@ -293,10 +293,6 @@ DO NOTHING;
 
 `);
 
-await db.query(`
-DELETE FROM wheel_prizes;
-`);
-
 
 // DEFAULT PRIZES
 
