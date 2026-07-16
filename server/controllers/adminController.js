@@ -339,8 +339,8 @@ exports.getSystemStatus = async (req, res) => {
 // WHEEL ADMIN
 // =======================
 
-console.log("🔥 ADMIN WHEEL PRIZES START");
 exports.getWheelPrizes = async (req,res)=>{
+console.log("🔥 WHEEL REQUEST RECEIVED");
 
     try{
 
@@ -384,7 +384,7 @@ console.log("🔥 AFTER DB");
 
 
 exports.addWheelPrize = async(req,res)=>{
-
+console.log("🔥 BEFORE WHEEL DB");
     try{
 
         const db = require("../config/database");
@@ -400,7 +400,7 @@ exports.addWheelPrize = async(req,res)=>{
 
 
         await db.query(`
-
+console.log("🔥 AFTER WHEEL DB");
         INSERT INTO wheel_prizes
         (
         name,
