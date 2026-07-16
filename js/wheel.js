@@ -17,7 +17,12 @@ if (buyBtn) {
 buyBtn.onclick = async()=>{
 
     const user =
-    Telegram.WebApp.initDataUnsafe.user;
+Telegram.WebApp?.initDataUnsafe?.user;
+
+if(!user){
+    alert("Telegram user not found");
+    return;
+}
 
 
     const res = await fetch(
@@ -211,8 +216,12 @@ button.onclick = async()=>{
 
 
         const user =
-        Telegram.WebApp
-        .initDataUnsafe.user;
+Telegram.WebApp?.initDataUnsafe?.user;
+
+if(!user){
+    alert("Telegram user not found");
+    return;
+}
 
 
 
@@ -416,12 +425,13 @@ async function loadInfo(){
     button.disabled =
     !canSpin;
 
+if(button){
 
     button.innerText =
     canSpin
     ? "🎡 Крутить"
     : "Нет спинов";
-
+}
 
 }
 //хуй знает что, я ебу что ли?
