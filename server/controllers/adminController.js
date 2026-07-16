@@ -340,44 +340,46 @@ exports.getSystemStatus = async (req, res) => {
 // =======================
 
 exports.getWheelPrizes = async (req,res)=>{
-console.log("🔥 WHEEL REQUEST RECEIVED");
 
-    try{
+console.log("🔥 WHEEL PRIZES START");
 
-        const db = require("../config/database");
+try{
 
-        const result = await db.query(`
+const db = require("../config/database");
 
-        SELECT *
+console.log("🔥 BEFORE DB");
 
-        FROM wheel_prizes
+const result = await db.query(`
+SELECT *
+FROM wheel_prizes
+ORDER BY id
+`);
 
-        ORDER BY id
-
-        `);
-console.log("🔥 AFTER DB");
-
-
-        res.json({
-
-            success:true,
-
-            prizes:result.rows
-
-        });
+console.log("🔥 AFTER DB", result.rows.length);
 
 
-    }catch(err){
+res.json({
 
-        console.error(err);
+success:true,
 
-        res.status(500).json({
+prizes:result.rows
 
-            success:false
+});
 
-        });
 
-    }
+}catch(err){
+
+console.error("🔥 WHEEL ERROR", err);
+
+res.status(500).json({
+
+success:false,
+
+error:err.message
+
+});
+
+}
 
 };
 
