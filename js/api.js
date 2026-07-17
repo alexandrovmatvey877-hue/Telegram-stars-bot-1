@@ -103,6 +103,6 @@ window.API = {
 
     getPromos,
     createPromo,
-    disablePromo
+    disablePromo,
     getWheelPrizes,
 };
