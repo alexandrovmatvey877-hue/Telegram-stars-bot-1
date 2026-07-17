@@ -385,9 +385,6 @@ CREATE TABLE IF NOT EXISTS promo_uses (
 
 );
 `);
-await db.query(`
-    TRUNCATE TABLE promo_uses, promocodes RESTART IDENTITY CASCADE;
-`);
 
         console.log("✅ Database initialized");
 
