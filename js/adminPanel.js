@@ -1,3 +1,9 @@
+console.log("wheelAdmin loaded");
+
+if (typeof API === "undefined") {
+    const API = "https://white-stars-api.onrender.com";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 const stopBtn = document.getElementById("stopSalesBtn");
 
