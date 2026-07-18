@@ -881,18 +881,34 @@ onclick="copyReferral()">
             message.textContent = '⏳ Сохранение...';
 
             try {
-                const res = await fetch("https://white-stars-api.onrender.com/api/admin/balance", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-admin-key': 'white-stars-super-admin'
-                    },
-                    body: JSON.stringify({
-                        telegram_id: String(userId),
-                        action: action,
-                        amount: amount
-                    })
-                });
+                let url = "";
+let body = {
+    telegram_id: String(userId)
+};
+
+if (action === "add") {
+    url = "https://white-stars-api.onrender.com/api/balance/deposit";
+    body.amount = amount;
+}
+
+if (action === "subtract") {
+    url = "https://white-stars-api.onrender.com/api/balance/withdraw";
+    body.amount = amount;
+}
+
+if (action === "set") {
+    url = "https://white-stars-api.onrender.com/api/balance/set";
+    body.balance = amount;
+}
+
+const res = await fetch(url, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "x-admin-key": "WS_ADMIN_9f82jd72hd82hd82"
+    },
+    body: JSON.stringify(body)
+});
 
                 if (!res.ok) {
                     const errorData = await res.json();
