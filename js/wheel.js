@@ -190,15 +190,12 @@ function renderPrizeList() {
 // =====================
 // Создание круга
 // =====================
-
 function createWheel() {
 
     if (!wheel) return;
-
     if (!prizes.length) return;
 
     let gradient = "conic-gradient(";
-
     let current = 0;
 
     prizes.forEach((p, i) => {
@@ -206,12 +203,9 @@ function createWheel() {
         const chance = Number(p.chance);
 
         const start = current;
-
         const end = current + chance * 3.6;
 
-        gradient += `
-hsl(${i * 55},80%,60%) ${start}deg ${end}deg,
-`;
+        gradient += `hsl(${i * 55},80%,60%) ${start}deg ${end}deg,`;
 
         current = end;
 
@@ -221,11 +215,8 @@ hsl(${i * 55},80%,60%) ${start}deg ${end}deg,
 
     wheel.style.background = gradient;
 
-    alert(wheel.style.background);
-
-const style = getComputedStyle(wheel);
-
-alert("BG = " + style.backgroundImage);
+    alert(gradient);
+    alert(getComputedStyle(wheel).backgroundImage);
 
 }
 // =====================
