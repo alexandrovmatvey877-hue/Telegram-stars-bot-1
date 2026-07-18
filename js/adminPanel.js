@@ -220,6 +220,11 @@ if (btn) {
         Settings.loadSettings();
 
     }
+if(page === "wheel"){
+
+    WheelAdmin.load();
+
+}
 
     if (page === "operations") {
 
