@@ -13,7 +13,7 @@ alert(JSON.stringify(data));
             console.log("WHEEL DATA:", data);
 
 
-            const box = document.getElementById("wheelPrizes");
+            const box = document.getElementById("wheelList");
 
             if (!box) {
                 console.warn("wheelPrizes not found");
