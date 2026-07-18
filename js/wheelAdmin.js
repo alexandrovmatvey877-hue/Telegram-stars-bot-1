@@ -8,6 +8,7 @@ window.WheelAdmin = {
         try {
 
             const data = await API.getWheelPrizes();
+alert(JSON.stringify(data));
 
             console.log("WHEEL DATA:", data);
 
