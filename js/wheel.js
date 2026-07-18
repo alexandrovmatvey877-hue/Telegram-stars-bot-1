@@ -150,7 +150,6 @@ async function loadWheel() {
 // ======================
 
 function renderPrizeList() {
-alert(prizes.map(p => p.color).join("\n"));
     const box = document.getElementById("prizeList");
 
     if (!box) return;
