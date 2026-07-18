@@ -299,7 +299,7 @@ DO NOTHING;
 await db.query(`
 
 INSERT INTO wheel_prizes
-(name,type,value,chance)
+(name,type,value,chance,color)
 
 SELECT * FROM (
 
