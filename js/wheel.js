@@ -150,7 +150,7 @@ async function loadWheel() {
 // ======================
 
 function renderPrizeList() {
-
+alert(prizes.map(p => p.color).join("\n"));
     const box = document.getElementById("prizeList");
 
     if (!box) return;
@@ -214,9 +214,6 @@ function createWheel() {
     gradient = gradient.slice(0, -1) + ")";
 
     wheel.style.background = gradient;
-
-    alert(gradient);
-    alert(getComputedStyle(wheel).backgroundImage);
 
 }
 // =====================
