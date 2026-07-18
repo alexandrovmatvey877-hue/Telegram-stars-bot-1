@@ -201,63 +201,63 @@ background: red;
 /* CENTER */
 
 
-.wheel::after {
+//.wheel::after {
 
 
-    content:"⭐";
+   // content:"⭐";
 
 
-    position:absolute;
+  //  position:absolute;
 
 
-    left:50%;
-    top:50%;
+  //  left:50%;
+  //  top:50%;
 
 
-    transform:
-    translate(-50%,-50%);
-
-
-
-    width:75px;
-    height:75px;
-
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
+  //  transform:
+ //   translate(-50%,-50%);
 
 
 
-    background:
-
-    rgba(10,14,30,.95);
-
+ //   width:75px;
+  //  height:75px;
 
 
-    border:
+  //  display:flex;
 
-    2px solid
-    rgba(255,255,255,.15);
+  //  justify-content:center;
 
-
-
-    border-radius:50%;
-
-
-    font-size:32px;
+  //  align-items:center;
 
 
 
-    box-shadow:
+  //  background:
 
-    0 0 35px
-    rgba(255,255,255,.15);
+  //  rgba(10,14,30,.95);
 
 
-}
+
+  //  border:
+
+  //  2px solid
+  //  rgba(255,255,255,.15);
+
+
+
+   // border-radius:50%;
+
+
+   // font-size:32px;
+
+
+
+   // box-shadow:
+
+  //  0 0 35px
+  //  rgba(255,255,255,.15);
+
+
+//}
 
 
 
