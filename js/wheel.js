@@ -1,4 +1,4 @@
-console.log("🔥 WHEEL START");
+let currentRotation = 0;
 
 window.onerror = function (message, source, line, col, error) {
     console.error("❌ JS ERROR:", {
@@ -165,7 +165,7 @@ function renderPrizeList() {
 
             <div
                 class="color-box"
-                style="background:hsl(${i * 55},80%,60%)">
+                style="background:${p.color}"
             </div>
 
             <div>
@@ -277,13 +277,17 @@ if (button) {
                 start +
                 Number(prize.chance) * 3.6 / 2;
 
-            const rotate = 3600 - angle;
+            const extraSpins = 360 * 8;
 
-            wheel.style.transition =
-                "transform 5s cubic-bezier(.17,.67,.19,1)";
+currentRotation += extraSpins;
 
-            wheel.style.transform =
-                `rotate(${rotate}deg)`;
+currentRotation -= angle;
+
+wheel.style.transition =
+    "transform 5s cubic-bezier(.17,.67,.19,1)";
+
+wheel.style.transform =
+    `rotate(${currentRotation}deg)`;
 
             setTimeout(async () => {
 
