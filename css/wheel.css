@@ -81,6 +81,8 @@ h1 {
 
 .wheel-container {
 
+    position: relative;
+
     display:flex;
 
     flex-direction:column;
@@ -97,6 +99,8 @@ h1 {
 .pointer {
 
     position:absolute;
+
+    pointer-events: none;
 
     top:8px;
 
@@ -118,6 +122,8 @@ h1 {
 
 .wheel {
 
+position: relative;
+z-index: 1;
 
     width:min(340px,85vw);
 
@@ -259,6 +265,8 @@ h1 {
 
 button {
 
+position: relative;
+z-index: 20;
 
     font-weight:800;
 
