@@ -211,10 +211,8 @@ function createWheel() {
         const end = current + chance * 3.6;
 
         gradient += `
-            hsl(${i * 55},80%,60%)
-            ${start}deg
-            ${end}deg,
-        `;
+hsl(${i * 55},80%,60%) ${start}deg ${end}deg,
+`;
 
         current = end;
 
@@ -223,6 +221,8 @@ function createWheel() {
     gradient = gradient.slice(0, -1) + ")";
 
     wheel.style.background = gradient;
+
+    alert(gradient);
 
 }
 // =====================
