@@ -89,7 +89,15 @@ async function disablePromo(id) {
     );
 }
 async function getWheelPrizes() {
-    return await api("/api/wheel/admin/prizes");
+
+    console.log("Запрос:", "/api/admin/wheel/prizes");
+
+    const data = await api("/api/admin/wheel/prizes");
+
+    console.log("Ответ:", data);
+
+    return data;
+
 }
 window.API = {
     getUsers,
