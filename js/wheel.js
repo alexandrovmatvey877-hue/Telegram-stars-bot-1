@@ -109,7 +109,7 @@ async function loadWheel() {
     try {
 
         const data = await api(API + "/api/wheel");
-alert("WHEEL DATA:", data);
+alert("WHEEL DATA: " + JSON.stringify(data))
         if (!data.success) {
             throw new Error(data.message || "Wheel API error");
         }
