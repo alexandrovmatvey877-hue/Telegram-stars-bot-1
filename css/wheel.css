@@ -125,6 +125,7 @@ h1 {
 position: relative;
 z-index: 1;
 
+background: red;
     width:min(340px,85vw);
 
     aspect-ratio:1;
