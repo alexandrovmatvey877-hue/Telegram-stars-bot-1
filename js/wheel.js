@@ -109,7 +109,6 @@ async function loadWheel() {
     try {
 
         const data = await api(API + "/api/wheel");
-alert("WHEEL DATA: " + JSON.stringify(data))
         if (!data.success) {
             throw new Error(data.message || "Wheel API error");
         }
@@ -222,7 +221,11 @@ hsl(${i * 55},80%,60%) ${start}deg ${end}deg,
 
     wheel.style.background = gradient;
 
-    alert(gradient);
+    alert(wheel.style.background);
+
+const style = getComputedStyle(wheel);
+
+alert("BG = " + style.backgroundImage);
 
 }
 // =====================
