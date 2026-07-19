@@ -204,7 +204,11 @@ function createWheel() {
         const start = current;
         const end = current + chance * 3.6;
 
-        gradient += `hsl(${i * 55},80%,60%) ${start}deg ${end}deg,`;
+        gradient += `
+    ${p.color || `hsl(${i * 55},80%,60%)`}
+    ${start}deg
+    ${end}deg,
+`;
 
         current = end;
 
