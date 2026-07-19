@@ -8,7 +8,6 @@ window.WheelAdmin = {
         try {
 
             const data = await API.getWheelPrizes();
-alert(JSON.stringify(data));
 
             console.log("WHEEL DATA:", data);
 
@@ -28,32 +27,44 @@ alert(JSON.stringify(data));
 box.innerHTML += `
 <div class="wheel-prize-card">
 
+<div style="display:flex;align-items:center;gap:10px;">
+
 <div style="
 width:20px;
 height:20px;
 background:${p.color};
 border-radius:4px;
-display:inline-block;
-margin-right:10px;
+flex-shrink:0;
 "></div>
 
+<div>
 <b>${p.name}</b><br>
-
 Тип: ${p.type}<br>
-
 Значение: ${p.value}<br>
+Шанс: ${p.chance}%
+</div>
 
-Шанс: ${p.chance}%<br><br>
+</div>
 
-<button onclick="WheelAdmin.deletePrize(${p.id})">
+<br>
+
+<button
+style="
+width:100%;
+padding:10px;
+background:#ff4d4f;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+"
+onclick="WheelAdmin.deletePrize(${p.id})">
 🗑 Удалить
 </button>
 
 </div>
 `;
-
 });
-
 
         } catch(err){
 
