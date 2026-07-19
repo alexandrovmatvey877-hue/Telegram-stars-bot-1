@@ -127,6 +127,8 @@ async addPrize(){
 
 }
 
+};
+
 document.addEventListener("DOMContentLoaded",()=>{
 
     WheelAdmin.load();
