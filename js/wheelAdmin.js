@@ -99,6 +99,32 @@ async deletePrize(id){
 
     }
 
+},
+async addPrize(){
+
+    try{
+
+        await api(
+            "/api/admin/wheel/prizes",
+            "POST",
+            {
+                name: document.getElementById("wheelName").value,
+                type: document.getElementById("wheelType").value,
+                value: Number(document.getElementById("wheelValue").value),
+                chance: Number(document.getElementById("wheelChance").value),
+                color: document.getElementById("wheelColor").value
+            }
+        );
+
+        this.load();
+
+    }catch(err){
+
+        console.error(err);
+        alert(err.message);
+
+    }
+
 }
 
 };
@@ -108,5 +134,17 @@ document.addEventListener(
 ()=>{
 
     WheelAdmin.load();
+
+const addBtn = document.getElementById("addWheelPrizeBtn");
+
+if(addBtn){
+
+    addBtn.onclick = () => {
+
+        WheelAdmin.addPrize();
+
+    };
+
+}
 
 });
