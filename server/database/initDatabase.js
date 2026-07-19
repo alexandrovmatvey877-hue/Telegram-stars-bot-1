@@ -305,17 +305,17 @@ SELECT * FROM (
 
 VALUES
 
-('5 Stars','stars',5,35),
+('5 Stars','stars',5,35,'#ff5555'),
 
-('10 Stars','stars',10,25),
+('10 Stars','stars',10,25,'#ff9900'),
 
-('50 Stars','stars',50,10),
+('50 Stars','stars',50,10,'#ffe066'),
 
-('100 Stars','stars',100,3),
+('100 Stars','stars',100,3,'#55ff55'),
 
-('Бонус','balance',20,20),
+('Бонус','balance',20,20,'#55aaff'),
 
-('Пусто','none',0,7)
+('Пусто','none',0,7,'#777777')
 
 ) AS prizes(
 name,
