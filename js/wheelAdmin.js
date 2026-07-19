@@ -66,8 +66,6 @@ margin-right:10px;
 
     }
 
-};
-
 async deletePrize(id){
 
     if(!confirm("Удалить приз?"))
@@ -97,6 +95,7 @@ async deletePrize(id){
 
 }
 
+};
 
 document.addEventListener(
 "DOMContentLoaded",
