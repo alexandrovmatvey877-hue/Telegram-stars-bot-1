@@ -385,60 +385,67 @@ prizes:result.rows
 
 
 exports.addWheelPrize = async(req,res)=>{
+
 console.log("🔥 BEFORE WHEEL DB");
+
     try{
 
         const db = require("../config/database");
-
 
         const {
             name,
             type,
             value,
-            chance
+            chance,
+            color
         } = req.body;
 
 
+        console.log("DATA:", {
+            name,
+            type,
+            value,
+            chance,
+            color
+        });
+
 
         await db.query(`
-console.log("🔥 AFTER WHEEL DB");
-        INSERT INTO wheel_prizes
-        (
-        name,
-        type,
-        value,
-        chance
-        )
+            INSERT INTO wheel_prizes
+            (
+                name,
+                type,
+                value,
+                chance,
+                color
+            )
 
-        VALUES($1,$2,$3,$4)
+            VALUES($1,$2,$3,$4,$5)
 
         `,[
-
-        name,
-        type,
-        value,
-        chance
-
+            name,
+            type,
+            value,
+            chance,
+            color || "#ffffff"
         ]);
 
 
+        console.log("🔥 AFTER WHEEL DB");
+
 
         res.json({
-
             success:true
-
         });
-
 
 
     }catch(err){
 
-        console.error(err);
+        console.error("ADD WHEEL ERROR:", err);
 
         res.status(500).json({
-
-            success:false
-
+            success:false,
+            error:err.message
         });
 
     }
