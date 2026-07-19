@@ -127,24 +127,38 @@ async addPrize(){
 
 }
 
-};
-
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
+document.addEventListener("DOMContentLoaded",()=>{
 
     WheelAdmin.load();
 
-const addBtn = document.getElementById("addWheelPrizeBtn");
 
-if(addBtn){
+    const btn = document.getElementById("addWheelPrizeBtn");
 
-    addBtn.onclick = () => {
 
-        WheelAdmin.addPrize();
+    if(btn){
 
-    };
+        btn.onclick = async()=>{
 
-}
+            await api(
+                "/api/admin/wheel/prizes",
+                "POST",
+                {
+                    name: document.getElementById("wheelName").value,
+                    type: document.getElementById("wheelType").value,
+                    value: Number(document.getElementById("wheelValue").value),
+                    chance: Number(document.getElementById("wheelChance").value),
+                    color: document.getElementById("wheelColor").value
+                }
+            );
+
+
+            alert("Приз добавлен");
+
+
+            WheelAdmin.load();
+
+        };
+
+    }
 
 });
