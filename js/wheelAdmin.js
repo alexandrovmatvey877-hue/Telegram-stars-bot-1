@@ -19,35 +19,6 @@ alert(JSON.stringify(data));
                 console.warn("wheelPrizes not found");
                 return;
             }
-async deletePrize(id){
-
-    if(!confirm("Удалить приз?"))
-        return;
-
-    try{
-
-        await fetch(
-            API_URL + "/api/admin/wheel/prizes/" + id,
-            {
-                method:"DELETE",
-                headers:{
-                    "x-admin-key":ADMIN_KEY
-                }
-            }
-        );
-
-        this.load();
-
-    }catch(err){
-
-        console.error(err);
-
-        alert("Ошибка удаления");
-
-    }
-
-}
-
 
             box.innerHTML = "";
 
@@ -96,6 +67,35 @@ margin-right:10px;
     }
 
 };
+
+async deletePrize(id){
+
+    if(!confirm("Удалить приз?"))
+        return;
+
+    try{
+
+        await fetch(
+            API_URL + "/api/admin/wheel/prizes/" + id,
+            {
+                method:"DELETE",
+                headers:{
+                    "x-admin-key":ADMIN_KEY
+                }
+            }
+        );
+
+        this.load();
+
+    }catch(err){
+
+        console.error(err);
+
+        alert("Ошибка удаления");
+
+    }
+
+}
 
 
 document.addEventListener(
