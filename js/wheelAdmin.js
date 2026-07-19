@@ -64,7 +64,7 @@ margin-right:10px;
 
         }
 
-    }
+    },
 
 async deletePrize(id){
 
@@ -73,15 +73,10 @@ async deletePrize(id){
 
     try{
 
-        await fetch(
-            API_URL + "/api/admin/wheel/prizes/" + id,
-            {
-                method:"DELETE",
-                headers:{
-                    "x-admin-key":ADMIN_KEY
-                }
-            }
-        );
+        await api(
+    "/api/admin/wheel/prizes/" + id,
+    "DELETE"
+);
 
         this.load();
 
