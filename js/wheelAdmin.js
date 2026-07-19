@@ -19,6 +19,34 @@ alert(JSON.stringify(data));
                 console.warn("wheelPrizes not found");
                 return;
             }
+async deletePrize(id){
+
+    if(!confirm("Удалить приз?"))
+        return;
+
+    try{
+
+        await fetch(
+            API_URL + "/api/admin/wheel/prizes/" + id,
+            {
+                method:"DELETE",
+                headers:{
+                    "x-admin-key":ADMIN_KEY
+                }
+            }
+        );
+
+        this.load();
+
+    }catch(err){
+
+        console.error(err);
+
+        alert("Ошибка удаления");
+
+    }
+
+}
 
 
             box.innerHTML = "";
@@ -26,7 +54,7 @@ alert(JSON.stringify(data));
 
             (data.prizes || []).forEach(p => {
 
-                box.innerHTML += `
+box.innerHTML += `
 <div class="wheel-prize-card">
 
 <div style="
@@ -44,12 +72,16 @@ margin-right:10px;
 
 Значение: ${p.value}<br>
 
-Шанс: ${p.chance}%
+Шанс: ${p.chance}%<br><br>
+
+<button onclick="WheelAdmin.deletePrize(${p.id})">
+🗑 Удалить
+</button>
 
 </div>
 `;
 
-            });
+});
 
 
         } catch(err){
