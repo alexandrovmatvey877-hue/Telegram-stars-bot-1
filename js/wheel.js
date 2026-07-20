@@ -219,9 +219,7 @@ function createWheel() {
     wheel.style.background = gradient;
 
 }
-console.log("GRADIENT =", gradient);
-console.log("ELEMENT =", wheel);
-console.log("BACKGROUND =", wheel.style.background);
+alert(gradient);
 // =====================
 // Крутить
 // =====================
