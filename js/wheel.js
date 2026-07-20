@@ -197,6 +197,9 @@ function createWheel() {
     let gradient = "conic-gradient(";
     let current = 0;
 
+console.log(prizes);
+alert(JSON.stringify(prizes));
+
     prizes.forEach((p, i) => {
 
         const chance = Number(p.chance);
