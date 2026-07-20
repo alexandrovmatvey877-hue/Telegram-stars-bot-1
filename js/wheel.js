@@ -279,15 +279,18 @@ if (button) {
 
             const extraSpins = 360 * 8;
 
-currentRotation += extraSpins;
-
-currentRotation -= angle;
+const targetRotation =
+    currentRotation +
+    360 * 8 +
+    (360 - angle);
 
 wheel.style.transition =
     "transform 5s cubic-bezier(.17,.67,.19,1)";
 
 wheel.style.transform =
-    `rotate(${currentRotation}deg)`;
+    `rotate(${targetRotation}deg)`;
+
+currentRotation = targetRotation % 360;
 
             setTimeout(async () => {
 
