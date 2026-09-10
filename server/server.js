@@ -116,6 +116,10 @@ app.listen(PORT, () => {
     console.log(`🚀 WHITE STARS started on port ${PORT}`);
 });
 
+// =========================
+// DB INIT (критично — без БД сервер не может работать)
+// =========================
+
 (async () => {
     try {
 
@@ -125,17 +129,6 @@ app.listen(PORT, () => {
 
         await initDatabase();
 
-const price = await monitor.getTonPrice();
-
-console.log("TON PRICE =", price);
-
-await monitor.updatePrices();
-
-// Обновление каждые 5 минут
-setInterval(() => {
-    monitor.updatePrices();
-}, 5 * 60 * 1000);
-
     } catch (err) {
 
         console.error("Database init error:");
@@ -144,4 +137,35 @@ setInterval(() => {
         process.exit(1);
 
     }
+
+    // =========================
+    // TON/STARS PRICE (некритично — сервер не должен падать из-за курса)
+    // =========================
+
+    try {
+
+        const price = await monitor.getTonPrice();
+        console.log("TON PRICE =", price);
+
+        await monitor.updatePrices();
+
+    } catch (err) {
+
+        console.error("TON price init error (non-fatal, will retry):");
+        console.error(err.message || err);
+
+    }
+
+    // Обновление каждые 5 минут, ошибки внутри цикла тоже не должны валить сервер
+    setInterval(() => {
+
+        monitor.updatePrices().catch(err => {
+
+            console.error("TON price update error (non-fatal):");
+            console.error(err.message || err);
+
+        });
+
+    }, 5 * 60 * 1000);
+
 })();
