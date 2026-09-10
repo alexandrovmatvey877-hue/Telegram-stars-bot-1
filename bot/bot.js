@@ -38,6 +38,28 @@ bot.on("polling_error", (err) => {
 });
 
 
+// Корректное завершение polling при передеплое/рестарте на Render,
+// чтобы не оставался "хвост", который потом конфликтует с новым процессом (409 Conflict)
+function shutdown(signal) {
+
+    console.log(`BOT: received ${signal}, stopping polling...`);
+
+    bot.stopPolling()
+        .then(() => {
+            console.log("BOT: polling stopped cleanly");
+            process.exit(0);
+        })
+        .catch((err) => {
+            console.error("BOT: error stopping polling:", err.message);
+            process.exit(1);
+        });
+
+}
+
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
+
+
 // =======================
 // CONFIG
 // =======================
