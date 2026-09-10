@@ -1,4 +1,16 @@
-const ADMIN_KEY = process.env.ADMIN_KEY || "white-stars-super-admin";
+const ADMIN_KEY = process.env.ADMIN_KEY;
+
+if (!ADMIN_KEY) {
+
+    console.error(
+        "FATAL: переменная окружения ADMIN_KEY не задана. " +
+        "Задайте её в настройках хостинга (Render → Environment) — " +
+        "сервер не запустится без неё, чтобы админка не осталась с дефолтным паролем."
+    );
+
+    process.exit(1);
+
+}
 
 module.exports = (req, res, next) => {
 
