@@ -163,7 +163,7 @@ exports.getProfile = async(req,res)=>{
             FROM users u
 
             LEFT JOIN users r
-            ON u.referrer_id = r.telegram_id
+            ON u.referrer_id::text = r.telegram_id
 
             WHERE u.telegram_id=$1
         `,
@@ -346,7 +346,7 @@ exports.getAllUsers = async(req,res)=>{
 
             LEFT JOIN users r
 
-            ON u.referrer_id = r.telegram_id
+            ON u.referrer_id::text = r.telegram_id
 
 
             ORDER BY registered_at DESC
@@ -407,7 +407,7 @@ exports.getReferrals = async(req,res)=>{
             FROM users
 
 
-            WHERE referrer_id=$1
+            WHERE referrer_id=$1::bigint
 
 
             ORDER BY registered_at DESC
